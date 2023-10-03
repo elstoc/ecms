@@ -1,6 +1,7 @@
 services:
   ui:
     build: ./ui
+    restart: unless-stopped
     env_file: .env
     environment:
       - API_URL=${UI_URL}/api
@@ -10,6 +11,7 @@ services:
       - ${DOCKER_PORT}:3000
   api:
     build: ./api
+    restart: unless-stopped
     env_file: .env
     environment:
       - API_PORT=3100
