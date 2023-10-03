@@ -1,0 +1,6 @@
+[submodule "api"]
+	path = api
+	url = git@github.com:elstoc/ecms-api.git
+[submodule "ui"]
+	path = ui
+	url = git@github.com:elstoc/ecms-ui.git
