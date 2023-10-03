@@ -1,0 +1,20 @@
+services:
+  ui:
+    build: ./ui
+    env_file: .env
+    environment:
+      - API_URL=${UI_URL}/api
+      - DOCKER_NGINX_PORT=3000
+      - DOCKER_NGINX_API_URL=http://api:3100
+    ports:
+      - ${DOCKER_PORT}:3000
+  api:
+    build: ./api
+    env_file: .env
+    environment:
+      - API_PORT=3100
+      - API_URL=${UI_URL}/api
+      - LOG_LEVEL=info
+      - DATA_DIR=/data
+    volumes:
+      - ${API_DATA_DIR}:/data
