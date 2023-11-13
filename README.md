@@ -27,6 +27,19 @@ Take a copy of the `.env-template` file and rename it to `.env`. Set the followi
 - `JWT_REFRESH_SECRET`: A secret used to prevent unauthorised refresh tokens from being created. Any sufficiently random string will do.
 - `JWT_ACCESS_SECRET`: A secret used to prevent unauthorised access tokens from being created. Any sufficiently random string will do.
 
+### A Note on Symbolic Links
+
+Docker doesn't handle symbolic links very well, since it can't see any of the host file system's files that outside of the mapped volume. If any of your content directories include symbolic links, you must create one or more additional volumes within docker-compose. You can do this by creating a new file `docker-compose.override.yml`, containing additional instructions (this file will be automatically picked up when you bring the containers up). For example, where `/path/to/target/directory` is the path that the link points to, include the following content:
+
+```
+services:
+  api:
+    volumes:
+      - /path/to/target/directory:/path/to/target/directory:read-only
+```
+
+In this case, I have made the target volume read-only, but this is not necessary.
+
 ### Add Some Content
 
 You will need to do this yourself, but some samples are provided (in the content-samples directory) to get you started. See the following section for more information about how to do this.
