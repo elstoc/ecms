@@ -9,6 +9,7 @@ services:
       - API_URL=${UI_URL}/api
       - DOCKER_NGINX_PORT=3000
       - DOCKER_NGINX_API_URL=http://api:3100
+      - QUERY_REFETCH_INTERVAL=${UI_QUERY_REFETCH_INTERVAL}
     ports:
       - ${DOCKER_PORT}:3000
   api:
