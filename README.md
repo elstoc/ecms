@@ -19,6 +19,7 @@ Take a copy of the `.env-template` file and rename it to `.env`. Set the followi
 - `UI_URL`: The full url that is used to access the ui. For example, if you just want to use the application locally, you might use the default http://localhost:3000. However, if you are exposing this to the internet (and forwarding requests to the docker container with a reverse proxy) you will need to provide the fully qualified domain name used by external requests.
 - `UI_QUERY_REFETCH_INTERVAL`: The interval after which the ui considers data from the api to be stale and refetches it (in ms).
 - `API_DATA_DIR`: The directory on the host machine where the api will find its content files. Please note that the api will also need write access to this directory.
+- `OMDB_API_KEY`: The key used to access the OMDB video database API
 - `STORAGE_WRITE_UID`: The uid that is applied to any created directories and created/updated files -- leave empty to stop ownership being amended (N.B. process must be run as root for this to work)
 - `STORAGE_WRITE_GID`: The gid that is applied to any created directories and created/updated files -- leave empty to stop ownership being amended (N.B. process must be run as root for this to work)
 - `ENABLE_AUTHENTICATION`: Set to "true" to enable site-wide authentication (though guest access is still permitted for unrestricted pages). Set to "false" to ignore all restrictions and hide authentication options in the UI.
