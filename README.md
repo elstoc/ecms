@@ -27,6 +27,8 @@ Take a copy of the `.env-template` file and rename it to `.env`. Set the followi
 - `JWT_ACCESS_EXPIRES`: The amount of time after which the JWT access token expires (default 30 minutes)
 - `JWT_REFRESH_SECRET`: A secret used to prevent unauthorised refresh tokens from being created. Any sufficiently random string will do.
 - `JWT_ACCESS_SECRET`: A secret used to prevent unauthorised access tokens from being created. Any sufficiently random string will do.
+- `SITE_TITLE`: The title to display on the left-hand-side of the site header
+- `FOOTER_TEXT`: Text to display in the site footer
 
 ### A Note on Symbolic Links
 
