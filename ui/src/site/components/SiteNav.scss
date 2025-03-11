@@ -1,0 +1,53 @@
+@import '../../variables.scss';
+
+.site-nav,
+.sub-menu {
+    display: flex;
+    background-color: $appBgColor;
+    
+    .nav-title {
+        font-family: $headingFont;
+    }
+
+    a:visited, a:hover, a:active, a:link {
+        color: black;
+        text-decoration: none;
+    }
+
+    a.active {
+        font-weight: 600;
+    }
+
+    a:focus {
+        outline: none; // remove BlueprintJS outline
+    }
+}
+
+.site-nav {
+    flex-direction: row;
+    align-items: left;
+    flex-wrap: wrap;
+
+    .nav-title {
+        font-size: 1.05rem;
+        padding: 0.3rem 0.5rem;
+    }
+
+    @media screen and (min-width: $maxMobileWidth) {
+        align-items: center;
+
+        .nav-title {
+            padding: 0 0.9rem;
+        }
+    }
+}
+
+.sub-menu {
+    flex-direction: column;
+
+    .nav-title {
+        font-size: 1rem;
+        justify-content: left;
+        padding: 0.35rem 0.9rem;
+    }
+}

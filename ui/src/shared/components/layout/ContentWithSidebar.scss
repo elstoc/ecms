@@ -1,0 +1,74 @@
+@import '../../../variables.scss';
+
+#app .cws-container {
+    display: flex;
+    justify-content: center;
+
+    height: 100%;
+
+    .cws {
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+
+        width: 100%;
+        max-width: $maxContentPlusSidebarWidth;
+
+        &.no-sidebar { max-width: $maxContentWidth }
+
+        .cws-toolbar {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            max-width: $maxContentWidth;
+
+            .sidebar-button {
+                margin-right: auto; // push menu to left hand side
+            }
+        }
+
+        .cws-content-and-sidebar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+
+            .cws-content {
+                width: 100%;
+                flex-grow: 1;
+            }
+
+            .cws-sidebar {
+                margin: 10px 5px;
+                flex-grow: 1;
+            }
+        }
+
+        @media screen and (min-width: $minDualPanelWidth) {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            column-gap: 10px;
+
+            .cws-toolbar { flex-direction: column }
+
+            .cws-content-and-sidebar {
+                flex-direction: row;
+                column-gap: 20px;
+
+                .cws-sidebar {
+                    width: 28%;
+                    max-width: $maxSidebarWidth;
+                }
+
+                .cws-content {
+                    width: 64%;
+                    max-width: $maxContentWidth;
+                }
+            }
+
+            &.no-sidebar .cws-content {
+                width: 100%;
+            }
+        }
+    }
+}

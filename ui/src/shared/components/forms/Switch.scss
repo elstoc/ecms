@@ -1,0 +1,13 @@
+#app-container, #portal-container {
+    .switch-component {
+        font-size: 0.95rem;
+    
+        label {
+            font-size: 0.95rem;
+        }
+
+        &>div>label {
+            width: 0 !important;
+        }
+    }
+}
