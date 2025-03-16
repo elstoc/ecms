@@ -1,5 +1,5 @@
 import { Icon } from '@blueprintjs/core';
-import React, { ReactElement, FC } from 'react';
+import { ReactElement, FC } from 'react';
 
 const watchedColorLookup = {
     'Y': 'green',

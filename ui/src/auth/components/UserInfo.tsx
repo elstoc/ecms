@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, Suspense, useState } from 'react';
+import { FC, ReactElement, Suspense, useState } from 'react';
 import { Dialog, DialogBody } from '@blueprintjs/core';
 
 import { useSiteConfig } from '../../site';

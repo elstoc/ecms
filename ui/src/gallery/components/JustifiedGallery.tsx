@@ -1,4 +1,4 @@
-import React, { createRef, FC, ReactElement, startTransition, useCallback, useContext, useMemo } from 'react';
+import { createRef, FC, ReactElement, startTransition, useCallback, useContext, useMemo } from 'react';
 
 import { useElementIsVisible, useScrollIntoView } from '../../shared/hooks';
 import { useGalleryContent } from '../hooks/useGalleryQueries';

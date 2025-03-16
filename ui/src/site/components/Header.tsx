@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, Suspense } from 'react';
+import { FC, ReactElement, Suspense } from 'react';
 
 import { useSiteComponents, useSiteConfig } from '../hooks/useSiteQueries';
 import { SiteNav } from './SiteNav';

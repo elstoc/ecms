@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 
 import './StringInput.scss';

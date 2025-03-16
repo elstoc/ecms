@@ -1,4 +1,4 @@
-import React, { ReactElement, Suspense } from 'react';
+import { ReactElement, Suspense } from 'react';
 
 import { SiteRoutes, Header, Footer } from './site';
 import { FocusStyleManager } from '@blueprintjs/core';

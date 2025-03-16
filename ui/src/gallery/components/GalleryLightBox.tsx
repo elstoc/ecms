@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext, useEffect } from 'react';
+import { FC, ReactElement, useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useTitle } from '../../shared/hooks';

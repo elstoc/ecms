@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { Collapse } from '@blueprintjs/core';
 
 import { useIsDualPanel } from '../../hooks';

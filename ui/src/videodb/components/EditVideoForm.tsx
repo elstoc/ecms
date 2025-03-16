@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useState } from 'react';
+import { FC, ReactElement, useCallback, useState } from 'react';
 import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
 
 import { VideoWithId } from '../../contracts/videodb';

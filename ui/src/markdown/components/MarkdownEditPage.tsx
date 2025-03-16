@@ -1,11 +1,11 @@
 /* eslint-disable no-restricted-globals */
-import React, { FC, ReactElement, Suspense, useContext } from 'react';
+import { FC, ReactElement, Suspense, useContext, lazy } from 'react';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownEditPage.scss';
 
-const EditMd = React.lazy(() => import('../../shared/components/editmd/EditMdAsDefault'));
+const EditMd = lazy(() => import('../../shared/components/editmd/EditMdAsDefault'));
 
 export const MarkdownEditPage: FC = (): ReactElement => {
     const { markdownState: { editedMarkdown }, markdownReducer} = useContext(MarkdownStateContext);

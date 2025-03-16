@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 
 import { MarkdownMetadata } from '../../contracts/site';
 import { useTitle } from '../../shared/hooks';

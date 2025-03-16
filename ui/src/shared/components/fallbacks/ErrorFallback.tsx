@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { FC } from 'react';
 
 export const ErrorFallback: FC<{ error: unknown }> = ({ error }): ReactElement => {

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useState } from 'react';
+import { FC, ReactElement, useCallback, useState } from 'react';
 import { Button, Card } from '@blueprintjs/core';
 
 import { useLogin } from '../hooks/useAuthQueries';

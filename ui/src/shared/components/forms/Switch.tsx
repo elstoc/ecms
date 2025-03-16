@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { FormGroup, Switch as BlueprintSwitch } from '@blueprintjs/core';
 
 import './Switch.scss';

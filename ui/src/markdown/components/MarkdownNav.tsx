@@ -1,4 +1,4 @@
-import React, { FC, ReactElement,  useContext } from 'react';
+import { FC, ReactElement, Fragment, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { MarkdownTree } from '../../contracts/markdown';
@@ -27,10 +27,10 @@ const MarkdownNavRecurse: FC<{ children: MarkdownTree[], rootUiPath: string }> =
                 const linkPrefix = rootUiPath ? `${rootUiPath}/` : '';
                 const linkName = `/${linkPrefix}${child.uiPath}`.replace(/\/$/, '');
                 return (
-                    <React.Fragment key = {child.apiPath}>
+                    <Fragment key = {child.apiPath}>
                         <li><NavLink to={linkName} end>{child?.title}</NavLink></li>
                         {child.children && <MarkdownNavRecurse rootUiPath={rootUiPath} children={child.children} />}
-                    </React.Fragment>
+                    </Fragment>
                 );
             })}
         </ol>

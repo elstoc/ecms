@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, Suspense, useContext } from 'react';
+import { FC, ReactElement, Suspense, useContext } from 'react';
 import { Card } from '@blueprintjs/core';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';

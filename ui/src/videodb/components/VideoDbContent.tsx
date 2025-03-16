@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, Suspense } from 'react';
+import { FC, ReactElement, Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Dialog, DialogBody } from '@blueprintjs/core';
 

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext } from 'react';
+import { FC, ReactElement, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { MarkdownTree } from '../../contracts/markdown';

@@ -1,5 +1,5 @@
 // See https://react-icons.github.io/react-icons for summary of available icons
-import React, { FC, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { FiChevronLeft, FiChevronRight, FiEdit, FiFlag, FiSave, FiTrash2, FiUser, FiUserX, FiX, FiPlusSquare, FiMenu, FiDownload, FiCheck } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 

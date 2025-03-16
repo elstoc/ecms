@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext } from 'react';
+import { FC, ReactElement, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { VideoWithId } from '../../contracts/videodb';

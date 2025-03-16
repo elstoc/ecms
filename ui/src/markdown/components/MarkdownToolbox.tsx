@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { FC, ReactElement, useCallback, useContext } from 'react';
+import { FC, ReactElement, useCallback, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 

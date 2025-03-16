@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import { Button, FormGroup, InputGroup, Intent, Tooltip } from '@blueprintjs/core';
 
 import './PasswordInput.scss';

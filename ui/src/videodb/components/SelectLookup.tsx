@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext } from 'react';
+import { FC, ReactElement, useContext } from 'react';
 
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 import { useGetLookup } from '../hooks/useVideoDbQueries';

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import YAML from 'yaml';
-import React, { FC, ReactElement, ReactNode, Suspense, useContext } from 'react';
+import { FC, ReactElement, ReactNode, Suspense, useContext, lazy } from 'react';
 import { Link } from 'react-router-dom';
 
 import { splitFrontMatter } from '../../utils';
@@ -9,7 +9,7 @@ import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownViewPage.scss';
 
-const RenderMd = React.lazy(() => import('../../shared/components/rendermd/RenderMdAsDefault'));
+const RenderMd = lazy(() => import('../../shared/components/rendermd/RenderMdAsDefault'));
 
 const basename = (path: string): string => {
     return path.split('/').reverse()[0];

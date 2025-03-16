@@ -1,4 +1,4 @@
-import React, { MouseEvent, FC, ReactElement, useEffect } from 'react';
+import { MouseEvent, FC, ReactElement, useEffect } from 'react';
 
 import { useKeyPress } from '../../hooks';
 import { Icon } from '../icon';
