@@ -1,4 +1,4 @@
-import { ReactElement, Suspense } from 'react';
+import { Suspense } from 'react';
 
 import { SiteRoutes, Header, Footer } from './site';
 import { FocusStyleManager } from '@blueprintjs/core';
@@ -10,7 +10,7 @@ import './app.scss';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-export const App = (): ReactElement => {
+export const App = () => {
     return (
         <div id='app-container'>
             <div id='app'>

@@ -1,5 +1,4 @@
-/* eslint-disable no-restricted-globals */
-import { FC, ReactElement, useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 
@@ -9,7 +8,9 @@ import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdo
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 import { Icon } from '../../shared/components/icon';
 
-export const MarkdownToolbox: FC<{ apiPath: string }> = ({ apiPath }): ReactElement => {
+type MarkdownToolboxProps = { apiPath: string }
+
+export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 

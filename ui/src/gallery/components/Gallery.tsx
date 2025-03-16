@@ -1,4 +1,4 @@
-import { FC, ReactElement, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 
 import { GalleryMetadata } from '../../contracts/site';
@@ -7,7 +7,7 @@ import { GalleryStateContext, useGalleryStateReducer, getInitialState } from '..
 import { NotFoundPage } from '../../shared/components/NotFoundPage';
 import { GalleryContent } from './GalleryContent';
 
-export const Gallery: FC<GalleryMetadata> = (props): ReactElement => {
+export const Gallery = (props: GalleryMetadata) => {
     const { apiPath, title } = props;
     const { galleryState, galleryStateReducer } = useGalleryStateReducer(getInitialState(apiPath, title));
 

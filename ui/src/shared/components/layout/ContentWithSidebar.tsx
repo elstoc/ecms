@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Collapse } from '@blueprintjs/core';
 
 import { useIsDualPanel } from '../../hooks';
@@ -15,7 +15,7 @@ type ContentWithSideBarProps = {
     closeSidebarOnClick?: boolean;
 }
 
-export const ContentWithSidebar: FC<ContentWithSideBarProps> = ({ content, sidebar, toolbarIcons, closeSidebarOnClick }): ReactElement => {
+export const ContentWithSidebar = ({ content, sidebar, toolbarIcons, closeSidebarOnClick }: ContentWithSideBarProps) => {
     const isDualPanel = useIsDualPanel();
     const [sidebarDrawerVisible, setSidebarDrawerVisible] = useState(false);
 

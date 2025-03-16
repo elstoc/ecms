@@ -1,5 +1,4 @@
 import { Icon } from '@blueprintjs/core';
-import { ReactElement, FC } from 'react';
 
 const watchedColorLookup = {
     'Y': 'green',
@@ -8,7 +7,9 @@ const watchedColorLookup = {
     '': 'white'
 } as { [key: string]: string };
 
-export const WatchedIcon: FC<{ watchedStatus?: string | null, medium?: string | null }> = ({ watchedStatus }): ReactElement => {
+type WatchedIconProps = { watchedStatus?: string | null, medium?: string | null }
+
+export const WatchedIcon = ({ watchedStatus }: WatchedIconProps) => {
     return (
         <Icon
             icon='record'

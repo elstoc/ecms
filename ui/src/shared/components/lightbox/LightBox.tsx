@@ -1,4 +1,4 @@
-import { MouseEvent, FC, ReactElement, useEffect } from 'react';
+import { MouseEvent, useEffect } from 'react';
 
 import { useKeyPress } from '../../hooks';
 import { Icon } from '../icon';
@@ -16,7 +16,7 @@ type LightBoxProps = {
     nextImageUrl?: string;
 }
 
-export const LightBox: FC<LightBoxProps> = ({ onClose, onPrev, onNext, caption, alt, imageUrl, prevImageUrl, nextImageUrl }): ReactElement => {
+export const LightBox = ({ onClose, onPrev, onNext, caption, alt, imageUrl, prevImageUrl, nextImageUrl }: LightBoxProps) => {
     const handleOuterClick = (event: MouseEvent) => {
         if (event.target === event.currentTarget) {
             onClose?.();

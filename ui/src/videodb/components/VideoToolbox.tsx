@@ -1,4 +1,4 @@
-import { FC, ReactElement, useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { downloadVideoCSV } from '../utils/downloadVideoCSV';
@@ -8,7 +8,7 @@ import { useIsDualPanel } from '../../shared/hooks';
 
 import { Icon } from '../../shared/components/icon';
 
-export const VideoToolbox: FC = (): ReactElement => {
+export const VideoToolbox = () => {
     const userIsAdmin = useGetUserIsAdmin();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();

@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { Button, FormGroup, MenuItem } from '@blueprintjs/core';
 import { ItemPredicate, ItemRenderer, Select } from '@blueprintjs/select';
 
@@ -20,7 +19,7 @@ type SelectKeyValueParams = {
     filterable?: boolean;
 };
 
-export const SelectKeyValue: FC<SelectKeyValueParams> = ({ allItems, selectedKey, onSelectionChange, label, small, inline, className = '', filterable = true }): ReactElement => {
+export const SelectKeyValue = ({ allItems, selectedKey, onSelectionChange, label, small, inline, className = '', filterable = true }: SelectKeyValueParams) => {
     const allItemsArray = Object.entries(allItems).map(([key, value]) => ({ key, value }));
 
     const popoverClassName = className ? `${className}-popover` : '';

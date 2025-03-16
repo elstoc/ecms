@@ -1,4 +1,4 @@
-import { FC, ReactElement, Suspense} from 'react';
+import { Suspense} from 'react';
 import { Route, Routes } from 'react-router';
 
 import { VideoDbMetadata } from '../../contracts/site';
@@ -11,7 +11,7 @@ import { VideoToolbox } from './VideoToolbox';
 import { VideoFilters } from './VideoFilters';
 import { ContentWithSidebar } from '../../shared/components/layout';
 
-export const VideoDb: FC<VideoDbMetadata> = ({ title, apiPath }): ReactElement => {
+export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
     const videoDbState = useVideoDbState(title, apiPath);
 
     useTitle(title);

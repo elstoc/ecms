@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { Button, FormGroup, InputGroup, Intent, Tooltip } from '@blueprintjs/core';
 
 import './PasswordInput.scss';
@@ -14,7 +14,7 @@ type PasswordInputParams = {
     onPressEnter?: () => void;
 };
 
-export const PasswordInput: FC<PasswordInputParams> = ({ value, onValueChange, placeholder, label, inline, small, className = '', onPressEnter }): ReactElement => {
+export const PasswordInput = ({ value, onValueChange, placeholder, label, inline, small, className = '', onPressEnter }: PasswordInputParams) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleKeyDown = (event: React.KeyboardEvent) => {

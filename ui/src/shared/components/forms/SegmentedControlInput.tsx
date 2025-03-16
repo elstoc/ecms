@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { FormGroup, OptionProps, SegmentedControl } from '@blueprintjs/core';
 
 import './SegmentedControlInput.scss';
@@ -13,7 +12,7 @@ type SegmentedControlInputParams = {
     className?: string;
 };
 
-export const SegmentedControlInput: FC<SegmentedControlInputParams> = ({ value, onValueChange, label, options, inline, small, className = '' }): ReactElement => {
+export const SegmentedControlInput = ({ value, onValueChange, label, options, inline, small, className = '' }: SegmentedControlInputParams) => {
     return (
         <FormGroup label={label} inline={inline} className={`segmented-control-input ${className}`}>
             <SegmentedControl

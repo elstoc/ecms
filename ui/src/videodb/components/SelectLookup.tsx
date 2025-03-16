@@ -1,11 +1,11 @@
-import { FC, ReactElement, useContext } from 'react';
+import { useContext } from 'react';
 
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 import { useGetLookup } from '../hooks/useVideoDbQueries';
 
 import { SelectKeyValue } from '../../shared/components/forms';
 
-type SelectLookupParams = {
+type SelectLookupProps = {
     lookupTable: string;
     selectedKey: string;
     onSelectionChange?: (selectedKey: string) => void;
@@ -14,7 +14,7 @@ type SelectLookupParams = {
     className?: string;
 };
 
-export const SelectLookup: FC<SelectLookupParams> = (props): ReactElement => {
+export const SelectLookup = (props: SelectLookupProps) => {
     const { lookupTable, selectedKey, onSelectionChange, label, small, className } = props;
     const { videoDbState: { apiPath } } = useContext(VideoDbStateContext);
     const lookupKeyValues = useGetLookup(apiPath, lookupTable);

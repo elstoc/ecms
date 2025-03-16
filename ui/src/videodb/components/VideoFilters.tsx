@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { Button } from '@blueprintjs/core';
 
 import { useVideoDbFilterState } from '../hooks/useVideoDbFilterState';
@@ -21,7 +20,7 @@ const watchedStatusOptions = [
     { label: 'N', value: 'N' }
 ];
 
-export const VideoFilters: FC = (): ReactElement => {
+export const VideoFilters = () => {
     const { state, updateState, clearAllFilters } = useVideoDbFilterState();
     const { titleContains, maxLength, categories, watched, mediaWatched, minResolution, tags, sortPriorityFirst } = state;
 

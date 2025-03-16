@@ -1,4 +1,4 @@
-import { FC, ReactElement, Suspense, useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Dialog, DialogBody } from '@blueprintjs/core';
 
 import { useSiteConfig } from '../../site';
@@ -10,7 +10,7 @@ import { Welcome } from './Welcome';
 
 import './UserInfo.scss';
 
-export const UserInfo: FC = (): ReactElement => {
+export const UserInfo = () => {
     const [authDialogOpen, setAuthDialogOpen] = useState(false);
     const userData = useGetUserInfo();
     const { authEnabled } = useSiteConfig();

@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Card, Dialog, DialogBody } from '@blueprintjs/core';
 
@@ -10,7 +10,7 @@ import { StringInput } from '../../shared/components/forms';
 
 import './MarkdownAddPage.scss';
 
-export const MarkdownAddPage: FC = (): ReactElement => {
+export const MarkdownAddPage = () => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const { markdownState: { pageApiPath } } = useContext(MarkdownStateContext);

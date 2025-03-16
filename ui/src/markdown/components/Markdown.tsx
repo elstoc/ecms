@@ -1,12 +1,10 @@
-import { FC, ReactElement } from 'react';
-
 import { MarkdownMetadata } from '../../contracts/site';
 import { useTitle } from '../../shared/hooks';
 
 import { MarkdownStateContext, useMarkdownState } from '../hooks/useMarkdownStateContext';
 import { MarkdownRoutes } from './MarkdownRoutes';
 
-export const Markdown: FC<MarkdownMetadata> = ({ uiPath, apiPath, title, singlePage }): ReactElement => {
+export const Markdown = ({ uiPath, apiPath, title, singlePage }: MarkdownMetadata) => {
     const { markdownState, markdownReducer } = useMarkdownState(uiPath, apiPath, singlePage);
     useTitle(title);
 

@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 
 import { config } from '../../../utils';
@@ -24,7 +24,7 @@ type TesselateProps = {
     as this component will wrap them in a bunch of divs
 */
 
-export const Tesselate: FC<TesselateProps> = ({ tiles }): ReactElement => {
+export const Tesselate = ({ tiles }: TesselateProps) => {
     const { width: containerWidth, ref: widthRef } = useResizeDetector({ handleHeight: false });
     const { tesselateMarginPx } = config;
 

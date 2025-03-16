@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useTitle } from '../../shared/hooks';
@@ -7,7 +7,7 @@ import { GalleryStateContext } from '../hooks/useGalleryState';
 
 import { LightBox } from '../../shared/components/lightbox';
 
-export const GalleryLightBox: FC = (): ReactElement => {
+export const GalleryLightBox = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const { galleryState: { apiPath, maxImages, title }, galleryStateReducer } = useContext(GalleryStateContext);
     const { images, allImageFiles } = useGalleryContent(apiPath, maxImages);

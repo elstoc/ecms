@@ -1,4 +1,4 @@
-import { FC, ReactElement, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, Card } from '@blueprintjs/core';
 
 import { useLogin } from '../hooks/useAuthQueries';
@@ -7,7 +7,7 @@ import { PasswordInput, StringInput } from '../../shared/components/forms';
 
 import './Login.scss';
 
-export const Login: FC = (): ReactElement => {
+export const Login = () => {
     const [loginFailed, setLoginFailed] = useState(false);
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');

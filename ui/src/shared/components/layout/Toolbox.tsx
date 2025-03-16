@@ -1,5 +1,5 @@
+import { ReactElement } from 'react';
 import { Card } from '@blueprintjs/core';
-import { FC, ReactElement } from 'react';
 
 import './Toolbox.scss';
 
@@ -8,7 +8,7 @@ export type ToolboxProps = {
     orientation: 'horizontal' | 'vertical';
 }
 
-export const Toolbox: FC<ToolboxProps> = ({ content, orientation }): ReactElement => {
+export const Toolbox = ({ content, orientation }: ToolboxProps) => {
     return (
         <Card className={`toolbox ${orientation}`}>
             {content}

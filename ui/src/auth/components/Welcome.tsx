@@ -1,11 +1,12 @@
-import { FC, ReactElement } from 'react';
 import { Button } from '@blueprintjs/core';
 
 import { useLogout } from '../hooks/useAuthQueries';
 
 import './Welcome.scss';
 
-export const Welcome: FC<{ user: string }> = ({ user }): ReactElement => {
+type WelcomeProps = { user: string }
+
+export const Welcome = ({ user }: WelcomeProps) => {
     const { mutate } = useLogout('logged out');
 
     return (

@@ -1,4 +1,4 @@
-import { createRef, FC, ReactElement, startTransition, useCallback, useContext, useMemo } from 'react';
+import { createRef, startTransition, useCallback, useContext, useMemo } from 'react';
 
 import { useElementIsVisible, useScrollIntoView } from '../../shared/hooks';
 import { useGalleryContent } from '../hooks/useGalleryQueries';
@@ -7,7 +7,7 @@ import { GalleryStateContext } from '../hooks/useGalleryState';
 import { Tesselate } from '../../shared/components/layout';
 import { GalleryThumb } from './GalleryThumb';
 
-export const JustifiedGallery: FC = (): ReactElement => {
+export const JustifiedGallery = () => {
     const { galleryState: { apiPath, maxImages, activeImageIndex }, galleryStateReducer } = useContext(GalleryStateContext);
     const { images, allImageFiles } = useGalleryContent(apiPath, maxImages);
 

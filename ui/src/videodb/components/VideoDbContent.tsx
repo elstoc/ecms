@@ -1,4 +1,4 @@
-import { FC, ReactElement, Suspense } from 'react';
+import { Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Dialog, DialogBody } from '@blueprintjs/core';
 
@@ -15,7 +15,7 @@ type VideoDbContentProps = {
     mode?: 'update' | 'add'
 }
 
-export const VideoDbContent: FC<VideoDbContentProps> = ({ mode }): ReactElement => {
+export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const userIsAdmin = useGetUserIsAdmin();

@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import { ReactNode, Suspense, useContext, lazy } from 'react';
 import YAML from 'yaml';
-import { FC, ReactElement, ReactNode, Suspense, useContext, lazy } from 'react';
 import { Link } from 'react-router-dom';
 
 import { splitFrontMatter } from '../../utils';
@@ -15,7 +14,7 @@ const basename = (path: string): string => {
     return path.split('/').reverse()[0];
 };
 
-export const MarkdownViewPage: FC = (): ReactElement => {
+export const MarkdownViewPage = () => {
     const { markdownState: { currentPage, pageApiPath } } = useContext(MarkdownStateContext);
 
     const [yaml, markdown] = splitFrontMatter(currentPage?.content || '');

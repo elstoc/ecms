@@ -1,4 +1,4 @@
-import { FC, ReactElement, Fragment, useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { MarkdownTree } from '../../contracts/markdown';
@@ -7,7 +7,7 @@ import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownNav.scss';
 
-export const MarkdownNav: FC = (): ReactElement => {
+export const MarkdownNav = () => {
     const { markdownState: { rootUiPath, rootApiPath } } = useContext(MarkdownStateContext);
     const markdownTree = useGetMarkdownTree(rootApiPath);
 
@@ -20,7 +20,8 @@ export const MarkdownNav: FC = (): ReactElement => {
     return navContent;
 };
 
-const MarkdownNavRecurse: FC<{ children: MarkdownTree[], rootUiPath: string }> = ({ children, rootUiPath }): ReactElement => {
+type MarkdownNavRecurseProps = { children: MarkdownTree[], rootUiPath: string }
+const MarkdownNavRecurse = ({ children, rootUiPath }: MarkdownNavRecurseProps) => {
     return (
         <ol>
             {children.map((child) => {

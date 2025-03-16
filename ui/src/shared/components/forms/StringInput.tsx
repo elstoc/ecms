@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 
 import './StringInput.scss';
@@ -15,7 +14,7 @@ type StringInputParams = {
     onPressEnter?: () => void;
 };
 
-export const StringInput: FC<StringInputParams> = ({ value, onValueChange, placeholder, label, inline, small, className = '', autoFocus, onPressEnter }): ReactElement => {
+export const StringInput = ({ value, onValueChange, placeholder, label, inline, small, className = '', autoFocus, onPressEnter }: StringInputParams) => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             onPressEnter?.();

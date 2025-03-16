@@ -1,4 +1,4 @@
-import { FC, ReactElement, Suspense, useContext } from 'react';
+import { Suspense, useContext } from 'react';
 import { Card } from '@blueprintjs/core';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
@@ -10,7 +10,9 @@ import { MarkdownPage } from './MarkdownPage';
 
 import './MarkdownContent.scss';
 
-export const MarkdownContent: FC<{ apiPath: string }> = ({ apiPath }): ReactElement => {
+type MarkdownContentProps = { apiPath: string }
+
+export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
     const { markdownState: { singlePage } } = useContext(MarkdownStateContext);
 
     const toolbar = (

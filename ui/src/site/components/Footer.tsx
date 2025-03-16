@@ -1,10 +1,8 @@
-import { FC, ReactElement } from 'react';
-
 import { useSiteConfig } from '../hooks/useSiteQueries';
 
 import './Footer.scss';
 
-export const Footer: FC = (): ReactElement => {
+export const Footer = () => {
     const siteConfig = useSiteConfig();
     return (
         <div className='footer'>

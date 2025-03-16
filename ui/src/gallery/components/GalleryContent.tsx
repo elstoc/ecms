@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext } from 'react';
+import { useContext } from 'react';
 
 import { useTitle } from '../../shared/hooks';
 
@@ -8,7 +8,7 @@ import { GalleryStateContext } from '../hooks/useGalleryState';
 
 import './GalleryContent.scss';
 
-export const GalleryContent: FC = (): ReactElement => {
+export const GalleryContent = () => {
     const { galleryState: { title } } = useContext(GalleryStateContext);
     useTitle(title);
 

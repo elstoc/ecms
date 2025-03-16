@@ -1,5 +1,4 @@
 // See https://react-icons.github.io/react-icons for summary of available icons
-import { FC, ReactElement } from 'react';
 import { FiChevronLeft, FiChevronRight, FiEdit, FiFlag, FiSave, FiTrash2, FiUser, FiUserX, FiX, FiPlusSquare, FiMenu, FiDownload, FiCheck } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 
@@ -30,7 +29,7 @@ type IconProps = {
     color?: string;
 };
 
-export const Icon: FC<IconProps> = ({ name, onClick, disabled = false, className = '', color }): ReactElement => {
+export const Icon = ({ name, onClick, disabled = false, className = '', color }: IconProps) => {
     const IconComponent = icons[name];
 
     if (!IconComponent) return <></>;

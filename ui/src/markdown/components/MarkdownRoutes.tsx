@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext } from 'react';
+import { ReactElement, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { MarkdownTree } from '../../contracts/markdown';
@@ -8,7 +8,7 @@ import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 import { MarkdownContent } from './MarkdownContent';
 import { NotFoundPage } from '../../shared/components/NotFoundPage';
 
-export const MarkdownRoutes: FC = (): ReactElement => {
+export const MarkdownRoutes = () => {
     const { markdownState: { rootApiPath, singlePage } } = useContext(MarkdownStateContext);
     const markdownTree = useGetMarkdownTree(rootApiPath);
 
@@ -22,7 +22,7 @@ export const MarkdownRoutes: FC = (): ReactElement => {
     );
 };
 
-const listMarkdownRoutes = (children: MarkdownTree[], singlePage: boolean): ReactElement[] => {
+const listMarkdownRoutes = (children: MarkdownTree[], singlePage: boolean) => {
     const routes: ReactElement[] = [];
 
     children.forEach((child) => {

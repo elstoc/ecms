@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { markdown as codeMirrorMarkdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
@@ -11,7 +10,7 @@ type EditMdProps = {
     setMarkdown: (value: string) => void;
 }
 
-export const EditMd: FC<EditMdProps> = ({ markdown, setMarkdown }): ReactElement => {
+export const EditMd = ({ markdown, setMarkdown }: EditMdProps) => {
     return (
         <div className='edit-markdown'>
             <CodeMirror

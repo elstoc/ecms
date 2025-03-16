@@ -1,11 +1,11 @@
-import { FC, ReactElement, useContext } from 'react';
+import { useContext } from 'react';
 
 import { useGetTags } from '../hooks/useVideoDbQueries';
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 import { MultiTagInput } from '../../shared/components/forms';
 
-type TagInputParams = {
+type TagInputProps = {
     tags: string | null;
     onSelectionChange?: (selectedTags: string) => void;
     label: string;
@@ -14,7 +14,7 @@ type TagInputParams = {
     allowCreation?: boolean;
 };
 
-export const TagInput: FC<TagInputParams> = ({ tags, onSelectionChange, label, inline, className, allowCreation = true }): ReactElement => {
+export const TagInput = ({ tags, onSelectionChange, label, inline, className, allowCreation = true }: TagInputProps) => {
     const { videoDbState: { apiPath } } = useContext(VideoDbStateContext);
     const tagsArray = tags ? tags.split('|') : [];
     const tagLookup = useGetTags(apiPath);

@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { FormGroup, MenuItem } from '@blueprintjs/core';
 import { ItemPredicate, ItemRenderer, MultiSelect } from '@blueprintjs/select';
 
@@ -18,7 +18,7 @@ type MultiSelectKeyValueParams = {
     className?: string;
 };
 
-export const MultiSelectKeyValue: FC<MultiSelectKeyValueParams> = ({ allItems, selectedKeys, onSelectionChange, label, inline, className = '' }): ReactElement => {
+export const MultiSelectKeyValue = ({ allItems, selectedKeys, onSelectionChange, label, inline, className = '' }: MultiSelectKeyValueParams) => {
     const [queryString, setQueryString] = useState('');
     const allItemsArray = Object.entries(allItems).map(([key, value]) => ({ key, value }));
     const selectedItems = selectedKeys.map((key) => ({ key, value: allItems[key] ?? '' }));

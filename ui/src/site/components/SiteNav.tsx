@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Classes, Popover } from '@blueprintjs/core';
 
@@ -6,7 +5,9 @@ import { ComponentMetadata, ComponentTypes } from '../../contracts/site';
 
 import './SiteNav.scss';
 
-export const SiteNav: FC<{ siteComponents: ComponentMetadata[] }> = ({ siteComponents }): ReactElement => {
+type SiteNavProps = { siteComponents: ComponentMetadata[] }
+
+export const SiteNav = ({ siteComponents }: SiteNavProps) => {
     if (siteComponents.length === 1) {
         return <></>;
     }
@@ -20,7 +21,9 @@ export const SiteNav: FC<{ siteComponents: ComponentMetadata[] }> = ({ siteCompo
     );
 };
 
-const ComponentNavItem: FC<{ component: ComponentMetadata }> = ({ component }) => {
+type ComponentNavItemProps = { component: ComponentMetadata }
+
+const ComponentNavItem = ({ component }: ComponentNavItemProps) => {
     if (component.type !== ComponentTypes.componentgroup) {
         return (
             <NavLink to={component.uiPath}>

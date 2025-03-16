@@ -1,7 +1,6 @@
-import { ReactElement } from 'react';
-import { FC } from 'react';
+type ErrorFallbackProps = { error: unknown }
 
-export const ErrorFallback: FC<{ error: unknown }> = ({ error }): ReactElement => {
+export const ErrorFallback = ({ error }: ErrorFallbackProps) => {
     const { message, stack } = error instanceof Error ? error : { message: 'Unknown', stack: ''};
     return (
         <div role="alert">

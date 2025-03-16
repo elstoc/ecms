@@ -1,5 +1,3 @@
-import { FC, ReactElement } from 'react';
-
 import { SelectKeyValue } from './SelectKeyValue';
 
 type NullableSelectKeyValueParams = {
@@ -14,7 +12,7 @@ type NullableSelectKeyValueParams = {
     filterable?: boolean;
 };
 
-export const NullableSelectKeyValue: FC<NullableSelectKeyValueParams> = (params): ReactElement => {
+export const NullableSelectKeyValue = (params: NullableSelectKeyValueParams) => {
     const allItems = { ...params.allItems };
     const { selectedKey, label, small, className, inline, nullValueRepr, filterable } = params;
     allItems[''] = nullValueRepr || ' — ';

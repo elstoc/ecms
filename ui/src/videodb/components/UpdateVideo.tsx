@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { VideoWithId } from '../../contracts/videodb';
@@ -7,7 +7,9 @@ import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 import { EditVideoForm } from './EditVideoForm';
 
-export const UpdateVideo: FC<{ id: number }> = ({ id }): ReactElement => {
+type UpdateVideoProps = { id: number }
+
+export const UpdateVideo = ({ id }: UpdateVideoProps) => {
     const navigate = useNavigate();
     const { videoDbState: { apiPath } } = useContext(VideoDbStateContext);
 

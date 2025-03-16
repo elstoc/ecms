@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { FormGroup, Switch as BlueprintSwitch } from '@blueprintjs/core';
 
 import './Switch.scss';
@@ -11,7 +10,7 @@ type SwitchParams = {
     className?: string;
 }
 
-export const Switch: FC<SwitchParams> = ({ value, onValueChange, label, inline, className = '' }): ReactElement => {
+export const Switch = ({ value, onValueChange, label, inline, className = '' }: SwitchParams) => {
     return (
         <FormGroup label={label} inline={inline} className={`${className} switch-component`}>
             <BlueprintSwitch

@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { ComponentMetadata, ComponentTypes } from '../../contracts/site';
@@ -7,7 +7,7 @@ import { useSiteComponents } from '../hooks/useSiteQueries';
 import { SiteComponent } from './SiteComponent';
 import { NotFoundPage } from '../../shared/components/NotFoundPage';
 
-const listComponentRoutes = (components: ComponentMetadata[]): ReactElement[] => {
+const listComponentRoutes = (components: ComponentMetadata[]) => {
     const routes: ReactElement[] = [];
     components.forEach((metadata) => {
         if (metadata?.type === ComponentTypes.componentgroup) {
@@ -25,7 +25,7 @@ const listComponentRoutes = (components: ComponentMetadata[]): ReactElement[] =>
     return routes;
 };
 
-export const SiteRoutes: FC = (): ReactElement => {
+export const SiteRoutes = () => {
     const siteComponents = useSiteComponents();
 
     return (

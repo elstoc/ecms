@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { FormGroup, MenuItem } from '@blueprintjs/core';
 import { ItemPredicate, ItemRenderer, MultiSelect } from '@blueprintjs/select';
 
@@ -19,7 +19,7 @@ type MultiTagInputParams = {
     allowCreation?: boolean;
 };
 
-export const MultiTagInput: FC<MultiTagInputParams> = ({ selectableTags, tags, onSelectionChange, label, inline, className = '', allowCreation = true }): ReactElement => {
+export const MultiTagInput = ({ selectableTags, tags, onSelectionChange, label, inline, className = '', allowCreation = true }: MultiTagInputParams) => {
     const [queryString, setQueryString] = useState('');
     const allTags = Array.from(new Set([...selectableTags, ...tags]))
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));

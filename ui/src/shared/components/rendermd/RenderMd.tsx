@@ -1,4 +1,4 @@
-import { FC, ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { remarkDefinitionList, defListHastHandlers } from 'remark-definition-list';
 import remarkGfm from 'remark-gfm';
@@ -15,7 +15,7 @@ export type RenderMdProps = {
     renderLink: (href: string, children: ReactNode & ReactNode[]) => ReactElement;
 };
 
-export const RenderMd: FC<RenderMdProps> = ({ pageTitle, markdown, renderLink }): ReactElement => {
+export const RenderMd = ({ pageTitle, markdown, renderLink }: RenderMdProps) => {
     return (
         <div className='rendered-md'>
             {pageTitle && <h1 className='title'>{pageTitle}</h1>}

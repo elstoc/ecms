@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { Icon } from '../icon';
 
 import './Flag.scss';
@@ -10,7 +9,7 @@ type FlagParams = {
     color?: string;
 }
 
-export const Flag: FC<FlagParams> = ({ value, onValueChange, className = '', color }): ReactElement => {
+export const Flag = ({ value, onValueChange, className = '', color }: FlagParams) => {
     let calculatedColor = color || 'firebrick';
     if (value === false) {
         calculatedColor = 'lightgrey';

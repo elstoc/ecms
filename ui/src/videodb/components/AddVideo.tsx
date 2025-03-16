@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { usePostVideo } from '../hooks/useVideoDbQueries';
@@ -17,7 +17,7 @@ const initialVideo = {
     other_media_location: null, media_notes: null,
 };
 
-export const AddVideo: FC = (): ReactElement => {
+export const AddVideo = () => {
     const navigate = useNavigate();
     const { videoDbState: { apiPath } } = useContext(VideoDbStateContext);
 

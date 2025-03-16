@@ -1,4 +1,4 @@
-import { FC, ReactElement, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
 
 import { VideoWithId } from '../../contracts/videodb';
@@ -17,7 +17,7 @@ type EditVideoFormProps = {
     onDelete?: (id: number) => Promise<void>;
 }
 
-export const EditVideoForm: FC<EditVideoFormProps> = ({ initialVideoState, onSave, onDelete }): ReactElement => {
+export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideoFormProps) => {
     const [video, videoReducer] = useEditVideoReducer(initialVideoState);
     const [collapseIsOpen, setCollapseIsOpen] = useState(false);
 

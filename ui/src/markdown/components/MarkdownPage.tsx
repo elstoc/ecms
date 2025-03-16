@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useGetMarkdownPage } from '../hooks/useMarkdownQueries';
@@ -8,7 +8,9 @@ import { MarkdownViewPage } from './MarkdownViewPage';
 import { MarkdownEditPage } from './MarkdownEditPage';
 import { MarkdownAddPage } from './MarkdownAddPage';
 
-export const MarkdownPage: FC<{ apiPath: string }> = ({ apiPath }): ReactElement => {
+type MarkdownAddPageProps = { apiPath: string }
+
+export const MarkdownPage = ({ apiPath }: MarkdownAddPageProps) => {
     const { markdownReducer } = useContext(MarkdownStateContext);
     const [ searchParams ] = useSearchParams();
     const mode = searchParams.get('mode');

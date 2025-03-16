@@ -1,4 +1,3 @@
-import { FC, ReactElement } from 'react';
 import { FormGroup, NumericInput } from '@blueprintjs/core';
 
 import './NullableIntInput.scss';
@@ -13,7 +12,7 @@ type NullableIntInputParams = {
     className?: string;
 };
 
-export const NullableIntInput: FC<NullableIntInputParams> = ({ value, onValueChange, label, placeholder, inline, small, className = '' }): ReactElement => {
+export const NullableIntInput = ({ value, onValueChange, label, placeholder, inline, small, className = '' }: NullableIntInputParams) => {
     return (
         <FormGroup label={label} inline={inline} className={`nullable-int-input ${className}`}>
             <NumericInput
