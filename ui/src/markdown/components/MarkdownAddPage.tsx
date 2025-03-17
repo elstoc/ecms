@@ -11,11 +11,27 @@ import { StringInput } from '../../shared/components/forms';
 import './MarkdownAddPage.scss';
 
 export const MarkdownAddPage = () => {
-    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+    const mode = searchParams.get('mode');
+
+    return (
+        <Dialog
+            title='Add new child page'
+            isOpen={mode === 'add'}
+            onClose={() => setSearchParams()}
+            canEscapeKeyClose={false}
+        >
+            <DialogBody>
+                {mode === 'add' && <MarkdownAddPageContent />}
+            </DialogBody>
+        </Dialog>
+    );
+};
+
+const MarkdownAddPageContent = () => {
+    const navigate = useNavigate();
     const { markdownState: { pageApiPath } } = useContext(MarkdownStateContext);
     const { mutate } = useCreateMarkdownPage('page created');
-    const mode = searchParams.get('mode');
 
     const [errorText, setErrorText] = useState('');
     const [newPagePath, setNewPagePath] = useState('');
@@ -39,30 +55,21 @@ export const MarkdownAddPage = () => {
     };
 
     return (
-        <Dialog
-            title='Add new child page'
-            isOpen={mode === 'add'}
-            onClose={() => setSearchParams()}
-            canEscapeKeyClose={false}
-        >
-            <DialogBody>
-                <div className='markdown-add-page'>
-                    <Card className='add-page-form'>
-                        <StringInput
-                            label='Path'
-                            value={newPagePath}
-                            onValueChange={(path) => setNewPagePath(path.replace(/[^a-z0-9\-_]/gi, '').toLowerCase())}
-                            onPressEnter={createPage}
-                            autoFocus={true}
-                            inline={true}
-                        />
-                        <Button onClick={createPage}>Create Page</Button>
-                    </Card>
-                    <div className='error'>
-                        {errorText}
-                    </div>
-                </div>
-            </DialogBody>
-        </Dialog>
+        <div className='markdown-add-page'>
+            <Card className='add-page-form'>
+                <StringInput
+                    label='Path'
+                    value={newPagePath}
+                    onValueChange={(path) => setNewPagePath(path.replace(/[^a-z0-9\-_]/gi, '').toLowerCase())}
+                    onPressEnter={createPage}
+                    autoFocus={true}
+                    inline={true}
+                />
+                <Button onClick={createPage}>Create Page</Button>
+            </Card>
+            <div className='error'>
+                {errorText}
+            </div>
+        </div>
     );
-};
+}
