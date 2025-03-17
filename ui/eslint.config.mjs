@@ -10,6 +10,7 @@ export default [
     pluginJs.configs.recommended,
     ...tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
+    pluginReact.configs.flat['jsx-runtime'],
     {
         rules: {
             'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx', '.tsx', '.ts'] }],
@@ -18,7 +19,6 @@ export default [
             'eol-last': 2,
             'quotes': [2, 'single'],
             '@typescript-eslint/no-non-null-assertion': 'off',
-            'react/react-in-jsx-scope': 'off'
         }
     },
     {
