@@ -22,6 +22,7 @@ export const RenderMd = ({ pageTitle, markdown, renderLink }: RenderMdProps) => 
             <ReactMarkdown
                 components={{
                     a(props) {
+                        // eslint-disable-next-line react/prop-types
                         const { href = '', children } = props;
                         return renderLink(href, children);
                     }

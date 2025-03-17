@@ -72,4 +72,4 @@ const MarkdownAddPageContent = () => {
             </div>
         </div>
     );
-}
+};

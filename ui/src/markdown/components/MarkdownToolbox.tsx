@@ -38,7 +38,7 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
             try {
                 const [yaml] = splitFrontMatter(editedMarkdown);
                 YAML.parse(yaml);
-            } catch (error: unknown) {
+            } catch {
                 throw new Error('Unable to parse YAML front matter');
             }
             saveMutate( editedMarkdown, { onSuccess: () => setSearchParams() });

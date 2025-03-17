@@ -13,24 +13,24 @@ export const MarkdownNav = () => {
 
     const navContent = (
         <span className='markdown-nav'>
-            {markdownTree?.children && <MarkdownNavRecurse rootUiPath={rootUiPath} children={markdownTree.children} />}
+            {markdownTree?.children && <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={markdownTree.children} />}
         </span>
     );
 
     return navContent;
 };
 
-type MarkdownNavRecurseProps = { children: MarkdownTree[], rootUiPath: string }
-const MarkdownNavRecurse = ({ children, rootUiPath }: MarkdownNavRecurseProps) => {
+type MarkdownNavRecurseProps = { treeChildren: MarkdownTree[], rootUiPath: string }
+const MarkdownNavRecurse = ({ treeChildren, rootUiPath }: MarkdownNavRecurseProps) => {
     return (
         <ol>
-            {children.map((child) => {
+            {treeChildren.map((child) => {
                 const linkPrefix = rootUiPath ? `${rootUiPath}/` : '';
                 const linkName = `/${linkPrefix}${child.uiPath}`.replace(/\/$/, '');
                 return (
                     <Fragment key = {child.apiPath}>
                         <li><NavLink to={linkName} end>{child?.title}</NavLink></li>
-                        {child.children && <MarkdownNavRecurse rootUiPath={rootUiPath} children={child.children} />}
+                        {child.children && <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={child.children} />}
                     </Fragment>
                 );
             })}

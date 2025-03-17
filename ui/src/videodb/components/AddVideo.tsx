@@ -24,6 +24,7 @@ export const AddVideo = () => {
     const { mutate } = usePostVideo(apiPath, 'saved');
 
     const addVideo = async (video: VideoWithId) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, ...videoWithoutId } = video;
         mutate(
             videoWithoutId,

@@ -104,7 +104,6 @@ export const useVideoDbFilterState = () => {
                 sortPriorityFirst: (toIntOrUndefined(searchParams.get('sortPriorityFirst')) as null | 0 | 1) ?? null
             }
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // update search params to match state when instructed
@@ -114,7 +113,6 @@ export const useVideoDbFilterState = () => {
             videoDbReducer({ action: 'resetLimit' });
             setSearchParams((params) => getSearchParamsFromState(params, state));
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [syncState]);
 
     const clearAllFilters = useCallback(() => {

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef, ReactElement, useContext, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Card, Collapse, Tag } from '@blueprintjs/core';
