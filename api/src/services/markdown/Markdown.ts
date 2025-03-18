@@ -243,7 +243,7 @@ export class Markdown {
             return undefined;
         }
 
-        this.isRoot && this.logger.debug(`getting markdown tree at ${this.apiPath}`);
+        if(this.isRoot) this.logger.debug(`getting markdown tree at ${this.apiPath}`);
 
         if (this.singlePage) {
             return {apiPath: this.apiPath, uiPath: this.uiPath, children: [metadata] };

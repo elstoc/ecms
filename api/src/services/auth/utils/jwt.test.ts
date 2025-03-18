@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-
 import * as jwt from './jwt';
 
 describe('That jwt', () => {

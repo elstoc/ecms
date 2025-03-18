@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-
 import { hashPassword, verifyPasswordWithHash } from './hash';
 
 describe('That hash', () => {

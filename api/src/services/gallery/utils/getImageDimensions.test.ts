@@ -1,4 +1,3 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
 import * as sizeOf from 'image-size';
 import { getImageDimensions } from './getImageDimensions';
 

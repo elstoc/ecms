@@ -28,7 +28,7 @@ export const createErrorHandlerMiddleware = (logger: Logger): ErrorHandler => (e
     if (err.validationErrors) {
         logger.info(JSON.stringify(err.validationErrors));
         res.status(status).json({
-          errors: err.validationErrors,
+            errors: err.validationErrors,
         });
     } else {
         res.sendStatus(status);
