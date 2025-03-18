@@ -3,14 +3,14 @@
 import fs from 'fs';
 
 export default {
-    existsSync: fs.existsSync,
-    statSync: fs.statSync,
-    mkdirSync: fs.mkdirSync,
-    chownSync: fs.chownSync,
-    promises: {
-        readFile: fs.promises.readFile,
-        writeFile: fs.promises.writeFile,
-        readdir: fs.promises.readdir,
-        rm: fs.promises.rm,
-    },
+  existsSync: fs.existsSync,
+  statSync: fs.statSync,
+  mkdirSync: fs.mkdirSync,
+  chownSync: fs.chownSync,
+  promises: {
+    readFile: fs.promises.readFile,
+    writeFile: fs.promises.writeFile,
+    readdir: fs.promises.readdir,
+    rm: fs.promises.rm,
+  },
 };

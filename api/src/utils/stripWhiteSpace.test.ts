@@ -1,12 +1,12 @@
 import { stripWhiteSpace } from '.';
 
 it('removes all whitespace from a string', () => {
-    const stringToStrip = `This is a 
+  const stringToStrip = `This is a 
                            string       that    needs
                            whitespace stripping`;
-    const expectedStrippedString = 'This is a string that needs whitespace stripping';
+  const expectedStrippedString = 'This is a string that needs whitespace stripping';
 
-    const strippedString = stripWhiteSpace(stringToStrip);
+  const strippedString = stripWhiteSpace(stringToStrip);
 
-    expect(strippedString).toBe(expectedStrippedString);
+  expect(strippedString).toBe(expectedStrippedString);
 });

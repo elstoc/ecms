@@ -7,15 +7,15 @@ export class NotPermittedError extends Error {}
 export class OASParsingError extends Error {}
 
 export type ValidationErrorDetail = {
-    property: string;
-    error: string;
+  property: string;
+  error: string;
 };
 
 export class EndpointValidationError extends Error {
-    constructor(
-        message: string,
-        public validationErrors: ValidationErrorDetail[],
-    ) {
-        super(message);
-    }
+  constructor(
+    message: string,
+    public validationErrors: ValidationErrorDetail[],
+  ) {
+    super(message);
+  }
 }
