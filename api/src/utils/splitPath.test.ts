@@ -10,10 +10,10 @@ describe('splitPath', () => {
     });
 
     it('returns an array of non-empty elements for long path starting and ending in a slash', () => {
-        expect(splitPath('/path/to/test/dir/')).toEqual(['path','to','test','dir']);
+        expect(splitPath('/path/to/test/dir/')).toEqual(['path', 'to', 'test', 'dir']);
     });
 
     it('returns an array of non-empty elements for long path not starting or ending in a slash', () => {
-        expect(splitPath('path/to/test/dir')).toEqual(['path','to','test','dir']);
+        expect(splitPath('path/to/test/dir')).toEqual(['path', 'to', 'test', 'dir']);
     });
 });

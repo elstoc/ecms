@@ -10,12 +10,12 @@ const mockStorage = {
 const mockLogger = {
     debug: jest.fn(),
     info: jest.fn(),
-    error: jest.fn()
+    error: jest.fn(),
 } as any;
 
 jest.mock('./GalleryImage');
 
-const config = { } as any;
+const config = {} as any;
 const imageFiles = [
     'image12.jpg',
     'image01.jpg',
@@ -29,7 +29,7 @@ const imageFiles = [
     'image09.jpg',
     'image10.jpg',
     'image11.jpg',
-    'notimage.txt'
+    'notimage.txt',
 ];
 const filteredSortedImageFiles = [
     'image12.jpg',
@@ -50,7 +50,7 @@ const GalleryImageMock = GalleryImage as jest.Mock;
 
 describe('Gallery', () => {
     let gallery: Gallery;
-    
+
     describe('getContents', () => {
         beforeEach(() => {
             gallery = new Gallery('gallery', config, mockStorage, mockLogger);
@@ -58,7 +58,7 @@ describe('Gallery', () => {
                 return imageFiles.filter(fileMatcher as any);
             });
         });
-    
+
         it('only creates GalleryImage instances for files it has not seen before', async () => {
             await gallery.getContents(3);
             await gallery.getContents(3);
@@ -68,29 +68,29 @@ describe('Gallery', () => {
             await gallery.getContents(9);
             expect(GalleryImageMock).toHaveBeenCalledTimes(9);
         });
-    
+
         it('returns metadata for each file in reverse order (within defined limit), plus total count', async () => {
             GalleryImageMock.mockImplementation((_, inputFilePath) => ({
-                getImageMetadata: () => ({ filePath: inputFilePath })
+                getImageMetadata: () => ({ filePath: inputFilePath }),
             }));
-    
+
             const expectedReturnData = {
                 allImageFiles: filteredSortedImageFiles,
                 images: [
                     { filePath: 'gallery/image12.jpg' },
                     { filePath: 'gallery/image11.jpg' },
                     { filePath: 'gallery/image10.jpg' },
-                ]
+                ],
             };
             const returnData = await gallery.getContents(3);
             expect(returnData).toStrictEqual(expectedReturnData);
         });
-    
+
         it('returns metadata for each file in reverse order (with no limit), plus total count', async () => {
             GalleryImageMock.mockImplementation((_, inputFilePath) => ({
-                getImageMetadata: () => ({ filePath: inputFilePath })
+                getImageMetadata: () => ({ filePath: inputFilePath }),
             }));
-    
+
             const expectedReturnData = {
                 allImageFiles: filteredSortedImageFiles,
                 images: [
@@ -106,40 +106,39 @@ describe('Gallery', () => {
                     { filePath: 'gallery/image03.jpg' },
                     { filePath: 'gallery/image02.jpg' },
                     { filePath: 'gallery/image01.jpg' },
-                ]
+                ],
             };
             const returnData = await gallery.getContents();
             expect(returnData).toStrictEqual(expectedReturnData);
         });
-    
     });
-    
+
     describe('sendImageFile', () => {
         beforeEach(() => {
             gallery = new Gallery('gallery', config, mockStorage, mockLogger);
         });
-    
+
         it('creates a new image object and calls image.getFile the first time it is called', async () => {
             const getFile = jest.fn();
             GalleryImageMock.mockImplementation(() => ({
-                getFile
+                getFile,
             }));
-    
+
             await gallery.getImageFile('gallery/image1.jpg', ImageSize.thumb, '1234');
-    
+
             expect(GalleryImageMock).toHaveBeenCalledTimes(1);
             expect(getFile).toHaveBeenCalledWith('thumb', '1234');
         });
-    
+
         it('calls image.sendFile on the existing object the second time it is called', async () => {
             const getFile = jest.fn();
             GalleryImageMock.mockImplementation(() => ({
-                getFile
+                getFile,
             }));
-    
+
             await gallery.getImageFile('gallery/image1.jpg', ImageSize.thumb, '1234');
             await gallery.getImageFile('gallery/image1.jpg', ImageSize.fhd, '1234');
-    
+
             expect(GalleryImageMock).toHaveBeenCalledTimes(1);
             expect(getFile).toHaveBeenCalledTimes(2);
             const path1Parms = getFile.mock.calls[0];

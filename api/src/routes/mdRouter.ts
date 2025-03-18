@@ -4,7 +4,12 @@ import { Site } from '../services';
 import { RequestWithUser } from '../middleware';
 
 export const createMarkdownRouter = (site: Site): Router => {
-    const markdownHandler = async (req: RequestWithUser, res: Response, next: NextFunction, fn: string): Promise<void> => {
+    const markdownHandler = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+        fn: string,
+    ): Promise<void> => {
         try {
             const path = (req.query.path ?? req.body.path) as string;
             const markdown = await site.getMarkdown(path);

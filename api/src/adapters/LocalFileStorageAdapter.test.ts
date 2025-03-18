@@ -16,8 +16,8 @@ jest.mock('../../src/adapters/fs', () => ({
         readFile: jest.fn(),
         writeFile: jest.fn(),
         readdir: jest.fn(),
-        rm: jest.fn()
-    }
+        rm: jest.fn(),
+    },
 }));
 
 const existsSyncMock = fs.existsSync as jest.Mock;
@@ -45,18 +45,22 @@ describe('LocalFileStorageAdapter', () => {
         storage = new LocalFileStorageAdapter(dataDir);
         jest.resetAllMocks();
         mockSQLiteDatabaseAdapter.mockClear();
-        mockSQLiteDatabaseAdapter.mockImplementation(() => ({
-            initialise: mockInit,
-            exec: mockExec
-        } as any));
+        mockSQLiteDatabaseAdapter.mockImplementation(
+            () =>
+                ({
+                    initialise: mockInit,
+                    exec: mockExec,
+                }) as any,
+        );
     });
 
     describe('constructor', () => {
         it('throws an error if config.dataDir does not exist', () => {
             existsSyncMock.mockReturnValue(false);
 
-            expect(() => new LocalFileStorageAdapter(dataDir))
-                .toThrow(`${dataDir} is not an extant directory`);
+            expect(() => new LocalFileStorageAdapter(dataDir)).toThrow(
+                `${dataDir} is not an extant directory`,
+            );
             expect(existsSyncMock).toHaveBeenCalledWith(dataDir);
         });
 
@@ -64,8 +68,9 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => false });
 
-            expect(() => new LocalFileStorageAdapter(dataDir))
-                .toThrow(`${dataDir} is not an extant directory`);
+            expect(() => new LocalFileStorageAdapter(dataDir)).toThrow(
+                `${dataDir} is not an extant directory`,
+            );
             expect(statsyncMock).toHaveBeenCalledWith(dataDir);
         });
 
@@ -150,7 +155,7 @@ describe('LocalFileStorageAdapter', () => {
 
         it('returns an empty array if directory does not exist', async () => {
             existsSyncMock.mockReturnValue(false);
-            
+
             const fileList = await storage.listContentChildren('some/path', fileMatcher);
 
             expect(existsSyncMock).toHaveBeenCalledWith(`${dataDir}/content/some/path`);
@@ -165,7 +170,7 @@ describe('LocalFileStorageAdapter', () => {
 
             expect(statsyncMock).toHaveBeenCalledWith(`${dataDir}/content/some/path`);
             expect(promiseReaddirMock).toHaveBeenCalledWith(`${dataDir}/content/some/path`);
-            expect(fileList).toEqual(['match','matched']);
+            expect(fileList).toEqual(['match', 'matched']);
         });
     });
 
@@ -223,7 +228,7 @@ describe('LocalFileStorageAdapter', () => {
             statsyncMock.mockReturnValueOnce({ isFile: () => true });
 
             await storage.getContentFile('path/to/file');
-            
+
             expect(promiseReadFileMock).toHaveBeenCalledWith(`${dataDir}/content/path/to/file`);
         });
 
@@ -247,7 +252,7 @@ describe('LocalFileStorageAdapter', () => {
             statsyncMock.mockReturnValueOnce({ isFile: () => true });
 
             await storage.getAdminFile('path/to/file');
-            
+
             expect(promiseReadFileMock).toHaveBeenCalledWith(`${dataDir}/admin/path/to/file`);
         });
 
@@ -271,7 +276,7 @@ describe('LocalFileStorageAdapter', () => {
             statsyncMock.mockReturnValueOnce({ isFile: () => true });
 
             await storage.getGeneratedFile('path/to/file', 'tag');
-            
+
             expect(promiseReadFileMock).toHaveBeenCalledWith(`${dataDir}/cache/path/to/tag/file`);
         });
 
@@ -291,7 +296,9 @@ describe('LocalFileStorageAdapter', () => {
 
     describe('storeAdminFile', () => {
         it('creates directories if they do not exist', async () => {
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/admin/`));
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/admin/`),
+            );
 
             await storage.storeAdminFile('full/path/to/file', Buffer.from('file-contents'));
 
@@ -310,15 +317,22 @@ describe('LocalFileStorageAdapter', () => {
         it('attempts to store the file with the correct parameters', async () => {
             existsSyncMock.mockReturnValue(true);
             await storage.storeAdminFile('dir/file', Buffer.from('file-contents'));
-            expect(promiseWriteFileMock).toHaveBeenCalledWith(`${dataDir}/admin/dir/file`, Buffer.from('file-contents'));
+            expect(promiseWriteFileMock).toHaveBeenCalledWith(
+                `${dataDir}/admin/dir/file`,
+                Buffer.from('file-contents'),
+            );
         });
 
         it('attempts to chown files/folders if uid and gid are set', async () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/admin/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/admin/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
 
             await storage.storeAdminFile('path/to/file', Buffer.from('file-contents'));
 
@@ -332,11 +346,19 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/admin/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/admin/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
-            await expect(storage.storeAdminFile('path/to/file', Buffer.from('file-contents'))).resolves.toBeUndefined();
+            await expect(
+                storage.storeAdminFile('path/to/file', Buffer.from('file-contents')),
+            ).resolves.toBeUndefined();
 
             expect(chownSyncMock).toHaveBeenCalledTimes(3);
         });
@@ -345,9 +367,15 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, undefined, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/admin/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/admin/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
             await storage.storeAdminFile('path/to/file', Buffer.from('file-contents'));
 
@@ -358,9 +386,15 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, undefined);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/admin/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/admin/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
             await storage.storeAdminFile('path/to/file', Buffer.from('file-contents'));
 
@@ -370,7 +404,9 @@ describe('LocalFileStorageAdapter', () => {
 
     describe('storeContentFile', () => {
         it('creates directories if they do not exist', async () => {
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/content/`));
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/content/`),
+            );
 
             await storage.storeContentFile('full/path/to/file', Buffer.from('file-contents'));
 
@@ -389,33 +425,52 @@ describe('LocalFileStorageAdapter', () => {
         it('attempts to store the file with the correct parameters', async () => {
             existsSyncMock.mockReturnValue(true);
             await storage.storeContentFile('dir/file', Buffer.from('file-contents'));
-            expect(promiseWriteFileMock).toHaveBeenCalledWith(`${dataDir}/content/dir/file`, Buffer.from('file-contents'));
+            expect(promiseWriteFileMock).toHaveBeenCalledWith(
+                `${dataDir}/content/dir/file`,
+                Buffer.from('file-contents'),
+            );
         });
 
         it('attempts to chown files/folders if uid and gid are set', async () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/content/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/content/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
 
             await storage.storeContentFile('path/to/file', Buffer.from('file-contents'));
 
             expect(chownSyncMock).toHaveBeenCalledTimes(3);
             expect(chownSyncMock).toHaveBeenCalledWith(`${dataDir}/content/path`, 1000, 1000);
             expect(chownSyncMock).toHaveBeenCalledWith(`${dataDir}/content/path/to`, 1000, 1000);
-            expect(chownSyncMock).toHaveBeenCalledWith(`${dataDir}/content/path/to/file`, 1000, 1000);
+            expect(chownSyncMock).toHaveBeenCalledWith(
+                `${dataDir}/content/path/to/file`,
+                1000,
+                1000,
+            );
         });
 
         it('handles any errors when chowning files/folders', async () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/content/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/content/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
-            await expect(storage.storeContentFile('path/to/file', Buffer.from('file-contents'))).resolves.toBeUndefined();
+            await expect(
+                storage.storeContentFile('path/to/file', Buffer.from('file-contents')),
+            ).resolves.toBeUndefined();
 
             expect(chownSyncMock).toHaveBeenCalledTimes(3);
         });
@@ -424,9 +479,15 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, undefined, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/content/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/content/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
             await storage.storeContentFile('path/to/file', Buffer.from('file-contents'));
 
@@ -437,9 +498,15 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, undefined);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/content/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/content/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
             await storage.storeContentFile('path/to/file', Buffer.from('file-contents'));
 
@@ -449,9 +516,15 @@ describe('LocalFileStorageAdapter', () => {
 
     describe('storeGeneratedFile', () => {
         it('creates directories if they do not exist', async () => {
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/cache/`));
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/cache/`),
+            );
 
-            await storage.storeGeneratedFile('full/path/to/file', 'tag', Buffer.from('file-contents'));
+            await storage.storeGeneratedFile(
+                'full/path/to/file',
+                'tag',
+                Buffer.from('file-contents'),
+            );
 
             expect(mkdirSyncMock).toHaveBeenCalledTimes(4);
             expect(mkdirSyncMock).toHaveBeenCalledWith(`${dataDir}/cache/full`);
@@ -469,15 +542,22 @@ describe('LocalFileStorageAdapter', () => {
         it('attempts to store the file with the correct parameters', async () => {
             existsSyncMock.mockReturnValue(true);
             await storage.storeGeneratedFile('dir/file', 'tag', Buffer.from('file-contents'));
-            expect(promiseWriteFileMock).toHaveBeenCalledWith(`${dataDir}/cache/dir/tag/file`, Buffer.from('file-contents'));
+            expect(promiseWriteFileMock).toHaveBeenCalledWith(
+                `${dataDir}/cache/dir/tag/file`,
+                Buffer.from('file-contents'),
+            );
         });
 
         it('attempts to chown files/folders if uid and gid are set', async () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/cache/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/cache/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
 
             await storage.storeGeneratedFile('path/to/file', 'tag', Buffer.from('file-contents'));
 
@@ -485,18 +565,30 @@ describe('LocalFileStorageAdapter', () => {
             expect(chownSyncMock).toHaveBeenCalledWith(`${dataDir}/cache/path`, 1000, 1000);
             expect(chownSyncMock).toHaveBeenCalledWith(`${dataDir}/cache/path/to`, 1000, 1000);
             expect(chownSyncMock).toHaveBeenCalledWith(`${dataDir}/cache/path/to/tag`, 1000, 1000);
-            expect(chownSyncMock).toHaveBeenCalledWith(`${dataDir}/cache/path/to/tag/file`, 1000, 1000);
+            expect(chownSyncMock).toHaveBeenCalledWith(
+                `${dataDir}/cache/path/to/tag/file`,
+                1000,
+                1000,
+            );
         });
 
         it('handles any errors when chowning files/folders', async () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/cache/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/cache/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
-            await expect(storage.storeGeneratedFile('path/to/file', 'tag', Buffer.from('file-contents'))).resolves.toBeUndefined();
+            await expect(
+                storage.storeGeneratedFile('path/to/file', 'tag', Buffer.from('file-contents')),
+            ).resolves.toBeUndefined();
 
             expect(chownSyncMock).toHaveBeenCalledTimes(4);
         });
@@ -505,9 +597,15 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, undefined, 1000);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/cache/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/cache/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
             await storage.storeGeneratedFile('path/to/file', 'tag', Buffer.from('file-contents'));
 
@@ -518,9 +616,15 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockReturnValue({ isDirectory: () => true });
             storage = new LocalFileStorageAdapter(dataDir, 1000, undefined);
-            existsSyncMock.mockImplementation((path: string) => !path.startsWith(`${dataDir}/cache/`));
-            statsyncMock.mockImplementation((path: string) => ({ isDirectory: () => !path.endsWith('file') }));
-            chownSyncMock.mockImplementation(() => { throw new Error('cannot chown'); });
+            existsSyncMock.mockImplementation(
+                (path: string) => !path.startsWith(`${dataDir}/cache/`),
+            );
+            statsyncMock.mockImplementation((path: string) => ({
+                isDirectory: () => !path.endsWith('file'),
+            }));
+            chownSyncMock.mockImplementation(() => {
+                throw new Error('cannot chown');
+            });
 
             await storage.storeGeneratedFile('path/to/file', 'tag', Buffer.from('file-contents'));
 
@@ -581,9 +685,9 @@ describe('LocalFileStorageAdapter', () => {
     describe('generatedFileIsOlder', () => {
         it('returns true if the generated file is older', () => {
             existsSyncMock.mockReturnValue(true);
-            statsyncMock.mockImplementation((fileName) => (
-                { mtimeMs: fileName.includes('cache') ? 100 : 200 }
-            ));
+            statsyncMock.mockImplementation((fileName) => ({
+                mtimeMs: fileName.includes('cache') ? 100 : 200,
+            }));
 
             const isOlder = storage.generatedFileIsOlder('path/to/file', 'tag');
             expect(statsyncMock).toHaveBeenCalledWith(`${dataDir}/cache/path/to/tag/file`);
@@ -593,9 +697,7 @@ describe('LocalFileStorageAdapter', () => {
 
         it('returns false if the generated file is the same age', () => {
             existsSyncMock.mockReturnValue(true);
-            statsyncMock.mockImplementation(() => (
-                { mtimeMs: 100 }
-            ));
+            statsyncMock.mockImplementation(() => ({ mtimeMs: 100 }));
 
             const isOlder = storage.generatedFileIsOlder('path/to/file', 'tag');
             expect(statsyncMock).toHaveBeenCalledWith(`${dataDir}/cache/path/to/tag/file`);
@@ -605,9 +707,9 @@ describe('LocalFileStorageAdapter', () => {
 
         it('returns true if the generated file is newer', () => {
             existsSyncMock.mockReturnValue(true);
-            statsyncMock.mockImplementation((fileName) => (
-                { mtimeMs: fileName.includes('cache') ? 200 : 100 }
-            ));
+            statsyncMock.mockImplementation((fileName) => ({
+                mtimeMs: fileName.includes('cache') ? 200 : 100,
+            }));
 
             const isOlder = storage.generatedFileIsOlder('path/to/file', 'tag');
             expect(statsyncMock).toHaveBeenCalledWith(`${dataDir}/cache/path/to/tag/file`);
@@ -642,19 +744,22 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockImplementation((path) => !path.endsWith('file'));
             statsyncMock.mockImplementation((path) => ({
                 isFile: () => false,
-                isDirectory: () => !path.endsWith('file')
+                isDirectory: () => !path.endsWith('file'),
             }));
 
             await storage.getContentDb('path/to/file');
 
-            expect(promiseWriteFileMock).toHaveBeenCalledWith(`${dataDir}/content/path/to/file`, Buffer.from(''));
+            expect(promiseWriteFileMock).toHaveBeenCalledWith(
+                `${dataDir}/content/path/to/file`,
+                Buffer.from(''),
+            );
         });
 
         it('does not create the database file with an empty buffer if it does exist', async () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockImplementation((path) => ({
                 isFile: () => path.endsWith('file'),
-                isDirectory: () => !path.endsWith('file')
+                isDirectory: () => !path.endsWith('file'),
             }));
 
             await storage.getContentDb('path/to/file');
@@ -666,12 +771,14 @@ describe('LocalFileStorageAdapter', () => {
             existsSyncMock.mockReturnValue(true);
             statsyncMock.mockImplementation((path) => ({
                 isFile: () => path.endsWith('file'),
-                isDirectory: () => !path.endsWith('file')
+                isDirectory: () => !path.endsWith('file'),
             }));
 
             await storage.getContentDb('path/to/file');
 
-            expect(mockSQLiteDatabaseAdapter).toHaveBeenCalledWith(`${dataDir}/content/path/to/file`);
+            expect(mockSQLiteDatabaseAdapter).toHaveBeenCalledWith(
+                `${dataDir}/content/path/to/file`,
+            );
             expect(mockInit).toHaveBeenCalled();
             expect(mockExec).toHaveBeenCalledWith('PRAGMA foreign_keys = ON');
         });

@@ -6,7 +6,7 @@ const getStringConfig = (key: string): string => {
     return value;
 };
 
-const getOptionalStringConfig = (key: string, defaultValue: string): string=> {
+const getOptionalStringConfig = (key: string, defaultValue: string): string => {
     return process.env[key] ?? defaultValue;
 };
 

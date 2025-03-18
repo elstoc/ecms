@@ -24,11 +24,9 @@ export class Markdown {
         private storage: StorageAdapter,
         private logger: Logger,
         private isRoot = false,
-        private singlePage = false
+        private singlePage = false,
     ) {
-        this.contentPath = this.isRoot
-            ? `${this.apiPath}/index.md`
-            : `${this.apiPath}.md`;
+        this.contentPath = this.isRoot ? `${this.apiPath}/index.md` : `${this.apiPath}.md`;
     }
 
     public async getPage(targetApiPath: string, user?: User): Promise<MarkdownPage> {
@@ -43,13 +41,14 @@ export class Markdown {
                 const [, markdown] = splitFrontMatter(content);
                 content = this.getFrontMatterTemplate(this.apiPath) + (markdown || '');
             }
-            const canDelete = !this.isRoot && this.userIsAdmin(user) && (await this.getChildFiles()).length === 0;
+            const canDelete =
+                !this.isRoot && this.userIsAdmin(user) && (await this.getChildFiles()).length === 0;
             return {
                 content,
                 pageExists: true,
                 canDelete,
                 pathValid: true,
-                canWrite: this.userHasWriteAccess(user)
+                canWrite: this.userHasWriteAccess(user),
             };
         }
 
@@ -64,7 +63,7 @@ export class Markdown {
                     pageExists: false,
                     canDelete: false,
                     pathValid,
-                    canWrite: pathValid
+                    canWrite: pathValid,
                 };
             } else {
                 throw e;
@@ -110,7 +109,11 @@ export class Markdown {
             try {
                 await nextChild.writePage(targetApiPath, fileContent, user);
             } catch (e: unknown) {
-                if (e instanceof NotFoundError && this.userIsAdmin(user) && this.apiPathIsValid(targetApiPath)) {
+                if (
+                    e instanceof NotFoundError &&
+                    this.userIsAdmin(user) &&
+                    this.apiPathIsValid(targetApiPath)
+                ) {
                     await nextChild.createContentFile();
                     await nextChild.writePage(targetApiPath, fileContent, user);
                 } else {
@@ -121,7 +124,10 @@ export class Markdown {
     }
 
     public async createContentFile(): Promise<void> {
-        await this.storage.storeContentFile(this.contentPath, Buffer.from(this.getFrontMatterTemplate(this.apiPath)));
+        await this.storage.storeContentFile(
+            this.contentPath,
+            Buffer.from(this.getFrontMatterTemplate(this.apiPath)),
+        );
     }
 
     private throwIfNoContentFile(): void {
@@ -135,7 +141,9 @@ export class Markdown {
     }
 
     private userHasReadAccess(user?: User): boolean {
-        return !this.config.enableAuthentication || userHasReadAccess(user, this.metadata?.restrict);
+        return (
+            !this.config.enableAuthentication || userHasReadAccess(user, this.metadata?.restrict)
+        );
     }
 
     private throwIfNoWriteAccess(user?: User): void {
@@ -143,7 +151,9 @@ export class Markdown {
     }
 
     private userHasWriteAccess(user?: User): boolean {
-        return !this.config.enableAuthentication || userHasWriteAccess(user, this.metadata?.allowWrite);
+        return (
+            !this.config.enableAuthentication || userHasWriteAccess(user, this.metadata?.allowWrite)
+        );
     }
 
     private userIsAdmin(user?: User): boolean {
@@ -198,7 +208,13 @@ export class Markdown {
 
     private getChild(childApiPath: string): Markdown {
         const childUiPath = path.join(this.uiPath, childApiPath.split('/').slice(-1)[0] || '');
-        this.children[childApiPath] ??= new Markdown(childApiPath, childUiPath, this.config, this.storage, this.logger);
+        this.children[childApiPath] ??= new Markdown(
+            childApiPath,
+            childUiPath,
+            this.config,
+            this.storage,
+            this.logger,
+        );
         return this.children[childApiPath];
     }
 
@@ -219,7 +235,8 @@ export class Markdown {
             uiPath: this.uiPath,
             title: title ?? path.basename(this.apiPath),
             weight: weight ? parseInt(weight) : undefined,
-            restrict, allowWrite
+            restrict,
+            allowWrite,
         };
 
         this.metadataFromSourceFileTime = contentModifiedTime;
@@ -231,7 +248,7 @@ export class Markdown {
         const [yaml] = splitFrontMatter(file);
         return YAML.parse(yaml);
     }
-    
+
     public async getTree(user?: User): Promise<MarkdownTree | undefined> {
         this.throwIfNoContentFile();
         const metadata = await this.getMetadata();
@@ -243,10 +260,10 @@ export class Markdown {
             return undefined;
         }
 
-        if(this.isRoot) this.logger.debug(`getting markdown tree at ${this.apiPath}`);
+        if (this.isRoot) this.logger.debug(`getting markdown tree at ${this.apiPath}`);
 
         if (this.singlePage) {
-            return {apiPath: this.apiPath, uiPath: this.uiPath, children: [metadata] };
+            return { apiPath: this.apiPath, uiPath: this.uiPath, children: [metadata] };
         }
 
         const childObjects = await this.getChildren();
@@ -267,19 +284,16 @@ export class Markdown {
 
     private async getChildren(): Promise<Markdown[]> {
         const childMdFiles = await this.getChildFiles();
-        return childMdFiles
-            .map((childFileName) => {
-                const childApiPath = path.join(this.apiPath, path.basename(childFileName, '.md'));
-                return this.getChild(childApiPath);
-            });
+        return childMdFiles.map((childFileName) => {
+            const childApiPath = path.join(this.apiPath, path.basename(childFileName, '.md'));
+            return this.getChild(childApiPath);
+        });
     }
 
     private async getChildFiles(): Promise<string[]> {
         return this.storage.listContentChildren(
             this.apiPath,
-            (childFile) => (
-                childFile.endsWith('.md') && !(childFile.endsWith('index.md'))
-            )
+            (childFile) => childFile.endsWith('.md') && !childFile.endsWith('index.md'),
         );
     }
 }

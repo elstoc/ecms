@@ -16,25 +16,33 @@ export class ComponentGroup {
         private config: Config,
         private storage: StorageAdapter,
         private logger: Logger,
-        private parentPath: string
-    ) { }
+        private parentPath: string,
+    ) {}
 
     public async list(user?: User): Promise<ComponentMetadata[]> {
         this.logger.debug(`Site.listComponents(${user})`);
-        const componentPromises = (await this.listComponentYamlFiles()).map(async (file) => (
-            this.getComponentMetadata(path.join(this.parentPath, path.basename(file, '.yaml')), user)
-        ));
+        const componentPromises = (await this.listComponentYamlFiles()).map(async (file) =>
+            this.getComponentMetadata(
+                path.join(this.parentPath, path.basename(file, '.yaml')),
+                user,
+            ),
+        );
 
-        const components = (await Promise.all(componentPromises));
+        const components = await Promise.all(componentPromises);
 
         return sortByWeightAndTitle(components as ComponentMetadata[]);
     }
 
     private async listComponentYamlFiles(): Promise<string[]> {
-        return this.storage.listContentChildren(this.parentPath, (file: string) => file.endsWith('.yaml'));
+        return this.storage.listContentChildren(this.parentPath, (file: string) =>
+            file.endsWith('.yaml'),
+        );
     }
 
-    private async getComponentMetadata(apiRootPath: string, user?: User): Promise<ComponentMetadata | undefined> {
+    private async getComponentMetadata(
+        apiRootPath: string,
+        user?: User,
+    ): Promise<ComponentMetadata | undefined> {
         const component = this.getComponent(apiRootPath);
         return component.getMetadata(user);
     }
@@ -50,7 +58,8 @@ export class ComponentGroup {
     }
 
     private getComponentAtPath(apiPath: string): Component {
-        const baseDirOfComponent = apiPath.replace(this.parentPath, '')
+        const baseDirOfComponent = apiPath
+            .replace(this.parentPath, '')
             .replace(/^\//, '')
             .split('/')[0];
         const componentPath = path.join(this.parentPath, baseDirOfComponent);

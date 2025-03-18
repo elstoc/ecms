@@ -11,7 +11,12 @@ const sendTokens = (tokens: Tokens, res: Response): void => {
 };
 
 export const createAuthRouter = (auth: Auth): Router => {
-    const authHandler = async (req: RequestWithUser, res: Response, next: NextFunction, fn: string): Promise<void> => {
+    const authHandler = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+        fn: string,
+    ): Promise<void> => {
         try {
             if (fn === 'login') {
                 const tokens = await auth.getTokensFromPassword(req.body.id, req.body.password);
@@ -37,8 +42,12 @@ export const createAuthRouter = (auth: Auth): Router => {
     const router = Router();
     router.post('/login', async (req, res, next) => authHandler(req, res, next, 'login'));
     router.post('/refresh', async (req, res, next) => authHandler(req, res, next, 'refresh'));
-    router.post('/changepassword', async (req, res, next) => authHandler(req, res, next, 'changePassword'));
+    router.post('/changepassword', async (req, res, next) =>
+        authHandler(req, res, next, 'changePassword'),
+    );
     router.post('/logout', async (req, res, next) => authHandler(req, res, next, 'logout'));
-    router.get('/get-user-info', async (req, res, next) => authHandler(req, res, next, 'getUserInfo'));
+    router.get('/get-user-info', async (req, res, next) =>
+        authHandler(req, res, next, 'getUserInfo'),
+    );
     return router;
 };

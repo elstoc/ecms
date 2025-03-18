@@ -23,19 +23,27 @@ describe('That resizeImage', () => {
         toBuffer = jest.fn().mockReturnThis();
 
         const spy = jest.spyOn(gm, 'default') as jest.Mock;
-        spy.mockImplementation(() => ({
-            resize,
-            strip,
-            quality,
-            borderColor,
-            border,
-            toBuffer,
-        } as any));
-
+        spy.mockImplementation(
+            () =>
+                ({
+                    resize,
+                    strip,
+                    quality,
+                    borderColor,
+                    border,
+                    toBuffer,
+                }) as any,
+        );
     });
 
     it('Calls the appropriate imageMagick functions with the correct parameters (stripExif: true, addBorder: true)', () => {
-        const resizeOptions = { width: 10, height: 20, quality: 30, stripExif: true, addBorder: true };
+        const resizeOptions = {
+            width: 10,
+            height: 20,
+            quality: 30,
+            stripExif: true,
+            addBorder: true,
+        };
         resizeImage(fileBuffer, resizeOptions as any);
 
         expect(gm).toHaveBeenCalledWith(fileBuffer);
@@ -48,7 +56,13 @@ describe('That resizeImage', () => {
     });
 
     it('Calls the appropriate imageMagick functions with the correct parameters (stripExif: false)', () => {
-        const resizeOptions = { width: 10, height: 20, quality: 30, stripExif: false, addBorder: true };
+        const resizeOptions = {
+            width: 10,
+            height: 20,
+            quality: 30,
+            stripExif: false,
+            addBorder: true,
+        };
         resizeImage(fileBuffer, resizeOptions as any);
 
         expect(gm).toHaveBeenCalledWith(fileBuffer);
@@ -61,7 +75,13 @@ describe('That resizeImage', () => {
     });
 
     it('Calls the appropriate imageMagick functions with the correct parameters (addBorder: true)', () => {
-        const resizeOptions = { width: 10, height: 20, quality: 30, stripExif: true, addBorder: false };
+        const resizeOptions = {
+            width: 10,
+            height: 20,
+            quality: 30,
+            stripExif: true,
+            addBorder: false,
+        };
         resizeImage(fileBuffer, resizeOptions as any);
 
         expect(gm).toHaveBeenCalledWith(fileBuffer);
@@ -74,7 +94,13 @@ describe('That resizeImage', () => {
     });
 
     it('resolves awaited promise when there is no error', () => {
-        const resizeOptions = { width: 10, height: 20, quality: 30, stripExif: true, addBorder: true };
+        const resizeOptions = {
+            width: 10,
+            height: 20,
+            quality: 30,
+            stripExif: true,
+            addBorder: true,
+        };
         const resizePromise = resizeImage(fileBuffer, resizeOptions as any);
         const toBufferCallback = toBuffer.mock.calls[0][1];
         toBufferCallback();
@@ -82,7 +108,13 @@ describe('That resizeImage', () => {
     });
 
     it('rejects awaited promise with error when there is an error', () => {
-        const resizeOptions = { width: 10, height: 20, quality: 30, stripExif: true, addBorder: true };
+        const resizeOptions = {
+            width: 10,
+            height: 20,
+            quality: 30,
+            stripExif: true,
+            addBorder: true,
+        };
         const resizePromise = resizeImage(fileBuffer, resizeOptions as any);
         const toBufferCallback = toBuffer.mock.calls[0][1];
         toBufferCallback(new Error('something wrong'));

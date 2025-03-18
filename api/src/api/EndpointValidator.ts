@@ -14,19 +14,20 @@ type EndpointData = {
     requestBody?: Record<string, unknown>;
     queryParams?: Record<string, unknown>;
     pathParams?: Record<string, unknown>;
-}
+};
 
 export class EndpointValidator {
     private endpointsWithPathParams: string[] = [];
 
-    constructor(
-        private validationSchemas: { [endpoint: string]: EndpointValidationSchemas }
-    ) {
+    constructor(private validationSchemas: { [endpoint: string]: EndpointValidationSchemas }) {
         const endpoints = Object.keys(validationSchemas);
         this.endpointsWithPathParams = endpoints.filter((endpoint) => endpoint.includes('{'));
     }
 
-    public getEndpointAndPathParams(method: string, path: string): { endpoint: string, pathParams: Record<string, unknown> } {
+    public getEndpointAndPathParams(
+        method: string,
+        path: string,
+    ): { endpoint: string; pathParams: Record<string, unknown> } {
         const trimmedPath = path.replace(/\/$/, ''); // remove any trailing slash
         const methodLower = method.toLowerCase();
         const methodAndPath = `${methodLower}:${trimmedPath}`;
@@ -41,7 +42,10 @@ export class EndpointValidator {
             const [endpointMethod, endpointPath] = endpoint.split(':');
             const endpointPathElements = endpointPath.split('/');
 
-            if (endpointMethod !== methodLower || pathElements.length !== endpointPathElements.length) {
+            if (
+                endpointMethod !== methodLower ||
+                pathElements.length !== endpointPathElements.length
+            ) {
                 continue;
             }
 
@@ -54,7 +58,7 @@ export class EndpointValidator {
 
                 if (parameterName) {
                     pathParams[parameterName] = pathElements[i];
-                } else if ( pathElement !== endpointPathElement) {
+                } else if (pathElement !== endpointPathElement) {
                     break;
                 }
 
@@ -79,7 +83,8 @@ export class EndpointValidator {
 
         const errors: ValidationErrorDetail[] = [];
         const { requestBody, pathParams, queryParams } = data;
-        const { requestBodyRequired, requestBodySchema, pathParamsSchema, queryParamsSchema } = this.validationSchemas[endpoint];
+        const { requestBodyRequired, requestBodySchema, pathParamsSchema, queryParamsSchema } =
+            this.validationSchemas[endpoint];
 
         if (requestBodyRequired && isEmpty(requestBody)) {
             this.pushError(errors, 'requestBody', 'required but not present');
@@ -93,7 +98,12 @@ export class EndpointValidator {
         return errors;
     }
 
-    private validateEndpointObject(errors: ValidationErrorDetail[], obj: unknown, schema: ObjectValidationSchema | undefined, objectDescription: string) {
+    private validateEndpointObject(
+        errors: ValidationErrorDetail[],
+        obj: unknown,
+        schema: ObjectValidationSchema | undefined,
+        objectDescription: string,
+    ) {
         if (schema) {
             this.validateObject(errors, obj ?? {}, schema);
         } else if (!isEmpty(obj)) {
@@ -101,7 +111,11 @@ export class EndpointValidator {
         }
     }
 
-    private validateValue(errors: ValidationErrorDetail[], value: unknown, validationSchema: ValidationSchema) {
+    private validateValue(
+        errors: ValidationErrorDetail[],
+        value: unknown,
+        validationSchema: ValidationSchema,
+    ) {
         if (validationSchema.type === 'string') {
             this.validateString(errors, value, validationSchema);
         } else if (validationSchema.type === 'integer') {
@@ -113,7 +127,11 @@ export class EndpointValidator {
         }
     }
 
-    private validateArray(errors: ValidationErrorDetail[], value: unknown, validationSchema: ArrayValidationSchema): void {
+    private validateArray(
+        errors: ValidationErrorDetail[],
+        value: unknown,
+        validationSchema: ArrayValidationSchema,
+    ): void {
         if (validationSchema.nullable && (value === undefined || value === null)) {
             return;
         }
@@ -123,7 +141,11 @@ export class EndpointValidator {
         let arrayToValidate: unknown[] = [];
         if (pipeDelimitedString) {
             if (typeof value !== 'string') {
-                this.pushError(errors, validationSchema.fullPath, 'invalid data type - pipe-delimited array expected');
+                this.pushError(
+                    errors,
+                    validationSchema.fullPath,
+                    'invalid data type - pipe-delimited array expected',
+                );
                 return;
             }
             arrayToValidate = (value as string).split('|');
@@ -131,13 +153,21 @@ export class EndpointValidator {
             try {
                 arrayToValidate = convertToArray(value);
             } catch {
-                this.pushError(errors, validationSchema.fullPath, 'invalid data type - array expected');
+                this.pushError(
+                    errors,
+                    validationSchema.fullPath,
+                    'invalid data type - array expected',
+                );
                 return;
             }
         }
 
         if (minItems !== undefined && arrayToValidate.length < minItems) {
-            this.pushError(errors, validationSchema.fullPath, `array must contain at least ${minItems} item${minItems > 1 ? 's' : ''}`);
+            this.pushError(
+                errors,
+                validationSchema.fullPath,
+                `array must contain at least ${minItems} item${minItems > 1 ? 's' : ''}`,
+            );
         }
 
         arrayToValidate.forEach((value, index) => {
@@ -146,7 +176,11 @@ export class EndpointValidator {
         });
     }
 
-    private validateObject(errors: ValidationErrorDetail[], value: unknown, validationSchema: ObjectValidationSchema): void {
+    private validateObject(
+        errors: ValidationErrorDetail[],
+        value: unknown,
+        validationSchema: ObjectValidationSchema,
+    ): void {
         if (validationSchema.nullable && (value === undefined || value === null)) {
             return;
         }
@@ -155,14 +189,22 @@ export class EndpointValidator {
         try {
             objectToValidate = convertToRecord(value, true);
         } catch {
-            this.pushError(errors, validationSchema.fullPath, 'invalid data type - object expected');
+            this.pushError(
+                errors,
+                validationSchema.fullPath,
+                'invalid data type - object expected',
+            );
             return;
         }
 
         if (validationSchema.required) {
             validationSchema.required.forEach((requiredField) => {
                 if (!(requiredField in objectToValidate)) {
-                    this.pushError(errors, validationSchema.properties[requiredField].fullPath, 'required field is not present');
+                    this.pushError(
+                        errors,
+                        validationSchema.properties[requiredField].fullPath,
+                        'required field is not present',
+                    );
                 }
             });
         }
@@ -171,12 +213,20 @@ export class EndpointValidator {
             if (validationSchema.properties[key]) {
                 this.validateValue(errors, value, validationSchema.properties[key]);
             } else if (!validationSchema.additionalProperties) {
-                this.pushError(errors, `${validationSchema.fullPath}.${key}`, 'field is not permitted');
+                this.pushError(
+                    errors,
+                    `${validationSchema.fullPath}.${key}`,
+                    'field is not permitted',
+                );
             }
         }
     }
 
-    private validateString(errors: ValidationErrorDetail[], value: unknown, validationSchema: StringValidationSchema): void {
+    private validateString(
+        errors: ValidationErrorDetail[],
+        value: unknown,
+        validationSchema: StringValidationSchema,
+    ): void {
         if (validationSchema.nullable && (value === undefined || value === null)) {
             return;
         }
@@ -185,15 +235,31 @@ export class EndpointValidator {
         const stringMinLength = validationSchema.minLength;
 
         if (typeof value !== 'string') {
-            this.pushError(errors, validationSchema.fullPath, 'invalid data type - string expected');
+            this.pushError(
+                errors,
+                validationSchema.fullPath,
+                'invalid data type - string expected',
+            );
         } else if (stringEnum && !stringEnum.includes(value)) {
-            this.pushError(errors, validationSchema.fullPath, `value must be one of [${stringEnum.join(',')}]`);
+            this.pushError(
+                errors,
+                validationSchema.fullPath,
+                `value must be one of [${stringEnum.join(',')}]`,
+            );
         } else if (stringMinLength && value.length < stringMinLength) {
-            this.pushError(errors, validationSchema.fullPath, `invalid length - expected at least ${stringMinLength} ${stringMinLength === 1 ? 'character' : 'characters'}`);
+            this.pushError(
+                errors,
+                validationSchema.fullPath,
+                `invalid length - expected at least ${stringMinLength} ${stringMinLength === 1 ? 'character' : 'characters'}`,
+            );
         }
     }
 
-    private validateInteger(errors: ValidationErrorDetail[], value: unknown, validationSchema: IntegerValidationSchema): void {
+    private validateInteger(
+        errors: ValidationErrorDetail[],
+        value: unknown,
+        validationSchema: IntegerValidationSchema,
+    ): void {
         if (validationSchema.nullable && (value === undefined || value === null)) {
             return;
         }
@@ -206,13 +272,25 @@ export class EndpointValidator {
         }
 
         if (typeof valueToCheck !== 'number' || !Number.isInteger(valueToCheck)) {
-            this.pushError(errors, validationSchema.fullPath, 'invalid data type - integer expected');
+            this.pushError(
+                errors,
+                validationSchema.fullPath,
+                'invalid data type - integer expected',
+            );
         } else {
             if (minimum !== undefined && valueToCheck < minimum) {
-                this.pushError(errors, validationSchema.fullPath, `integer must not be less than ${minimum}`);
+                this.pushError(
+                    errors,
+                    validationSchema.fullPath,
+                    `integer must not be less than ${minimum}`,
+                );
             }
             if (maximum !== undefined && valueToCheck > maximum) {
-                this.pushError(errors, validationSchema.fullPath, `integer must not be more than ${maximum}`);
+                this.pushError(
+                    errors,
+                    validationSchema.fullPath,
+                    `integer must not be more than ${maximum}`,
+                );
             }
         }
     }

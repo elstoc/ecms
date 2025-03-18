@@ -14,7 +14,7 @@ export class Gallery {
         apiPath: string,
         private config: Config,
         private storage: StorageAdapter,
-        private logger: Logger
+        private logger: Logger,
     ) {
         this.apiPath = apiPath.replace(/^\//, '');
     }
@@ -26,7 +26,7 @@ export class Gallery {
         const images = await Promise.all(
             allImageFiles
                 .slice(0, limit)
-                .map((fileName) => this.getImageMetadata(`${this.apiPath}/${fileName}`))
+                .map((fileName) => this.getImageMetadata(`${this.apiPath}/${fileName}`)),
         );
 
         return { images, allImageFiles };
@@ -37,7 +37,11 @@ export class Gallery {
         return await image.getImageMetadata();
     }
 
-    public async getImageFile(apiPath: string, size: ImageSize, timestamp: string): Promise<Buffer> {
+    public async getImageFile(
+        apiPath: string,
+        size: ImageSize,
+        timestamp: string,
+    ): Promise<Buffer> {
         const image = this.getGalleryImage(apiPath);
         return image.getFile(size, timestamp);
     }

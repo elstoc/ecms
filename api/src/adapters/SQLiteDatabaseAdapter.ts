@@ -4,7 +4,7 @@ import { Database } from 'sqlite3';
 export class SQLiteDatabaseAdapter implements DatabaseAdapter {
     private database?: Database;
 
-    public constructor(private dbFullPath: string) { }
+    public constructor(private dbFullPath: string) {}
 
     public initialise(): Promise<void> {
         return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ export class SQLiteDatabaseAdapter implements DatabaseAdapter {
             });
         });
     }
-    
+
     public get<T>(sql: string): Promise<T | undefined> {
         return new Promise((resolve, reject) => {
             this.database?.get<T>(sql, (err: Error | null, row: T) => {

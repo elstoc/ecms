@@ -46,7 +46,10 @@ export class LocalFileStorageAdapter implements StorageAdapter {
         }
     }
 
-    public async listContentChildren(contentDirPath: string, fileMatcher: (fileName: string) => boolean): Promise<string[]> {
+    public async listContentChildren(
+        contentDirPath: string,
+        fileMatcher: (fileName: string) => boolean,
+    ): Promise<string[]> {
         const fullPath = path.join(this.dataDir, 'content', contentDirPath);
         if (!this.isExtantDirectory(fullPath)) {
             return [];
@@ -88,7 +91,11 @@ export class LocalFileStorageAdapter implements StorageAdapter {
         await this.storeFile(this.getContentFullPath(apiPath), fileBuffer);
     }
 
-    public async storeGeneratedFile(contentPath: string, tag: string, fileBuffer: Buffer): Promise<void> {
+    public async storeGeneratedFile(
+        contentPath: string,
+        tag: string,
+        fileBuffer: Buffer,
+    ): Promise<void> {
         await this.storeFile(this.getGeneratedFileFullPath(contentPath, tag), fileBuffer);
     }
 
@@ -114,8 +121,10 @@ export class LocalFileStorageAdapter implements StorageAdapter {
     }
 
     public generatedFileIsOlder(contentPath: string, tag: string): boolean {
-        return this.pathModifiedTime(this.getGeneratedFileFullPath(contentPath, tag))
-            < this.pathModifiedTime(this.getContentFullPath(contentPath));
+        return (
+            this.pathModifiedTime(this.getGeneratedFileFullPath(contentPath, tag)) <
+            this.pathModifiedTime(this.getContentFullPath(contentPath))
+        );
     }
 
     public contentFileExists(contentPath: string): boolean {
@@ -135,9 +144,7 @@ export class LocalFileStorageAdapter implements StorageAdapter {
     }
 
     private pathModifiedTime(fullPath: string): number {
-        return fs.existsSync(fullPath)
-            ? fs.statSync(fullPath).mtimeMs
-            : 0;
+        return fs.existsSync(fullPath) ? fs.statSync(fullPath).mtimeMs : 0;
     }
 
     public getContentFullPath(contentPath: string): string {
@@ -149,6 +156,12 @@ export class LocalFileStorageAdapter implements StorageAdapter {
     }
 
     private getGeneratedFileFullPath(contentPath: string, tag: string): string {
-        return path.join(this.dataDir, 'cache', path.dirname(contentPath), tag, path.basename(contentPath));
+        return path.join(
+            this.dataDir,
+            'cache',
+            path.dirname(contentPath),
+            tag,
+            path.basename(contentPath),
+        );
     }
 }

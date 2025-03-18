@@ -5,7 +5,7 @@ it('removes all whitespace from a string', () => {
                            string       that    needs
                            whitespace stripping`;
     const expectedStrippedString = 'This is a string that needs whitespace stripping';
-    
+
     const strippedString = stripWhiteSpace(stringToStrip);
 
     expect(strippedString).toBe(expectedStrippedString);

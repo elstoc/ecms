@@ -1,7 +1,10 @@
 import { DatabaseAdapter } from './DatabaseAdapter';
 
 export interface StorageAdapter {
-    listContentChildren(contentDirPath: string, fileMatcher: (fileName: string) => boolean): Promise<string[]>;
+    listContentChildren(
+        contentDirPath: string,
+        fileMatcher: (fileName: string) => boolean,
+    ): Promise<string[]>;
     getContentFullPath(contentPath: string): string;
     contentFileExists(contentPath: string): boolean;
     contentDirectoryExists(contentPath: string): boolean;

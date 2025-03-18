@@ -5,15 +5,26 @@ import { Site } from '../services';
 import { ImageSize } from '../contracts/gallery';
 
 export const createGalleryRouter = (site: Site): Router => {
-    const galleryHandler = async (req: RequestWithUser, res: Response, next: NextFunction, fn: string): Promise<void> => {
+    const galleryHandler = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+        fn: string,
+    ): Promise<void> => {
         try {
             const { path, size, limit, timestamp } = req.query;
             const gallery = await site.getGallery(path as string);
             if (fn === 'contents') {
-                const images = await gallery.getContents(limit ? parseInt(limit.toString()) : undefined);
+                const images = await gallery.getContents(
+                    limit ? parseInt(limit.toString()) : undefined,
+                );
                 res.json(images);
             } else if (fn === 'image') {
-                const imageFileBuf = await gallery.getImageFile(path as string, size as ImageSize, timestamp as string);
+                const imageFileBuf = await gallery.getImageFile(
+                    path as string,
+                    size as ImageSize,
+                    timestamp as string,
+                );
                 res.send(imageFileBuf);
             }
         } catch (err: unknown) {

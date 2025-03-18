@@ -15,7 +15,7 @@ const mockJwtDecode = jwtDecode as jest.Mock;
 const mockLogger = {
     debug: jest.fn(),
     info: jest.fn(),
-    error: jest.fn()
+    error: jest.fn(),
 } as any;
 
 const config = {
@@ -26,7 +26,7 @@ const config = {
     jwtAccessExpires: '10m',
     jwtRefreshSecret: 'refreshSecret',
     jwtAccessSecret: 'accessSecret',
-    enableAuthentication: true
+    enableAuthentication: true,
 } as any;
 
 const mockStorage = {
@@ -38,34 +38,44 @@ const mockStorage = {
 describe('Auth', () => {
     let auth: Auth;
     const emptyUsersFileBuf = Buffer.from('{}');
-    
+
     beforeEach(async () => {
         auth = new Auth(config, mockStorage, mockLogger);
         mockJwtDecode.mockReturnValue({ exp: 123 });
         mockHashPassword.mockImplementation(async (password) => `${password}-hashed`);
-        mockVerifyPasswordWithHash.mockImplementation(async (password, hashedPassword) => `${password}-hashed` === hashedPassword);
+        mockVerifyPasswordWithHash.mockImplementation(
+            async (password, hashedPassword) => `${password}-hashed` === hashedPassword,
+        );
     });
 
     describe('constructor', () => {
         describe('with authentication enabled', () => {
             it('throws an error if jwtAccessExpires is undefined', () => {
                 const newConfig = { ...config, jwtAccessExpires: undefined };
-                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow('All jwt configuration must be defined');
+                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow(
+                    'All jwt configuration must be defined',
+                );
             });
 
             it('throws an error if jwtRefreshExpires is undefined', () => {
                 const newConfig = { ...config, jwtRefreshExpires: undefined };
-                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow('All jwt configuration must be defined');
+                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow(
+                    'All jwt configuration must be defined',
+                );
             });
 
             it('throws an error if jwtAccessSecret is undefined', () => {
                 const newConfig = { ...config, jwtAccessSecret: undefined };
-                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow('All jwt configuration must be defined');
+                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow(
+                    'All jwt configuration must be defined',
+                );
             });
 
             it('throws an error if jwtRefreshSecret is undefined', () => {
                 const newConfig = { ...config, jwtRefreshSecret: undefined };
-                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow('All jwt configuration must be defined');
+                expect(() => new Auth(newConfig, mockStorage, mockLogger)).toThrow(
+                    'All jwt configuration must be defined',
+                );
             });
         });
 
@@ -85,7 +95,6 @@ describe('Auth', () => {
     });
 
     describe('createUser', () => {
-
         beforeEach(() => {
             mockStorage.getAdminFileModifiedTime.mockReturnValue(1234);
             mockStorage.getAdminFile.mockResolvedValue(emptyUsersFileBuf);
@@ -112,7 +121,7 @@ describe('Auth', () => {
                 .mockReturnValueOnce(1234) //check whether to read users.json
                 .mockReturnValueOnce(2345) //written users.json
                 .mockReturnValueOnce(3456) //check whether to read users.json
-                .mockReturnValue(4567);    //written users.json
+                .mockReturnValue(4567); //written users.json
 
             await auth.createUser('chris');
             await auth.createUser('john');
@@ -120,12 +129,12 @@ describe('Auth', () => {
             expect(mockStorage.getAdminFile).toHaveBeenCalledTimes(2);
         });
 
-        it('throws an error if added user already exists; doesn\'t attempt to write users.json', async () => {
-            mockStorage.getAdminFile
-                .mockClear()
-                .mockResolvedValue(Buffer.from('{ "chris": {} }'));
+        it("throws an error if added user already exists; doesn't attempt to write users.json", async () => {
+            mockStorage.getAdminFile.mockClear().mockResolvedValue(Buffer.from('{ "chris": {} }'));
 
-            await expect(auth.createUser('chris')).rejects.toThrow(new AuthenticationError('user already exists'));
+            await expect(auth.createUser('chris')).rejects.toThrow(
+                new AuthenticationError('user already exists'),
+            );
             expect(mockStorage.storeAdminFile).not.toHaveBeenCalled();
         });
 
@@ -133,12 +142,14 @@ describe('Auth', () => {
             await auth.createUser('chris');
 
             const expectedFileContent = JSON.stringify({ chris: { id: 'chris' } }, null, 4);
-            expect(mockStorage.storeAdminFile).toHaveBeenCalledWith('users.json', Buffer.from(expectedFileContent, 'utf-8'));
+            expect(mockStorage.storeAdminFile).toHaveBeenCalledWith(
+                'users.json',
+                Buffer.from(expectedFileContent, 'utf-8'),
+            );
         });
     });
 
     describe('setPassword', () => {
-
         beforeEach(() => {
             mockStorage.getAdminFileModifiedTime.mockReturnValue(1234);
             mockStorage.getAdminFile.mockResolvedValue(Buffer.from('{ "chris": {} }'));
@@ -165,7 +176,7 @@ describe('Auth', () => {
                 .mockReturnValueOnce(1234) //check whether to read users.json
                 .mockReturnValueOnce(2345) //written users.json
                 .mockReturnValueOnce(3456) //check whether to read users.json
-                .mockReturnValue(4567);    //written users.json
+                .mockReturnValue(4567); //written users.json
 
             await auth.setPassword('chris', 'Blob');
             await auth.setPassword('chris', 'Blib', 'Blob');
@@ -174,7 +185,9 @@ describe('Auth', () => {
         });
 
         it('throws error for a non-existent user', async () => {
-            await expect(auth.setPassword('john', 'Blob')).rejects.toThrow(new AuthenticationError('user does not exist'));
+            await expect(auth.setPassword('john', 'Blob')).rejects.toThrow(
+                new AuthenticationError('user does not exist'),
+            );
         });
 
         it('runs successfully (attempts to hash password) for an existing user with no password stored and no old password given', async () => {
@@ -192,25 +205,33 @@ describe('Auth', () => {
 
         it('throws error for an existing user with a previous password stored and no old password given', async () => {
             await auth.setPassword('chris', 'some-password');
-            await expect(auth.setPassword('chris', 'some-new-password')).rejects.toThrow(new AuthenticationError('old password not entered'));
+            await expect(auth.setPassword('chris', 'some-new-password')).rejects.toThrow(
+                new AuthenticationError('old password not entered'),
+            );
         });
 
         it('throws error for an existing user with a previous password stored and incorrect old password given', async () => {
             await auth.setPassword('chris', 'some-password');
-            await expect(auth.setPassword('chris', 'some-new-password', 'some-wrong-password'))
-                .rejects.toThrow(new AuthenticationError('passwords do not match'));
+            await expect(
+                auth.setPassword('chris', 'some-new-password', 'some-wrong-password'),
+            ).rejects.toThrow(new AuthenticationError('passwords do not match'));
         });
 
         it('runs successfully for an existing user with a previous password stored and correct old password given', async () => {
             await auth.setPassword('chris', 'some-password');
-            expect(auth.setPassword('chris', 'some-new-password', 'some-password')).resolves.toBeUndefined();
+            expect(
+                auth.setPassword('chris', 'some-new-password', 'some-password'),
+            ).resolves.toBeUndefined();
         });
 
         it('verifies hashed password by calling verifyPasswordWithHash using appropriate params, then creates new hash', async () => {
             await auth.setPassword('chris', 'some-password');
             await auth.setPassword('chris', 'some-new-password', 'some-password');
 
-            expect(mockVerifyPasswordWithHash).toHaveBeenCalledWith('some-password', 'some-password-hashed');
+            expect(mockVerifyPasswordWithHash).toHaveBeenCalledWith(
+                'some-password',
+                'some-password-hashed',
+            );
             expect(mockHashPassword).toHaveBeenLastCalledWith('some-new-password');
         });
     });
@@ -221,13 +242,15 @@ describe('Auth', () => {
                 id: 'chris',
                 roles: 'chris-has-roles',
                 fullName: 'Chris Has A Name',
-                hashedPassword: 'some-password-hashed'
-            }
+                hashedPassword: 'some-password-hashed',
+            },
         };
 
-        beforeEach( async () => {
+        beforeEach(async () => {
             mockStorage.getAdminFileModifiedTime.mockReturnValue(1234);
-            mockStorage.getAdminFile.mockResolvedValue(Buffer.from(JSON.stringify(initialUserFileContent)));
+            mockStorage.getAdminFile.mockResolvedValue(
+                Buffer.from(JSON.stringify(initialUserFileContent)),
+            );
         });
 
         it('loads the users file the first time it is run', async () => {
@@ -250,7 +273,7 @@ describe('Auth', () => {
                 .mockReturnValueOnce(1234) //check whether to read users.json
                 .mockReturnValueOnce(2345) //written users.json
                 .mockReturnValueOnce(3456) //check whether to read users.json
-                .mockReturnValue(4567);    //written users.json
+                .mockReturnValue(4567); //written users.json
 
             await auth.getTokensFromPassword('chris', 'some-password');
             await auth.getTokensFromPassword('chris', 'some-password');
@@ -259,32 +282,49 @@ describe('Auth', () => {
         });
 
         it('throws error for a non-existent user', async () => {
-            await expect(auth.getTokensFromPassword('john', 'Blob')).rejects.toThrow(new AuthenticationError('user does not exist'));
+            await expect(auth.getTokensFromPassword('john', 'Blob')).rejects.toThrow(
+                new AuthenticationError('user does not exist'),
+            );
         });
 
         it('throws error when called with incorrect password', async () => {
-            await expect(auth.getTokensFromPassword('chris', 'a-different-password'))
-                .rejects.toThrow(new AuthenticationError('incorrect password'));
+            await expect(
+                auth.getTokensFromPassword('chris', 'a-different-password'),
+            ).rejects.toThrow(new AuthenticationError('incorrect password'));
         });
 
         it('returns a pair of jwt tokens (generated with correct params) when called with correct password', async () => {
-            mockJwtSign.mockResolvedValueOnce('access-token')
+            mockJwtSign
+                .mockResolvedValueOnce('access-token')
                 .mockResolvedValueOnce('refresh-token');
 
             const actualTokens = await auth.getTokensFromPassword('chris', 'some-password');
-            
-            const expectedTokens = { id: 'chris', accessToken: 'access-token', accessTokenExpiry: 123, refreshToken: 'refresh-token' };
+
+            const expectedTokens = {
+                id: 'chris',
+                accessToken: 'access-token',
+                accessTokenExpiry: 123,
+                refreshToken: 'refresh-token',
+            };
             const { id, fullName, roles } = initialUserFileContent.chris;
             const accessPayload = {
                 id,
                 fullName,
-                roles
+                roles,
             };
             expect(verifyPasswordWithHash).toHaveBeenCalled();
             expect(hashPassword).not.toHaveBeenCalled();
             expect(actualTokens).toStrictEqual(expectedTokens);
-            expect(mockJwtSign).toHaveBeenCalledWith(accessPayload, config.jwtAccessSecret, config.jwtAccessExpires);
-            expect(mockJwtSign).toHaveBeenCalledWith({ id }, config.jwtRefreshSecret, config.jwtRefreshExpires);
+            expect(mockJwtSign).toHaveBeenCalledWith(
+                accessPayload,
+                config.jwtAccessSecret,
+                config.jwtAccessExpires,
+            );
+            expect(mockJwtSign).toHaveBeenCalledWith(
+                { id },
+                config.jwtRefreshSecret,
+                config.jwtRefreshExpires,
+            );
         });
 
         it('sets the password and returns jwt tokens if user does not yet have a hashed password stored', async () => {
@@ -293,28 +333,44 @@ describe('Auth', () => {
                     id: 'chris',
                     roles: 'chris-has-roles',
                     fullName: 'Chris Has A Name',
-                }
+                },
             };
 
             mockStorage.getAdminFileModifiedTime.mockReturnValue(2345);
-            mockStorage.getAdminFile.mockResolvedValue(Buffer.from(JSON.stringify(userFileContent)));
-            mockJwtSign.mockResolvedValueOnce('access-token')
+            mockStorage.getAdminFile.mockResolvedValue(
+                Buffer.from(JSON.stringify(userFileContent)),
+            );
+            mockJwtSign
+                .mockResolvedValueOnce('access-token')
                 .mockResolvedValueOnce('refresh-token');
 
             const actualTokens = await auth.getTokensFromPassword('chris', 'some-other-password');
-            
-            const expectedTokens = { id: 'chris', accessToken: 'access-token', accessTokenExpiry: 123, refreshToken: 'refresh-token' };
+
+            const expectedTokens = {
+                id: 'chris',
+                accessToken: 'access-token',
+                accessTokenExpiry: 123,
+                refreshToken: 'refresh-token',
+            };
             const { id, fullName, roles } = initialUserFileContent.chris;
             const accessPayload = {
                 id,
                 fullName,
-                roles
+                roles,
             };
             expect(verifyPasswordWithHash).not.toHaveBeenCalled();
             expect(hashPassword).toHaveBeenCalledWith('some-other-password');
             expect(actualTokens).toStrictEqual(expectedTokens);
-            expect(mockJwtSign).toHaveBeenCalledWith(accessPayload, config.jwtAccessSecret, config.jwtAccessExpires);
-            expect(mockJwtSign).toHaveBeenCalledWith({ id }, config.jwtRefreshSecret, config.jwtRefreshExpires);
+            expect(mockJwtSign).toHaveBeenCalledWith(
+                accessPayload,
+                config.jwtAccessSecret,
+                config.jwtAccessExpires,
+            );
+            expect(mockJwtSign).toHaveBeenCalledWith(
+                { id },
+                config.jwtRefreshSecret,
+                config.jwtRefreshExpires,
+            );
         });
     });
 
@@ -324,13 +380,15 @@ describe('Auth', () => {
                 id: 'chris',
                 roles: 'chris-has-roles',
                 fullName: 'Chris Has A Name',
-                hashedPassword: 'some-password-hashed'
-            }
+                hashedPassword: 'some-password-hashed',
+            },
         };
 
-        beforeEach( async () => {
+        beforeEach(async () => {
             mockStorage.getAdminFileModifiedTime.mockReturnValue(1234);
-            mockStorage.getAdminFile.mockResolvedValue(Buffer.from(JSON.stringify(initialUserFileContent)));
+            mockStorage.getAdminFile.mockResolvedValue(
+                Buffer.from(JSON.stringify(initialUserFileContent)),
+            );
             mockJwtVerify.mockImplementation(async (payload) => JSON.parse(payload));
         });
 
@@ -354,7 +412,7 @@ describe('Auth', () => {
                 .mockReturnValueOnce(1234) //check whether to read users.json
                 .mockReturnValueOnce(2345) //written users.json
                 .mockReturnValueOnce(3456) //check whether to read users.json
-                .mockReturnValue(4567);    //written users.json
+                .mockReturnValue(4567); //written users.json
 
             await auth.getTokensFromRefreshToken('{ "id": "chris" }');
             await auth.getTokensFromRefreshToken('{ "id": "chris" }');
@@ -364,23 +422,32 @@ describe('Auth', () => {
 
         it('throws an error if jwtVerify throws (e.g. expired/incorrectly-signed token)', async () => {
             mockJwtVerify.mockRejectedValue(new AuthenticationError('jwt expired'));
-            await expect(auth.getTokensFromRefreshToken('{ "id": "chris" }'))
-                .rejects.toThrow(new AuthenticationError('jwt expired'));
+            await expect(auth.getTokensFromRefreshToken('{ "id": "chris" }')).rejects.toThrow(
+                new AuthenticationError('jwt expired'),
+            );
         });
 
         it('throws error when called for a token that does not contain an id', async () => {
-            await expect(auth.getTokensFromRefreshToken('{ "not-an-id": "chris" }'))
-                .rejects.toThrow(new AuthenticationError('id not stored in payload'));
+            await expect(
+                auth.getTokensFromRefreshToken('{ "not-an-id": "chris" }'),
+            ).rejects.toThrow(new AuthenticationError('id not stored in payload'));
         });
 
         it('throws error when called for non-existent user', async () => {
-            await expect(auth.getTokensFromRefreshToken('{ "id": "not-chris" }'))
-                .rejects.toThrow(new AuthenticationError('user does not exist'));
+            await expect(auth.getTokensFromRefreshToken('{ "id": "not-chris" }')).rejects.toThrow(
+                new AuthenticationError('user does not exist'),
+            );
         });
 
         it('returns a pair of jwt tokens (generated with correct params) when called with correct refresh token', async () => {
-            const expectedTokens = { id: 'chris', accessToken: 'access-token', accessTokenExpiry: 123, refreshToken: 'refresh-token' };
-            mockJwtSign.mockResolvedValueOnce('access-token')
+            const expectedTokens = {
+                id: 'chris',
+                accessToken: 'access-token',
+                accessTokenExpiry: 123,
+                refreshToken: 'refresh-token',
+            };
+            mockJwtSign
+                .mockResolvedValueOnce('access-token')
                 .mockResolvedValueOnce('refresh-token');
 
             const actualTokens = await auth.getTokensFromRefreshToken('{ "id": "chris" }');
@@ -389,11 +456,19 @@ describe('Auth', () => {
             const accessPayload = {
                 id,
                 fullName,
-                roles
+                roles,
             };
             expect(actualTokens).toStrictEqual(expectedTokens);
-            expect(mockJwtSign).toHaveBeenCalledWith(accessPayload, config.jwtAccessSecret, config.jwtAccessExpires);
-            expect(mockJwtSign).toHaveBeenCalledWith({ id }, config.jwtRefreshSecret, config.jwtRefreshExpires);
+            expect(mockJwtSign).toHaveBeenCalledWith(
+                accessPayload,
+                config.jwtAccessSecret,
+                config.jwtAccessExpires,
+            );
+            expect(mockJwtSign).toHaveBeenCalledWith(
+                { id },
+                config.jwtRefreshSecret,
+                config.jwtRefreshExpires,
+            );
         });
     });
 
@@ -403,8 +478,8 @@ describe('Auth', () => {
                 id: 'chris',
                 roles: 'chris-has-roles',
                 fullName: 'Chris Has A Name',
-                hashedPassword: 'some-password-hashed'
-            }
+                hashedPassword: 'some-password-hashed',
+            },
         };
 
         beforeEach(() => {
@@ -417,15 +492,18 @@ describe('Auth', () => {
 
         it('throws an error if jwtVerify throws (e.g. expired/incorrectly-signed token)', async () => {
             mockJwtVerify.mockRejectedValue(new AuthenticationError('jwt expired'));
-            await expect(auth.getUserInfoFromAuthHeader('Bearer some-bearer-token'))
-                .rejects.toThrow(new AuthenticationError('jwt expired'));
+            await expect(
+                auth.getUserInfoFromAuthHeader('Bearer some-bearer-token'),
+            ).rejects.toThrow(new AuthenticationError('jwt expired'));
         });
 
         it('returns appropriate user data when called using a token generated by getTokensFromPassword', async () => {
             const { id, fullName, roles } = initialUserFileContent.chris;
             const expectedAccessPayload = { id, fullName, roles };
 
-            const actualAccessPayload = await auth.getUserInfoFromAuthHeader(`Bearer ${JSON.stringify(expectedAccessPayload)}`);
+            const actualAccessPayload = await auth.getUserInfoFromAuthHeader(
+                `Bearer ${JSON.stringify(expectedAccessPayload)}`,
+            );
 
             expect(actualAccessPayload).toStrictEqual(expectedAccessPayload);
         });

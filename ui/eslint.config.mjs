@@ -16,10 +16,8 @@ export default [
     {
         rules: {
             'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx', '.tsx', '.ts'] }],
-            'indent': ['error', 4, {'SwitchCase': 1}],
             'semi': [2, 'always'],
             'eol-last': 2,
-            'quotes': [2, 'single'],
             '@typescript-eslint/no-non-null-assertion': 'off',
         }
     },

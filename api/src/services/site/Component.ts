@@ -25,7 +25,7 @@ export class Component {
         private config: Config,
         private contentDir: string,
         private storage: StorageAdapter,
-        private logger: Logger
+        private logger: Logger,
     ) {
         this.contentYamlPath = contentDir + '.yaml';
     }
@@ -40,18 +40,25 @@ export class Component {
             return undefined;
         }
         if (this.metadata.type === ComponentTypes.componentgroup) {
-            this.componentGroup ??= new ComponentGroup(this.config, this.storage, this.logger, this.metadata.apiPath);
+            this.componentGroup ??= new ComponentGroup(
+                this.config,
+                this.storage,
+                this.logger,
+                this.metadata.apiPath,
+            );
             const components = await this.componentGroup.list(user);
             return {
                 ...this.metadata,
-                components
+                components,
             };
         }
         return this.metadata;
     }
 
     private async refreshMetadata(): Promise<void> {
-        const sourceFileModifiedTime = this.storage.getContentFileModifiedTime(this.contentYamlPath);
+        const sourceFileModifiedTime = this.storage.getContentFileModifiedTime(
+            this.contentYamlPath,
+        );
         if (sourceFileModifiedTime === this.metadataFromSourceTime && this.metadata) {
             return;
         }
@@ -80,26 +87,26 @@ export class Component {
                 type,
                 singlePage: singlePage === true,
                 defaultComponent: defaultComponent === true,
-                ...commonMetadata
+                ...commonMetadata,
             };
         } else if (type === ComponentTypes.videodb || type === ComponentTypes.gallery) {
             const { defaultComponent } = parsedYaml;
             return {
                 type,
                 defaultComponent: defaultComponent === true,
-                ...commonMetadata
+                ...commonMetadata,
             };
         } else if (type === ComponentTypes.componentgroup) {
             return {
                 type,
                 defaultComponent: false,
-                ...commonMetadata
+                ...commonMetadata,
             };
         }
 
         return {
             type,
-            ...commonMetadata
+            ...commonMetadata,
         };
     }
 
@@ -113,13 +120,15 @@ export class Component {
             uiPath: parsedYaml?.defaultComponent ? '' : this.contentDir,
             title: parsedYaml?.title ?? this.contentDir,
             weight: parsedYaml.weight,
-            restrict: parsedYaml.restrict
+            restrict: parsedYaml.restrict,
         };
     }
 
     private throwIfNoContent(): void {
         if (!this.storage.contentDirectoryExists(this.contentDir)) {
-            throw new NotFoundError(`A content directory does not exist for the path ${this.contentDir}`);
+            throw new NotFoundError(
+                `A content directory does not exist for the path ${this.contentDir}`,
+            );
         }
         if (!this.storage.contentFileExists(`${this.contentDir}.yaml`)) {
             throw new NotFoundError(`A yaml file does not exist for the path ${this.contentDir}`);
@@ -129,11 +138,18 @@ export class Component {
     public async getGallery(apiPath: string): Promise<Gallery> {
         await this.getMetadata();
         if (this.metadata?.type === ComponentTypes.componentgroup) {
-            this.componentGroup ??= new ComponentGroup(this.config, this.storage, this.logger, this.contentDir);
+            this.componentGroup ??= new ComponentGroup(
+                this.config,
+                this.storage,
+                this.logger,
+                this.contentDir,
+            );
             return this.componentGroup.getGallery(apiPath);
         }
         if (this.metadata?.type !== ComponentTypes.gallery) {
-            throw new NotFoundError(`No ${ComponentTypes.gallery} component found at the path ${this.contentDir}`);
+            throw new NotFoundError(
+                `No ${ComponentTypes.gallery} component found at the path ${this.contentDir}`,
+            );
         }
         this.gallery ??= new Gallery(this.contentDir, this.config, this.storage, this.logger);
         return this.gallery;
@@ -142,24 +158,46 @@ export class Component {
     public async getMarkdown(apiPath: string): Promise<Markdown> {
         await this.getMetadata();
         if (this.metadata?.type === ComponentTypes.componentgroup) {
-            this.componentGroup ??= new ComponentGroup(this.config, this.storage, this.logger, this.contentDir);
+            this.componentGroup ??= new ComponentGroup(
+                this.config,
+                this.storage,
+                this.logger,
+                this.contentDir,
+            );
             return this.componentGroup.getMarkdown(apiPath);
         }
         if (this.metadata?.type !== ComponentTypes.markdown) {
-            throw new NotFoundError(`No ${ComponentTypes.markdown} component found at the path ${this.contentDir}`);
+            throw new NotFoundError(
+                `No ${ComponentTypes.markdown} component found at the path ${this.contentDir}`,
+            );
         }
-        this.markdown ??= new Markdown(this.contentDir, '', this.config, this.storage, this.logger, true, this.metadata.singlePage);
+        this.markdown ??= new Markdown(
+            this.contentDir,
+            '',
+            this.config,
+            this.storage,
+            this.logger,
+            true,
+            this.metadata.singlePage,
+        );
         return this.markdown;
     }
 
     public async getVideoDb(apiPath: string): Promise<VideoDb> {
         await this.getMetadata();
         if (this.metadata?.type === ComponentTypes.componentgroup) {
-            this.componentGroup ??= new ComponentGroup(this.config, this.storage, this.logger, this.contentDir);
+            this.componentGroup ??= new ComponentGroup(
+                this.config,
+                this.storage,
+                this.logger,
+                this.contentDir,
+            );
             return this.componentGroup.getVideoDb(apiPath);
         }
         if (this.metadata?.type !== ComponentTypes.videodb) {
-            throw new NotFoundError(`No ${ComponentTypes.videodb} component found at the path ${this.contentDir}`);
+            throw new NotFoundError(
+                `No ${ComponentTypes.videodb} component found at the path ${this.contentDir}`,
+            );
         }
         this.videoDb ??= new VideoDb(this.contentDir, this.config, this.logger, this.storage);
         await this.videoDb.initialise();

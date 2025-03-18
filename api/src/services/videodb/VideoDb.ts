@@ -11,9 +11,25 @@ import { User } from '../../contracts/auth';
 import { Video, VideoUpdate, VideoWithId } from '../../contracts/videodb';
 
 export const videoFields = [
-    'title', 'category', 'director', 'num_episodes', 'length_mins', 'watched', 'priority_flag', 'progress',
-    'imdb_id', 'image_url', 'year', 'actors', 'plot', 'primary_media_type', 'primary_media_location',
-    'primary_media_watched', 'other_media_type', 'other_media_location', 'media_notes'
+    'title',
+    'category',
+    'director',
+    'num_episodes',
+    'length_mins',
+    'watched',
+    'priority_flag',
+    'progress',
+    'imdb_id',
+    'image_url',
+    'year',
+    'actors',
+    'plot',
+    'primary_media_type',
+    'primary_media_location',
+    'primary_media_watched',
+    'other_media_type',
+    'other_media_location',
+    'media_notes',
 ];
 
 export const videoWithIdFields = ['id', ...videoFields];
@@ -28,11 +44,11 @@ export enum LookupTables {
 export type LookupRow = {
     code: string;
     description: string;
-}
+};
 
 export type LookupValues = {
     [key: string]: string;
-}
+};
 
 export type VideoFilters = {
     maxLength?: number;
@@ -43,9 +59,9 @@ export type VideoFilters = {
     mediaWatched?: string;
     sortPriorityFirst?: boolean;
     minResolution?: string;
-}
+};
 
-const wait = (timeMs: number) => new Promise(resolve => setTimeout(resolve, timeMs));
+const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
 export class VideoDb {
     private apiPath: string;
@@ -172,7 +188,7 @@ export class VideoDb {
         const sql = `UPDATE videos SET ${setList.join(', ')} WHERE id = $id`;
 
         let key: keyof VideoWithId;
-        const params: { [key: string]: unknown} = {};
+        const params: { [key: string]: unknown } = {};
         for (key in video) {
             if (key !== 'tags') {
                 params[`$${key}`] = video[key];
@@ -202,9 +218,9 @@ export class VideoDb {
 
         const insertSql = `INSERT INTO video_tags (video_id, tag)
                            VALUES ($id, $tag)`;
-        
+
         for (const tag of tagsArray) {
-            const params = { '$id': id, $tag: tag };
+            const params = { $id: id, $tag: tag };
             await this.database?.runWithParams(insertSql, params);
         }
     }
@@ -271,7 +287,16 @@ export class VideoDb {
                         GROUP BY video_id ) vt
 					  ON v.id =  vt.video_id`;
 
-        const { maxLength, categories, tags, titleContains, watched, mediaWatched, minResolution, sortPriorityFirst } = filters || {};
+        const {
+            maxLength,
+            categories,
+            tags,
+            titleContains,
+            watched,
+            mediaWatched,
+            minResolution,
+            sortPriorityFirst,
+        } = filters || {};
         if (maxLength !== undefined) {
             whereClauses.push('length_mins <= $maxLength');
             params['$maxLength'] = maxLength;
@@ -289,7 +314,9 @@ export class VideoDb {
             tags.forEach((tag, index) => {
                 tagParams['$tag' + index.toString()] = tag;
             });
-            whereClauses.push(`EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN (${Object.keys(tagParams).join(', ')}))`);
+            whereClauses.push(
+                `EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN (${Object.keys(tagParams).join(', ')}))`,
+            );
             params = { ...params, ...tagParams };
         }
         if (titleContains !== undefined) {

@@ -4,7 +4,12 @@ import { Site } from '../services';
 import { RequestWithUser } from '../middleware';
 
 export const createSiteRouter = (site: Site): Router => {
-    const siteHandler = async (req: RequestWithUser, res: Response, next: NextFunction, fn: string): Promise<void> => {
+    const siteHandler = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+        fn: string,
+    ): Promise<void> => {
         try {
             if (fn === 'getComponents') {
                 const components = await site.listComponents(req.user);
@@ -18,7 +23,9 @@ export const createSiteRouter = (site: Site): Router => {
     };
 
     const router = Router();
-    router.get('/components', async (req, res, next) => siteHandler(req, res, next, 'getComponents'));
+    router.get('/components', async (req, res, next) =>
+        siteHandler(req, res, next, 'getComponents'),
+    );
     router.get('/config', async (req, res, next) => siteHandler(req, res, next, 'getConfig'));
     return router;
 };

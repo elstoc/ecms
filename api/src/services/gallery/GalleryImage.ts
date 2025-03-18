@@ -10,9 +10,33 @@ import { Logger } from 'winston';
 import { ImageMetadata, ImageSize } from '../../contracts/gallery';
 
 export const RESIZE_OPTIONS = {
-    thumb: { version: 1, desc: ImageSize.thumb, width: 100000, height: 300, quality: 60, stripExif: true, addBorder: true },
-    fhd: { version: 1, desc: ImageSize.fhd, width: 2560, height: 1440, quality: 85, stripExif: true, addBorder: false },
-    forExif: { version: 1, desc: ImageSize.forExif, width: 1, height: 1, quality: 0, stripExif: false, addBorder: false }
+    thumb: {
+        version: 1,
+        desc: ImageSize.thumb,
+        width: 100000,
+        height: 300,
+        quality: 60,
+        stripExif: true,
+        addBorder: true,
+    },
+    fhd: {
+        version: 1,
+        desc: ImageSize.fhd,
+        width: 2560,
+        height: 1440,
+        quality: 85,
+        stripExif: true,
+        addBorder: false,
+    },
+    forExif: {
+        version: 1,
+        desc: ImageSize.forExif,
+        width: 1,
+        height: 1,
+        quality: 0,
+        stripExif: false,
+        addBorder: false,
+    },
 };
 
 export class GalleryImage {
@@ -24,9 +48,9 @@ export class GalleryImage {
         private config: Config,
         private contentPath: string,
         private storage: StorageAdapter,
-        private logger: Logger
-    ) { }
-    
+        private logger: Logger,
+    ) {}
+
     public async getImageMetadata(): Promise<ImageMetadata> {
         this.throwIfNoSourceFile();
 
@@ -35,10 +59,10 @@ export class GalleryImage {
         if (this.imageMetadata && sourceModifiedTime <= this.imageDataFromSourceFileTime) {
             return this.imageMetadata;
         }
-        
+
         const [thumbFileBuf, exifFileBuf] = await Promise.all([
             this.getResizedImageBuf(ImageSize.thumb),
-            this.getResizedImageBuf(ImageSize.forExif)
+            this.getResizedImageBuf(ImageSize.forExif),
         ]);
 
         const exif = getExif(exifFileBuf);
@@ -51,13 +75,13 @@ export class GalleryImage {
 
         this.imageDataFromSourceFileTime = sourceModifiedTime;
 
-        this.imageMetadata =  {
+        this.imageMetadata = {
             fileName: basename(this.contentPath),
             description,
             exif,
             thumbDimensions: getImageDimensions(thumbFileBuf),
             thumbSrcUrl: this.getSourceUrl(ImageSize.thumb),
-            fhdSrcUrl: this.getSourceUrl(ImageSize.fhd)
+            fhdSrcUrl: this.getSourceUrl(ImageSize.fhd),
         };
 
         return this.imageMetadata;
@@ -101,7 +125,11 @@ export class GalleryImage {
     private async generateResizedImage(size: ImageSize): Promise<Buffer> {
         const sourceFileBuf = await this.storage.getContentFile(this.contentPath);
         const targetFileBuf = await resizeImage(sourceFileBuf, RESIZE_OPTIONS[size]);
-        await this.storage.storeGeneratedFile(this.contentPath, this.getResizedImageTag(size), targetFileBuf);
+        await this.storage.storeGeneratedFile(
+            this.contentPath,
+            this.getResizedImageTag(size),
+            targetFileBuf,
+        );
         return targetFileBuf;
     }
 

@@ -11,6 +11,6 @@ export default {
         readFile: fs.promises.readFile,
         writeFile: fs.promises.writeFile,
         readdir: fs.promises.readdir,
-        rm: fs.promises.rm
-    }
+        rm: fs.promises.rm,
+    },
 };

@@ -4,17 +4,32 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import { Auth, Site } from './services';
-import { createAuthRouter, createGalleryRouter, createMarkdownRouter, createSiteRouter, createVideoDbRouter } from './routes';
-import { createAddUserInfoMiddleware, createErrorHandlerMiddleware, createValidateRequestMiddleware } from './middleware';
+import {
+    createAuthRouter,
+    createGalleryRouter,
+    createMarkdownRouter,
+    createSiteRouter,
+    createVideoDbRouter,
+} from './routes';
+import {
+    createAddUserInfoMiddleware,
+    createErrorHandlerMiddleware,
+    createValidateRequestMiddleware,
+} from './middleware';
 import { Config } from './utils';
 import { EndpointValidator, OASParser } from './api';
 import { Logger } from 'winston';
 
-export const createApp = async (config: Config, site: Site, auth: Auth, logger: Logger): Promise<express.Express> => {
+export const createApp = async (
+    config: Config,
+    site: Site,
+    auth: Auth,
+    logger: Logger,
+): Promise<express.Express> => {
     const corsConfig = {
         origin: [config.uiUrl],
-        credentials: true
-    }; 
+        credentials: true,
+    };
 
     const oasParser = new OASParser(path.join(__dirname, './api/api.spec.yaml'));
     const endpointValidationSchemas = await oasParser.parseOAS();

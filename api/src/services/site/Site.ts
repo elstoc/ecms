@@ -14,7 +14,7 @@ export class Site {
     constructor(
         private config: Config,
         storage: StorageAdapter,
-        private logger: Logger
+        private logger: Logger,
     ) {
         this.components = new ComponentGroup(config, storage, logger, '');
     }
@@ -40,7 +40,7 @@ export class Site {
         return {
             authEnabled: this.config.enableAuthentication,
             footerText: this.config.footerText,
-            siteTitle: this.config.siteTitle
+            siteTitle: this.config.siteTitle,
         };
     }
 

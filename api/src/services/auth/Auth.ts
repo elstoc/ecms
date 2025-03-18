@@ -14,7 +14,7 @@ export type Tokens = {
     accessToken: Token;
     accessTokenExpiry: number;
     refreshToken: Token;
-}
+};
 
 export class Auth {
     private jwtRefreshExpires = '';
@@ -28,12 +28,16 @@ export class Auth {
     public constructor(
         private config: Config,
         private storage: StorageAdapter,
-        private logger: Logger
+        private logger: Logger,
     ) {
-        if (!this.config.enableAuthentication)
-            return;
-        
-        if (!config.jwtAccessExpires || !config.jwtRefreshExpires || !config.jwtAccessSecret || !config.jwtRefreshSecret) {
+        if (!this.config.enableAuthentication) return;
+
+        if (
+            !config.jwtAccessExpires ||
+            !config.jwtRefreshExpires ||
+            !config.jwtAccessSecret ||
+            !config.jwtRefreshSecret
+        ) {
             throw new Error('All jwt configuration must be defined');
         }
 
@@ -127,7 +131,7 @@ export class Auth {
         }
         this.throwIfNoUser(id);
         return id;
-    } 
+    }
 
     private async getTokensFromId(id: string): Promise<Tokens> {
         const accessToken = await this.getAccessToken(id);
@@ -136,11 +140,11 @@ export class Auth {
         return { id, accessToken, refreshToken, accessTokenExpiry };
     }
 
-    private async getAccessToken (id: string): Promise<Token> {
+    private async getAccessToken(id: string): Promise<Token> {
         const payload = {
             id: this.users[id].id,
             fullName: this.users[id].fullName,
-            roles: this.users[id].roles
+            roles: this.users[id].roles,
         };
         return await jwtSign(payload, this.jwtAccessSecret, this.jwtAccessExpires);
     }

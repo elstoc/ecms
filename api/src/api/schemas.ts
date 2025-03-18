@@ -5,7 +5,7 @@ export type ObjectValidationSchema = {
     required?: string[];
     properties: { [key: string]: ValidationSchema };
     additionalProperties: boolean;
-}
+};
 
 export type ArrayValidationSchema = {
     type: 'array';
@@ -14,7 +14,7 @@ export type ArrayValidationSchema = {
     itemSchema: ValidationSchema;
     minItems?: number;
     pipeDelimitedString?: boolean;
-}
+};
 
 export type StringValidationSchema = {
     type: 'string';
@@ -22,7 +22,7 @@ export type StringValidationSchema = {
     fullPath: string;
     enum?: string[];
     minLength?: number;
-}
+};
 
 export type IntegerValidationSchema = {
     type: 'integer';
@@ -30,18 +30,23 @@ export type IntegerValidationSchema = {
     fullPath: string;
     minimum?: number;
     maximum?: number;
-}
+};
 
-export type ValidationSchema = ObjectValidationSchema | ArrayValidationSchema | StringValidationSchema | IntegerValidationSchema;
+export type ValidationSchema =
+    | ObjectValidationSchema
+    | ArrayValidationSchema
+    | StringValidationSchema
+    | IntegerValidationSchema;
 
 export type EndpointParameterValidationSchema = {
     pathParamsSchema?: ObjectValidationSchema;
     queryParamsSchema?: ObjectValidationSchema;
-}
+};
 
 export type EndpointRequestBodyValidationSchema = {
     requestBodySchema?: ObjectValidationSchema;
     requestBodyRequired?: boolean;
-}
+};
 
-export type EndpointValidationSchemas = EndpointParameterValidationSchema & EndpointRequestBodyValidationSchema;
+export type EndpointValidationSchemas = EndpointParameterValidationSchema &
+    EndpointRequestBodyValidationSchema;

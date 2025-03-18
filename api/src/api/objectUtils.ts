@@ -19,11 +19,11 @@ export const convertToArray = (arr: unknown): unknown[] => {
 const getValueAtPath = (obj: unknown, paths: string[]): unknown => {
     let untypedObj = obj;
     let typedObj: Record<string, unknown> | undefined;
-    for (let i= 0; i< paths.length; i++) {
+    for (let i = 0; i < paths.length; i++) {
         const path = paths[i];
         typedObj = convertToRecord(untypedObj);
         const value = typedObj?.[path];
-        if (typeof value !== 'object' || i === (paths.length - 1)) {
+        if (typeof value !== 'object' || i === paths.length - 1) {
             return value;
         }
         untypedObj = value;
@@ -53,7 +53,7 @@ export const convertToStringArray = (arr: unknown): string[] => {
     throw new Error('unable to convert');
 };
 
-export const isEmpty= (obj: unknown): boolean => {
+export const isEmpty = (obj: unknown): boolean => {
     if (obj && Object.keys(obj).length > 0) {
         return false;
     }

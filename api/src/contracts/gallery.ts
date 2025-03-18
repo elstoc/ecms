@@ -1,7 +1,7 @@
 export enum ImageSize {
     thumb = 'thumb',
     fhd = 'fhd',
-    forExif = 'forExif'
+    forExif = 'forExif',
 }
 
 export type Dimensions = {
@@ -12,7 +12,7 @@ export type Dimensions = {
 export type ImageMetadata = {
     fileName: string;
     description: string;
-    exif: { [key: string]: string | undefined; };
+    exif: { [key: string]: string | undefined };
     thumbDimensions: Dimensions;
     thumbSrcUrl: string;
     fhdSrcUrl: string;
