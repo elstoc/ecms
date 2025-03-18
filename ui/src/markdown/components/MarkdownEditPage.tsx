@@ -7,18 +7,18 @@ import './MarkdownEditPage.scss';
 const EditMd = lazy(() => import('../../shared/components/editmd/EditMdAsDefault'));
 
 export const MarkdownEditPage = () => {
-    const {
-        markdownState: { editedMarkdown },
-        markdownReducer,
-    } = useContext(MarkdownStateContext);
+  const {
+    markdownState: { editedMarkdown },
+    markdownReducer,
+  } = useContext(MarkdownStateContext);
 
-    const setEditedMarkdown = (value: string) => markdownReducer({ key: 'editedMarkdown', value });
+  const setEditedMarkdown = (value: string) => markdownReducer({ key: 'editedMarkdown', value });
 
-    return (
-        <Suspense>
-            <div className='markdown-edit-page'>
-                <EditMd markdown={editedMarkdown} setMarkdown={setEditedMarkdown} />
-            </div>
-        </Suspense>
-    );
+  return (
+    <Suspense>
+      <div className='markdown-edit-page'>
+        <EditMd markdown={editedMarkdown} setMarkdown={setEditedMarkdown} />
+      </div>
+    </Suspense>
+  );
 };

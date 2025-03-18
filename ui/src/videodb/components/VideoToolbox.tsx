@@ -9,30 +9,30 @@ import { useIsDualPanel } from '../../shared/hooks';
 import { Icon } from '../../shared/components/icon';
 
 export const VideoToolbox = () => {
-    const userIsAdmin = useGetUserIsAdmin();
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
-    const {
-        videoDbState: { apiPath },
-    } = useContext(VideoDbStateContext);
-    const isDualPanel = useIsDualPanel();
+  const userIsAdmin = useGetUserIsAdmin();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const {
+    videoDbState: { apiPath },
+  } = useContext(VideoDbStateContext);
+  const isDualPanel = useIsDualPanel();
 
-    const downloadCSV = useCallback(async () => {
-        await downloadVideoCSV(apiPath);
-    }, [apiPath]);
+  const downloadCSV = useCallback(async () => {
+    await downloadVideoCSV(apiPath);
+  }, [apiPath]);
 
-    if (!userIsAdmin && isDualPanel) {
-        return <></>;
-    }
+  if (!userIsAdmin && isDualPanel) {
+    return <></>;
+  }
 
-    return (
-        <>
-            <Icon
-                name='add'
-                disabled={!userIsAdmin}
-                onClick={() => navigate(`./add?${searchParams.toString()}`)}
-            />
-            <Icon name='download' disabled={!userIsAdmin} onClick={downloadCSV} />
-        </>
-    );
+  return (
+    <>
+      <Icon
+        name='add'
+        disabled={!userIsAdmin}
+        onClick={() => navigate(`./add?${searchParams.toString()}`)}
+      />
+      <Icon name='download' disabled={!userIsAdmin} onClick={downloadCSV} />
+    </>
+  );
 };

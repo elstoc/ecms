@@ -1,130 +1,130 @@
 @import '../../variables.scss';
 
 .edit-video-form {
-    .bp5-inline {
-        label {
-            width: 6rem;
-        }
-
-        .bp5-form-content,
-        .bp5-form-content .bp5-input-group {
-            width: 100%;
-            margin-bottom: 0;
-        }
+  .bp5-inline {
+    label {
+      width: 6rem;
     }
 
-    .title {
-        margin-bottom: 1.5rem;
-        * {
-            width: 100%;
-        }
+    .bp5-form-content,
+    .bp5-form-content .bp5-input-group {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  .title {
+    margin-bottom: 1.5rem;
+    * {
+      width: 100%;
+    }
+  }
+
+  .second-group * {
+    margin-bottom: 0;
+  }
+
+  .watched-status {
+    width: 6rem;
+    button {
+      width: 5rem;
+    }
+  }
+
+  .category {
+    width: 13em;
+    button {
+      width: 12rem;
+    }
+  }
+
+  .length,
+  .num-episodes {
+    width: 6em;
+    input {
+      width: 5rem;
+    }
+  }
+
+  .media {
+    padding: 0.7rem;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+
+    .media-type {
+      width: 9rem;
+      button {
+        width: 8rem;
+      }
     }
 
-    .second-group * {
-        margin-bottom: 0;
+    .media-location {
+      width: 8rem;
+      button {
+        width: 7rem;
+      }
+    }
+
+    .notes {
+      margin-bottom: 0;
+    }
+  }
+
+  .bp5-control.bp5-switch input:checked:hover ~ .bp5-control-indicator,
+  .bp5-control.bp5-switch input:checked ~ .bp5-control-indicator {
+    background: dimgray;
+  }
+
+  .collapser {
+    width: 100%;
+  }
+
+  .director {
+    margin-top: 1rem;
+  }
+
+  .form-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media screen and (min-width: $maxMobileWidth) {
+  .edit-video-form {
+    font-size: 0.95rem;
+
+    .title * {
+      font-size: 1.2rem;
     }
 
     .watched-status {
-        width: 6rem;
-        button {
-            width: 5rem;
-        }
-    }
-
-    .category {
-        width: 13em;
-        button {
-            width: 12rem;
-        }
+      width: 6rem;
+      button {
+        width: 5rem;
+      }
     }
 
     .length,
     .num-episodes {
-        width: 6em;
-        input {
-            width: 5rem;
-        }
+      width: 6rem;
+      input {
+        width: 5rem;
+      }
     }
 
     .media {
-        padding: 0.7rem;
-        margin-bottom: 1.5rem;
-        margin-top: 2rem;
-
-        .media-type {
-            width: 9rem;
-            button {
-                width: 8rem;
-            }
-        }
-
-        .media-location {
-            width: 8rem;
-            button {
-                width: 7rem;
-            }
-        }
-
-        .notes {
-            margin-bottom: 0;
-        }
-    }
-
-    .bp5-control.bp5-switch input:checked:hover ~ .bp5-control-indicator,
-    .bp5-control.bp5-switch input:checked ~ .bp5-control-indicator {
-        background: dimgray;
-    }
-
-    .collapser {
-        width: 100%;
-    }
-
-    .director {
-        margin-top: 1rem;
-    }
-
-    .form-buttons {
-        margin-top: 1rem;
-        display: flex;
-        justify-content: space-between;
-
+      .media-type,
+      .media-location {
+        width: 11rem;
         button {
-            font-size: 1rem;
+          width: 10rem;
         }
+      }
     }
-}
-
-@media screen and (min-width: $maxMobileWidth) {
-    .edit-video-form {
-        font-size: 0.95rem;
-
-        .title * {
-            font-size: 1.2rem;
-        }
-
-        .watched-status {
-            width: 6rem;
-            button {
-                width: 5rem;
-            }
-        }
-
-        .length,
-        .num-episodes {
-            width: 6rem;
-            input {
-                width: 5rem;
-            }
-        }
-
-        .media {
-            .media-type,
-            .media-location {
-                width: 11rem;
-                button {
-                    width: 10rem;
-                }
-            }
-        }
-    }
+  }
 }

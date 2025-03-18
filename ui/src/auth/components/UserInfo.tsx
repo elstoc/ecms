@@ -11,33 +11,33 @@ import { Welcome } from './Welcome';
 import './UserInfo.scss';
 
 export const UserInfo = () => {
-    const [authDialogOpen, setAuthDialogOpen] = useState(false);
-    const userData = useGetUserInfo();
-    const { authEnabled } = useSiteConfig();
+  const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const userData = useGetUserInfo();
+  const { authEnabled } = useSiteConfig();
 
-    if (!authEnabled) {
-        return <></>;
-    }
+  if (!authEnabled) {
+    return <></>;
+  }
 
-    const loggedIn = userData.id !== 'guest';
-    const userName = userData.fullName || userData.id;
+  const loggedIn = userData.id !== 'guest';
+  const userName = userData.fullName || userData.id;
 
-    return (
-        <div className='user-info'>
-            <Icon name={loggedIn ? 'user' : 'noUser'} onClick={() => setAuthDialogOpen(true)} />
-            <Dialog
-                title={loggedIn ? 'Welcome' : 'Log in'}
-                isOpen={authDialogOpen}
-                onClose={() => setAuthDialogOpen(false)}
-                className='auth-dialog'
-            >
-                <DialogBody>
-                    <Suspense>
-                        {loggedIn && <Welcome user={userName} />}
-                        {!loggedIn && <Login />}
-                    </Suspense>
-                </DialogBody>
-            </Dialog>
-        </div>
-    );
+  return (
+    <div className='user-info'>
+      <Icon name={loggedIn ? 'user' : 'noUser'} onClick={() => setAuthDialogOpen(true)} />
+      <Dialog
+        title={loggedIn ? 'Welcome' : 'Log in'}
+        isOpen={authDialogOpen}
+        onClose={() => setAuthDialogOpen(false)}
+        className='auth-dialog'
+      >
+        <DialogBody>
+          <Suspense>
+            {loggedIn && <Welcome user={userName} />}
+            {!loggedIn && <Login />}
+          </Suspense>
+        </DialogBody>
+      </Dialog>
+    </div>
+  );
 };

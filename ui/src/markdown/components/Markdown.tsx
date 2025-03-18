@@ -5,12 +5,12 @@ import { MarkdownStateContext, useMarkdownState } from '../hooks/useMarkdownStat
 import { MarkdownRoutes } from './MarkdownRoutes';
 
 export const Markdown = ({ uiPath, apiPath, title, singlePage }: MarkdownMetadata) => {
-    const { markdownState, markdownReducer } = useMarkdownState(uiPath, apiPath, singlePage);
-    useTitle(title);
+  const { markdownState, markdownReducer } = useMarkdownState(uiPath, apiPath, singlePage);
+  useTitle(title);
 
-    return (
-        <MarkdownStateContext.Provider value={{ markdownState, markdownReducer }}>
-            <MarkdownRoutes />
-        </MarkdownStateContext.Provider>
-    );
+  return (
+    <MarkdownStateContext.Provider value={{ markdownState, markdownReducer }}>
+      <MarkdownRoutes />
+    </MarkdownStateContext.Provider>
+  );
 };

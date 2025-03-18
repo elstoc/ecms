@@ -9,15 +9,15 @@ import { GalleryStateContext } from '../hooks/useGalleryState';
 import './GalleryContent.scss';
 
 export const GalleryContent = () => {
-    const {
-        galleryState: { title },
-    } = useContext(GalleryStateContext);
-    useTitle(title);
+  const {
+    galleryState: { title },
+  } = useContext(GalleryStateContext);
+  useTitle(title);
 
-    return (
-        <div className='gallery-content'>
-            <GalleryLightBox />
-            <JustifiedGallery />
-        </div>
-    );
+  return (
+    <div className='gallery-content'>
+      <GalleryLightBox />
+      <JustifiedGallery />
+    </div>
+  );
 };

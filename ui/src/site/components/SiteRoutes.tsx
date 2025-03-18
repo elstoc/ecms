@@ -8,30 +8,30 @@ import { SiteComponent } from './SiteComponent';
 import { NotFoundPage } from '../../shared/components/NotFoundPage';
 
 const listComponentRoutes = (components: ComponentMetadata[]) => {
-    const routes: ReactElement[] = [];
-    components.forEach((metadata) => {
-        if (metadata?.type === ComponentTypes.componentgroup) {
-            routes.push(...listComponentRoutes(metadata.components));
-        } else {
-            routes.push(
-                <Route
-                    key={metadata.apiPath}
-                    path={metadata.uiPath + '/*'}
-                    element={<SiteComponent metadata={metadata} />}
-                />,
-            );
-        }
-    });
-    return routes;
+  const routes: ReactElement[] = [];
+  components.forEach((metadata) => {
+    if (metadata?.type === ComponentTypes.componentgroup) {
+      routes.push(...listComponentRoutes(metadata.components));
+    } else {
+      routes.push(
+        <Route
+          key={metadata.apiPath}
+          path={metadata.uiPath + '/*'}
+          element={<SiteComponent metadata={metadata} />}
+        />,
+      );
+    }
+  });
+  return routes;
 };
 
 export const SiteRoutes = () => {
-    const siteComponents = useSiteComponents();
+  const siteComponents = useSiteComponents();
 
-    return (
-        <Routes>
-            {listComponentRoutes(siteComponents)}
-            <Route key='*' path='*' element={<NotFoundPage />} />
-        </Routes>
-    );
+  return (
+    <Routes>
+      {listComponentRoutes(siteComponents)}
+      <Route key='*' path='*' element={<NotFoundPage />} />
+    </Routes>
+  );
 };

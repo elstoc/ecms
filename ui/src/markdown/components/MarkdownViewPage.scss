@@ -1,11 +1,11 @@
 @import '../../variables.scss';
 
 .markdown-view-page {
-    padding: 0.5rem;
-    height: 100%;
-    background-color: $contentBgColor;
+  padding: 0.5rem;
+  height: 100%;
+  background-color: $contentBgColor;
 
-    @media screen and (min-width: $maxMobileWidth) {
-        padding: 1.5rem 2.5rem;
-    }
+  @media screen and (min-width: $maxMobileWidth) {
+    padding: 1.5rem 2.5rem;
+  }
 }

@@ -7,18 +7,18 @@ import { UserInfo } from '../../auth';
 import './Header.scss';
 
 export const Header = () => {
-    const siteComponents = useSiteComponents();
-    const { siteTitle } = useSiteConfig();
+  const siteComponents = useSiteComponents();
+  const { siteTitle } = useSiteConfig();
 
-    return (
-        <Suspense>
-            <div className='header'>
-                <div className='left'>
-                    {siteTitle && <div className='site-title'>{siteTitle}</div>}
-                    <SiteNav siteComponents={siteComponents} />
-                </div>
-                <UserInfo />
-            </div>
-        </Suspense>
-    );
+  return (
+    <Suspense>
+      <div className='header'>
+        <div className='left'>
+          {siteTitle && <div className='site-title'>{siteTitle}</div>}
+          <SiteNav siteComponents={siteComponents} />
+        </div>
+        <UserInfo />
+      </div>
+    </Suspense>
+  );
 };

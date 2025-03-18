@@ -18,46 +18,46 @@ type TesselateProps = { tiles: TileInfo[] };
 */
 
 export const Tesselate = ({ tiles }: TesselateProps) => {
-    const { width: containerWidth, ref: widthRef } = useResizeDetector({ handleHeight: false });
-    const { tesselateMarginPx } = config;
+  const { width: containerWidth, ref: widthRef } = useResizeDetector({ handleHeight: false });
+  const { tesselateMarginPx } = config;
 
-    const tiledRows: ReactElement[] = [];
+  const tiledRows: ReactElement[] = [];
 
-    if (containerWidth) {
-        let rowContents: ReactElement[] = [];
-        let cumulativeRowWidth = 0;
+  if (containerWidth) {
+    let rowContents: ReactElement[] = [];
+    let cumulativeRowWidth = 0;
 
-        tiles.forEach((tile, index) => {
-            const isLastRow = index === tiles.length - 1;
-            rowContents.push(<div key={tile.key}>{tile.element}</div>);
+    tiles.forEach((tile, index) => {
+      const isLastRow = index === tiles.length - 1;
+      rowContents.push(<div key={tile.key}>{tile.element}</div>);
 
-            cumulativeRowWidth += tile.maxWidth;
-            const availableWidth = containerWidth - 2 * tesselateMarginPx * rowContents.length;
+      cumulativeRowWidth += tile.maxWidth;
+      const availableWidth = containerWidth - 2 * tesselateMarginPx * rowContents.length;
 
-            let fillRatio = availableWidth / cumulativeRowWidth;
-            if (isLastRow && fillRatio > 1) fillRatio = 1;
+      let fillRatio = availableWidth / cumulativeRowWidth;
+      if (isLastRow && fillRatio > 1) fillRatio = 1;
 
-            if (fillRatio <= 1) {
-                const rowElement = (
-                    <div
-                        className='row'
-                        key={rowContents[0].key}
-                        style={{ height: `${tile.maxHeight * fillRatio}px` }}
-                    >
-                        {rowContents}
-                    </div>
-                );
+      if (fillRatio <= 1) {
+        const rowElement = (
+          <div
+            className='row'
+            key={rowContents[0].key}
+            style={{ height: `${tile.maxHeight * fillRatio}px` }}
+          >
+            {rowContents}
+          </div>
+        );
 
-                tiledRows.push(rowElement);
-                cumulativeRowWidth = 0;
-                rowContents = [];
-            }
-        });
-    }
+        tiledRows.push(rowElement);
+        cumulativeRowWidth = 0;
+        rowContents = [];
+      }
+    });
+  }
 
-    return (
-        <div ref={widthRef} className='tiled-container'>
-            {tiledRows}
-        </div>
-    );
+  return (
+    <div ref={widthRef} className='tiled-container'>
+      {tiledRows}
+    </div>
+  );
 };

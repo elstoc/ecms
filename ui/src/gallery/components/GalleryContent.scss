@@ -1,12 +1,12 @@
 @import '../../variables.scss';
 
 .gallery-content {
-    background-color: $midGrey;
-    width: 100%;
-    min-height: 100%;
-    padding: 5px;
+  background-color: $midGrey;
+  width: 100%;
+  min-height: 100%;
+  padding: 5px;
 
-    @media screen and (min-width: $maxMobileWidth) {
-        padding: 10px;
-    }
+  @media screen and (min-width: $maxMobileWidth) {
+    padding: 10px;
+  }
 }

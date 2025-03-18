@@ -11,25 +11,25 @@ import './app.scss';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 export const App = () => {
-    return (
-        <div id='app-container'>
-            <div id='app'>
-                <div className='app-header'>
-                    <Suspense>
-                        <Header />
-                    </Suspense>
-                </div>
-                <div className='app-component'>
-                    <Suspense>
-                        <SiteRoutes />
-                    </Suspense>
-                </div>
-                <div className='app-footer'>
-                    <Suspense>
-                        <Footer />
-                    </Suspense>
-                </div>
-            </div>
+  return (
+    <div id='app-container'>
+      <div id='app'>
+        <div className='app-header'>
+          <Suspense>
+            <Header />
+          </Suspense>
         </div>
-    );
+        <div className='app-component'>
+          <Suspense>
+            <SiteRoutes />
+          </Suspense>
+        </div>
+        <div className='app-footer'>
+          <Suspense>
+            <Footer />
+          </Suspense>
+        </div>
+      </div>
+    </div>
+  );
 };

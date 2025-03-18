@@ -1,46 +1,46 @@
 @import '../../variables.scss';
 
 .markdown-nav {
-    min-height: 100%;
-    display: block;
-    font-family: $headingFont;
-    font-size: 1rem;
+  min-height: 100%;
+  display: block;
+  font-family: $headingFont;
+  font-size: 1rem;
 
-    ol {
-        list-style-type: none;
-        padding-left: 1.7em;
-        margin-block-start: 0;
-        margin-block-end: 0;
-    }
+  ol {
+    list-style-type: none;
+    padding-left: 1.7em;
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
 
-    > ol {
-        padding-left: 0;
-    }
+  > ol {
+    padding-left: 0;
+  }
 
-    li {
-        margin: 0.4em 0;
-    }
+  li {
+    margin: 0.4em 0;
+  }
 
-    > ol > li:first-child {
-        margin-top: 0;
-        padding-bottom: 0.5rem;
-        font-size: 1.4rem;
-        font-weight: 600;
-    }
+  > ol > li:first-child {
+    margin-top: 0;
+    padding-bottom: 0.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
 
-    a:visited,
-    a:hover,
-    a:active,
-    a:link {
-        color: black;
-        text-decoration: none;
-    }
+  a:visited,
+  a:hover,
+  a:active,
+  a:link {
+    color: black;
+    text-decoration: none;
+  }
 
-    a.active {
-        font-weight: 600;
-    }
+  a.active {
+    font-weight: 600;
+  }
 
-    a:focus {
-        outline: none; // remove BlueprintJS outline
-    }
+  a:focus {
+    outline: none; // remove BlueprintJS outline
+  }
 }

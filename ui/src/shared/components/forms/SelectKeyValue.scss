@@ -1,21 +1,21 @@
 #app-container,
 #portal-container {
-    .select-key-value {
-        label {
-            font-size: 0.95rem;
-        }
-
-        button {
-            font-size: 0.95rem;
-            justify-content: space-between;
-        }
+  .select-key-value {
+    label {
+      font-size: 0.95rem;
     }
 
-    .select-key-value-popover {
-        font-size: 0.95rem;
-
-        input {
-            font-size: 0.95rem;
-        }
+    button {
+      font-size: 0.95rem;
+      justify-content: space-between;
     }
+  }
+
+  .select-key-value-popover {
+    font-size: 0.95rem;
+
+    input {
+      font-size: 0.95rem;
+    }
+  }
 }

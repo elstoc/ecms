@@ -16,15 +16,15 @@ const portalContainer = document.getElementById('portal-container')!;
 const root = createRoot(appContainer);
 
 root.render(
-    <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-            <BlueprintProvider portalContainer={portalContainer}>
-                <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <Suspense fallback='Loading...'>
-                        <App />
-                    </Suspense>
-                </ErrorBoundary>
-            </BlueprintProvider>
-        </BrowserRouter>
-    </QueryClientProvider>,
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <BlueprintProvider portalContainer={portalContainer}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Suspense fallback='Loading...'>
+            <App />
+          </Suspense>
+        </ErrorBoundary>
+      </BlueprintProvider>
+    </BrowserRouter>
+  </QueryClientProvider>,
 );

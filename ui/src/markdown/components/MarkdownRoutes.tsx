@@ -9,36 +9,36 @@ import { MarkdownContent } from './MarkdownContent';
 import { NotFoundPage } from '../../shared/components/NotFoundPage';
 
 export const MarkdownRoutes = () => {
-    const {
-        markdownState: { rootApiPath, singlePage },
-    } = useContext(MarkdownStateContext);
-    const markdownTree = useGetMarkdownTree(rootApiPath);
+  const {
+    markdownState: { rootApiPath, singlePage },
+  } = useContext(MarkdownStateContext);
+  const markdownTree = useGetMarkdownTree(rootApiPath);
 
-    if (!markdownTree.children) return <></>;
+  if (!markdownTree.children) return <></>;
 
-    return (
-        <Routes>
-            {listMarkdownRoutes(markdownTree.children, singlePage)}
-            <Route key='*' path='*' element={<NotFoundPage />} />
-        </Routes>
-    );
+  return (
+    <Routes>
+      {listMarkdownRoutes(markdownTree.children, singlePage)}
+      <Route key='*' path='*' element={<NotFoundPage />} />
+    </Routes>
+  );
 };
 
 const listMarkdownRoutes = (children: MarkdownTree[], singlePage: boolean) => {
-    const routes: ReactElement[] = [];
+  const routes: ReactElement[] = [];
 
-    children.forEach((child) => {
-        routes.push(
-            <Route
-                key={child.apiPath}
-                path={child.uiPath}
-                element={<MarkdownContent apiPath={child.apiPath} />}
-            />,
-        );
-        if (!singlePage && child.children) {
-            routes.push(...listMarkdownRoutes(child.children, false));
-        }
-    });
+  children.forEach((child) => {
+    routes.push(
+      <Route
+        key={child.apiPath}
+        path={child.uiPath}
+        element={<MarkdownContent apiPath={child.apiPath} />}
+      />,
+    );
+    if (!singlePage && child.children) {
+      routes.push(...listMarkdownRoutes(child.children, false));
+    }
+  });
 
-    return routes;
+  return routes;
 };

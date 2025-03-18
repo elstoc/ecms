@@ -8,45 +8,42 @@ import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 import './MarkdownNav.scss';
 
 export const MarkdownNav = () => {
-    const {
-        markdownState: { rootUiPath, rootApiPath },
-    } = useContext(MarkdownStateContext);
-    const markdownTree = useGetMarkdownTree(rootApiPath);
+  const {
+    markdownState: { rootUiPath, rootApiPath },
+  } = useContext(MarkdownStateContext);
+  const markdownTree = useGetMarkdownTree(rootApiPath);
 
-    const navContent = (
-        <span className='markdown-nav'>
-            {markdownTree?.children && (
-                <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={markdownTree.children} />
-            )}
-        </span>
-    );
+  const navContent = (
+    <span className='markdown-nav'>
+      {markdownTree?.children && (
+        <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={markdownTree.children} />
+      )}
+    </span>
+  );
 
-    return navContent;
+  return navContent;
 };
 
 type MarkdownNavRecurseProps = { treeChildren: MarkdownTree[]; rootUiPath: string };
 const MarkdownNavRecurse = ({ treeChildren, rootUiPath }: MarkdownNavRecurseProps) => {
-    return (
-        <ol>
-            {treeChildren.map((child) => {
-                const linkPrefix = rootUiPath ? `${rootUiPath}/` : '';
-                const linkName = `/${linkPrefix}${child.uiPath}`.replace(/\/$/, '');
-                return (
-                    <Fragment key={child.apiPath}>
-                        <li>
-                            <NavLink to={linkName} end>
-                                {child?.title}
-                            </NavLink>
-                        </li>
-                        {child.children && (
-                            <MarkdownNavRecurse
-                                rootUiPath={rootUiPath}
-                                treeChildren={child.children}
-                            />
-                        )}
-                    </Fragment>
-                );
-            })}
-        </ol>
-    );
+  return (
+    <ol>
+      {treeChildren.map((child) => {
+        const linkPrefix = rootUiPath ? `${rootUiPath}/` : '';
+        const linkName = `/${linkPrefix}${child.uiPath}`.replace(/\/$/, '');
+        return (
+          <Fragment key={child.apiPath}>
+            <li>
+              <NavLink to={linkName} end>
+                {child?.title}
+              </NavLink>
+            </li>
+            {child.children && (
+              <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={child.children} />
+            )}
+          </Fragment>
+        );
+      })}
+    </ol>
+  );
 };
