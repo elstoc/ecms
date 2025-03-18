@@ -14,8 +14,17 @@ type TagInputProps = {
     allowCreation?: boolean;
 };
 
-export const TagInput = ({ tags, onSelectionChange, label, inline, className, allowCreation = true }: TagInputProps) => {
-    const { videoDbState: { apiPath } } = useContext(VideoDbStateContext);
+export const TagInput = ({
+    tags,
+    onSelectionChange,
+    label,
+    inline,
+    className,
+    allowCreation = true,
+}: TagInputProps) => {
+    const {
+        videoDbState: { apiPath },
+    } = useContext(VideoDbStateContext);
     const tagsArray = tags ? tags.split('|') : [];
     const tagLookup = useGetTags(apiPath);
 

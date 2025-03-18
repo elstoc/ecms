@@ -16,7 +16,7 @@ export const useGetLookup = (path: string, lookupTable: string) => {
         queryKey: ['videoDb', 'lookup', path, lookupTable],
         queryFn: () => getVideoDbLookup(path, lookupTable),
         staleTime: 60 * 60 * 1000,
-        refetchInterval: 60 * 60 * 1000
+        refetchInterval: 60 * 60 * 1000,
     });
 };
 
@@ -40,11 +40,7 @@ export const useGetVideos = (path: string, params?: { [key: string]: string }) =
 };
 
 export const useGetVideo = (path: string, id: number) => {
-    return useCustomQuery({
-        queryKey: [],
-        queryFn: () => getVideoDbVideo(path, id),
-        gcTime: 0
-    });
+    return useCustomQuery({ queryKey: [], queryFn: () => getVideoDbVideo(path, id), gcTime: 0 });
 };
 
 export const usePostVideo = (path: string, successMessage: string) => {
@@ -52,9 +48,9 @@ export const usePostVideo = (path: string, successMessage: string) => {
         mutationFn: (video) => postVideoDbVideo(path, video),
         invalidateKeys: [
             ['videoDb', 'videos'],
-            ['videoDb', 'tags']
+            ['videoDb', 'tags'],
         ],
-        successMessage
+        successMessage,
     });
 };
 
@@ -63,9 +59,9 @@ export const useDeleteVideo = (path: string, id: number, successMessage: string)
         mutationFn: () => deleteVideoDbVideo(path, id),
         invalidateKeys: [
             ['videoDb', 'videos'],
-            ['videoDb', 'tags']
+            ['videoDb', 'tags'],
         ],
-        successMessage
+        successMessage,
     });
 };
 
@@ -76,16 +72,14 @@ export const usePutVideo = (path: string, id: number, successMessage: string) =>
             ['videoDb', 'videos'],
             ['videoDb', 'tags'],
         ],
-        successMessage
+        successMessage,
     });
 };
 
 export const usePatchVideo = (path: string, id: number, successMessage: string) => {
     return useMutationWithToast<VideoUpdate>({
         mutationFn: (videoUpdate) => patchVideoDbVideo(path, videoUpdate),
-        invalidateKeys: [
-            ['videoDb', 'videos'],
-        ],
-        successMessage
+        invalidateKeys: [['videoDb', 'videos']],
+        successMessage,
     });
 };

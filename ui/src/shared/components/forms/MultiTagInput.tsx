@@ -4,10 +4,7 @@ import { ItemPredicate, ItemRenderer, MultiSelect } from '@blueprintjs/select';
 
 import './MultiTagInput.scss';
 
-export type KeyValue = {
-    key: string;
-    value: string;
-}
+export type KeyValue = { key: string; value: string };
 
 type MultiTagInputParams = {
     selectableTags: string[];
@@ -19,16 +16,25 @@ type MultiTagInputParams = {
     allowCreation?: boolean;
 };
 
-export const MultiTagInput = ({ selectableTags, tags, onSelectionChange, label, inline, className = '', allowCreation = true }: MultiTagInputParams) => {
+export const MultiTagInput = ({
+    selectableTags,
+    tags,
+    onSelectionChange,
+    label,
+    inline,
+    className = '',
+    allowCreation = true,
+}: MultiTagInputParams) => {
     const [queryString, setQueryString] = useState('');
-    const allTags = Array.from(new Set([...selectableTags, ...tags]))
-        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    const allTags = Array.from(new Set([...selectableTags, ...tags])).sort((a, b) =>
+        a.toLowerCase().localeCompare(b.toLowerCase()),
+    );
 
     const popoverClassName = className ? `${className}-popover` : '';
 
     const toggleTag = (tag: string) => {
         if (!tags.includes(tag)) {
-            onSelectionChange?.([...(tags), tag]);
+            onSelectionChange?.([...tags, tag]);
         } else {
             onSelectionChange?.(tags.filter((tagToRemove) => tag !== tagToRemove));
         }
@@ -53,7 +59,7 @@ export const MultiTagInput = ({ selectableTags, tags, onSelectionChange, label, 
     const createItemRenderer = (
         query: string,
         active: boolean,
-        handleClick: React.MouseEventHandler<HTMLElement>
+        handleClick: React.MouseEventHandler<HTMLElement>,
     ) => {
         return (
             <MenuItem
@@ -94,9 +100,11 @@ export const MultiTagInput = ({ selectableTags, tags, onSelectionChange, label, 
                 onQueryChange={setQueryString}
                 resetOnSelect={true}
                 placeholder=''
-                noResults={<MenuItem disabled={true} text="No results." roleStructure="listoption" />}
-                popoverProps={{minimal: true, matchTargetWidth: true}}
-                popoverContentProps={{className: `${popoverClassName} multi-tag-input-popover`}}
+                noResults={
+                    <MenuItem disabled={true} text='No results.' roleStructure='listoption' />
+                }
+                popoverProps={{ minimal: true, matchTargetWidth: true }}
+                popoverContentProps={{ className: `${popoverClassName} multi-tag-input-popover` }}
             />
         </FormGroup>
     );

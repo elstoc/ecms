@@ -14,15 +14,18 @@ export const Login = () => {
     const { mutate } = useLogin('logged in');
 
     const handleLogin = useCallback(async () => {
-        mutate({ userId, password }, {
-            onError: () => {
-                setLoginFailed(true);
-                setPassword('');
+        mutate(
+            { userId, password },
+            {
+                onError: () => {
+                    setLoginFailed(true);
+                    setPassword('');
+                },
             },
-        });
+        );
     }, [mutate, userId, password]);
 
-    return(
+    return (
         <div className='login'>
             <Card className='login-form'>
                 <StringInput
@@ -41,9 +44,7 @@ export const Login = () => {
                 />
                 <Button onClick={handleLogin}>Log In</Button>
             </Card>
-            <div className='error'>
-                {loginFailed && 'Invalid UserId or password'}
-            </div>
+            <div className='error'>{loginFailed && 'Invalid UserId or password'}</div>
         </div>
     );
 };

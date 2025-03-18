@@ -8,19 +8,23 @@ import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 import './MarkdownNav.scss';
 
 export const MarkdownNav = () => {
-    const { markdownState: { rootUiPath, rootApiPath } } = useContext(MarkdownStateContext);
+    const {
+        markdownState: { rootUiPath, rootApiPath },
+    } = useContext(MarkdownStateContext);
     const markdownTree = useGetMarkdownTree(rootApiPath);
 
     const navContent = (
         <span className='markdown-nav'>
-            {markdownTree?.children && <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={markdownTree.children} />}
+            {markdownTree?.children && (
+                <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={markdownTree.children} />
+            )}
         </span>
     );
 
     return navContent;
 };
 
-type MarkdownNavRecurseProps = { treeChildren: MarkdownTree[], rootUiPath: string }
+type MarkdownNavRecurseProps = { treeChildren: MarkdownTree[]; rootUiPath: string };
 const MarkdownNavRecurse = ({ treeChildren, rootUiPath }: MarkdownNavRecurseProps) => {
     return (
         <ol>
@@ -28,9 +32,18 @@ const MarkdownNavRecurse = ({ treeChildren, rootUiPath }: MarkdownNavRecurseProp
                 const linkPrefix = rootUiPath ? `${rootUiPath}/` : '';
                 const linkName = `/${linkPrefix}${child.uiPath}`.replace(/\/$/, '');
                 return (
-                    <Fragment key = {child.apiPath}>
-                        <li><NavLink to={linkName} end>{child?.title}</NavLink></li>
-                        {child.children && <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={child.children} />}
+                    <Fragment key={child.apiPath}>
+                        <li>
+                            <NavLink to={linkName} end>
+                                {child?.title}
+                            </NavLink>
+                        </li>
+                        {child.children && (
+                            <MarkdownNavRecurse
+                                rootUiPath={rootUiPath}
+                                treeChildren={child.children}
+                            />
+                        )}
                     </Fragment>
                 );
             })}

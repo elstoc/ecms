@@ -4,12 +4,15 @@
 .sub-menu {
     display: flex;
     background-color: $appBgColor;
-    
+
     .nav-title {
         font-family: $headingFont;
     }
 
-    a:visited, a:hover, a:active, a:link {
+    a:visited,
+    a:hover,
+    a:active,
+    a:link {
         color: black;
         text-decoration: none;
     }

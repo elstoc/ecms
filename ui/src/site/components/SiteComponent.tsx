@@ -4,7 +4,7 @@ import { Gallery } from '../../gallery';
 import { Markdown } from '../../markdown';
 import { VideoDb } from '../../videodb';
 
-type SiteComponentProps = { metadata: ComponentMetadata }
+type SiteComponentProps = { metadata: ComponentMetadata };
 
 export const SiteComponent = ({ metadata }: SiteComponentProps) => {
     if (metadata.type === ComponentTypes.gallery) {

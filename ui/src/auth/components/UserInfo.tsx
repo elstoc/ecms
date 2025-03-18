@@ -24,10 +24,7 @@ export const UserInfo = () => {
 
     return (
         <div className='user-info'>
-            <Icon
-                name={loggedIn ? 'user' : 'noUser'}
-                onClick={() => setAuthDialogOpen(true)}
-            />
+            <Icon name={loggedIn ? 'user' : 'noUser'} onClick={() => setAuthDialogOpen(true)} />
             <Dialog
                 title={loggedIn ? 'Welcome' : 'Log in'}
                 isOpen={authDialogOpen}

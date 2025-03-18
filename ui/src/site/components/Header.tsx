@@ -15,7 +15,7 @@ export const Header = () => {
             <div className='header'>
                 <div className='left'>
                     {siteTitle && <div className='site-title'>{siteTitle}</div>}
-                    <SiteNav siteComponents={siteComponents}/>
+                    <SiteNav siteComponents={siteComponents} />
                 </div>
                 <UserInfo />
             </div>

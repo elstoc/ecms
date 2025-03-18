@@ -12,14 +12,24 @@ type NullableIntInputParams = {
     className?: string;
 };
 
-export const NullableIntInput = ({ value, onValueChange, label, placeholder, inline, small, className = '' }: NullableIntInputParams) => {
+export const NullableIntInput = ({
+    value,
+    onValueChange,
+    label,
+    placeholder,
+    inline,
+    small,
+    className = '',
+}: NullableIntInputParams) => {
     return (
         <FormGroup label={label} inline={inline} className={`nullable-int-input ${className}`}>
             <NumericInput
                 value={value == null ? NumericInput.VALUE_EMPTY : value}
                 buttonPosition='none'
                 placeholder={placeholder}
-                onValueChange={(num, str) => onValueChange?.(str === NumericInput.VALUE_EMPTY ? null : parseInt(str))}
+                onValueChange={(num, str) =>
+                    onValueChange?.(str === NumericInput.VALUE_EMPTY ? null : parseInt(str))
+                }
                 small={small}
             />
         </FormGroup>

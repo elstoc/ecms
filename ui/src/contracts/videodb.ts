@@ -19,11 +19,8 @@ export type Video = {
     other_media_type: string | null;
     other_media_location: string | null;
     media_notes: string | null;
-}
+};
 
-export type VideoWithId = Video & { id: number; };
+export type VideoWithId = Video & { id: number };
 
-export type VideoUpdate = {
-    id: number;
-    priority_flag: 0 | 1;
-}
+export type VideoUpdate = { id: number; priority_flag: 0 | 1 };

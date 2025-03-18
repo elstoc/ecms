@@ -8,16 +8,14 @@ export const useElementIsVisible = (ref: RefObject<HTMLElement | null>, cb: () =
             const element = ref?.current;
             if (element && prevRef?.current !== element) {
                 prevRef.current = element;
-                const observer = new IntersectionObserver(
-                    ([entry]) => {
-                        if (entry.isIntersecting) {
-                            cb();
-                            observer.unobserve(element);
-                        }
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) {
+                        cb();
+                        observer.unobserve(element);
                     }
-                );
+                });
                 observer.observe(element);
             }
         }, 100);
-    } ,[ref, cb]);
+    }, [ref, cb]);
 };

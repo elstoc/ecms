@@ -13,37 +13,37 @@ type FilterState = {
     mediaWatched: string | null;
     minResolution: string | null;
     sortPriorityFirst: 0 | 1 | null;
-}
+};
 
 const initialFilters: FilterState = {
-    maxLength: null, categories: null, tags: null, titleContains: null,
-    watched: 'All', mediaWatched: 'All', minResolution: 'SD',
-    sortPriorityFirst: null
+    maxLength: null,
+    categories: null,
+    tags: null,
+    titleContains: null,
+    watched: 'All',
+    mediaWatched: 'All',
+    minResolution: 'SD',
+    sortPriorityFirst: null,
 };
 
 type SetStringField = {
-    action: 'setFilter'; 
+    action: 'setFilter';
     key: 'titleContains' | 'categories' | 'tags' | 'watched' | 'mediaWatched' | 'minResolution';
     value: string | null;
-}
-
-type SetNumericField = {
-    action: 'setFilter';
-    key: 'maxLength';
-    value: number | null;
-}
-
-type SetBooleanIntField = {
-    action: 'setFilter';
-    key: 'sortPriorityFirst';
-    value: 0 | 1 | null;
 };
+
+type SetNumericField = { action: 'setFilter'; key: 'maxLength'; value: number | null };
+
+type SetBooleanIntField = { action: 'setFilter'; key: 'sortPriorityFirst'; value: 0 | 1 | null };
 
 type SetIndividualFilter = SetStringField | SetNumericField | SetBooleanIntField;
 
 type FilterOperations = SetIndividualFilter | { action: 'setAllFilters'; value: FilterState };
 
-const filterReducer: (state: FilterState, operation: FilterOperations) => FilterState = (state, operation) => {
+const filterReducer: (state: FilterState, operation: FilterOperations) => FilterState = (
+    state,
+    operation,
+) => {
     if (operation.action === 'setFilter') {
         return { ...state, [operation.key]: operation.value };
     } else if (operation.action === 'setAllFilters') {
@@ -52,27 +52,31 @@ const filterReducer: (state: FilterState, operation: FilterOperations) => Filter
     return state;
 };
 
-const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) => URLSearchParams = (params, state) => {
-    const { titleContains, maxLength, categories, watched, mediaWatched, minResolution, tags, sortPriorityFirst } = state;
-    categories?.length
-        ? params.set('categories', categories)
-        : params.delete('categories');
-    maxLength
-        ? params.set('maxLength', maxLength.toString())
-        : params.delete('maxLength');
-    titleContains
-        ? params.set('titleContains', titleContains)
-        : params.delete('titleContains');
-    tags
-        ? params.set('tags', tags)
-        : params.delete('tags');
+const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) => URLSearchParams = (
+    params,
+    state,
+) => {
+    const {
+        titleContains,
+        maxLength,
+        categories,
+        watched,
+        mediaWatched,
+        minResolution,
+        tags,
+        sortPriorityFirst,
+    } = state;
+    categories?.length ? params.set('categories', categories) : params.delete('categories');
+    maxLength ? params.set('maxLength', maxLength.toString()) : params.delete('maxLength');
+    titleContains ? params.set('titleContains', titleContains) : params.delete('titleContains');
+    tags ? params.set('tags', tags) : params.delete('tags');
     watched && ['Y', 'N'].includes(watched)
         ? params.set('watched', watched)
         : params.delete('watched');
     mediaWatched && ['Y', 'N'].includes(mediaWatched)
         ? params.set('mediaWatched', mediaWatched)
         : params.delete('mediaWatched');
-    minResolution && ['HD','UHD'].includes(minResolution)
+    minResolution && ['HD', 'UHD'].includes(minResolution)
         ? params.set('minResolution', minResolution)
         : params.delete('minResolution');
     sortPriorityFirst
@@ -101,8 +105,10 @@ export const useVideoDbFilterState = () => {
                 watched: searchParams.get('watched') ?? 'All',
                 mediaWatched: searchParams.get('mediaWatched') ?? 'All',
                 minResolution: searchParams.get('minResolution') ?? 'SD',
-                sortPriorityFirst: (toIntOrUndefined(searchParams.get('sortPriorityFirst')) as null | 0 | 1) ?? null
-            }
+                sortPriorityFirst:
+                    (toIntOrUndefined(searchParams.get('sortPriorityFirst')) as null | 0 | 1) ??
+                    null,
+            },
         });
     }, []);
 
@@ -120,23 +126,26 @@ export const useVideoDbFilterState = () => {
         setSearchParams();
     }, [setSearchParams, stateReducer]);
 
-    const updateState = useCallback((operation: SetIndividualFilter) => {
-        // update state immediately
-        stateReducer(operation);
+    const updateState = useCallback(
+        (operation: SetIndividualFilter) => {
+            // update state immediately
+            stateReducer(operation);
 
-        // update search params with a delay (debounce)
-        if (handlerRef.current) {
-            clearTimeout(handlerRef.current);
-            handlerRef.current = null;
-        }
+            // update search params with a delay (debounce)
+            if (handlerRef.current) {
+                clearTimeout(handlerRef.current);
+                handlerRef.current = null;
+            }
 
-        // delay should be longer for typed fields
-        const timeout = ['titleContains', 'maxLength'].includes(operation.key) ? 1000 : 10;
+            // delay should be longer for typed fields
+            const timeout = ['titleContains', 'maxLength'].includes(operation.key) ? 1000 : 10;
 
-        handlerRef.current = setTimeout(() => {
-            setSyncState(true);
-        }, timeout);
-    }, [stateReducer]);
+            handlerRef.current = setTimeout(() => {
+                setSyncState(true);
+            }, timeout);
+        },
+        [stateReducer],
+    );
 
     return { state, updateState, clearAllFilters };
 };

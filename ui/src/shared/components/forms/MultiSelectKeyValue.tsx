@@ -4,10 +4,7 @@ import { ItemPredicate, ItemRenderer, MultiSelect } from '@blueprintjs/select';
 
 import './MultiSelectKeyValue.scss';
 
-export type KeyValue = {
-    key: string;
-    value: string;
-}
+export type KeyValue = { key: string; value: string };
 
 type MultiSelectKeyValueParams = {
     allItems: { [key: string]: string };
@@ -18,7 +15,14 @@ type MultiSelectKeyValueParams = {
     className?: string;
 };
 
-export const MultiSelectKeyValue = ({ allItems, selectedKeys, onSelectionChange, label, inline, className = '' }: MultiSelectKeyValueParams) => {
+export const MultiSelectKeyValue = ({
+    allItems,
+    selectedKeys,
+    onSelectionChange,
+    label,
+    inline,
+    className = '',
+}: MultiSelectKeyValueParams) => {
     const [queryString, setQueryString] = useState('');
     const allItemsArray = Object.entries(allItems).map(([key, value]) => ({ key, value }));
     const selectedItems = selectedKeys.map((key) => ({ key, value: allItems[key] ?? '' }));
@@ -27,7 +31,7 @@ export const MultiSelectKeyValue = ({ allItems, selectedKeys, onSelectionChange,
 
     const toggleItem = (item: KeyValue) => {
         if (!selectedKeys.includes(item.key)) {
-            onSelectionChange?.([...(selectedKeys), item.key]);
+            onSelectionChange?.([...selectedKeys, item.key]);
         } else {
             onSelectionChange?.(selectedKeys.filter((key) => key !== item.key));
         }
@@ -41,7 +45,10 @@ export const MultiSelectKeyValue = ({ allItems, selectedKeys, onSelectionChange,
         return item1.key === item2.key;
     };
 
-    const itemRenderer: ItemRenderer<KeyValue> = (keyValue: KeyValue, { handleClick, handleFocus, modifiers }) => {
+    const itemRenderer: ItemRenderer<KeyValue> = (
+        keyValue: KeyValue,
+        { handleClick, handleFocus, modifiers },
+    ) => {
         return (
             <MenuItem
                 text={keyValue.value}
@@ -81,10 +88,12 @@ export const MultiSelectKeyValue = ({ allItems, selectedKeys, onSelectionChange,
                 query={queryString}
                 onQueryChange={setQueryString}
                 resetOnSelect={true}
-                popoverProps={{minimal: true}}
+                popoverProps={{ minimal: true }}
                 placeholder=''
                 fill={false}
-                popoverContentProps={{className: `${popoverClassName} multi-select-key-value-popover`}}
+                popoverContentProps={{
+                    className: `${popoverClassName} multi-select-key-value-popover`,
+                }}
             />
         </FormGroup>
     );

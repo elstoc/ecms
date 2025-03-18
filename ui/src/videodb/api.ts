@@ -1,15 +1,20 @@
 import { Video, VideoUpdate, VideoWithId } from '../contracts/videodb';
 import { axiosSecureClient } from '../shared/api';
 
-export const getVideoDbVideos = async (path: string, filters?: { [key: string]: string }): Promise<VideoWithId[]> => {
+export const getVideoDbVideos = async (
+    path: string,
+    filters?: { [key: string]: string },
+): Promise<VideoWithId[]> => {
     const url = 'videodb/videos';
-    const { data } = await axiosSecureClient.get<VideoWithId[]>(url, { params: { path, ...filters }});
+    const { data } = await axiosSecureClient.get<VideoWithId[]>(url, {
+        params: { path, ...filters },
+    });
     return data;
 };
 
 export const getVideoDbVideo = async (path: string, id: number): Promise<VideoWithId> => {
     const url = 'videodb/video';
-    const { data } = await axiosSecureClient.get<VideoWithId>(url, { params: { path, id }});
+    const { data } = await axiosSecureClient.get<VideoWithId>(url, { params: { path, id } });
     return data;
 };
 
@@ -40,8 +45,13 @@ export const getVideoDbTags = async (path: string): Promise<string[]> => {
     return data;
 };
 
-export const getVideoDbLookup = async (path: string, lookupTable: string): Promise<{ [key: string]: string }> => {
+export const getVideoDbLookup = async (
+    path: string,
+    lookupTable: string,
+): Promise<{ [key: string]: string }> => {
     const url = 'videodb/lookup';
-    const { data } = await axiosSecureClient.get<{ [key: string]: string }>(url, { params: { path, table: lookupTable } });
+    const { data } = await axiosSecureClient.get<{ [key: string]: string }>(url, {
+        params: { path, table: lookupTable },
+    });
     return data;
 };

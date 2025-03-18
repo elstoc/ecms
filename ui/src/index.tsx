@@ -8,13 +8,7 @@ import { App } from './app';
 import { ErrorFallback } from './shared/components/fallbacks';
 import { BlueprintProvider } from '@blueprintjs/core';
 
-const queryDefaults = {
-    defaultOptions: {
-        queries: {
-            retry: 2,
-        }
-    }
-};
+const queryDefaults = { defaultOptions: { queries: { retry: 2 } } };
 
 const queryClient = new QueryClient(queryDefaults);
 const appContainer = document.getElementById('app-root')!;
@@ -32,5 +26,5 @@ root.render(
                 </ErrorBoundary>
             </BlueprintProvider>
         </BrowserRouter>
-    </QueryClientProvider>
+    </QueryClientProvider>,
 );

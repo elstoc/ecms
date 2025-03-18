@@ -25,7 +25,7 @@ export const RenderMd = ({ pageTitle, markdown, renderLink }: RenderMdProps) => 
                         // eslint-disable-next-line react/prop-types
                         const { href = '', children } = props;
                         return renderLink(href, children);
-                    }
+                    },
                 }}
                 remarkPlugins={[
                     [remarkGfm, { singleTilde: false }],
@@ -34,9 +34,7 @@ export const RenderMd = ({ pageTitle, markdown, renderLink }: RenderMdProps) => 
                     [smartypants],
                 ]}
                 rehypePlugins={[rehypeHighlight]}
-                remarkRehypeOptions={{
-                    handlers: {...defListHastHandlers},
-                }}
+                remarkRehypeOptions={{ handlers: { ...defListHastHandlers } }}
             >
                 {markdown}
             </ReactMarkdown>

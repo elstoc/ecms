@@ -9,11 +9,13 @@ import { GalleryStateContext } from '../hooks/useGalleryState';
 import './GalleryContent.scss';
 
 export const GalleryContent = () => {
-    const { galleryState: { title } } = useContext(GalleryStateContext);
+    const {
+        galleryState: { title },
+    } = useContext(GalleryStateContext);
     useTitle(title);
 
     return (
-        <div className="gallery-content">
+        <div className='gallery-content'>
             <GalleryLightBox />
             <JustifiedGallery />
         </div>

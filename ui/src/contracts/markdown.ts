@@ -6,7 +6,7 @@ export type MarkdownTree = {
     restrict?: string;
     allowWrite?: string;
     children?: MarkdownTree[];
-}
+};
 
 export type MarkdownPage = {
     content: string;
@@ -14,4 +14,4 @@ export type MarkdownPage = {
     canWrite: boolean;
     canDelete: boolean;
     pathValid: boolean;
-}
+};

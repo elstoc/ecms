@@ -6,7 +6,7 @@ import { config } from '../utils';
 const axiosDefaults = {
     baseURL: config.apiUrl,
     headers: { 'Content-Type': 'application/json' },
-    withCredentials: true
+    withCredentials: true,
 };
 
 export const axiosClient = axios.create(axiosDefaults);
@@ -21,7 +21,10 @@ const finishWaitingRequests = () => {
     waitingForTokensQueue = [];
 };
 
-const resolveWithConfig = (config: InternalAxiosRequestConfig<unknown>, cb: (config: InternalAxiosRequestConfig<unknown>) => void) => {
+const resolveWithConfig = (
+    config: InternalAxiosRequestConfig<unknown>,
+    cb: (config: InternalAxiosRequestConfig<unknown>) => void,
+) => {
     const { accessToken } = getAccessToken();
     if (accessToken) {
         config.headers['authorization'] = `Bearer ${accessToken}`;
@@ -30,18 +33,19 @@ const resolveWithConfig = (config: InternalAxiosRequestConfig<unknown>, cb: (con
     cb(config);
 };
 
-const injectAccessToken = (config: InternalAxiosRequestConfig<unknown>): Promise<InternalAxiosRequestConfig> => {
+const injectAccessToken = (
+    config: InternalAxiosRequestConfig<unknown>,
+): Promise<InternalAxiosRequestConfig> => {
     return new Promise((resolve) => {
         const { accessTokenExpiry } = getAccessToken();
-        const tokenExpired = accessTokenExpiry && (accessTokenExpiry * 1000 < Date.now() + 10000);
+        const tokenExpired = accessTokenExpiry && accessTokenExpiry * 1000 < Date.now() + 10000;
         if (!tokenExpired) {
             resolveWithConfig(config, resolve);
         } else {
             waitingForTokensQueue.push(() => resolveWithConfig(config, resolve));
             if (!fetchingNewTokens) {
                 fetchingNewTokens = true;
-                refreshAccessToken()
-                    .then(() => finishWaitingRequests());
+                refreshAccessToken().then(() => finishWaitingRequests());
             }
         }
     });

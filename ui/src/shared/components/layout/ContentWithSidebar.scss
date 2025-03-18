@@ -14,7 +14,9 @@
         width: 100%;
         max-width: $maxContentPlusSidebarWidth;
 
-        &.no-sidebar { max-width: $maxContentWidth }
+        &.no-sidebar {
+            max-width: $maxContentWidth;
+        }
 
         .cws-toolbar {
             display: flex;
@@ -49,7 +51,9 @@
             justify-content: space-between;
             column-gap: 10px;
 
-            .cws-toolbar { flex-direction: column }
+            .cws-toolbar {
+                flex-direction: column;
+            }
 
             .cws-content-and-sidebar {
                 flex-direction: row;

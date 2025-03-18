@@ -2,7 +2,7 @@
 @import url('//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css');
 @import './variables.scss';
 
-#app-container{
+#app-container {
     display: flex;
     justify-content: center;
     height: 100vh;
@@ -24,7 +24,7 @@
             width: 100%;
             font-size: 1rem;
         }
-        
+
         .app-component {
             margin-top: 10px;
             margin-bottom: 10px;

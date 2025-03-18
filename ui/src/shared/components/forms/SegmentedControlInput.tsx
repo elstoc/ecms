@@ -12,7 +12,15 @@ type SegmentedControlInputParams = {
     className?: string;
 };
 
-export const SegmentedControlInput = ({ value, onValueChange, label, options, inline, small, className = '' }: SegmentedControlInputParams) => {
+export const SegmentedControlInput = ({
+    value,
+    onValueChange,
+    label,
+    options,
+    inline,
+    small,
+    className = '',
+}: SegmentedControlInputParams) => {
     return (
         <FormGroup label={label} inline={inline} className={`segmented-control-input ${className}`}>
             <SegmentedControl

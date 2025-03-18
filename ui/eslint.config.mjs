@@ -2,6 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
+import configPrettier from 'eslint-config-prettier/flat';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -11,6 +12,7 @@ export default [
     ...tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
     pluginReact.configs.flat['jsx-runtime'],
+    configPrettier,
     {
         rules: {
             'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx', '.tsx', '.ts'] }],

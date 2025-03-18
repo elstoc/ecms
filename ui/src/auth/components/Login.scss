@@ -3,10 +3,12 @@
         display: flex;
         flex-direction: column;
     }
-    
+
     .bp5-inline {
-        label { width: 7em; }
-        
+        label {
+            width: 7em;
+        }
+
         .bp5-form-content,
         .bp5-form-content .bp5-input-group {
             width: 100%;

@@ -8,7 +8,7 @@ type SwitchParams = {
     inline?: boolean;
     onValueChange?: (value: boolean) => void;
     className?: string;
-}
+};
 
 export const Switch = ({ value, onValueChange, label, inline, className = '' }: SwitchParams) => {
     return (

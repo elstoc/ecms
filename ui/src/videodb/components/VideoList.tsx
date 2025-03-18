@@ -12,12 +12,31 @@ import './VideoList.scss';
 
 export const VideoList = () => {
     const [searchParams] = useSearchParams();
-    const { videoDbState: { apiPath, limit }, videoDbReducer } = useContext(VideoDbStateContext);
-    const { maxLength, titleContains, categories, tags, watched, mediaWatched, minResolution, sortPriorityFirst } = Object.fromEntries(searchParams.entries());
+    const {
+        videoDbState: { apiPath, limit },
+        videoDbReducer,
+    } = useContext(VideoDbStateContext);
+    const {
+        maxLength,
+        titleContains,
+        categories,
+        tags,
+        watched,
+        mediaWatched,
+        minResolution,
+        sortPriorityFirst,
+    } = Object.fromEntries(searchParams.entries());
 
     const videos = useGetVideos(apiPath, {
-        maxLength, titleContains, categories, tags, watched, mediaWatched, minResolution, sortPriorityFirst,
-        limit: limit?.toString()
+        maxLength,
+        titleContains,
+        categories,
+        tags,
+        watched,
+        mediaWatched,
+        minResolution,
+        sortPriorityFirst,
+        limit: limit?.toString(),
     });
 
     const refLastVideo = createRef<HTMLDivElement>();

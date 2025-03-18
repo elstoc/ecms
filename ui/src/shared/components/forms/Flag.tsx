@@ -7,7 +7,7 @@ type FlagParams = {
     onValueChange?: (value: boolean) => void;
     className?: string;
     color?: string;
-}
+};
 
 export const Flag = ({ value, onValueChange, className = '', color }: FlagParams) => {
     let calculatedColor = color || 'firebrick';

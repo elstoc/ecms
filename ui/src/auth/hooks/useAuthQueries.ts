@@ -3,10 +3,7 @@ import { useCustomQuery, useMutationWithToast } from '../../shared/hooks';
 import { useSiteConfig } from '../../site';
 
 export const useGetUserInfo = () => {
-    return useCustomQuery({
-        queryKey: ['user-info'],
-        queryFn: getUserInfo,
-    });
+    return useCustomQuery({ queryKey: ['user-info'], queryFn: getUserInfo });
 };
 
 export const useGetUserIsAdmin = () => {
@@ -16,10 +13,10 @@ export const useGetUserIsAdmin = () => {
 };
 
 export const useLogin = (successMessage: string) => {
-    return useMutationWithToast<{ userId: string, password: string }>({
+    return useMutationWithToast<{ userId: string; password: string }>({
         mutationFn: ({ userId, password }) => login(userId, password),
         invalidateKeys: 'all',
-        successMessage
+        successMessage,
     });
 };
 
@@ -27,6 +24,6 @@ export const useLogout = (successMessage: string) => {
     return useMutationWithToast<void>({
         mutationFn: () => logout(),
         invalidateKeys: 'all',
-        successMessage
+        successMessage,
     });
 };

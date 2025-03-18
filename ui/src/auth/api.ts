@@ -4,17 +4,9 @@ import { getStorage, setStorage } from '../utils';
 const TOKEN_KEY = 'access-token';
 const TOKEN_EXPIRY_KEY = 'access-token-expiry';
 
-type User = {
-    id: string;
-    fullName?: string;
-    roles?: string[];
-    hashedPassword?: string;
-};
+type User = { id: string; fullName?: string; roles?: string[]; hashedPassword?: string };
 
-type AccessToken = {
-    accessToken: string,
-    accessTokenExpiry: number;
-}
+type AccessToken = { accessToken: string; accessTokenExpiry: number };
 
 type IdAndAccessToken = AccessToken & { id: string };
 
@@ -24,7 +16,10 @@ const setAccessToken = (token: string, expiry: number): void => {
 };
 
 export const login = async (userId: string, password: string): Promise<void> => {
-    const response = await axiosClient.post<IdAndAccessToken>('auth/login', { id: userId, password });
+    const response = await axiosClient.post<IdAndAccessToken>('auth/login', {
+        id: userId,
+        password,
+    });
     const { accessToken, accessTokenExpiry } = response.data;
     setAccessToken(accessToken, accessTokenExpiry);
     console.log('logged in');
@@ -49,7 +44,7 @@ export const refreshAccessToken = async (): Promise<void> => {
         setAccessToken(accessToken, accessTokenExpiry);
         console.log('access token refreshed');
     } catch (e) {
-        console.log('Error', e);   
+        console.log('Error', e);
         setAccessToken('', 0);
     }
 };

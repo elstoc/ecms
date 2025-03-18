@@ -5,7 +5,7 @@ import { ComponentMetadata, ComponentTypes } from '../../contracts/site';
 
 import './SiteNav.scss';
 
-type SiteNavProps = { siteComponents: ComponentMetadata[] }
+type SiteNavProps = { siteComponents: ComponentMetadata[] };
 
 export const SiteNav = ({ siteComponents }: SiteNavProps) => {
     if (siteComponents.length === 1) {
@@ -14,14 +14,14 @@ export const SiteNav = ({ siteComponents }: SiteNavProps) => {
 
     return (
         <div className='site-nav'>
-            {siteComponents.map((component) =>
+            {siteComponents.map((component) => (
                 <ComponentNavItem key={component.apiPath} component={component} />
-            )}
+            ))}
         </div>
     );
 };
 
-type ComponentNavItemProps = { component: ComponentMetadata }
+type ComponentNavItemProps = { component: ComponentMetadata };
 
 const ComponentNavItem = ({ component }: ComponentNavItemProps) => {
     if (component.type !== ComponentTypes.componentgroup) {
@@ -48,7 +48,7 @@ const ComponentNavItem = ({ component }: ComponentNavItemProps) => {
                 popoverClassName={Classes.POPOVER_DISMISS}
                 interactionKind='click'
                 minimal={true}
-                modifiers={{ offset: { enabled: true, options: { offset: [0, 6]} }}}
+                modifiers={{ offset: { enabled: true, options: { offset: [0, 6] } } }}
             >
                 <div
                     className='nav-title'

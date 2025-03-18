@@ -8,13 +8,15 @@ import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdo
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 import { Icon } from '../../shared/components/icon';
 
-type MarkdownToolboxProps = { apiPath: string }
+type MarkdownToolboxProps = { apiPath: string };
 
 export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
-    const { markdownState: { editedMarkdown, singlePage, currentPage } } = useContext(MarkdownStateContext);
+    const {
+        markdownState: { editedMarkdown, singlePage, currentPage },
+    } = useContext(MarkdownStateContext);
     const mode = searchParams.get('mode');
     const { mutate: saveMutate } = useUpdateMarkdownPage(apiPath, 'page saved');
     const { mutate: deleteMutate } = useDeleteMarkdownPage(apiPath, 'page deleted');
@@ -23,8 +25,9 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
 
     const toggleEditMode = useCallback(() => {
         if (mode === 'edit') {
-            if (editedMarkdown === content
-                || confirm('You have unsaved changes. Are you sure you wish to leave?')
+            if (
+                editedMarkdown === content ||
+                confirm('You have unsaved changes. Are you sure you wish to leave?')
             ) {
                 setSearchParams();
             }
@@ -41,7 +44,7 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
             } catch {
                 throw new Error('Unable to parse YAML front matter');
             }
-            saveMutate( editedMarkdown, { onSuccess: () => setSearchParams() });
+            saveMutate(editedMarkdown, { onSuccess: () => setSearchParams() });
         } catch (error: unknown) {
             alert('error ' + error);
         }
@@ -53,7 +56,7 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
                 onSuccess: () => {
                     setSearchParams();
                     navigate('..', { relative: 'path' });
-                }
+                },
             });
         }
     };

@@ -14,9 +14,18 @@ type LightBoxProps = {
     alt?: string;
     prevImageUrl?: string;
     nextImageUrl?: string;
-}
+};
 
-export const LightBox = ({ onClose, onPrev, onNext, caption, alt, imageUrl, prevImageUrl, nextImageUrl }: LightBoxProps) => {
+export const LightBox = ({
+    onClose,
+    onPrev,
+    onNext,
+    caption,
+    alt,
+    imageUrl,
+    prevImageUrl,
+    nextImageUrl,
+}: LightBoxProps) => {
     const handleOuterClick = (event: MouseEvent) => {
         if (event.target === event.currentTarget) {
             onClose?.();
@@ -27,7 +36,9 @@ export const LightBox = ({ onClose, onPrev, onNext, caption, alt, imageUrl, prev
         const elements = document.querySelectorAll<HTMLElement>('.fadeout');
         elements.forEach((element) => {
             element.classList.remove('fadeout');
-            setTimeout(() => { element.classList.add('fadeout'); }, 10);
+            setTimeout(() => {
+                element.classList.add('fadeout');
+            }, 10);
         });
     };
 
@@ -39,7 +50,7 @@ export const LightBox = ({ onClose, onPrev, onNext, caption, alt, imageUrl, prev
     useKeyPress(['ArrowLeft'], () => onPrev?.());
     useKeyPress(['ArrowRight'], () => onNext?.());
     useKeyPress(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End'], null);
-    
+
     return (
         <div className='lightbox' onClick={handleOuterClick} onMouseMove={restartFadeOut}>
             <img src={imageUrl} alt={alt} />
@@ -51,21 +62,17 @@ export const LightBox = ({ onClose, onPrev, onNext, caption, alt, imageUrl, prev
                 {nextImageUrl && <img src={nextImageUrl} alt='preload' />}
             </div>
 
-            {onPrev &&
+            {onPrev && (
                 <div className='prev fadeout' onClick={() => onPrev()}>
                     <Icon name='previous' />
                 </div>
-            }
-            {onNext &&
+            )}
+            {onNext && (
                 <div className='next fadeout' onClick={() => onNext()}>
                     <Icon name='next' />
                 </div>
-            }
-            {caption &&
-                <div className='image-info fadeout'>
-                    {caption}
-                </div>
-            }
+            )}
+            {caption && <div className='image-info fadeout'>{caption}</div>}
         </div>
     );
 };

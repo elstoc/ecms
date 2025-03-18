@@ -13,13 +13,13 @@ const listComponentRoutes = (components: ComponentMetadata[]) => {
         if (metadata?.type === ComponentTypes.componentgroup) {
             routes.push(...listComponentRoutes(metadata.components));
         } else {
-            routes.push((
+            routes.push(
                 <Route
                     key={metadata.apiPath}
                     path={metadata.uiPath + '/*'}
                     element={<SiteComponent metadata={metadata} />}
-                />
-            ));
+                />,
+            );
         }
     });
     return routes;

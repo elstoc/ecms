@@ -10,14 +10,14 @@ import { MarkdownPage } from './MarkdownPage';
 
 import './MarkdownContent.scss';
 
-type MarkdownContentProps = { apiPath: string }
+type MarkdownContentProps = { apiPath: string };
 
 export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
-    const { markdownState: { singlePage } } = useContext(MarkdownStateContext);
+    const {
+        markdownState: { singlePage },
+    } = useContext(MarkdownStateContext);
 
-    const toolbar = (
-        <MarkdownToolbox apiPath={apiPath} />
-    );
+    const toolbar = <MarkdownToolbox apiPath={apiPath} />;
 
     const sidebar = (
         <Suspense>

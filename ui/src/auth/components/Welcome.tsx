@@ -4,7 +4,7 @@ import { useLogout } from '../hooks/useAuthQueries';
 
 import './Welcome.scss';
 
-type WelcomeProps = { user: string }
+type WelcomeProps = { user: string };
 
 export const Welcome = ({ user }: WelcomeProps) => {
     const { mutate } = useLogout('logged out');

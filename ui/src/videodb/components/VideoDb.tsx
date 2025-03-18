@@ -1,4 +1,4 @@
-import { Suspense} from 'react';
+import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 
 import { VideoDbMetadata } from '../../contracts/site';
@@ -41,13 +41,9 @@ export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
 
     // suspense is wrapped around routes and page elements separately to stop screen flashing
     return (
-        <VideoDbStateContext.Provider value={videoDbState} >
+        <VideoDbStateContext.Provider value={videoDbState}>
             <Suspense>
-                <ContentWithSidebar
-                    content={content}
-                    sidebar={filters}
-                    toolbarIcons={toolbar}
-                />
+                <ContentWithSidebar content={content} sidebar={filters} toolbarIcons={toolbar} />
             </Suspense>
         </VideoDbStateContext.Provider>
     );

@@ -5,10 +5,7 @@ import { EditorView } from '@codemirror/view';
 
 import './EditMd.scss';
 
-type EditMdProps = {
-    markdown: string;
-    setMarkdown: (value: string) => void;
-}
+type EditMdProps = { markdown: string; setMarkdown: (value: string) => void };
 
 export const EditMd = ({ markdown, setMarkdown }: EditMdProps) => {
     return (
@@ -18,8 +15,11 @@ export const EditMd = ({ markdown, setMarkdown }: EditMdProps) => {
                 autoFocus={true}
                 value={markdown}
                 onChange={(value: string) => setMarkdown(value)}
-                basicSetup={{ lineNumbers: true, highlightActiveLine: true, foldGutter: false}}
-                extensions={[codeMirrorMarkdown({ base: markdownLanguage, codeLanguages: languages }), EditorView.lineWrapping]}
+                basicSetup={{ lineNumbers: true, highlightActiveLine: true, foldGutter: false }}
+                extensions={[
+                    codeMirrorMarkdown({ base: markdownLanguage, codeLanguages: languages }),
+                    EditorView.lineWrapping,
+                ]}
             />
         </div>
     );

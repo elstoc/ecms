@@ -1,20 +1,16 @@
-type StringParam<T> = {
-    title: string;
-    getField: (record: T) => string | null;
-}
+type StringParam<T> = { title: string; getField: (record: T) => string | null };
 
-type NumericParam<T> = {
-    title: string;
-    getField: (record: T) => number | null;
-}
+type NumericParam<T> = { title: string; getField: (record: T) => number | null };
 
 export type ColumnParam<T> = StringParam<T> | NumericParam<T>;
 
-export const createCSV = <T,>(columnParams: ColumnParam<T>[], data: T[]): string => {
+export const createCSV = <T>(columnParams: ColumnParam<T>[], data: T[]): string => {
     const rows: string[] = [];
 
     // Add headers
-    rows.push(columnParams.map((columnParam) => `"${columnParam.title.replace('"', '')}"`).join(','));
+    rows.push(
+        columnParams.map((columnParam) => `"${columnParam.title.replace('"', '')}"`).join(','),
+    );
 
     // Add rows
     data.forEach((row) => {

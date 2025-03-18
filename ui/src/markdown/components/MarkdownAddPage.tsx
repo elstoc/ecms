@@ -21,16 +21,16 @@ export const MarkdownAddPage = () => {
             onClose={() => setSearchParams()}
             canEscapeKeyClose={false}
         >
-            <DialogBody>
-                {mode === 'add' && <MarkdownAddPageContent />}
-            </DialogBody>
+            <DialogBody>{mode === 'add' && <MarkdownAddPageContent />}</DialogBody>
         </Dialog>
     );
 };
 
 const MarkdownAddPageContent = () => {
     const navigate = useNavigate();
-    const { markdownState: { pageApiPath } } = useContext(MarkdownStateContext);
+    const {
+        markdownState: { pageApiPath },
+    } = useContext(MarkdownStateContext);
     const { mutate } = useCreateMarkdownPage('page created');
 
     const [errorText, setErrorText] = useState('');
@@ -60,16 +60,16 @@ const MarkdownAddPageContent = () => {
                 <StringInput
                     label='Path'
                     value={newPagePath}
-                    onValueChange={(path) => setNewPagePath(path.replace(/[^a-z0-9\-_]/gi, '').toLowerCase())}
+                    onValueChange={(path) =>
+                        setNewPagePath(path.replace(/[^a-z0-9\-_]/gi, '').toLowerCase())
+                    }
                     onPressEnter={createPage}
                     autoFocus={true}
                     inline={true}
                 />
                 <Button onClick={createPage}>Create Page</Button>
             </Card>
-            <div className='error'>
-                {errorText}
-            </div>
+            <div className='error'>{errorText}</div>
         </div>
     );
 };

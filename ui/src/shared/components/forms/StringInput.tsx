@@ -14,7 +14,17 @@ type StringInputParams = {
     onPressEnter?: () => void;
 };
 
-export const StringInput = ({ value, onValueChange, placeholder, label, inline, small, className = '', autoFocus, onPressEnter }: StringInputParams) => {
+export const StringInput = ({
+    value,
+    onValueChange,
+    placeholder,
+    label,
+    inline,
+    small,
+    className = '',
+    autoFocus,
+    onPressEnter,
+}: StringInputParams) => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             onPressEnter?.();

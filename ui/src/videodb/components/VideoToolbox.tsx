@@ -12,7 +12,9 @@ export const VideoToolbox = () => {
     const userIsAdmin = useGetUserIsAdmin();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { videoDbState: { apiPath} } = useContext(VideoDbStateContext);
+    const {
+        videoDbState: { apiPath },
+    } = useContext(VideoDbStateContext);
     const isDualPanel = useIsDualPanel();
 
     const downloadCSV = useCallback(async () => {
@@ -22,7 +24,7 @@ export const VideoToolbox = () => {
     if (!userIsAdmin && isDualPanel) {
         return <></>;
     }
-    
+
     return (
         <>
             <Icon
@@ -30,11 +32,7 @@ export const VideoToolbox = () => {
                 disabled={!userIsAdmin}
                 onClick={() => navigate(`./add?${searchParams.toString()}`)}
             />
-            <Icon
-                name='download'
-                disabled={!userIsAdmin}
-                onClick={downloadCSV}
-            />
+            <Icon name='download' disabled={!userIsAdmin} onClick={downloadCSV} />
         </>
     );
 };

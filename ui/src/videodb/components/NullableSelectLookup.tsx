@@ -18,8 +18,20 @@ type NullableSelectLookupProps = {
 };
 
 export const NullableSelectLookup = (props: NullableSelectLookupProps) => {
-    const { lookupTable, selectedKey, onSelectionChange, label, small, className, inline, nullValueRepr, filterable } = props;
-    const { videoDbState: { apiPath } } = useContext(VideoDbStateContext);
+    const {
+        lookupTable,
+        selectedKey,
+        onSelectionChange,
+        label,
+        small,
+        className,
+        inline,
+        nullValueRepr,
+        filterable,
+    } = props;
+    const {
+        videoDbState: { apiPath },
+    } = useContext(VideoDbStateContext);
     const lookupKeyValues = useGetLookup(apiPath, lookupTable);
 
     return (

@@ -11,9 +11,7 @@ import { AddVideo } from './AddVideo';
 
 import './VideoDbContent.scss';
 
-type VideoDbContentProps = {
-    mode?: 'update' | 'add'
-}
+type VideoDbContentProps = { mode?: 'update' | 'add' };
 
 export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
     const { id } = useParams();
@@ -26,10 +24,10 @@ export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
 
     return (
         <div className='video-content'>
-            {userIsAdmin &&
+            {userIsAdmin && (
                 <Dialog
-                    title={ mode === 'add' ? 'Add Video' : 'Update Video' }
-                    isOpen={ mode === 'add' || mode === 'update' }
+                    title={mode === 'add' ? 'Add Video' : 'Update Video'}
+                    isOpen={mode === 'add' || mode === 'update'}
                     onClose={() => navigate(-1)}
                     canEscapeKeyClose={false}
                     canOutsideClickClose={false}
@@ -41,7 +39,7 @@ export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
                         </Suspense>
                     </DialogBody>
                 </Dialog>
-            }
+            )}
             <VideoList />
         </div>
     );

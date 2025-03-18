@@ -15,14 +15,20 @@ const basename = (path: string): string => {
 };
 
 export const MarkdownViewPage = () => {
-    const { markdownState: { currentPage, pageApiPath } } = useContext(MarkdownStateContext);
+    const {
+        markdownState: { currentPage, pageApiPath },
+    } = useContext(MarkdownStateContext);
 
     const [yaml, markdown] = splitFrontMatter(currentPage?.content || '');
     const pageTitle = YAML.parse(yaml)?.title || basename(pageApiPath) || 'Home';
     useTitle(pageTitle);
 
     const renderLink = (href: string, children: ReactNode & ReactNode[]) => {
-        return <Link to={href.replace(/\/$/, '')} relative='path'>{children}</Link>;
+        return (
+            <Link to={href.replace(/\/$/, '')} relative='path'>
+                {children}
+            </Link>
+        );
     };
 
     return (

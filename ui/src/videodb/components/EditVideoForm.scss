@@ -2,7 +2,9 @@
 
 .edit-video-form {
     .bp5-inline {
-        label { width: 6rem; }
+        label {
+            width: 6rem;
+        }
 
         .bp5-form-content,
         .bp5-form-content .bp5-input-group {
@@ -13,42 +15,59 @@
 
     .title {
         margin-bottom: 1.5rem;
-        * { width: 100%; }
+        * {
+            width: 100%;
+        }
     }
 
-    .second-group * { margin-bottom: 0; }
-    
+    .second-group * {
+        margin-bottom: 0;
+    }
+
     .watched-status {
         width: 6rem;
-        button { width: 5rem; }
+        button {
+            width: 5rem;
+        }
     }
 
     .category {
         width: 13em;
-        button { width: 12rem; }
+        button {
+            width: 12rem;
+        }
     }
 
-    .length, .num-episodes {
+    .length,
+    .num-episodes {
         width: 6em;
-        input { width: 5rem; }
+        input {
+            width: 5rem;
+        }
     }
 
     .media {
-        padding: .7rem;
+        padding: 0.7rem;
         margin-bottom: 1.5rem;
         margin-top: 2rem;
 
         .media-type {
             width: 9rem;
-            button { width: 8rem; }
+            button {
+                width: 8rem;
+            }
         }
 
         .media-location {
             width: 8rem;
-            button { width: 7rem; }
+            button {
+                width: 7rem;
+            }
         }
-    
-        .notes { margin-bottom: 0; }
+
+        .notes {
+            margin-bottom: 0;
+        }
     }
 
     .bp5-control.bp5-switch input:checked:hover ~ .bp5-control-indicator,
@@ -56,9 +75,13 @@
         background: dimgray;
     }
 
-    .collapser { width: 100%; }
+    .collapser {
+        width: 100%;
+    }
 
-    .director { margin-top: 1rem; }
+    .director {
+        margin-top: 1rem;
+    }
 
     .form-buttons {
         margin-top: 1rem;
@@ -75,23 +98,32 @@
     .edit-video-form {
         font-size: 0.95rem;
 
-        .title * { font-size: 1.2rem; }
+        .title * {
+            font-size: 1.2rem;
+        }
 
         .watched-status {
             width: 6rem;
-            button { width: 5rem; }
+            button {
+                width: 5rem;
+            }
         }
 
-        .length, .num-episodes {
+        .length,
+        .num-episodes {
             width: 6rem;
-            input { width: 5rem; }
+            input {
+                width: 5rem;
+            }
         }
 
         .media {
             .media-type,
             .media-location {
                 width: 11rem;
-                button { width: 10rem; }
+                button {
+                    width: 10rem;
+                }
             }
         }
     }

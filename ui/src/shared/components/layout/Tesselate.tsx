@@ -5,16 +5,9 @@ import { config } from '../../../utils';
 
 import './Tesselate.scss';
 
-type TileInfo = {
-    maxWidth: number;
-    maxHeight: number;
-    key: string;
-    element: ReactElement;
-};
+type TileInfo = { maxWidth: number; maxHeight: number; key: string; element: ReactElement };
 
-type TesselateProps = {
-    tiles: TileInfo[];
-}
+type TesselateProps = { tiles: TileInfo[] };
 
 /*
     Takes an array of React Elements (tiles) that all have the same height
@@ -39,7 +32,7 @@ export const Tesselate = ({ tiles }: TesselateProps) => {
             rowContents.push(<div key={tile.key}>{tile.element}</div>);
 
             cumulativeRowWidth += tile.maxWidth;
-            const availableWidth = containerWidth - (2 * tesselateMarginPx * rowContents.length);
+            const availableWidth = containerWidth - 2 * tesselateMarginPx * rowContents.length;
 
             let fillRatio = availableWidth / cumulativeRowWidth;
             if (isLastRow && fillRatio > 1) fillRatio = 1;

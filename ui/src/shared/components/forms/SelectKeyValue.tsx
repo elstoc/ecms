@@ -3,10 +3,7 @@ import { ItemPredicate, ItemRenderer, Select } from '@blueprintjs/select';
 
 import './SelectKeyValue.scss';
 
-export type KeyValue = {
-    key: string;
-    value: string;
-}
+export type KeyValue = { key: string; value: string };
 
 type SelectKeyValueParams = {
     allItems: { [key: string]: string };
@@ -19,7 +16,16 @@ type SelectKeyValueParams = {
     filterable?: boolean;
 };
 
-export const SelectKeyValue = ({ allItems, selectedKey, onSelectionChange, label, small, inline, className = '', filterable = true }: SelectKeyValueParams) => {
+export const SelectKeyValue = ({
+    allItems,
+    selectedKey,
+    onSelectionChange,
+    label,
+    small,
+    inline,
+    className = '',
+    filterable = true,
+}: SelectKeyValueParams) => {
     const allItemsArray = Object.entries(allItems).map(([key, value]) => ({ key, value }));
 
     const popoverClassName = className ? `${className}-popover` : '';
@@ -32,7 +38,10 @@ export const SelectKeyValue = ({ allItems, selectedKey, onSelectionChange, label
         return query.length === 0 || item.value.toLowerCase().includes(query.toLowerCase());
     };
 
-    const itemRenderer: ItemRenderer<KeyValue> = (keyValue: KeyValue, { handleClick, handleFocus, modifiers }) => {
+    const itemRenderer: ItemRenderer<KeyValue> = (
+        keyValue: KeyValue,
+        { handleClick, handleFocus, modifiers },
+    ) => {
         if (!modifiers.matchesPredicate) {
             return null;
         }
@@ -57,8 +66,8 @@ export const SelectKeyValue = ({ allItems, selectedKey, onSelectionChange, label
                 itemRenderer={itemRenderer}
                 itemPredicate={filterValue}
                 onItemSelect={changeSelection}
-                popoverProps={{minimal: true}}
-                popoverContentProps={{className: `${popoverClassName} select-key-value-popover`}}
+                popoverProps={{ minimal: true }}
+                popoverContentProps={{ className: `${popoverClassName} select-key-value-popover` }}
                 resetOnSelect={true}
                 filterable={filterable}
             >
