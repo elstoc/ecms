@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import { StringValue } from 'ms';
+
 import { AuthenticationError } from '../../../errors';
 
 export const jwtSign = async (
@@ -7,10 +9,15 @@ export const jwtSign = async (
     expiresIn: string | number,
 ): Promise<string | undefined> => {
     return new Promise((resolve, reject) => {
-        jwt.sign(payload, secret, { expiresIn }, (err, token) => {
-            if (err) reject(new AuthenticationError(err.message));
-            resolve(token);
-        });
+        jwt.sign(
+            payload,
+            secret,
+            { expiresIn: expiresIn as number | StringValue },
+            (err, token) => {
+                if (err) reject(new AuthenticationError(err.message));
+                resolve(token);
+            },
+        );
     });
 };
 
