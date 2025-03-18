@@ -10,18 +10,18 @@ module.exports = {
   entry: './src/index.tsx',
   devServer: {
     historyApiFallback: {
-        disableDotRule: true,
+      disableDotRule: true,
     },
   },
   output: {
     publicPath: '/',
     path: __dirname + '/dist/',
     filename: '[name].[contenthash].js',
-    chunkFilename: '[name].chunk.[chunkhash].js'
+    chunkFilename: '[name].chunk.[chunkhash].js',
   },
   optimization: {
     minimize: prod,
-    minimizer: [new TerserPlugin()]
+    minimizer: [new TerserPlugin()],
   },
   module: {
     rules: [
@@ -36,21 +36,28 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          prod ? MiniCssExtractPlugin.loader : "style-loader",
-          "css-loader",
-          "postcss-loader",
-          "sass-loader",
+          prod ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
         ],
       },
-    ]
+    ],
   },
   devtool: prod ? undefined : 'source-map',
   plugins: [
     new Dotenv(),
     new HtmlWebpackPlugin({
       template: 'index.html',
-      favicon: 'favicon.png'
-    })].concat(prod ? [new MiniCssExtractPlugin({
-        filename: '[name].[contenthash].css'
-    })] : []),
+      favicon: 'favicon.png',
+    }),
+  ].concat(
+    prod
+      ? [
+          new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+          }),
+        ]
+      : [],
+  ),
 };
