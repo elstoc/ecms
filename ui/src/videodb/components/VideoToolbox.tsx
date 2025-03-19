@@ -3,10 +3,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { downloadVideoCSV } from '../utils/downloadVideoCSV';
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
-import { useGetUserIsAdmin } from '../../auth/hooks/useAuthQueries';
-import { useIsDualPanel } from '../../shared/hooks';
+import { useGetUserIsAdmin } from '@/auth/hooks/useAuthQueries';
+import { useIsDualPanel } from '@/shared/hooks';
 
-import { Icon } from '../../shared/components/icon';
+import { Icon } from '@/shared/components/icon';
 
 export const VideoToolbox = () => {
   const userIsAdmin = useGetUserIsAdmin();

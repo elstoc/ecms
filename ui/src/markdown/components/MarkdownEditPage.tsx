@@ -4,7 +4,7 @@ import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownEditPage.scss';
 
-const EditMd = lazy(() => import('../../shared/components/editmd/EditMdAsDefault'));
+const EditMd = lazy(() => import('@/shared/components/editmd/EditMdAsDefault'));
 
 export const MarkdownEditPage = () => {
   const {

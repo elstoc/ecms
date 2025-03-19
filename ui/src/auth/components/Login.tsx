@@ -3,7 +3,7 @@ import { Button, Card } from '@blueprintjs/core';
 
 import { useLogin } from '../hooks/useAuthQueries';
 
-import { PasswordInput, StringInput } from '../../shared/components/forms';
+import { PasswordInput, StringInput } from '@/shared/components/forms';
 
 import './Login.scss';
 

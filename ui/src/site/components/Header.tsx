@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { useSiteComponents, useSiteConfig } from '../hooks/useSiteQueries';
 import { SiteNav } from './SiteNav';
-import { UserInfo } from '../../auth';
+import { UserInfo } from '@/auth';
 
 import './Header.scss';
 

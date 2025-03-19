@@ -1,10 +1,10 @@
 import { createRef, startTransition, useCallback, useContext, useMemo } from 'react';
 
-import { useElementIsVisible, useScrollIntoView } from '../../shared/hooks';
+import { useElementIsVisible, useScrollIntoView } from '@/shared/hooks';
 import { useGalleryContent } from '../hooks/useGalleryQueries';
 import { GalleryStateContext } from '../hooks/useGalleryState';
 
-import { Tesselate } from '../../shared/components/layout';
+import { Tesselate } from '@/shared/components/layout';
 import { GalleryThumb } from './GalleryThumb';
 
 export const JustifiedGallery = () => {

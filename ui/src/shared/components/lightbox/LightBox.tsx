@@ -1,6 +1,6 @@
 import { MouseEvent, useEffect } from 'react';
 
-import { useKeyPress } from '../../hooks';
+import { useKeyPress } from '@/shared/hooks';
 import { Icon } from '../icon';
 
 import './LightBox.scss';

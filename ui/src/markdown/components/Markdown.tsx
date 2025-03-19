@@ -1,5 +1,5 @@
-import { MarkdownMetadata } from '../../contracts/site';
-import { useTitle } from '../../shared/hooks';
+import { MarkdownMetadata } from '@/contracts/site';
+import { useTitle } from '@/shared/hooks';
 
 import { MarkdownStateContext, useMarkdownState } from '../hooks/useMarkdownStateContext';
 import { MarkdownRoutes } from './MarkdownRoutes';

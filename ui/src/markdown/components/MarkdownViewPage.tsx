@@ -2,13 +2,13 @@ import { ReactNode, Suspense, useContext, lazy } from 'react';
 import YAML from 'yaml';
 import { Link } from 'react-router-dom';
 
-import { splitFrontMatter } from '../../utils';
-import { useTitle } from '../../shared/hooks';
+import { splitFrontMatter } from '@/utils';
+import { useTitle } from '@/shared/hooks';
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownViewPage.scss';
 
-const RenderMd = lazy(() => import('../../shared/components/rendermd/RenderMdAsDefault'));
+const RenderMd = lazy(() => import('@/shared/components/rendermd/RenderMdAsDefault'));
 
 const basename = (path: string): string => {
   return path.split('/').reverse()[0];

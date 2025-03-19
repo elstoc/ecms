@@ -1,6 +1,6 @@
 import { getUserInfo, login, logout } from '../api';
-import { useCustomQuery, useMutationWithToast } from '../../shared/hooks';
-import { useSiteConfig } from '../../site';
+import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
+import { useSiteConfig } from '@/site';
 
 export const useGetUserInfo = () => {
   return useCustomQuery({ queryKey: ['user-info'], queryFn: getUserInfo });

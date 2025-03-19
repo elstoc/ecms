@@ -1,5 +1,5 @@
-import { MarkdownPage, MarkdownTree } from '../contracts/markdown';
-import { axiosSecureClient } from '../shared/api';
+import { MarkdownPage, MarkdownTree } from '@/contracts/markdown';
+import { axiosSecureClient } from '@/shared/api';
 
 const getMarkdownPage = async (path: string): Promise<MarkdownPage> => {
   const url = 'markdown/page';

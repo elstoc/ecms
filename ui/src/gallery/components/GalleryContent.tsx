@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { useTitle } from '../../shared/hooks';
+import { useTitle } from '@/shared/hooks';
 
 import { JustifiedGallery } from './JustifiedGallery';
 import { GalleryLightBox } from './GalleryLightBox';

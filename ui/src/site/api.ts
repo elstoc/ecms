@@ -1,5 +1,5 @@
-import { ComponentMetadata, SiteConfig } from '../contracts/site';
-import { axiosSecureClient } from '../shared/api';
+import { ComponentMetadata, SiteConfig } from '@/contracts/site';
+import { axiosSecureClient } from '@/shared/api';
 
 export const getSiteComponents = async (): Promise<ComponentMetadata[]> => {
   const { data } = await axiosSecureClient.get<ComponentMetadata[]>('site/components');

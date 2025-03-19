@@ -1,12 +1,12 @@
 import { ReactElement, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { MarkdownTree } from '../../contracts/markdown';
+import { MarkdownTree } from '@/contracts/markdown';
 import { useGetMarkdownTree } from '../hooks/useMarkdownQueries';
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import { MarkdownContent } from './MarkdownContent';
-import { NotFoundPage } from '../../shared/components/NotFoundPage';
+import { NotFoundPage } from '@/shared/components/NotFoundPage';
 
 export const MarkdownRoutes = () => {
   const {

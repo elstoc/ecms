@@ -1,5 +1,5 @@
-import { axiosClient, axiosSecureClient } from '../shared/api';
-import { getStorage, setStorage } from '../utils';
+import { axiosClient, axiosSecureClient } from '@/shared/api';
+import { getStorage, setStorage } from '@/utils';
 
 const TOKEN_KEY = 'access-token';
 const TOKEN_EXPIRY_KEY = 'access-token-expiry';

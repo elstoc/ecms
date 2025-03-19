@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { config } from '../../utils';
+import { config } from '@/utils';
 
 type QueryOptions<T> = {
   queryKey: (string | number)[];

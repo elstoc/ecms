@@ -1,5 +1,5 @@
 import { deleteMarkdownPage, getMarkdownPage, getMarkdownTree, putMarkdownPage } from '../api';
-import { useCustomQuery, useMutationWithToast } from '../../shared/hooks';
+import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 
 export const useGetMarkdownPage = (path: string) => {
   return useCustomQuery({

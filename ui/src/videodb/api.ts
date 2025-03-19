@@ -1,5 +1,5 @@
-import { Video, VideoUpdate, VideoWithId } from '../contracts/videodb';
-import { axiosSecureClient } from '../shared/api';
+import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
+import { axiosSecureClient } from '@/shared/api';
 
 export const getVideoDbVideos = async (
   path: string,

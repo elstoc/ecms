@@ -2,11 +2,11 @@ import { useCallback, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 
-import { splitFrontMatter } from '../../utils';
+import { splitFrontMatter } from '@/utils';
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
-import { Icon } from '../../shared/components/icon';
+import { Icon } from '@/shared/components/icon';
 
 type MarkdownToolboxProps = { apiPath: string };
 

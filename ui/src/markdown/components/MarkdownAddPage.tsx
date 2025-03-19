@@ -6,7 +6,7 @@ import { getMarkdownPage } from '../api';
 import { useCreateMarkdownPage } from '../hooks/useMarkdownQueries';
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
-import { StringInput } from '../../shared/components/forms';
+import { StringInput } from '@/shared/components/forms';
 
 import './MarkdownAddPage.scss';
 

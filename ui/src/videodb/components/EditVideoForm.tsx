@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
 
-import { VideoWithId } from '../../contracts/videodb';
+import { VideoWithId } from '@/contracts/videodb';
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
 import {
@@ -9,7 +9,7 @@ import {
   NullableIntInput,
   NullableStringInput,
   StringInput,
-} from '../../shared/components/forms';
+} from '@/shared/components/forms';
 import { SelectLookup } from './SelectLookup';
 import { NullableSelectLookup } from './NullableSelectLookup';
 import { TagInput } from './TagInput';

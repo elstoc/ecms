@@ -7,7 +7,7 @@ import {
   NullableStringInput,
   Switch,
   SegmentedControlInput,
-} from '../../shared/components/forms';
+} from '@/shared/components/forms';
 import { NullableSelectLookup } from './NullableSelectLookup';
 import { TagInput } from './TagInput';
 

@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
-import { getAccessToken, refreshAccessToken } from '../auth/api';
-import { config } from '../utils';
+import { getAccessToken, refreshAccessToken } from '@/auth/api';
+import { config } from '@/utils';
 
 const axiosDefaults = {
   baseURL: config.apiUrl,

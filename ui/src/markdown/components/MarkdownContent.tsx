@@ -3,7 +3,7 @@ import { Card } from '@blueprintjs/core';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
-import { ContentWithSidebar } from '../../shared/components/layout';
+import { ContentWithSidebar } from '@/shared/components/layout';
 import { MarkdownNav } from './MarkdownNav';
 import { MarkdownToolbox } from './MarkdownToolbox';
 import { MarkdownPage } from './MarkdownPage';

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 import { useGetLookup } from '../hooks/useVideoDbQueries';
 
-import { SelectKeyValue } from '../../shared/components/forms';
+import { SelectKeyValue } from '@/shared/components/forms';
 
 type SelectLookupProps = {
   lookupTable: string;

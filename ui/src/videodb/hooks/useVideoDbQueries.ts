@@ -1,5 +1,5 @@
-import { Video, VideoUpdate, VideoWithId } from '../../contracts/videodb';
-import { useCustomQuery, useMutationWithToast } from '../../shared/hooks';
+import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
+import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 import {
   getVideoDbVideos,
   getVideoDbVideo,

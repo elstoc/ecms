@@ -1,8 +1,8 @@
-import { ComponentMetadata, ComponentTypes } from '../../contracts/site';
+import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
 
-import { Gallery } from '../../gallery';
-import { Markdown } from '../../markdown';
-import { VideoDb } from '../../videodb';
+import { Gallery } from '@/gallery';
+import { Markdown } from '@/markdown';
+import { VideoDb } from '@/videodb';
 
 type SiteComponentProps = { metadata: ComponentMetadata };
 
