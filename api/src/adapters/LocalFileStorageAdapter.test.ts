@@ -7,7 +7,7 @@ const mockSQLiteDatabaseAdapter = jest.mocked(SQLiteDatabaseAdapter);
 
 jest.mock('./SQLiteDatabaseAdapter');
 
-jest.mock('../../src/adapters/fs', () => ({
+jest.mock('./fs', () => ({
   existsSync: jest.fn(),
   statSync: jest.fn(),
   mkdirSync: jest.fn(),

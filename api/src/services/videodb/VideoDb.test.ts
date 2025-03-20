@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NotFoundError, NotPermittedError } from '../../errors';
+import { NotFoundError, NotPermittedError } from '@/errors';
 import { VideoDb, LookupTables } from './VideoDb';
-import { stripWhiteSpace } from '../../utils';
+import { stripWhiteSpace } from '@/utils';
 
-jest.mock('../../adapters');
+jest.mock('@/adapters');
 jest.mock('./dbUpgradeSql', () => ({
   dbUpgradeSql: ['SQL v1', 'SQL v2', 'SQL v3', 'SQL v4'],
 }));

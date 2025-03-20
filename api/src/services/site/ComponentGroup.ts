@@ -1,13 +1,13 @@
 import path from 'path';
 import { Component } from './Component';
-import { Config, sortByWeightAndTitle } from '../../utils';
-import { Gallery } from '../gallery';
-import { StorageAdapter } from '../../adapters';
-import { Markdown } from '../markdown';
-import { VideoDb } from '../videodb';
+import { Config, sortByWeightAndTitle } from '@/utils';
+import { Gallery } from '@/services/gallery';
+import { StorageAdapter } from '@/adapters';
+import { Markdown } from '@/services/markdown';
+import { VideoDb } from '@/services/videodb';
 import { Logger } from 'winston';
-import { ComponentMetadata } from '../../contracts/site';
-import { User } from '../../contracts/auth';
+import { ComponentMetadata } from '@/contracts/site';
+import { User } from '@/contracts/auth';
 
 export class ComponentGroup {
   private components: { [key: string]: Component } = {};

@@ -1,4 +1,4 @@
-import { NotFoundError, ValidationErrorDetail } from '../errors';
+import { NotFoundError, ValidationErrorDetail } from '@/errors';
 import { convertToArray, convertToRecord, isEmpty } from './objectUtils';
 
 import {

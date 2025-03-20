@@ -1,5 +1,5 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import { AuthenticationError } from '../../errors';
+import { AuthenticationError } from '@/errors';
 import { Auth } from '..';
 import { hashPassword, verifyPasswordWithHash } from './utils/hash';
 import { jwtSign, jwtVerify, jwtDecode } from './utils/jwt';

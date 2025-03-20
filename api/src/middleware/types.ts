@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { User } from '../services';
+import { User } from '@/contracts/auth';
 
 export interface RequestWithUser extends Request {
   user?: User;

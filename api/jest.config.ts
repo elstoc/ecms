@@ -4,4 +4,7 @@ export default {
   resetMocks: true,
   coverageDirectory: './coverage',
   coverageReporters: ['json', 'html', 'text'],
+  moduleNameMapper: {
+    '@/(.*)$': '<rootDir>/src/$1',
+  },
 };

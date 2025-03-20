@@ -1,16 +1,16 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import YAML from 'yaml';
-import { Gallery } from '../gallery/Gallery';
-import { Markdown } from '../markdown/Markdown';
-import { VideoDb } from '../videodb/VideoDb';
+import { Gallery } from '@/services/gallery/Gallery';
+import { Markdown } from '@/services/markdown/Markdown';
+import { VideoDb } from '@/services/videodb/VideoDb';
 import { ComponentGroup } from './ComponentGroup';
-import { Component } from '..';
-import { NotFoundError } from '../../errors';
+import { Component } from '@/services/site';
+import { NotFoundError } from '@/errors';
 
 jest.mock('yaml');
-jest.mock('../gallery/Gallery');
-jest.mock('../markdown/Markdown');
-jest.mock('../videodb/VideoDb');
+jest.mock('@/services/gallery/Gallery');
+jest.mock('@/services/markdown/Markdown');
+jest.mock('@/services/videodb/VideoDb');
 jest.mock('./ComponentGroup');
 
 const config = {

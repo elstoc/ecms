@@ -1,12 +1,12 @@
 import { Logger } from 'winston';
-import { StorageAdapter } from '../../adapters';
-import { Config } from '../../utils';
+import { StorageAdapter } from '@/adapters';
+import { Config } from '@/utils';
 import { ComponentGroup } from './ComponentGroup';
-import { Gallery } from '../gallery';
-import { Markdown } from '../markdown';
-import { VideoDb } from '../videodb';
-import { ComponentMetadata, SiteConfig } from '../../contracts/site';
-import { User } from '../../contracts/auth';
+import { Gallery } from '@/services/gallery';
+import { Markdown } from '@/services/markdown';
+import { VideoDb } from '@/services/videodb';
+import { ComponentMetadata, SiteConfig } from '@/contracts/site';
+import { User } from '@/contracts/auth';
 
 export class Site {
   private components: ComponentGroup;

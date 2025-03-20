@@ -1,14 +1,14 @@
 import path from 'path';
 import { Logger } from 'winston';
 
-import { DatabaseAdapter } from '../../adapters/DatabaseAdapter';
-import { StorageAdapter } from '../../adapters/StorageAdapter';
+import { DatabaseAdapter } from '@/adapters/DatabaseAdapter';
+import { StorageAdapter } from '@/adapters/StorageAdapter';
 import { dbUpgradeSql } from './dbUpgradeSql';
-import { NotFoundError, NotPermittedError } from '../../errors';
-import { Config } from '../../utils';
-import { userIsAdmin } from '../auth/utils/access';
-import { User } from '../../contracts/auth';
-import { Video, VideoUpdate, VideoWithId } from '../../contracts/videodb';
+import { NotFoundError, NotPermittedError } from '@/errors';
+import { Config } from '@/utils';
+import { userIsAdmin } from '@/services/auth/utils/access';
+import { User } from '@/contracts/auth';
+import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 
 export const videoFields = [
   'title',

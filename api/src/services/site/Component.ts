@@ -1,16 +1,16 @@
 import YAML from 'yaml';
 
-import { Config } from '../../utils';
-import { userHasReadAccess } from '../auth/utils/access';
-import { Gallery } from '../gallery';
-import { Markdown } from '../markdown';
-import { StorageAdapter } from '../../adapters';
-import { NotFoundError } from '../../errors';
-import { VideoDb } from '../videodb';
+import { Config } from '@/utils';
+import { userHasReadAccess } from '@/services/auth/utils/access';
+import { Gallery } from '@/services/gallery';
+import { Markdown } from '@/services/markdown';
+import { StorageAdapter } from '@/adapters';
+import { NotFoundError } from '@/errors';
+import { VideoDb } from '@/services/videodb';
 import { Logger } from 'winston';
 import { ComponentGroup } from './ComponentGroup';
-import { ComponentMetadata, ComponentMetadataCommon, ComponentTypes } from '../../contracts/site';
-import { User } from '../../contracts/auth';
+import { ComponentMetadata, ComponentMetadataCommon, ComponentTypes } from '@/contracts/site';
+import { User } from '@/contracts/auth';
 
 export class Component {
   private contentYamlPath: string;

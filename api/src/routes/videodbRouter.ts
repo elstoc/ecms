@@ -1,7 +1,7 @@
 import { Router, Response, NextFunction } from 'express';
 
-import { Site } from '../services';
-import { RequestWithUser } from '../middleware';
+import { Site } from '@/services';
+import { RequestWithUser } from '@/middleware';
 
 export const createVideoDbRouter = (site: Site): Router => {
   const videoDbHandler = async (

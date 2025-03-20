@@ -2,7 +2,7 @@
 import { Markdown } from './Markdown';
 import YAML from 'yaml';
 import { splitFrontMatter } from './splitFrontMatter';
-import { NotFoundError, NotPermittedError } from '../../errors';
+import { NotFoundError, NotPermittedError } from '@/errors';
 import path from 'path';
 
 jest.mock('yaml');

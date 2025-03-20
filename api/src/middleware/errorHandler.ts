@@ -8,7 +8,7 @@ import {
   NotFoundError,
   NotPermittedError,
   ValidationErrorDetail,
-} from '../errors';
+} from '@/errors';
 
 interface ExtraErrors extends Error {
   validationErrors?: ValidationErrorDetail[];

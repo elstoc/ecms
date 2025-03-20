@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { StringValue } from 'ms';
 
-import { AuthenticationError } from '../../../errors';
+import { AuthenticationError } from '@/errors';
 
 export const jwtSign = async (
   payload: object,

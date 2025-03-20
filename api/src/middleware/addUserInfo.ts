@@ -1,4 +1,4 @@
-import { Auth } from '../services';
+import { Auth } from '@/services';
 import { RequestHandler } from './types';
 
 export const createAddUserInfoMiddleware =

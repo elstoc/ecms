@@ -1,5 +1,5 @@
 import gm from 'gm';
-import { ImageSize } from '../../../contracts/gallery';
+import { ImageSize } from '@/contracts/gallery';
 
 type ResizeConfig = {
   desc: ImageSize;

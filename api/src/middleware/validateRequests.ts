@@ -1,5 +1,5 @@
-import { EndpointValidator } from '../api';
-import { EndpointValidationError } from '../errors';
+import { EndpointValidator } from '@/api';
+import { EndpointValidationError } from '@/errors';
 import { RequestHandler } from './types';
 
 export const createValidateRequestMiddleware =

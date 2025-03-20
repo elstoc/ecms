@@ -1,8 +1,8 @@
 import { Router, Response, NextFunction } from 'express';
-import { RequestWithUser } from '../middleware';
+import { RequestWithUser } from '@/middleware';
 
-import { Site } from '../services';
-import { ImageSize } from '../contracts/gallery';
+import { Site } from '@/services';
+import { ImageSize } from '@/contracts/gallery';
 
 export const createGalleryRouter = (site: Site): Router => {
   const galleryHandler = async (

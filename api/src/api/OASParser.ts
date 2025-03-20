@@ -1,7 +1,7 @@
 import RefParser from '@apidevtools/json-schema-ref-parser';
 
-import { OASParsingError } from '../errors';
-import { splitPath } from '../utils';
+import { OASParsingError } from '@/errors';
+import { splitPath } from '@/utils';
 import { convertToRecord, convertToStringArray, getRecordAtPath } from './objectUtils';
 import {
   StringValidationSchema,
