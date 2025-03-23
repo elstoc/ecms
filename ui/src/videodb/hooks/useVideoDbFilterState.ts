@@ -53,6 +53,15 @@ const filterReducer: (state: FilterState, operation: FilterOperations) => Filter
   return state;
 };
 
+const setOrDeleteParam = (params: URLSearchParams, key: string, value?: string | null) => {
+  if (value) {
+    params.set(key, value);
+  } else {
+    params.delete(key);
+  }
+  return params;
+};
+
 const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) => URLSearchParams = (
   params,
   state,
@@ -67,22 +76,21 @@ const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) =>
     tags,
     sortPriorityFirst,
   } = state;
-  categories?.length ? params.set('categories', categories) : params.delete('categories');
-  maxLength ? params.set('maxLength', maxLength.toString()) : params.delete('maxLength');
-  titleContains ? params.set('titleContains', titleContains) : params.delete('titleContains');
-  tags ? params.set('tags', tags) : params.delete('tags');
-  watched && ['Y', 'N'].includes(watched)
-    ? params.set('watched', watched)
-    : params.delete('watched');
-  mediaWatched && ['Y', 'N'].includes(mediaWatched)
-    ? params.set('mediaWatched', mediaWatched)
-    : params.delete('mediaWatched');
-  minResolution && ['HD', 'UHD'].includes(minResolution)
-    ? params.set('minResolution', minResolution)
-    : params.delete('minResolution');
-  sortPriorityFirst
-    ? params.set('sortPriorityFirst', sortPriorityFirst ? '1' : '0')
-    : params.delete('sortPriorityFirst');
+
+  const minResolutionParam = ['HD', 'UHD'].includes(minResolution ?? '') ? minResolution : '';
+  const watchedParam = ['Y', 'N'].includes(watched ?? '') ? watched : '';
+  const mediaWatchedParam = ['Y', 'N'].includes(mediaWatched ?? '') ? mediaWatched : '';
+  const sortPriorityFirstParam = sortPriorityFirst ? '1' : '';
+
+  setOrDeleteParam(params, 'categories', categories);
+  setOrDeleteParam(params, 'maxLength', maxLength?.toString());
+  setOrDeleteParam(params, 'titleContains', titleContains);
+  setOrDeleteParam(params, 'tags', tags);
+  setOrDeleteParam(params, 'watched', watchedParam);
+  setOrDeleteParam(params, 'mediaWatched', mediaWatchedParam);
+  setOrDeleteParam(params, 'minResolution', minResolutionParam);
+  setOrDeleteParam(params, 'sortPriorityFirst', sortPriorityFirstParam);
+
   return params;
 };
 
