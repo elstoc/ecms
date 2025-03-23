@@ -1,11 +1,13 @@
-import { Config } from '@/utils';
-import { jwtSign, jwtVerify, jwtDecode } from './utils/jwt';
-import { hashPassword, verifyPasswordWithHash } from './utils/hash';
 import { JwtPayload } from 'jsonwebtoken';
-import { StorageAdapter } from '@/adapters/StorageAdapter';
-import { AuthenticationError } from '@/errors';
 import { Logger } from 'winston';
+
+import { StorageAdapter } from '@/adapters/StorageAdapter';
 import { User } from '@/contracts/auth';
+import { AuthenticationError } from '@/errors';
+import { Config } from '@/utils';
+
+import { hashPassword, verifyPasswordWithHash } from './utils/hash';
+import { jwtDecode, jwtSign, jwtVerify } from './utils/jwt';
 
 type Token = string | undefined;
 

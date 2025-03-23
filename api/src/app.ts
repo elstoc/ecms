@@ -1,9 +1,15 @@
-import path from 'path';
-import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import express from 'express';
+import path from 'path';
+import { Logger } from 'winston';
 
-import { Auth, Site } from './services';
+import { EndpointValidator, OASParser } from './api';
+import {
+  createAddUserInfoMiddleware,
+  createErrorHandlerMiddleware,
+  createValidateRequestMiddleware,
+} from './middleware';
 import {
   createAuthRouter,
   createGalleryRouter,
@@ -11,14 +17,8 @@ import {
   createSiteRouter,
   createVideoDbRouter,
 } from './routes';
-import {
-  createAddUserInfoMiddleware,
-  createErrorHandlerMiddleware,
-  createValidateRequestMiddleware,
-} from './middleware';
+import { Auth, Site } from './services';
 import { Config } from './utils';
-import { EndpointValidator, OASParser } from './api';
-import { Logger } from 'winston';
 
 export const createApp = async (
   config: Config,

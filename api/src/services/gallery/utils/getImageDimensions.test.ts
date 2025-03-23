@@ -1,4 +1,5 @@
 import * as sizeOf from 'image-size';
+
 import { getImageDimensions } from './getImageDimensions';
 
 jest.mock('image-size');

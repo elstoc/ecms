@@ -1,8 +1,10 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import { AuthenticationError } from '@/errors';
 import { Auth } from '..';
+
+import { AuthenticationError } from '@/errors';
+
 import { hashPassword, verifyPasswordWithHash } from './utils/hash';
-import { jwtSign, jwtVerify, jwtDecode } from './utils/jwt';
+import { jwtDecode, jwtSign, jwtVerify } from './utils/jwt';
 
 jest.mock('./utils/hash');
 jest.mock('./utils/jwt');

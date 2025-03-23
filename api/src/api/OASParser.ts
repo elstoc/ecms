@@ -2,16 +2,17 @@ import RefParser from '@apidevtools/json-schema-ref-parser';
 
 import { OASParsingError } from '@/errors';
 import { splitPath } from '@/utils';
+
 import { convertToRecord, convertToStringArray, getRecordAtPath } from './objectUtils';
 import {
-  StringValidationSchema,
-  IntegerValidationSchema,
-  ObjectValidationSchema,
-  ValidationSchema,
-  EndpointValidationSchemas,
+  ArrayValidationSchema,
   EndpointParameterValidationSchema,
   EndpointRequestBodyValidationSchema,
-  ArrayValidationSchema,
+  EndpointValidationSchemas,
+  IntegerValidationSchema,
+  ObjectValidationSchema,
+  StringValidationSchema,
+  ValidationSchema,
 } from './schemas';
 
 export class OASParser {

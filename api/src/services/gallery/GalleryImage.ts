@@ -1,13 +1,14 @@
 import { basename } from 'path';
-
-import { Config } from '@/utils';
-import { StorageAdapter } from '@/adapters/StorageAdapter';
-import { NotFoundError, NotPermittedError } from '@/errors';
-import { getImageDimensions } from './utils/getImageDimensions';
-import { getExif } from './utils/getExif';
-import { resizeImage } from './utils/resizeImage';
 import { Logger } from 'winston';
+
+import { StorageAdapter } from '@/adapters/StorageAdapter';
 import { ImageMetadata, ImageSize } from '@/contracts/gallery';
+import { NotFoundError, NotPermittedError } from '@/errors';
+import { Config } from '@/utils';
+
+import { getExif } from './utils/getExif';
+import { getImageDimensions } from './utils/getImageDimensions';
+import { resizeImage } from './utils/resizeImage';
 
 export const RESIZE_OPTIONS = {
   thumb: {

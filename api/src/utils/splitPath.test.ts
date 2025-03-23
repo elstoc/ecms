@@ -1,4 +1,4 @@
-import { splitPath } from '.';
+import { splitPath } from './splitPath';
 
 describe('splitPath', () => {
   it('returns a single array element for a single item starting with a slash', () => {

@@ -1,5 +1,6 @@
-import { DatabaseAdapter } from './DatabaseAdapter';
 import { Database } from 'sqlite3';
+
+import { DatabaseAdapter } from './DatabaseAdapter';
 
 export class SQLiteDatabaseAdapter implements DatabaseAdapter {
   private database?: Database;

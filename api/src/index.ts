@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv';
 import winston from 'winston';
 
-import { Auth, Site } from './services';
-import { getConfig } from './utils';
 import { LocalFileStorageAdapter } from './adapters/LocalFileStorageAdapter';
 import { createApp } from './app';
+import { Auth, Site } from './services';
+import { getConfig } from './utils';
 
 dotenv.config();
 const config = getConfig();

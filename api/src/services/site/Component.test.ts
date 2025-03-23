@@ -1,11 +1,13 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import YAML from 'yaml';
+
+import { NotFoundError } from '@/errors';
 import { Gallery } from '@/services/gallery/Gallery';
 import { Markdown } from '@/services/markdown/Markdown';
-import { VideoDb } from '@/services/videodb/VideoDb';
-import { ComponentGroup } from './ComponentGroup';
 import { Component } from '@/services/site';
-import { NotFoundError } from '@/errors';
+import { VideoDb } from '@/services/videodb/VideoDb';
+
+import { ComponentGroup } from './ComponentGroup';
 
 jest.mock('yaml');
 jest.mock('@/services/gallery/Gallery');

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NotFoundError } from '@/errors';
-import { EndpointValidator } from '.';
+
+import { EndpointValidator } from './EndpointValidator';
 
 describe('EndpointValidator', () => {
   describe('getEndpointAndPathParams', () => {

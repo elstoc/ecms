@@ -1,13 +1,13 @@
 import { NotFoundError, ValidationErrorDetail } from '@/errors';
-import { convertToArray, convertToRecord, isEmpty } from './objectUtils';
 
+import { convertToArray, convertToRecord, isEmpty } from './objectUtils';
 import {
-  StringValidationSchema,
+  ArrayValidationSchema,
+  EndpointValidationSchemas,
   IntegerValidationSchema,
   ObjectValidationSchema,
+  StringValidationSchema,
   ValidationSchema,
-  EndpointValidationSchemas,
-  ArrayValidationSchema,
 } from './schemas';
 
 type EndpointData = {

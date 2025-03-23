@@ -1,7 +1,6 @@
 import { NextFunction, Response } from 'express';
 import { Logger } from 'winston';
 
-import { RequestWithUser } from './types';
 import {
   AuthenticationError,
   EndpointValidationError,
@@ -9,6 +8,8 @@ import {
   NotPermittedError,
   ValidationErrorDetail,
 } from '@/errors';
+
+import { RequestWithUser } from './types';
 
 interface ExtraErrors extends Error {
   validationErrors?: ValidationErrorDetail[];

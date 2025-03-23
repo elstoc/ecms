@@ -1,4 +1,4 @@
-import { stripWhiteSpace } from '.';
+import { stripWhiteSpace } from './stripWhiteSpace';
 
 it('removes all whitespace from a string', () => {
   const stringToStrip = `This is a 

@@ -1,10 +1,12 @@
-import { GalleryImage } from './GalleryImage';
+import { Logger } from 'winston';
+
+import { StorageAdapter } from '@/adapters/StorageAdapter';
 import { ImageMetadata } from '@/contracts/gallery';
 import { ImageSize } from '@/contracts/gallery';
-import { Config } from '@/utils';
-import { StorageAdapter } from '@/adapters/StorageAdapter';
-import { Logger } from 'winston';
 import { GalleryContents } from '@/contracts/gallery';
+import { Config } from '@/utils';
+
+import { GalleryImage } from './GalleryImage';
 
 export class Gallery {
   private apiPath: string;

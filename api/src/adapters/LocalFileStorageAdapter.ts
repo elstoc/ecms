@@ -1,9 +1,9 @@
 import path from 'path';
-import fs from './fs';
 
-import { StorageAdapter } from './StorageAdapter';
 import { DatabaseAdapter } from './DatabaseAdapter';
 import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
+import { StorageAdapter } from './StorageAdapter';
+import fs from './fs';
 
 export class LocalFileStorageAdapter implements StorageAdapter {
   public constructor(

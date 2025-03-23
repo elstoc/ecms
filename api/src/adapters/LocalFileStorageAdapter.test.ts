@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import fs from './fs';
-import { LocalFileStorageAdapter } from '.';
-import { SQLiteDatabaseAdapter } from '.';
+import { LocalFileStorageAdapter } from './LocalFileStorageAdapter';
+import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
 import { StorageAdapter } from './StorageAdapter';
+import fs from './fs';
+
 const mockSQLiteDatabaseAdapter = jest.mocked(SQLiteDatabaseAdapter);
 
 jest.mock('./SQLiteDatabaseAdapter');

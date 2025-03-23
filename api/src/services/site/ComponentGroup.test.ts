@@ -1,5 +1,5 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import { ComponentGroup, Component } from '..';
+import { Component, ComponentGroup } from '..';
 
 jest.mock('./Component');
 
