@@ -2,14 +2,15 @@ import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 
 import { VideoDbMetadata } from '@/contracts/site';
+import { NotFoundPage } from '@/shared/components/NotFoundPage';
+import { ContentWithSidebar } from '@/shared/components/layout';
 import { useTitle } from '@/shared/hooks';
+
 import { VideoDbStateContext, useVideoDbState } from '../hooks/useVideoDbStateContext';
 
-import { NotFoundPage } from '@/shared/components/NotFoundPage';
 import { VideoDbContent } from './VideoDbContent';
-import { VideoToolbox } from './VideoToolbox';
 import { VideoFilters } from './VideoFilters';
-import { ContentWithSidebar } from '@/shared/components/layout';
+import { VideoToolbox } from './VideoToolbox';
 
 export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
   const videoDbState = useVideoDbState(title, apiPath);

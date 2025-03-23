@@ -1,12 +1,13 @@
-import { Suspense, useContext } from 'react';
 import { Card } from '@blueprintjs/core';
+import { Suspense, useContext } from 'react';
+
+import { ContentWithSidebar } from '@/shared/components/layout';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
-import { ContentWithSidebar } from '@/shared/components/layout';
 import { MarkdownNav } from './MarkdownNav';
-import { MarkdownToolbox } from './MarkdownToolbox';
 import { MarkdownPage } from './MarkdownPage';
+import { MarkdownToolbox } from './MarkdownToolbox';
 
 import './MarkdownContent.scss';
 

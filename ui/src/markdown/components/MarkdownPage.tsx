@@ -4,9 +4,9 @@ import { useSearchParams } from 'react-router-dom';
 import { useGetMarkdownPage } from '../hooks/useMarkdownQueries';
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
-import { MarkdownViewPage } from './MarkdownViewPage';
-import { MarkdownEditPage } from './MarkdownEditPage';
 import { MarkdownAddPage } from './MarkdownAddPage';
+import { MarkdownEditPage } from './MarkdownEditPage';
+import { MarkdownViewPage } from './MarkdownViewPage';
 
 type MarkdownAddPageProps = { apiPath: string };
 

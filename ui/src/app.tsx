@@ -1,12 +1,12 @@
+import { FocusStyleManager } from '@blueprintjs/core';
+import 'modern-normalize';
 import { Suspense } from 'react';
 
-import { SiteRoutes, Header, Footer } from './site';
-import { FocusStyleManager } from '@blueprintjs/core';
+import { Footer, Header, SiteRoutes } from './site';
 
-import 'modern-normalize';
+import './app.scss';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/select/lib/css/blueprint-select.css';
-import './app.scss';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 

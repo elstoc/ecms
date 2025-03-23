@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
+import { MultiTagInput } from '@/shared/components/forms';
+
 import { useGetTags } from '../hooks/useVideoDbQueries';
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
-
-import { MultiTagInput } from '@/shared/components/forms';
 
 type TagInputProps = {
   tags: string | null;

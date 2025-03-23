@@ -1,12 +1,12 @@
-import { Suspense } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { createRoot } from 'react-dom/client';
+import { BlueprintProvider } from '@blueprintjs/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
+import { BrowserRouter } from 'react-router-dom';
 
 import { App } from './app';
 import { ErrorFallback } from './shared/components/fallbacks';
-import { BlueprintProvider } from '@blueprintjs/core';
 
 const queryDefaults = { defaultOptions: { queries: { retry: 2 } } };
 

@@ -1,11 +1,12 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { VideoWithId } from '@/contracts/videodb';
+
 import { usePostVideo } from '../hooks/useVideoDbQueries';
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 import { EditVideoForm } from './EditVideoForm';
-import { VideoWithId } from '@/contracts/videodb';
 
 const initialVideo = {
   id: 0,

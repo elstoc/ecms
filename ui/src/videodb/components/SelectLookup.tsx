@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
-import { useGetLookup } from '../hooks/useVideoDbQueries';
-
 import { SelectKeyValue } from '@/shared/components/forms';
+
+import { useGetLookup } from '../hooks/useVideoDbQueries';
+import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 type SelectLookupProps = {
   lookupTable: string;

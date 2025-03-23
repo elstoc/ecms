@@ -1,8 +1,9 @@
+import { Card } from '@blueprintjs/core';
 import { createRef, startTransition, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Card } from '@blueprintjs/core';
 
 import { useElementIsVisible } from '@/shared/hooks/useElementIsVisible';
+
 import { useGetVideos } from '../hooks/useVideoDbQueries';
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 

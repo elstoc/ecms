@@ -1,17 +1,18 @@
-import { useCallback, useState } from 'react';
 import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
+import { useCallback, useState } from 'react';
 
 import { VideoWithId } from '@/contracts/videodb';
-import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
-
 import {
-  Switch,
   NullableIntInput,
   NullableStringInput,
   StringInput,
+  Switch,
 } from '@/shared/components/forms';
-import { SelectLookup } from './SelectLookup';
+
+import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
+
 import { NullableSelectLookup } from './NullableSelectLookup';
+import { SelectLookup } from './SelectLookup';
 import { TagInput } from './TagInput';
 
 import './EditVideoForm.scss';

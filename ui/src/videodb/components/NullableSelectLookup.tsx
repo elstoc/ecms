@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
+import { NullableSelectKeyValue } from '@/shared/components/forms';
+
 import { useGetLookup } from '../hooks/useVideoDbQueries';
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
-
-import { NullableSelectKeyValue } from '@/shared/components/forms';
 
 type NullableSelectLookupProps = {
   lookupTable: string;

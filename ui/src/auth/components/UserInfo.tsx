@@ -1,10 +1,10 @@
-import { Suspense, useState } from 'react';
-import { Dialog, DialogBody } from '@blueprintjs/core';
-
-import { useSiteConfig } from '@/site';
 import { useGetUserInfo } from '..';
+import { Dialog, DialogBody } from '@blueprintjs/core';
+import { Suspense, useState } from 'react';
 
 import { Icon } from '@/shared/components/icon';
+import { useSiteConfig } from '@/site';
+
 import { Login } from './Login';
 import { Welcome } from './Welcome';
 

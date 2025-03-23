@@ -1,20 +1,20 @@
 // See https://react-icons.github.io/react-icons for summary of available icons
+import { IconType } from 'react-icons';
 import {
+  FiCheck,
   FiChevronLeft,
   FiChevronRight,
+  FiDownload,
   FiEdit,
   FiFlag,
+  FiMenu,
+  FiPlusSquare,
   FiSave,
   FiTrash2,
   FiUser,
   FiUserX,
   FiX,
-  FiPlusSquare,
-  FiMenu,
-  FiDownload,
-  FiCheck,
 } from 'react-icons/fi';
-import { IconType } from 'react-icons';
 
 import './Icon.scss';
 

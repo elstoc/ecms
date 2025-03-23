@@ -1,12 +1,12 @@
 import { useCallback, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { downloadVideoCSV } from '../utils/downloadVideoCSV';
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 import { useGetUserIsAdmin } from '@/auth/hooks/useAuthQueries';
+import { Icon } from '@/shared/components/icon';
 import { useIsDualPanel } from '@/shared/hooks';
 
-import { Icon } from '@/shared/components/icon';
+import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
+import { downloadVideoCSV } from '../utils/downloadVideoCSV';
 
 export const VideoToolbox = () => {
   const userIsAdmin = useGetUserIsAdmin();

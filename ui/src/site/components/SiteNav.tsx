@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom';
 import { Classes, Popover } from '@blueprintjs/core';
+import { NavLink } from 'react-router-dom';
 
 import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
 

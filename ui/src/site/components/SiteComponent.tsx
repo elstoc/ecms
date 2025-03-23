@@ -1,5 +1,4 @@
 import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
-
 import { Gallery } from '@/gallery';
 import { Markdown } from '@/markdown';
 import { VideoDb } from '@/videodb';

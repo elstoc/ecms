@@ -1,13 +1,13 @@
 import { ReactElement, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { remarkDefinitionList, defListHastHandlers } from 'remark-definition-list';
-import remarkGfm from 'remark-gfm';
-import emoji from 'remark-emoji';
-import smartypants from 'remark-smartypants';
 import rehypeHighlight from 'rehype-highlight';
+import { defListHastHandlers, remarkDefinitionList } from 'remark-definition-list';
+import emoji from 'remark-emoji';
+import remarkGfm from 'remark-gfm';
+import smartypants from 'remark-smartypants';
 
-import './RenderMdCode.scss';
 import './RenderMd.scss';
+import './RenderMdCode.scss';
 
 export type RenderMdProps = {
   markdown: string;

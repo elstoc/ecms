@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { FormGroup, MenuItem } from '@blueprintjs/core';
 import { ItemPredicate, ItemRenderer, MultiSelect } from '@blueprintjs/select';
+import { useState } from 'react';
 
 import './MultiSelectKeyValue.scss';
 

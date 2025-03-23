@@ -1,13 +1,13 @@
+import { Dialog, DialogBody } from '@blueprintjs/core';
 import { Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Dialog, DialogBody } from '@blueprintjs/core';
 
 import { useGetUserIsAdmin } from '@/auth/hooks/useAuthQueries';
-
 import { NotFoundPage } from '@/shared/components/NotFoundPage';
-import { VideoList } from './VideoList';
-import { UpdateVideo } from './UpdateVideo';
+
 import { AddVideo } from './AddVideo';
+import { UpdateVideo } from './UpdateVideo';
+import { VideoList } from './VideoList';
 
 import './VideoDbContent.scss';
 

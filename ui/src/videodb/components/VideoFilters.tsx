@@ -1,13 +1,14 @@
 import { Button } from '@blueprintjs/core';
 
-import { useVideoDbFilterState } from '../hooks/useVideoDbFilterState';
-
 import {
   NullableIntInput,
   NullableStringInput,
-  Switch,
   SegmentedControlInput,
+  Switch,
 } from '@/shared/components/forms';
+
+import { useVideoDbFilterState } from '../hooks/useVideoDbFilterState';
+
 import { NullableSelectLookup } from './NullableSelectLookup';
 import { TagInput } from './TagInput';
 

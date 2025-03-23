@@ -1,4 +1,4 @@
-import { FormGroup, Switch as BlueprintSwitch } from '@blueprintjs/core';
+import { Switch as BlueprintSwitch, FormGroup } from '@blueprintjs/core';
 
 import './Switch.scss';
 

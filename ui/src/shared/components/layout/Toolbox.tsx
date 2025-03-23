@@ -1,5 +1,5 @@
-import { ReactElement } from 'react';
 import { Card } from '@blueprintjs/core';
+import { ReactElement } from 'react';
 
 import './Toolbox.scss';
 

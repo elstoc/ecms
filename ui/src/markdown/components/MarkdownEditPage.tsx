@@ -1,4 +1,4 @@
-import { Suspense, useContext, lazy } from 'react';
+import { Suspense, lazy, useContext } from 'react';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 

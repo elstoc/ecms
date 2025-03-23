@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { LightBox } from '@/shared/components/lightbox';
 import { useTitle } from '@/shared/hooks';
+
 import { useGalleryContent } from '../hooks/useGalleryQueries';
 import { GalleryStateContext } from '../hooks/useGalleryState';
-
-import { LightBox } from '@/shared/components/lightbox';
 
 export const GalleryLightBox = () => {
   const [searchParams, setSearchParams] = useSearchParams();

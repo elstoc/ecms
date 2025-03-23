@@ -2,9 +2,10 @@ import { useContext } from 'react';
 
 import { useTitle } from '@/shared/hooks';
 
-import { JustifiedGallery } from './JustifiedGallery';
-import { GalleryLightBox } from './GalleryLightBox';
 import { GalleryStateContext } from '../hooks/useGalleryState';
+
+import { GalleryLightBox } from './GalleryLightBox';
+import { JustifiedGallery } from './JustifiedGallery';
 
 import './GalleryContent.scss';
 

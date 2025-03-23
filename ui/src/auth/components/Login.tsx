@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react';
 import { Button, Card } from '@blueprintjs/core';
-
-import { useLogin } from '../hooks/useAuthQueries';
+import { useCallback, useState } from 'react';
 
 import { PasswordInput, StringInput } from '@/shared/components/forms';
+
+import { useLogin } from '../hooks/useAuthQueries';
 
 import './Login.scss';
 

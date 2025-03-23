@@ -1,7 +1,7 @@
-import CodeMirror from '@uiw/react-codemirror';
 import { markdown as codeMirrorMarkdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
 import { EditorView } from '@codemirror/view';
+import CodeMirror from '@uiw/react-codemirror';
 
 import './EditMd.scss';
 

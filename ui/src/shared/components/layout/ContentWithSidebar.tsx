@@ -1,9 +1,10 @@
-import { ReactElement, useEffect, useState } from 'react';
 import { Collapse } from '@blueprintjs/core';
+import { ReactElement, useEffect, useState } from 'react';
 
 import { useIsDualPanel } from '@/shared/hooks';
 
 import { Icon } from '../icon';
+
 import { Toolbox } from './Toolbox';
 
 import './ContentWithSidebar.scss';
