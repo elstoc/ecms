@@ -10,10 +10,10 @@ import { GalleryThumb } from './GalleryThumb';
 
 export const JustifiedGallery = () => {
   const {
-    galleryState: { apiPath, maxImages, activeImageIndex },
+    galleryState: { activeImageIndex },
     galleryStateReducer,
   } = useContext(GalleryStateContext);
-  const { images, allImageFiles } = useGalleryContent(apiPath, maxImages);
+  const { images, allImageFiles } = useGalleryContent();
 
   const loadMoreImages = useCallback(
     () =>

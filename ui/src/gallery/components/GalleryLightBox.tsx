@@ -10,10 +10,10 @@ import { GalleryStateContext } from '../hooks/useGalleryState';
 export const GalleryLightBox = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const {
-    galleryState: { apiPath, maxImages, title },
+    galleryState: { title },
     galleryStateReducer,
   } = useContext(GalleryStateContext);
-  const { images, allImageFiles } = useGalleryContent(apiPath, maxImages);
+  const { images, allImageFiles } = useGalleryContent();
 
   const imageName = searchParams.get('image');
   const imageIndex = allImageFiles.findIndex((fileName) => fileName === imageName);
