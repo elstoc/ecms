@@ -16,7 +16,7 @@ const mockLogger = {
 
 jest.mock('./GalleryImage');
 
-const config = {} as any;
+const config = { galleryPageSize: 3 } as any;
 const imageFiles = [
   'image12.jpg',
   'image01.jpg',
@@ -32,20 +32,6 @@ const imageFiles = [
   'image11.jpg',
   'notimage.txt',
 ];
-const filteredSortedImageFiles = [
-  'image12.jpg',
-  'image11.jpg',
-  'image10.jpg',
-  'image09.jpg',
-  'image08.jpg',
-  'image07.jpg',
-  'image06.jpg',
-  'image05.jpg',
-  'image04.jpg',
-  'image03.jpg',
-  'image02.jpg',
-  'image01.jpg',
-];
 
 const GalleryImageMock = GalleryImage as jest.Mock;
 
@@ -58,42 +44,37 @@ describe('Gallery', () => {
       mockStorage.listContentChildren.mockImplementation(async (_: any, fileMatcher: any) => {
         return imageFiles.filter(fileMatcher as any);
       });
-    });
-
-    it('only creates GalleryImage instances for files it has not seen before', async () => {
-      await gallery.getContents(3);
-      await gallery.getContents(3);
-      expect(GalleryImageMock).toHaveBeenCalledTimes(3);
-      await gallery.getContents(6);
-      expect(GalleryImageMock).toHaveBeenCalledTimes(6);
-      await gallery.getContents(9);
-      expect(GalleryImageMock).toHaveBeenCalledTimes(9);
-    });
-
-    it('returns metadata for each file in reverse order (within defined limit), plus total count', async () => {
       GalleryImageMock.mockImplementation((_, inputFilePath) => ({
         getImageMetadata: () => ({ filePath: inputFilePath }),
       }));
+    });
 
+    it('only creates GalleryImage instances for files it has not seen before', async () => {
+      await gallery.getContents(1);
+      await gallery.getContents(1);
+      expect(GalleryImageMock).toHaveBeenCalledTimes(3);
+      await gallery.getContents(2);
+      expect(GalleryImageMock).toHaveBeenCalledTimes(6);
+      await gallery.getContents(3);
+      expect(GalleryImageMock).toHaveBeenCalledTimes(9);
+    });
+
+    it('returns metadata for each file in reverse order (within defined page limit), plus page info', async () => {
       const expectedReturnData = {
-        allImageFiles: filteredSortedImageFiles,
         images: [
           { filePath: 'gallery/image12.jpg' },
           { filePath: 'gallery/image11.jpg' },
           { filePath: 'gallery/image10.jpg' },
         ],
+        currentPage: 1,
+        totalPages: 4,
       };
-      const returnData = await gallery.getContents(3);
+      const returnData = await gallery.getContents(1);
       expect(returnData).toStrictEqual(expectedReturnData);
     });
 
-    it('returns metadata for each file in reverse order (with no limit), plus total count', async () => {
-      GalleryImageMock.mockImplementation((_, inputFilePath) => ({
-        getImageMetadata: () => ({ filePath: inputFilePath }),
-      }));
-
+    it('returns metadata for each file in reverse order (with too-large page count), plus page info', async () => {
       const expectedReturnData = {
-        allImageFiles: filteredSortedImageFiles,
         images: [
           { filePath: 'gallery/image12.jpg' },
           { filePath: 'gallery/image11.jpg' },
@@ -108,8 +89,30 @@ describe('Gallery', () => {
           { filePath: 'gallery/image02.jpg' },
           { filePath: 'gallery/image01.jpg' },
         ],
+        currentPage: 4,
+        totalPages: 4,
       };
-      const returnData = await gallery.getContents();
+      const returnData = await gallery.getContents(99);
+      expect(returnData).toStrictEqual(expectedReturnData);
+    });
+
+    it('returns more pages if a requested image falls outside of the requested pages', async () => {
+      const expectedReturnData = {
+        images: [
+          { filePath: 'gallery/image12.jpg' },
+          { filePath: 'gallery/image11.jpg' },
+          { filePath: 'gallery/image10.jpg' },
+          { filePath: 'gallery/image09.jpg' },
+          { filePath: 'gallery/image08.jpg' },
+          { filePath: 'gallery/image07.jpg' },
+          { filePath: 'gallery/image06.jpg' },
+          { filePath: 'gallery/image05.jpg' },
+          { filePath: 'gallery/image04.jpg' },
+        ],
+        currentPage: 3,
+        totalPages: 4,
+      };
+      const returnData = await gallery.getContents(1, 'image06.jpg');
       expect(returnData).toStrictEqual(expectedReturnData);
     });
   });

@@ -1,5 +1,9 @@
 import { RefObject, useEffect } from 'react';
 
 export const useScrollIntoView = (ref: RefObject<HTMLElement | null>) => {
-  useEffect(() => ref?.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }));
+  useEffect(() => {
+    setTimeout(() => {
+      ref?.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }, 10);
+  }, [ref.current]);
 };

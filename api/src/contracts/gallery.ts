@@ -20,5 +20,6 @@ export type ImageMetadata = {
 
 export type GalleryContents = {
   images: ImageMetadata[];
-  allImageFiles: string[];
+  currentPage: number;
+  totalPages: number;
 };

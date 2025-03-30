@@ -15,4 +15,8 @@ export type ImageMetadata = {
   fhdSrcUrl: string;
 };
 
-export type GalleryContents = { images: ImageMetadata[]; allImageFiles: string[] };
+export type GalleryContents = {
+  images: ImageMetadata[];
+  currentPage: number;
+  totalPages: number;
+};

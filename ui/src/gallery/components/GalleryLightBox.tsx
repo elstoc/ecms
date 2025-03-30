@@ -11,25 +11,18 @@ export const GalleryLightBox = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const {
     galleryState: { title },
-    galleryStateReducer,
   } = useContext(GalleryStateContext);
-  const { images, allImageFiles } = useGalleryContent();
+  const { images } = useGalleryContent();
 
   const imageName = searchParams.get('image');
-  const imageIndex = allImageFiles.findIndex((fileName) => fileName === imageName);
-
-  if (images && imageName && imageIndex < 0) {
-    // requested LightBox image does not exist
-    setSearchParams({}, { replace: true });
-  }
+  const imageIndex = images.findIndex((image) => image.fileName === imageName);
 
   useEffect(() => {
-    if (imageIndex >= images.length && images.length < allImageFiles.length) {
-      // requested LightBox image is available but not currently loaded
-      galleryStateReducer({ action: 'setMaxImages', value: imageIndex + 1 });
+    if (images && imageName && imageIndex < 0) {
+      // requested LightBox image does not exist
+      setSearchParams({}, { replace: true });
     }
-    galleryStateReducer({ action: 'setActiveImageIndex', value: imageIndex });
-  }, [images, allImageFiles, imageIndex, galleryStateReducer]);
+  }, [images, imageName, imageIndex]);
 
   useTitle(imageName ? `${title} - ${imageName}` : title);
 

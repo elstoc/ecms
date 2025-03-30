@@ -30,7 +30,6 @@ export type Config = {
   apiPort: number;
   uiUrl: string;
   dataDir: string;
-  omdbApiKey: string;
   storageWriteUid?: number;
   storageWriteGid?: number;
   enableAuthentication: boolean;
@@ -40,6 +39,8 @@ export type Config = {
   jwtAccessSecret: string;
   footerText: string;
   siteTitle: string;
+  omdbApiKey: string;
+  galleryPageSize: number;
 };
 
 export const getConfig = (): Config => {
@@ -49,7 +50,6 @@ export const getConfig = (): Config => {
     apiPort: getIntConfig('API_PORT'),
     uiUrl: getStringConfig('UI_URL'),
     dataDir: getStringConfig('DATA_DIR'),
-    omdbApiKey: getOptionalStringConfig('OMDB_API_KEY', ''),
     storageWriteUid: parseInt(getOptionalStringConfig('STORAGE_WRITE_UID', '0')),
     storageWriteGid: parseInt(getOptionalStringConfig('STORAGE_WRITE_GID', '0')),
     enableAuthentication: getBooleanConfig('ENABLE_AUTHENTICATION'),
@@ -59,5 +59,7 @@ export const getConfig = (): Config => {
     jwtAccessSecret: getOptionalStringConfig('JWT_ACCESS_SECRET', ''),
     footerText: getOptionalStringConfig('FOOTER_TEXT', ''),
     siteTitle: getOptionalStringConfig('SITE_TITLE', ''),
+    omdbApiKey: getOptionalStringConfig('OMDB_API_KEY', ''),
+    galleryPageSize: parseInt(getOptionalStringConfig('GALLERY_PAGE_SIZE', '25')),
   };
 };

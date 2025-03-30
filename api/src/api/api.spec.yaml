@@ -84,13 +84,19 @@ paths:
       description: Get metadata for images in a gallery
       parameters:
         - $ref: '#/components/parameters/ComponentPath'
-        - in: query
-          name: limit
-          description: The maximum number of images to return
+        - name: pages
+          description: The number of pages requested
+          in: query
           required: false
           schema:
             type: integer
             minimum: 0
+        - name: includeFile
+          description: A file name that is required in the output (may override pages parameter)
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: OK

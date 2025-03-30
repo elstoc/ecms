@@ -1,4 +1,5 @@
 import { createRef, startTransition, useCallback, useContext, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Tesselate } from '@/shared/components/layout';
 import { useElementIsVisible, useScrollIntoView } from '@/shared/hooks';
@@ -9,18 +10,19 @@ import { GalleryStateContext } from '../hooks/useGalleryState';
 import { GalleryThumb } from './GalleryThumb';
 
 export const JustifiedGallery = () => {
-  const {
-    galleryState: { activeImageIndex },
-    galleryStateReducer,
-  } = useContext(GalleryStateContext);
-  const { images, allImageFiles } = useGalleryContent();
+  const [searchParams] = useSearchParams();
+  const { galleryStateReducer } = useContext(GalleryStateContext);
+  const { images, totalPages, currentPage } = useGalleryContent();
 
   const loadMoreImages = useCallback(
     () =>
       startTransition(() => {
-        galleryStateReducer({ action: 'incrementMaxImages', value: allImageFiles.length });
+        galleryStateReducer({
+          action: 'setPages',
+          value: Math.min(totalPages, currentPage + 1),
+        });
       }),
-    [allImageFiles, galleryStateReducer],
+    [currentPage, totalPages],
   );
 
   const refPenultimateImage = createRef<HTMLAnchorElement>();
@@ -32,7 +34,7 @@ export const JustifiedGallery = () => {
   const imageTiles = useMemo(
     () =>
       images.map((image, index) => {
-        let ref = index === activeImageIndex ? refActiveImage : null;
+        let ref = image.fileName === searchParams.get('image') ? refActiveImage : null;
         if (index === images.length - 2) ref = refPenultimateImage;
 
         const element = (
@@ -52,7 +54,7 @@ export const JustifiedGallery = () => {
           maxWidth: image.thumbDimensions.width,
         };
       }),
-    [activeImageIndex, images, refActiveImage, refPenultimateImage],
+    [images, refActiveImage, refPenultimateImage],
   );
 
   return <Tesselate tiles={imageTiles} />;

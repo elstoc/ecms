@@ -1,22 +1,25 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 import { GalleryMetadata } from '@/contracts/site';
 import { NotFoundPage } from '@/shared/components/NotFoundPage';
 
-import {
-  GalleryStateContext,
-  getInitialState,
-  useGalleryStateReducer,
-} from '../hooks/useGalleryState';
+import { GalleryStateContext, useGalleryStateReducer } from '../hooks/useGalleryState';
 
 import { GalleryContent } from './GalleryContent';
 
 export const Gallery = (props: GalleryMetadata) => {
+  const [searchParams] = useSearchParams();
+  const initialImage = searchParams.get('image') ?? undefined;
   const { apiPath, title } = props;
-  const { galleryState, galleryStateReducer } = useGalleryStateReducer(
-    getInitialState(apiPath, title),
-  );
+
+  const { galleryState, galleryStateReducer } = useGalleryStateReducer({
+    apiPath,
+    title,
+    pages: 1,
+    initialImage,
+  });
 
   return (
     <GalleryStateContext.Provider value={{ galleryState, galleryStateReducer }}>

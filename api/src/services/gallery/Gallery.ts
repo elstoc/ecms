@@ -21,17 +21,33 @@ export class Gallery {
     this.apiPath = apiPath.replace(/^\//, '');
   }
 
-  public async getContents(limit?: number): Promise<GalleryContents> {
-    this.logger.debug(`getting contents of ${this.apiPath} (limit ${limit})`);
-    const allImageFiles = (await this.getJpegFileNames()).sort().reverse();
+  public async getContents(requestedPages = 1, includeFile?: string): Promise<GalleryContents> {
+    this.logger.debug(
+      `getting contents of ${this.apiPath} (requestedPages ${requestedPages}, includeFile: ${includeFile})`,
+    );
+
+    const { galleryPageSize } = this.config;
+    const allFileNames = (await this.getJpegFileNames()).sort().reverse();
+    const totalPages = Math.ceil(allFileNames.length / galleryPageSize);
+
+    let currentPage = Math.min(totalPages, requestedPages);
+    if (includeFile && currentPage < totalPages) {
+      const includeFileIndex = allFileNames.indexOf(includeFile);
+      const pageContainingFile = Math.ceil((includeFileIndex + 1) / galleryPageSize);
+      currentPage = Math.max(pageContainingFile, currentPage);
+    }
 
     const images = await Promise.all(
-      allImageFiles
-        .slice(0, limit)
+      allFileNames
+        .slice(0, currentPage * galleryPageSize)
         .map((fileName) => this.getImageMetadata(`${this.apiPath}/${fileName}`)),
     );
 
-    return { images, allImageFiles };
+    return {
+      images,
+      currentPage,
+      totalPages,
+    };
   }
 
   private async getImageMetadata(apiPath: string): Promise<ImageMetadata> {

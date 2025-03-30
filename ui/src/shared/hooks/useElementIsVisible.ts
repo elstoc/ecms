@@ -16,6 +16,6 @@ export const useElementIsVisible = (ref: RefObject<HTMLElement | null>, cb: () =
         });
         observer.observe(element);
       }
-    }, 100);
+    }, 10);
   }, [ref, cb]);
 };
