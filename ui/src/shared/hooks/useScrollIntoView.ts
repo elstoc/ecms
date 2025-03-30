@@ -5,5 +5,5 @@ export const useScrollIntoView = (ref: RefObject<HTMLElement | null>) => {
     setTimeout(() => {
       ref?.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }, 10);
-  }, [ref.current]);
+  });
 };
