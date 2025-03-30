@@ -1,4 +1,4 @@
-import { createRef, startTransition, useCallback, useContext, useMemo } from 'react';
+import { createRef, useCallback, useContext, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Tesselate } from '@/shared/components/layout';
@@ -16,11 +16,9 @@ export const JustifiedGallery = () => {
 
   const loadMoreImages = useCallback(
     () =>
-      startTransition(() => {
-        galleryStateReducer({
-          action: 'setPages',
-          value: Math.min(totalPages, currentPage + 1),
-        });
+      galleryStateReducer({
+        action: 'setPages',
+        value: Math.min(totalPages, currentPage + 1),
       }),
     [currentPage, totalPages],
   );

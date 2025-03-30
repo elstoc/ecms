@@ -1,5 +1,5 @@
 import { Card } from '@blueprintjs/core';
-import { createRef, startTransition, useContext } from 'react';
+import { createRef, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useElementIsVisible } from '@/shared/hooks/useElementIsVisible';
@@ -43,9 +43,7 @@ export const VideoList = () => {
   const refLastVideo = createRef<HTMLDivElement>();
 
   useElementIsVisible(refLastVideo, () => {
-    startTransition(() => {
-      videoDbReducer({ action: 'increaseLimit', currentlyLoaded: videos.length });
-    });
+    videoDbReducer({ action: 'increaseLimit', currentlyLoaded: videos.length });
   });
 
   return (
