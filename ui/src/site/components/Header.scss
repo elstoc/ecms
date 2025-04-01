@@ -9,6 +9,18 @@
   align-items: center;
   border-bottom: 1px solid lightgray;
 
+  .toolbar {
+    display: flex;
+    column-gap: 10px;
+    flex-direction: row;
+
+    #component-toolbox {
+      display: flex;
+      column-gap: 5px;
+      flex-direction: row;
+    }
+  }
+
   .left {
     display: flex;
     flex-direction: column;

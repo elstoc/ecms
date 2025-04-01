@@ -19,7 +19,10 @@ export const Header = () => {
           {siteTitle && <div className='site-title'>{siteTitle}</div>}
           <SiteNav siteComponents={siteComponents} />
         </div>
-        <UserInfo />
+        <div className='toolbar'>
+          <div id='component-toolbox'></div>
+          <UserInfo />
+        </div>
       </div>
     </Suspense>
   );
