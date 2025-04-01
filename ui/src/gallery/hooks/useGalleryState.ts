@@ -5,6 +5,8 @@ export type GalleryState = {
   apiPath: string;
   pages: number;
   initialImage?: string;
+  sortOrder: 'asc' | 'desc' | 'shuffle';
+  shuffleSeed?: number;
 };
 
 type GalleryStateContextProps = {
@@ -12,10 +14,15 @@ type GalleryStateContextProps = {
   galleryStateReducer: React.Dispatch<GalleryReducerActions>;
 };
 
-type GalleryReducerActions = {
-  action: 'setPages';
-  value: number;
-};
+type GalleryReducerActions =
+  | {
+      action: 'setPages';
+      value: number;
+    }
+  | {
+      action: 'setSortOrder';
+      value: 'asc' | 'desc' | 'shuffle';
+    };
 
 const stateReducer: (state: GalleryState, actions: GalleryReducerActions) => GalleryState = (
   state,
@@ -23,6 +30,13 @@ const stateReducer: (state: GalleryState, actions: GalleryReducerActions) => Gal
 ) => {
   if (actions.action === 'setPages') {
     return { ...state, pages: actions.value };
+  } else if (actions.action === 'setSortOrder') {
+    return {
+      ...state,
+      pages: 1,
+      sortOrder: actions.value,
+      shuffleSeed: actions.value === 'shuffle' ? (Math.random() * 2 ** 32) >>> 0 : undefined,
+    };
   }
   return state;
 };

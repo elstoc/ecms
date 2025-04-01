@@ -8,12 +8,12 @@ import { GalleryStateContext } from './useGalleryState';
 
 export const useGalleryContent = () => {
   const {
-    galleryState: { apiPath, pages, initialImage },
+    galleryState: { apiPath, pages, initialImage, sortOrder, shuffleSeed },
   } = useContext(GalleryStateContext);
 
   // initialImage is not present in the key to avoid unnecessary reload
   return useCustomQuery({
-    queryKey: ['galleryContents', apiPath, pages],
-    queryFn: () => getGalleryContents(apiPath, pages, initialImage),
+    queryKey: ['galleryContents', apiPath, pages, sortOrder, shuffleSeed ?? 0],
+    queryFn: () => getGalleryContents(apiPath, pages, initialImage, sortOrder, shuffleSeed),
   });
 };

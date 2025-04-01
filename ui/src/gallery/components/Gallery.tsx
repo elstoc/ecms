@@ -19,6 +19,7 @@ export const Gallery = (props: GalleryMetadata) => {
     title,
     pages: 1,
     initialImage,
+    sortOrder: 'desc',
   });
 
   return (
