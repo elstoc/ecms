@@ -97,6 +97,23 @@ paths:
           required: false
           schema:
             type: string
+        - name: shuffleSeed
+          description: A random 32 bit integer to use as the shuffle seed value
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: sortOrder
+          description: The order in which to sort the images
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+              - shuffle
       responses:
         '200':
           description: OK
