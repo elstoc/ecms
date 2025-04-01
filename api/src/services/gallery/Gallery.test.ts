@@ -59,7 +59,21 @@ describe('Gallery', () => {
       expect(GalleryImageMock).toHaveBeenCalledTimes(9);
     });
 
-    it('returns metadata for each file in reverse order (within defined page limit), plus page info', async () => {
+    it('(sort ascending) returns metadata for each file in ascending order (within defined page limit), plus page info', async () => {
+      const expectedReturnData = {
+        images: [
+          { filePath: 'gallery/image01.jpg' },
+          { filePath: 'gallery/image02.jpg' },
+          { filePath: 'gallery/image03.jpg' },
+        ],
+        currentPage: 1,
+        totalPages: 4,
+      };
+      const returnData = await gallery.getContents(1, undefined, 'asc');
+      expect(returnData).toStrictEqual(expectedReturnData);
+    });
+
+    it('(default) returns metadata for each file in descending order (within defined page limit), plus page info', async () => {
       const expectedReturnData = {
         images: [
           { filePath: 'gallery/image12.jpg' },
@@ -70,6 +84,48 @@ describe('Gallery', () => {
         totalPages: 4,
       };
       const returnData = await gallery.getContents(1);
+      expect(returnData).toStrictEqual(expectedReturnData);
+    });
+
+    it('(sort desc) returns metadata for each file in descending order (within defined page limit), plus page info', async () => {
+      const expectedReturnData = {
+        images: [
+          { filePath: 'gallery/image12.jpg' },
+          { filePath: 'gallery/image11.jpg' },
+          { filePath: 'gallery/image10.jpg' },
+        ],
+        currentPage: 1,
+        totalPages: 4,
+      };
+      const returnData = await gallery.getContents(1, undefined, 'desc');
+      expect(returnData).toStrictEqual(expectedReturnData);
+    });
+
+    it('(shuffle with no seed) returns metadata for each file in descending order (within defined page limit), plus page info', async () => {
+      const expectedReturnData = {
+        images: [
+          { filePath: 'gallery/image12.jpg' },
+          { filePath: 'gallery/image11.jpg' },
+          { filePath: 'gallery/image10.jpg' },
+        ],
+        currentPage: 1,
+        totalPages: 4,
+      };
+      const returnData = await gallery.getContents(1, undefined, 'shuffle');
+      expect(returnData).toStrictEqual(expectedReturnData);
+    });
+
+    it('(shuffle with fixed seed) returns metadata for each file in shuffled order (within defined page limit), plus page info', async () => {
+      const expectedReturnData = {
+        images: [
+          { filePath: 'gallery/image06.jpg' },
+          { filePath: 'gallery/image04.jpg' },
+          { filePath: 'gallery/image02.jpg' },
+        ],
+        currentPage: 1,
+        totalPages: 4,
+      };
+      const returnData = await gallery.getContents(1, undefined, 'shuffle', 12345678);
       expect(returnData).toStrictEqual(expectedReturnData);
     });
 

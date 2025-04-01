@@ -12,11 +12,16 @@ export const createGalleryRouter = (site: Site): Router => {
     fn: string,
   ): Promise<void> => {
     try {
-      const { path, size, timestamp, pages, includeFile } = req.query;
+      const { path, size, timestamp, pages, includeFile, sortOrder, shuffleSeed } = req.query;
       const gallery = await site.getGallery(path as string);
       if (fn === 'contents') {
         const pagesInt = pages ? parseInt(pages.toString()) : undefined;
-        const images = await gallery.getContents(pagesInt, includeFile?.toString());
+        const images = await gallery.getContents(
+          pagesInt,
+          includeFile?.toString(),
+          sortOrder?.toString(),
+          parseInt(shuffleSeed?.toString() ?? '0'),
+        );
         res.json(images);
       } else if (fn === 'image') {
         const imageFileBuf = await gallery.getImageFile(

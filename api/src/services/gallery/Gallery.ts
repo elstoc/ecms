@@ -1,10 +1,8 @@
 import { Logger } from 'winston';
 
 import { StorageAdapter } from '@/adapters/StorageAdapter';
-import { ImageMetadata } from '@/contracts/gallery';
-import { ImageSize } from '@/contracts/gallery';
-import { GalleryContents } from '@/contracts/gallery';
-import { Config } from '@/utils';
+import { GalleryContents, ImageMetadata, ImageSize } from '@/contracts/gallery';
+import { Config, pShuffle } from '@/utils';
 
 import { GalleryImage } from './GalleryImage';
 
@@ -21,24 +19,39 @@ export class Gallery {
     this.apiPath = apiPath.replace(/^\//, '');
   }
 
-  public async getContents(requestedPages = 1, includeFile?: string): Promise<GalleryContents> {
+  public async getContents(
+    requestedPages = 1,
+    includeFile?: string,
+    sortOrder?: string,
+    randomSeed?: number,
+  ): Promise<GalleryContents> {
     this.logger.debug(
       `getting contents of ${this.apiPath} (requestedPages ${requestedPages}, includeFile: ${includeFile})`,
     );
 
     const { galleryPageSize } = this.config;
-    const allFileNames = (await this.getJpegFileNames()).sort().reverse();
-    const totalPages = Math.ceil(allFileNames.length / galleryPageSize);
+    const allFileNames = await this.getJpegFileNames();
+
+    let sortedFileNames: string[] = [];
+
+    if (sortOrder === 'shuffle' && randomSeed) {
+      sortedFileNames = pShuffle(allFileNames, randomSeed);
+    } else if (sortOrder === 'asc') {
+      sortedFileNames = allFileNames.sort();
+    } else {
+      sortedFileNames = allFileNames.sort().reverse();
+    }
+    const totalPages = Math.ceil(sortedFileNames.length / galleryPageSize);
 
     let currentPage = Math.min(totalPages, requestedPages);
     if (includeFile && currentPage < totalPages) {
-      const includeFileIndex = allFileNames.indexOf(includeFile);
+      const includeFileIndex = sortedFileNames.indexOf(includeFile);
       const pageContainingFile = Math.ceil((includeFileIndex + 1) / galleryPageSize);
       currentPage = Math.max(pageContainingFile, currentPage);
     }
 
     const images = await Promise.all(
-      allFileNames
+      sortedFileNames
         .slice(0, currentPage * galleryPageSize)
         .map((fileName) => this.getImageMetadata(`${this.apiPath}/${fileName}`)),
     );
