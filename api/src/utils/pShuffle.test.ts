@@ -4,8 +4,10 @@ const initialArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 
 
 it('shuffles an array', () => {
   const seed = (Math.random() * 2 ** 32) >>> 0;
+  let newArray = structuredClone(initialArray);
 
-  const newArray = pShuffle(initialArray, seed);
+  newArray = pShuffle(newArray, seed);
+
   expect(newArray.length).toBe(initialArray.length);
   expect(newArray).not.toEqual(initialArray);
   expect(newArray.sort()).toEqual(initialArray.sort());
@@ -13,9 +15,11 @@ it('shuffles an array', () => {
 
 it('shuffles the array the same, given the same seed', () => {
   const seed = (Math.random() * 2 ** 32) >>> 0;
+  let newArray = structuredClone(initialArray);
+  let newArray2 = structuredClone(initialArray);
 
-  const newArray = pShuffle(initialArray, seed);
-  const newArray2 = pShuffle(initialArray, seed);
+  newArray = pShuffle(newArray, seed);
+  newArray2 = pShuffle(newArray2, seed);
 
   expect(newArray).toEqual(newArray2);
 });
@@ -23,17 +27,20 @@ it('shuffles the array the same, given the same seed', () => {
 it('shuffles the array differently, given a different seed', () => {
   const seed1 = (Math.random() * 2 ** 32) >>> 0;
   const seed2 = (Math.random() * 2 ** 32) >>> 0;
+  let newArray = structuredClone(initialArray);
+  let newArray2 = structuredClone(initialArray);
 
-  const newArray = pShuffle(initialArray, seed1);
-  const newArray2 = pShuffle(initialArray, seed2);
+  newArray = pShuffle(newArray, seed1);
+  newArray2 = pShuffle(newArray2, seed2);
 
   expect(newArray).not.toEqual(newArray2);
 });
 
 it('shuffles an array within the given length', () => {
   const seed = (Math.random() * 2 ** 32) >>> 0;
+  let newArray = structuredClone(initialArray);
 
-  const newArray = pShuffle(initialArray, seed, 10);
+  newArray = pShuffle(newArray, seed, 10);
   expect(newArray.length).toBe(10);
   expect(newArray).not.toEqual(initialArray.slice(0, 10));
   expect(initialArray).toEqual(expect.arrayContaining(newArray));
