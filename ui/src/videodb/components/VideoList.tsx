@@ -25,7 +25,7 @@ export const VideoList = () => {
     watched,
     mediaWatched,
     minResolution,
-    sortPriorityFirst,
+    flaggedOnly,
   } = Object.fromEntries(searchParams.entries());
 
   const videos = useGetVideos(apiPath, {
@@ -36,7 +36,7 @@ export const VideoList = () => {
     watched,
     mediaWatched,
     minResolution,
-    sortPriorityFirst,
+    flaggedOnly,
     limit: limit?.toString(),
   });
 

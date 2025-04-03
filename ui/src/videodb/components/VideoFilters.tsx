@@ -36,7 +36,7 @@ export const VideoFilters = () => {
     mediaWatched,
     minResolution,
     tags,
-    sortPriorityFirst,
+    flaggedOnly,
   } = state;
 
   return (
@@ -98,14 +98,14 @@ export const VideoFilters = () => {
         onValueChange={(value) => updateState({ action: 'setFilter', key: 'titleContains', value })}
       />
       <Switch
-        label='Priority First'
-        className='priority'
+        label='Flagged'
+        className='flagged'
         inline={true}
-        value={sortPriorityFirst === 1}
+        value={flaggedOnly === 1}
         onValueChange={(value) =>
           updateState({
             action: 'setFilter',
-            key: 'sortPriorityFirst',
+            key: 'flaggedOnly',
             value: value ? 1 : 0,
           })
         }

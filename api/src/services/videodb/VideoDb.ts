@@ -58,8 +58,8 @@ export type VideoFilters = {
   titleContains?: string;
   watched?: string;
   mediaWatched?: string;
-  sortPriorityFirst?: boolean;
   minResolution?: string;
+  flaggedOnly?: boolean;
 };
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
@@ -296,7 +296,7 @@ export class VideoDb {
       watched,
       mediaWatched,
       minResolution,
-      sortPriorityFirst,
+      flaggedOnly,
     } = filters || {};
     if (maxLength !== undefined) {
       whereClauses.push('length_mins <= $maxLength');
@@ -336,18 +336,15 @@ export class VideoDb {
     if (minResolution === 'UHD') {
       whereClauses.push("primary_media_type IN ('BD4K', 'DL2160')");
     }
+    if (flaggedOnly) {
+      whereClauses.push('priority_flag > 0');
+    }
 
     if (whereClauses.length > 0) {
       sql += ` WHERE (${whereClauses.join(') AND (')})`;
     }
 
-    sql += ' ORDER BY ';
-
-    if (sortPriorityFirst) {
-      sql += '(CASE WHEN priority_flag > 0 THEN 1 ELSE 0 END) DESC, ';
-    }
-
-    sql += `(
+    sql += ` ORDER BY (
             CASE WHEN UPPER(title) LIKE 'THE %' THEN UPPER(SUBSTR(title, 5))
                  WHEN UPPER(title) LIKE 'AN %' THEN UPPER(SUBSTR(title, 4))
                  WHEN UPPER(title) LIKE 'A %' THEN UPPER(SUBSTR(title, 3))

@@ -13,7 +13,7 @@ type FilterState = {
   watched: string | null;
   mediaWatched: string | null;
   minResolution: string | null;
-  sortPriorityFirst: 0 | 1 | null;
+  flaggedOnly: 0 | 1 | null;
 };
 
 const initialFilters: FilterState = {
@@ -24,7 +24,7 @@ const initialFilters: FilterState = {
   watched: 'All',
   mediaWatched: 'All',
   minResolution: 'SD',
-  sortPriorityFirst: null,
+  flaggedOnly: null,
 };
 
 type SetStringField = {
@@ -35,7 +35,7 @@ type SetStringField = {
 
 type SetNumericField = { action: 'setFilter'; key: 'maxLength'; value: number | null };
 
-type SetBooleanIntField = { action: 'setFilter'; key: 'sortPriorityFirst'; value: 0 | 1 | null };
+type SetBooleanIntField = { action: 'setFilter'; key: 'flaggedOnly'; value: 0 | 1 | null };
 
 type SetIndividualFilter = SetStringField | SetNumericField | SetBooleanIntField;
 
@@ -74,13 +74,13 @@ const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) =>
     mediaWatched,
     minResolution,
     tags,
-    sortPriorityFirst,
+    flaggedOnly,
   } = state;
 
   const minResolutionParam = ['HD', 'UHD'].includes(minResolution ?? '') ? minResolution : '';
   const watchedParam = ['Y', 'N'].includes(watched ?? '') ? watched : '';
   const mediaWatchedParam = ['Y', 'N'].includes(mediaWatched ?? '') ? mediaWatched : '';
-  const sortPriorityFirstParam = sortPriorityFirst ? '1' : '';
+  const flaggedOnlyParam = flaggedOnly ? '1' : '';
 
   setOrDeleteParam(params, 'categories', categories);
   setOrDeleteParam(params, 'maxLength', maxLength?.toString());
@@ -89,7 +89,7 @@ const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) =>
   setOrDeleteParam(params, 'watched', watchedParam);
   setOrDeleteParam(params, 'mediaWatched', mediaWatchedParam);
   setOrDeleteParam(params, 'minResolution', minResolutionParam);
-  setOrDeleteParam(params, 'sortPriorityFirst', sortPriorityFirstParam);
+  setOrDeleteParam(params, 'flaggedOnly', flaggedOnlyParam);
 
   return params;
 };
@@ -114,8 +114,7 @@ export const useVideoDbFilterState = () => {
         watched: searchParams.get('watched') ?? 'All',
         mediaWatched: searchParams.get('mediaWatched') ?? 'All',
         minResolution: searchParams.get('minResolution') ?? 'SD',
-        sortPriorityFirst:
-          (toIntOrUndefined(searchParams.get('sortPriorityFirst')) as null | 0 | 1) ?? null,
+        flaggedOnly: (toIntOrUndefined(searchParams.get('flaggedOnly')) as null | 0 | 1) ?? null,
       },
     });
   }, []);

@@ -409,9 +409,9 @@ paths:
               - HD
               - UHD
         - in: query
-          name: sortPriorityFirst
+          name: flaggedOnly
           required: false
-          description: Whether to sort priority-flagged videos first
+          description: filter priority-flagged videos only
           schema:
             $ref: '#/components/schemas/booleanInt'
       responses:
