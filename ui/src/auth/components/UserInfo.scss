@@ -4,6 +4,11 @@
   flex-direction: row;
   align-items: center;
   justify-content: right;
+
+  .user-card {
+    padding: 0;
+    background-color: #eeeeee;
+  }
 }
 
 .auth-dialog {
