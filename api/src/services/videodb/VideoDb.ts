@@ -7,7 +7,7 @@ import { User } from '@/contracts/auth';
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 import { NotFoundError, NotPermittedError } from '@/errors';
 import { userIsAdmin } from '@/services/auth/utils/access';
-import { Config } from '@/utils';
+import { Config, pShuffle } from '@/utils';
 
 import { dbUpgradeSql } from './dbUpgradeSql';
 
@@ -60,6 +60,8 @@ export type VideoFilters = {
   mediaWatched?: string;
   minResolution?: string;
   flaggedOnly?: boolean;
+  sortOrder?: string;
+  shuffleSeed?: number;
 };
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
@@ -297,7 +299,10 @@ export class VideoDb {
       mediaWatched,
       minResolution,
       flaggedOnly,
+      sortOrder,
+      shuffleSeed,
     } = filters || {};
+
     if (maxLength !== undefined) {
       whereClauses.push('length_mins <= $maxLength');
       params['$maxLength'] = maxLength;
@@ -352,14 +357,21 @@ export class VideoDb {
             END
         )`;
 
-    if (limit) {
+    const shuffle = sortOrder === 'shuffle' && shuffleSeed;
+
+    if (limit && !shuffle) {
       sql += ` LIMIT ${limit}`;
     }
 
-    const videos = await this.database?.getAllWithParams<VideoWithId>(sql, params);
+    let videos = await this.database?.getAllWithParams<VideoWithId>(sql, params);
     if (!videos) {
       throw new Error('Unexpected error querying videos');
     }
+
+    if (shuffle) {
+      videos = pShuffle(videos, shuffleSeed, limit);
+    }
+
     return videos;
   }
 
