@@ -13,7 +13,8 @@ export const VideoToolbox = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const {
-    videoDbState: { apiPath },
+    videoDbState: { apiPath, sortOrder },
+    videoDbReducer,
   } = useContext(VideoDbStateContext);
   const isDualPanel = useIsDualPanel();
 
@@ -33,6 +34,26 @@ export const VideoToolbox = () => {
         onClick={() => navigate(`./add?${searchParams.toString()}`)}
       />
       <Icon name='download' disabled={!userIsAdmin} onClick={downloadCSV} />
+      <Icon
+        name='sortAscAlpha'
+        color={sortOrder === 'asc' ? 'black' : 'grey'}
+        onClick={() =>
+          videoDbReducer({
+            action: 'setSortOrder',
+            value: 'asc',
+          })
+        }
+      />
+      <Icon
+        name='shuffle'
+        color={sortOrder === 'shuffle' ? 'black' : 'grey'}
+        onClick={() =>
+          videoDbReducer({
+            action: 'setSortOrder',
+            value: 'shuffle',
+          })
+        }
+      />
     </>
   );
 };
