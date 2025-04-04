@@ -50,6 +50,8 @@ export const createVideoDbRouter = (site: Site): Router => {
           mediaWatched,
           minResolution,
           flaggedOnly,
+          sortOrder,
+          shuffleSeed,
         } = req.query;
         const filters = {
           maxLength: maxLength === undefined ? undefined : parseInt(maxLength as string),
@@ -61,6 +63,8 @@ export const createVideoDbRouter = (site: Site): Router => {
           flaggedOnly:
             flaggedOnly === undefined ? undefined : parseInt(flaggedOnly as string) === 1,
           minResolution: minResolution === undefined ? undefined : (minResolution as string),
+          sortOrder: sortOrder === undefined ? 'asc' : (sortOrder as string),
+          shuffleSeed: parseInt(shuffleSeed?.toString() ?? '0'),
         };
         const videos = await videoDb.queryVideos(filters, parseInt(limit as string));
         res.json(videos);

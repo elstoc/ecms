@@ -414,6 +414,22 @@ paths:
           description: filter priority-flagged videos only
           schema:
             $ref: '#/components/schemas/booleanInt'
+        - in: query
+          required: false
+          name: sortOrder
+          description: order to sort results (default asc)
+          schema:
+            type: string
+            enum:
+              - asc
+              - shuffle
+        - name: shuffleSeed
+          description: A random 32 bit integer to use as the shuffle seed value
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: OK
