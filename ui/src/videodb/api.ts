@@ -3,7 +3,7 @@ import { axiosSecureClient } from '@/shared/api';
 
 export const getVideoDbVideos = async (
   path: string,
-  filters?: { [key: string]: string },
+  filters?: { [key: string]: string | undefined },
 ): Promise<VideoWithId[]> => {
   const url = 'videodb/videos';
   const { data } = await axiosSecureClient.get<VideoWithId[]>(url, {
