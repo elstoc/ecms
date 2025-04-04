@@ -11,12 +11,12 @@
 
   .toolbar {
     display: flex;
-    column-gap: 30px;
+    column-gap: 35px;
     flex-direction: row;
 
     #component-toolbox {
       display: flex;
-      column-gap: 5px;
+      column-gap: 15px;
       flex-direction: row;
     }
   }

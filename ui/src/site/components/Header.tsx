@@ -20,8 +20,8 @@ export const Header = () => {
           <SiteNav siteComponents={siteComponents} />
         </div>
         <div className='toolbar'>
-          <UserInfo />
           <div id='component-toolbox'></div>
+          <UserInfo />
         </div>
       </div>
     </Suspense>
