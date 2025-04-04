@@ -15,7 +15,12 @@ import {
   FiUserX,
   FiX,
 } from 'react-icons/fi';
-import { LuArrowDownWideNarrow, LuArrowUpNarrowWide, LuShuffle } from 'react-icons/lu';
+import {
+  LuArrowDownAZ,
+  LuArrowDownWideNarrow,
+  LuArrowUpNarrowWide,
+  LuShuffle,
+} from 'react-icons/lu';
 
 import './Icon.scss';
 
@@ -37,6 +42,7 @@ const icons: { [key: string]: IconType } = {
   shuffle: LuShuffle,
   sortDesc: LuArrowDownWideNarrow,
   sortAsc: LuArrowUpNarrowWide,
+  sortAscAlpha: LuArrowDownAZ,
 };
 
 type IconProps = {
