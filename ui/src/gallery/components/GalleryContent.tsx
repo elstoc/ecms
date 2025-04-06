@@ -1,9 +1,7 @@
-import { useContext } from 'react';
-
 import { useTitle } from '@/shared/hooks';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
-import { GalleryStateContext } from '../hooks/useGalleryState';
+import { useGallery } from '../hooks/useGallery';
 
 import { GalleryLightBox } from './GalleryLightBox';
 import { GalleryToolbox } from './GalleryToolbox';
@@ -13,8 +11,9 @@ import './GalleryContent.scss';
 
 export const GalleryContent = () => {
   const {
-    galleryState: { title },
-  } = useContext(GalleryStateContext);
+    state: { title },
+  } = useGallery();
+
   useTitle(title);
 
   return (

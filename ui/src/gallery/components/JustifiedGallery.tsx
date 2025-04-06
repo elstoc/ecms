@@ -1,24 +1,24 @@
-import { createRef, startTransition, useCallback, useContext, useMemo } from 'react';
+import { createRef, startTransition, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Tesselate } from '@/shared/components/layout';
 import { useElementIsVisible, useScrollIntoView } from '@/shared/hooks';
 
+import { useGallery } from '../hooks/useGallery';
 import { useGalleryContent } from '../hooks/useGalleryQueries';
-import { GalleryStateContext } from '../hooks/useGalleryState';
 
 import { GalleryThumb } from './GalleryThumb';
 
 export const JustifiedGallery = () => {
   const [searchParams] = useSearchParams();
-  const { galleryStateReducer } = useContext(GalleryStateContext);
+  const { dispatch } = useGallery();
   const { images, totalPages, currentPage } = useGalleryContent();
 
   const loadMoreImages = useCallback(
     () =>
       startTransition(() => {
-        galleryStateReducer({
-          action: 'setPages',
+        dispatch({
+          type: 'setPages',
           value: Math.min(totalPages, currentPage + 1),
         });
       }),

@@ -1,15 +1,13 @@
-import { useContext } from 'react';
-
 import { useCustomQuery } from '@/shared/hooks';
 
 import { getGalleryContents } from '../api';
 
-import { GalleryStateContext } from './useGalleryState';
+import { useGallery } from './useGallery';
 
 export const useGalleryContent = () => {
   const {
-    galleryState: { apiPath, pages, initialImage, sortOrder, shuffleSeed },
-  } = useContext(GalleryStateContext);
+    state: { apiPath, pages, initialImage, sortOrder, shuffleSeed },
+  } = useGallery();
 
   // initialImage is not present in the key to avoid unnecessary reload
   return useCustomQuery({

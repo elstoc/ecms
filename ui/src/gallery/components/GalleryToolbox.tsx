@@ -1,15 +1,13 @@
-import { useContext } from 'react';
-
 import { Icon } from '@/shared/components/icon';
 import { Toolbox } from '@/shared/components/layout';
 
-import { GalleryStateContext } from '../hooks/useGalleryState';
+import { useGallery } from '../hooks/useGallery';
 
 export const GalleryToolbox = () => {
   const {
-    galleryState: { sortOrder },
-    galleryStateReducer,
-  } = useContext(GalleryStateContext);
+    state: { sortOrder },
+    dispatch,
+  } = useGallery();
 
   return (
     <Toolbox>
@@ -17,8 +15,8 @@ export const GalleryToolbox = () => {
         name={sortOrder === 'asc' ? 'sortAsc' : 'sortDesc'}
         color={sortOrder === 'shuffle' ? 'grey' : 'black'}
         onClick={() =>
-          galleryStateReducer({
-            action: 'setSortOrder',
+          dispatch({
+            type: 'setSortOrder',
             value: sortOrder === 'desc' ? 'asc' : 'desc',
           })
         }
@@ -26,7 +24,7 @@ export const GalleryToolbox = () => {
       <Icon
         name='shuffle'
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}
-        onClick={() => galleryStateReducer({ action: 'setSortOrder', value: 'shuffle' })}
+        onClick={() => dispatch({ type: 'setSortOrder', value: 'shuffle' })}
       />
     </Toolbox>
   );
