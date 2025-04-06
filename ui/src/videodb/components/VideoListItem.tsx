@@ -3,7 +3,7 @@ import { Card, Collapse, Tag } from '@blueprintjs/core';
 import { ReactElement, forwardRef, useContext, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { useGetUserIsAdmin } from '@/auth/hooks/useAuthQueries';
+import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { VideoWithId } from '@/contracts/videodb';
 import { Flag } from '@/shared/components/forms';
 import { Icon } from '@/shared/components/icon';
@@ -19,7 +19,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
   ({ video }, ref): ReactElement => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const userIsAdmin = useGetUserIsAdmin();
+    const userIsAdmin = useUserIsAdmin();
     const [viewExpanded, setViewExpanded] = useState(false);
     const {
       videoDbState: { apiPath },

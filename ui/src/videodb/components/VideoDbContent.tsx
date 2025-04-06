@@ -2,7 +2,7 @@ import { Dialog, DialogBody } from '@blueprintjs/core';
 import { Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useGetUserIsAdmin } from '@/auth/hooks/useAuthQueries';
+import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { NotFoundPage } from '@/shared/components/NotFoundPage';
 
 import { AddVideo } from './AddVideo';
@@ -16,7 +16,7 @@ type VideoDbContentProps = { mode?: 'update' | 'add' };
 export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const userIsAdmin = useGetUserIsAdmin();
+  const userIsAdmin = useUserIsAdmin();
 
   if (mode === 'update' && !Number.isInteger(parseInt(id || 'x'))) {
     return <NotFoundPage />;

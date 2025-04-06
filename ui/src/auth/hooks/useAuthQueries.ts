@@ -7,7 +7,7 @@ export const useGetUserInfo = () => {
   return useCustomQuery({ queryKey: ['user-info'], queryFn: getUserInfo });
 };
 
-export const useGetUserIsAdmin = () => {
+export const useUserIsAdmin = () => {
   const user = useGetUserInfo();
   const { authEnabled } = useSiteConfig();
   return !authEnabled || (user.roles ?? []).includes('admin');

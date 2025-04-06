@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { useGetUserIsAdmin } from '@/auth/hooks/useAuthQueries';
+import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { Icon } from '@/shared/components/icon';
 import { Toolbox } from '@/shared/components/layout';
 
@@ -11,7 +11,7 @@ import { downloadVideoCSV } from '../utils/downloadVideoCSV';
 import './VideoToolbox.scss';
 
 export const VideoToolbox = () => {
-  const userIsAdmin = useGetUserIsAdmin();
+  const userIsAdmin = useUserIsAdmin();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const {
