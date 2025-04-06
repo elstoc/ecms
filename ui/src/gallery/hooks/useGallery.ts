@@ -15,14 +15,16 @@ type SetSortOrderAction = { type: 'setSortOrder'; value: SortOrder };
 type ReducerAction = SetPagesAction | SetSortOrderAction;
 
 const reducer: (state: GalleryState, action: ReducerAction) => GalleryState = (state, action) => {
-  if (action.type === 'setPages') {
-    return { ...state, pages: action.value };
-  } else if (action.type === 'setSortOrder') {
+  const { type, value } = action;
+
+  if (type === 'setPages') {
+    return { ...state, pages: value };
+  } else if (type === 'setSortOrder') {
     return {
       ...state,
       pages: 1,
-      sortOrder: action.value,
-      shuffleSeed: action.value === 'shuffle' ? (Math.random() * 2 ** 32) >>> 0 : undefined,
+      sortOrder: value,
+      shuffleSeed: value === 'shuffle' ? (Math.random() * 2 ** 32) >>> 0 : undefined,
     };
   }
   return state;
