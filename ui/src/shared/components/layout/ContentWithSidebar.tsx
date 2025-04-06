@@ -44,23 +44,21 @@ export const ContentWithSidebar = ({
   }
 
   return (
-    <div className='cws-container'>
-      <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
-        <div className='cws-content-and-sidebar'>
-          {!isDualPanel && sidebar && (
-            <InjectSideExpander>
-              <Toolbox>
-                <Icon
-                  name='menu'
-                  className='sidebar-button'
-                  onClick={() => setSidebarDrawerVisible((visible) => !visible)}
-                />
-              </Toolbox>
-            </InjectSideExpander>
-          )}
-          {sidebar && sidebarElement}
-          <div className='cws-content'>{content}</div>
-        </div>
+    <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
+      <div className='cws-content-and-sidebar'>
+        {!isDualPanel && sidebar && (
+          <InjectSideExpander>
+            <Toolbox>
+              <Icon
+                name='menu'
+                className='sidebar-button'
+                onClick={() => setSidebarDrawerVisible((visible) => !visible)}
+              />
+            </Toolbox>
+          </InjectSideExpander>
+        )}
+        {sidebar && sidebarElement}
+        <div className='cws-content'>{content}</div>
       </div>
     </div>
   );
