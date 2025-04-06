@@ -2,6 +2,7 @@ import { Card } from '@blueprintjs/core';
 import { Suspense, useContext } from 'react';
 
 import { ContentWithSidebar } from '@/shared/components/layout';
+import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
@@ -30,6 +31,7 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
     <Card className='markdown-page-content'>
       <Suspense>
         <MarkdownPage apiPath={apiPath} />
+        <InjectComponentTools>{toolbar}</InjectComponentTools>
       </Suspense>
     </Card>
   );
