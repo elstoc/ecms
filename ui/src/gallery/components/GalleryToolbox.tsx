@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import { Icon } from '@/shared/components/icon';
-import { ComponentToolbox } from '@/site/components/ComponentToolbox';
+import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
 import { GalleryStateContext } from '../hooks/useGalleryState';
 
@@ -12,7 +12,7 @@ export const GalleryToolbox = () => {
   } = useContext(GalleryStateContext);
 
   return (
-    <ComponentToolbox>
+    <InjectComponentTools>
       <Icon
         name={sortOrder === 'asc' ? 'sortAsc' : 'sortDesc'}
         color={sortOrder === 'shuffle' ? 'grey' : 'black'}
@@ -28,6 +28,6 @@ export const GalleryToolbox = () => {
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}
         onClick={() => galleryStateReducer({ action: 'setSortOrder', value: 'shuffle' })}
       />
-    </ComponentToolbox>
+    </InjectComponentTools>
   );
 };

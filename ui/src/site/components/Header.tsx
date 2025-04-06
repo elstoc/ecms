@@ -1,9 +1,8 @@
 import { Suspense } from 'react';
 
-import { UserInfo } from '@/auth';
-
 import { useSiteComponents, useSiteConfig } from '../hooks/useSiteQueries';
 
+import { HeaderToolbox } from './HeaderToolbox';
 import { SiteNav } from './SiteNav';
 
 import './Header.scss';
@@ -15,13 +14,12 @@ export const Header = () => {
   return (
     <Suspense>
       <div className='header'>
-        <div className='left'>
+        <div className='nav-and-title'>
           {siteTitle && <div className='site-title'>{siteTitle}</div>}
           <SiteNav siteComponents={siteComponents} />
         </div>
         <div className='toolbar'>
-          <div id='component-toolbox'></div>
-          <UserInfo />
+          <HeaderToolbox />
         </div>
       </div>
     </Suspense>

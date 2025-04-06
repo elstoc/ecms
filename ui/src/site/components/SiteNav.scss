@@ -28,8 +28,9 @@
 
 .site-nav {
   flex-direction: row;
-  align-items: left;
+  justify-content: space-between;
   flex-wrap: wrap;
+  padding: 0 5px;
 
   .nav-title {
     font-size: 1.05rem;
@@ -37,6 +38,7 @@
   }
 
   @media screen and (min-width: $maxMobileWidth) {
+    justify-content: flex-start;
     align-items: center;
 
     .nav-title {
