@@ -1,8 +1,9 @@
 import { useGetUserInfo } from '..';
-import { Card, Dialog, DialogBody } from '@blueprintjs/core';
+import { Dialog, DialogBody } from '@blueprintjs/core';
 import { Suspense, useState } from 'react';
 
 import { Icon } from '@/shared/components/icon';
+import { Toolbox } from '@/shared/components/layout';
 import { useSiteConfig } from '@/site';
 
 import { Login } from './Login';
@@ -22,11 +23,13 @@ export const UserInfo = () => {
   const loggedIn = userData.id !== 'guest';
   const userName = userData.fullName || userData.id;
 
+  const iconTool = (
+    <Icon name={loggedIn ? 'user' : 'noUser'} onClick={() => setAuthDialogOpen(true)} />
+  );
+
   return (
     <div className='user-info'>
-      <Card className='user-card'>
-        <Icon name={loggedIn ? 'user' : 'noUser'} onClick={() => setAuthDialogOpen(true)} />
-      </Card>
+      <Toolbox orientation='horizontal' content={iconTool} />
       <Dialog
         title={loggedIn ? 'Welcome' : 'Log in'}
         isOpen={authDialogOpen}
