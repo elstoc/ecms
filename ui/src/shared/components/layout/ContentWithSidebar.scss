@@ -1,53 +1,63 @@
 @import '../../../variables.scss';
 
-#app .cws {
+#app .cws-container {
   display: flex;
-  flex-direction: column;
-  row-gap: 5px;
+  justify-content: center;
 
-  width: 100%;
   height: 100%;
-  max-width: $maxContentPlusSidebarWidth;
 
-  &.no-sidebar {
-    max-width: $maxContentWidth;
-  }
-
-  .cws-content-and-sidebar {
+  .cws {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
+    row-gap: 5px;
 
-    .cws-content {
-      width: 100%;
-      flex-grow: 1;
+    width: 100%;
+    max-width: $maxContentPlusSidebarWidth;
+
+    &.no-sidebar {
+      max-width: $maxContentWidth;
     }
 
-    .cws-sidebar {
-      margin: 10px 5px;
-      flex-grow: 1;
-    }
-  }
-
-  @media screen and (min-width: $minDualPanelWidth) {
     .cws-content-and-sidebar {
-      flex-direction: row;
-      column-gap: 20px;
-
-      .cws-sidebar {
-        width: 28%;
-        max-width: $maxSidebarWidth;
-      }
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
 
       .cws-content {
-        width: 64%;
-        max-width: $maxContentWidth;
+        width: 100%;
+        flex-grow: 1;
+      }
+
+      .cws-sidebar {
+        margin: 10px 5px;
+        flex-grow: 1;
       }
     }
 
-    &.no-sidebar .cws-content {
-      width: 100%;
+    @media screen and (min-width: $minDualPanelWidth) {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      column-gap: 10px;
+
+      .cws-content-and-sidebar {
+        flex-direction: row;
+        column-gap: 20px;
+
+        .cws-sidebar {
+          width: 28%;
+          max-width: $maxSidebarWidth;
+        }
+
+        .cws-content {
+          width: 64%;
+          max-width: $maxContentWidth;
+        }
+      }
+
+      &.no-sidebar .cws-content {
+        width: 100%;
+      }
     }
   }
 }
