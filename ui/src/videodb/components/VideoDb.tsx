@@ -5,6 +5,7 @@ import { VideoDbMetadata } from '@/contracts/site';
 import { NotFoundPage } from '@/shared/components/NotFoundPage';
 import { ContentWithSidebar } from '@/shared/components/layout';
 import { useTitle } from '@/shared/hooks';
+import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
 import { VideoDbStateContext, useVideoDbState } from '../hooks/useVideoDbStateContext';
 
@@ -45,6 +46,7 @@ export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
     <VideoDbStateContext.Provider value={videoDbState}>
       <Suspense>
         <ContentWithSidebar content={content} sidebar={filters} toolbarIcons={toolbar} />
+        <InjectComponentTools>{toolbar}</InjectComponentTools>
       </Suspense>
     </VideoDbStateContext.Provider>
   );
