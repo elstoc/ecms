@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react';
 
-export type GalleryState = {
+type GalleryState = {
   title: string;
   apiPath: string;
   pages: number;
