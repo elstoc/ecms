@@ -23,4 +23,10 @@ export type Video = {
 
 export type VideoWithId = Video & { id: number };
 
+export type PaginatedVideos = {
+  videos: VideoWithId[];
+  currentPage: number;
+  totalPages: number;
+};
+
 export type VideoUpdate = { id: number; priority_flag: 0 | 1 };

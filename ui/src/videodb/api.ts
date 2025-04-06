@@ -1,12 +1,12 @@
-import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
+import { PaginatedVideos, Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 import { axiosSecureClient } from '@/shared/api';
 
 export const getVideoDbVideos = async (
   path: string,
   filters?: { [key: string]: string | undefined },
-): Promise<VideoWithId[]> => {
+): Promise<PaginatedVideos> => {
   const url = 'videodb/videos';
-  const { data } = await axiosSecureClient.get<VideoWithId[]>(url, {
+  const { data } = await axiosSecureClient.get<PaginatedVideos>(url, {
     params: { path, ...filters },
   });
   return data;

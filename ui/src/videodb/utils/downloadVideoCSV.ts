@@ -26,7 +26,7 @@ const videoColumnParams: ColumnParam<VideoWithId>[] = [
 
 export const downloadVideoCSV = async (path: string): Promise<void> => {
   const now = new Date();
-  const videos = await getVideoDbVideos(path);
+  const { videos } = await getVideoDbVideos(path);
   const videoCSV = createCSV(videoColumnParams, videos);
   const csvBlob = new Blob([videoCSV], { type: 'text/csv' });
   downloadBlob(csvBlob, `videos-${now.toISOString().substring(0, 10)}.csv`);

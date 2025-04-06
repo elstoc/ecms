@@ -28,7 +28,7 @@ export const VideoList = () => {
     flaggedOnly,
   } = Object.fromEntries(searchParams.entries());
 
-  const videos = useGetVideos(apiPath, {
+  const { videos } = useGetVideos(apiPath, {
     maxLength,
     titleContains,
     categories,

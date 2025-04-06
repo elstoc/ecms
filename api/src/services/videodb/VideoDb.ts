@@ -4,7 +4,7 @@ import { Logger } from 'winston';
 import { DatabaseAdapter } from '@/adapters/DatabaseAdapter';
 import { StorageAdapter } from '@/adapters/StorageAdapter';
 import { User } from '@/contracts/auth';
-import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
+import { PaginatedVideos, Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 import { NotFoundError, NotPermittedError } from '@/errors';
 import { userIsAdmin } from '@/services/auth/utils/access';
 import { Config, pShuffle } from '@/utils';
@@ -278,7 +278,10 @@ export class VideoDb {
     }
   }
 
-  public async queryVideos(filters?: VideoFilters, limit?: number): Promise<VideoWithId[]> {
+  private buildVideoQuery(filters?: VideoFilters): {
+    sql: string;
+    params: Record<string, unknown>;
+  } {
     let params: { [key: string]: unknown } = {};
     const whereClauses: string[] = [];
     let sql = `SELECT v.${videoWithIdFields.join(', v.')},
@@ -299,8 +302,6 @@ export class VideoDb {
       mediaWatched,
       minResolution,
       flaggedOnly,
-      sortOrder,
-      shuffleSeed,
     } = filters || {};
 
     if (maxLength !== undefined) {
@@ -357,12 +358,23 @@ export class VideoDb {
             END
         )`;
 
-    const shuffle = sortOrder === 'shuffle' && shuffleSeed;
+    return { sql, params };
+  }
 
+  public async queryVideos(filters?: VideoFilters, limit?: number): Promise<PaginatedVideos> {
+    const { sql, params } = this.buildVideoQuery(filters);
     let videos = await this.database?.getAllWithParams<VideoWithId>(sql, params);
+
     if (!videos) {
       throw new Error('Unexpected error querying videos');
     }
+
+    const { videoDbPageSize } = this.config;
+    const totalPages = Math.ceil(videos.length / videoDbPageSize);
+    const currentPage = 0;
+
+    const { sortOrder, shuffleSeed } = filters || {};
+    const shuffle = sortOrder === 'shuffle' && shuffleSeed;
 
     if (shuffle) {
       videos = pShuffle(videos, shuffleSeed, limit);
@@ -370,7 +382,11 @@ export class VideoDb {
       videos = videos.slice(0, limit);
     }
 
-    return videos;
+    return {
+      videos,
+      currentPage,
+      totalPages,
+    };
   }
 
   private throwIfNotAdmin(user?: User): void {

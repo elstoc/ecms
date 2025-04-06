@@ -41,6 +41,7 @@ export type Config = {
   siteTitle: string;
   omdbApiKey: string;
   galleryPageSize: number;
+  videoDbPageSize: number;
 };
 
 export const getConfig = (): Config => {
@@ -61,5 +62,6 @@ export const getConfig = (): Config => {
     siteTitle: getOptionalStringConfig('SITE_TITLE', ''),
     omdbApiKey: getOptionalStringConfig('OMDB_API_KEY', ''),
     galleryPageSize: parseInt(getOptionalStringConfig('GALLERY_PAGE_SIZE', '25')),
+    videoDbPageSize: parseInt(getOptionalStringConfig('VIDEODB_PAGE_SIZE', '40')),
   };
 };
