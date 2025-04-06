@@ -1,5 +1,7 @@
 import { createContext, useReducer } from 'react';
 
+import { getRandomSeed } from '@/utils';
+
 const BATCH_SIZE = 40;
 
 type IncreaseLimit = { action: 'increaseLimit'; currentlyLoaded: number };
@@ -36,7 +38,7 @@ const videoDbStateReducer: (state: VideoDbState, operation: StateOperations) => 
     return {
       ...state,
       sortOrder: operation.value,
-      shuffleSeed: operation.value === 'shuffle' ? (Math.random() * 2 ** 32) >>> 0 : undefined,
+      shuffleSeed: operation.value === 'shuffle' ? getRandomSeed() : undefined,
     };
   }
   return state;

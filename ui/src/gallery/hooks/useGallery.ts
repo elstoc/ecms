@@ -1,5 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 
+import { getRandomSeed } from '@/utils';
+
 type GalleryState = {
   title: string;
   apiPath: string;
@@ -24,7 +26,7 @@ const reducer: (state: GalleryState, action: ReducerAction) => GalleryState = (s
       ...state,
       pages: 1,
       sortOrder: value,
-      shuffleSeed: value === 'shuffle' ? (Math.random() * 2 ** 32) >>> 0 : undefined,
+      shuffleSeed: value === 'shuffle' ? getRandomSeed() : undefined,
     };
   }
   return state;
