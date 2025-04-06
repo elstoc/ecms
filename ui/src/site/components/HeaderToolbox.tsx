@@ -1,4 +1,3 @@
-import { Card } from '@blueprintjs/core';
 import { ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -37,7 +36,7 @@ export const InjectComponentTools = ({ children }: ChildrenOnly) => {
     return <></>;
   }
 
-  return createPortal(<Card className='toolbox'>{children}</Card>, toolsTarget);
+  return createPortal(children, toolsTarget);
 };
 
 export const InjectSideExpander = ({ children }: ChildrenOnly) => {
@@ -51,5 +50,5 @@ export const InjectSideExpander = ({ children }: ChildrenOnly) => {
     return <></>;
   }
 
-  return createPortal(<Card className='toolbox'>{children}</Card>, expanderTarget);
+  return createPortal(children, expanderTarget);
 };

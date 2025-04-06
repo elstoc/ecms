@@ -6,6 +6,8 @@ import { InjectSideExpander } from '@/site/components/HeaderToolbox';
 
 import { Icon } from '../icon';
 
+import { Toolbox } from './Toolbox';
+
 import './ContentWithSidebar.scss';
 
 type ContentWithSideBarProps = {
@@ -28,14 +30,6 @@ export const ContentWithSidebar = ({
 
   let sidebarElement = <div className='cws-sidebar'>{sidebar}</div>;
 
-  const menuIcon = (
-    <Icon
-      name='menu'
-      className='sidebar-button'
-      onClick={() => setSidebarDrawerVisible((visible) => !visible)}
-    />
-  );
-
   if (!isDualPanel && sidebar) {
     sidebarElement = (
       <Collapse isOpen={sidebarDrawerVisible} keepChildrenMounted={true}>
@@ -53,7 +47,17 @@ export const ContentWithSidebar = ({
     <div className='cws-container'>
       <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
         <div className='cws-content-and-sidebar'>
-          {!isDualPanel && sidebar && <InjectSideExpander>{menuIcon}</InjectSideExpander>}
+          {!isDualPanel && sidebar && (
+            <InjectSideExpander>
+              <Toolbox>
+                <Icon
+                  name='menu'
+                  className='sidebar-button'
+                  onClick={() => setSidebarDrawerVisible((visible) => !visible)}
+                />
+              </Toolbox>
+            </InjectSideExpander>
+          )}
           {sidebar && sidebarElement}
           <div className='cws-content'>{content}</div>
         </div>

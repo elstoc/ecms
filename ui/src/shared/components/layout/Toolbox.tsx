@@ -1,10 +1,10 @@
 import { Card } from '@blueprintjs/core';
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 
 import './Toolbox.scss';
 
-export type ToolboxProps = { content: ReactElement | null; orientation: 'horizontal' | 'vertical' };
+export type ToolboxProps = { children: ReactNode };
 
-export const Toolbox = ({ content, orientation }: ToolboxProps) => {
-  return <Card className={`toolbox ${orientation}`}>{content}</Card>;
+export const Toolbox = ({ children }: ToolboxProps) => {
+  return <Card className='toolbox'>{children}</Card>;
 };

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useGetUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { Icon } from '@/shared/components/icon';
+import { Toolbox } from '@/shared/components/layout';
 import { useIsDualPanel } from '@/shared/hooks';
 
 import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
@@ -27,7 +28,7 @@ export const VideoToolbox = () => {
   }
 
   return (
-    <>
+    <Toolbox>
       <Icon
         name='add'
         disabled={!userIsAdmin}
@@ -54,6 +55,6 @@ export const VideoToolbox = () => {
           })
         }
       />
-    </>
+    </Toolbox>
   );
 };

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 
 import { Icon } from '@/shared/components/icon';
+import { Toolbox } from '@/shared/components/layout';
 import { splitFrontMatter } from '@/utils';
 
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
@@ -62,7 +63,7 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
   };
 
   return (
-    <>
+    <Toolbox>
       <Icon
         name={mode === 'edit' ? 'cancel' : 'edit'}
         disabled={!pageExists || !pathValid}
@@ -83,6 +84,6 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
         disabled={singlePage || !canWrite || mode === 'edit'}
         onClick={() => setSearchParams({ mode: 'add' })}
       />
-    </>
+    </Toolbox>
   );
 };

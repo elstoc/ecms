@@ -1,16 +1,7 @@
 #app .toolbox {
   display: flex;
+  flex-direction: row;
+  column-gap: 5px;
+  padding: 1px 2px;
   margin: 0;
-
-  &.horizontal {
-    flex-direction: row-reverse;
-    column-gap: 5px;
-    padding: 1px 2px;
-  }
-
-  &.vertical {
-    flex-direction: column;
-    row-gap: 5px;
-    padding: 2px 1px;
-  }
 }

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 
 import { useTitle } from '@/shared/hooks';
+import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
 import { GalleryStateContext } from '../hooks/useGalleryState';
 
@@ -18,7 +19,9 @@ export const GalleryContent = () => {
 
   return (
     <div className='gallery-content'>
-      <GalleryToolbox />
+      <InjectComponentTools>
+        <GalleryToolbox />
+      </InjectComponentTools>
       <GalleryLightBox />
       <JustifiedGallery />
     </div>

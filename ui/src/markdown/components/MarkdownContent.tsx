@@ -19,8 +19,6 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
     markdownState: { singlePage },
   } = useContext(MarkdownStateContext);
 
-  const toolbar = <MarkdownToolbox apiPath={apiPath} />;
-
   const sidebar = (
     <Suspense>
       <MarkdownNav />
@@ -31,7 +29,9 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
     <Card className='markdown-page-content'>
       <Suspense>
         <MarkdownPage apiPath={apiPath} />
-        <InjectComponentTools>{toolbar}</InjectComponentTools>
+        <InjectComponentTools>
+          <MarkdownToolbox apiPath={apiPath} />
+        </InjectComponentTools>
       </Suspense>
     </Card>
   );

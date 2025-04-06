@@ -23,13 +23,11 @@ export const UserInfo = () => {
   const loggedIn = userData.id !== 'guest';
   const userName = userData.fullName || userData.id;
 
-  const iconTool = (
-    <Icon name={loggedIn ? 'user' : 'noUser'} onClick={() => setAuthDialogOpen(true)} />
-  );
-
   return (
     <div className='user-info'>
-      <Toolbox orientation='horizontal' content={iconTool} />
+      <Toolbox>
+        <Icon name={loggedIn ? 'user' : 'noUser'} onClick={() => setAuthDialogOpen(true)} />
+      </Toolbox>
       <Dialog
         title={loggedIn ? 'Welcome' : 'Log in'}
         isOpen={authDialogOpen}
