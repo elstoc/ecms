@@ -9,6 +9,8 @@ import { splitFrontMatter } from '@/utils';
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
 import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
+import './MarkdownToolbox.scss';
+
 type MarkdownToolboxProps = { apiPath: string };
 
 export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
@@ -71,18 +73,19 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
       />
       <Icon
         name='save'
+        className='save-markdown'
         onClick={savePage}
         disabled={mode !== 'edit' || !canWrite || content === editedMarkdown}
-      />
-      <Icon
-        name='delete'
-        disabled={singlePage || !canDelete || mode !== 'edit'}
-        onClick={deletePage}
       />
       <Icon
         name='add'
         disabled={singlePage || !canWrite || mode === 'edit'}
         onClick={() => setSearchParams({ mode: 'add' })}
+      />
+      <Icon
+        name='delete'
+        disabled={singlePage || !canDelete || mode === 'edit'}
+        onClick={deletePage}
       />
     </Toolbox>
   );
