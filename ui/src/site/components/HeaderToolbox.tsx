@@ -6,22 +6,27 @@ import { UserInfo } from '@/auth';
 
 import './HeaderToolbox.scss';
 
-type InjectComponentToolsProps = {
+type ChildrenOnly = {
   children: ReactNode;
 };
 
 export const HeaderToolbox = () => {
   return (
     <div className='toolbox-content'>
-      <div id='component-tools-target'></div>
-      <UserInfo />
+      <div className='left'>
+        <div id='sidebar-expander-target'></div>
+      </div>
+      <div className='right'>
+        <div id='component-tools-target'></div>
+        <UserInfo />
+      </div>
     </div>
   );
 };
 
 /* This is a React component that can be called from any other component
    and injects itself into the Header Toolbox */
-export const InjectComponentTools = ({ children }: InjectComponentToolsProps) => {
+export const InjectComponentTools = ({ children }: ChildrenOnly) => {
   const [toolsTarget, setToolsTarget] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -33,4 +38,18 @@ export const InjectComponentTools = ({ children }: InjectComponentToolsProps) =>
   }
 
   return createPortal(<Card className='toolbox'>{children}</Card>, toolsTarget);
+};
+
+export const InjectSideExpander = ({ children }: ChildrenOnly) => {
+  const [expanderTarget, setExpanderTarget] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setExpanderTarget(document.getElementById('sidebar-expander-target'));
+  });
+
+  if (!expanderTarget) {
+    return <></>;
+  }
+
+  return createPortal(<Card className='toolbox'>{children}</Card>, expanderTarget);
 };

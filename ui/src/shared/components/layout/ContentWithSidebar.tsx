@@ -2,24 +2,21 @@ import { Collapse } from '@blueprintjs/core';
 import { ReactElement, useEffect, useState } from 'react';
 
 import { useIsDualPanel } from '@/shared/hooks';
+import { InjectSideExpander } from '@/site/components/HeaderToolbox';
 
 import { Icon } from '../icon';
-
-import { Toolbox } from './Toolbox';
 
 import './ContentWithSidebar.scss';
 
 type ContentWithSideBarProps = {
   content: ReactElement;
   sidebar: ReactElement | null;
-  toolbarIcons: ReactElement | null;
   closeSidebarOnClick?: boolean;
 };
 
 export const ContentWithSidebar = ({
   content,
   sidebar,
-  toolbarIcons,
   closeSidebarOnClick,
 }: ContentWithSideBarProps) => {
   const isDualPanel = useIsDualPanel();
@@ -55,11 +52,8 @@ export const ContentWithSidebar = ({
   return (
     <div className='cws-container'>
       <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
-        <div className='cws-toolbar'>
-          <Toolbox content={toolbarIcons} orientation={isDualPanel ? 'vertical' : 'horizontal'} />
-          {!isDualPanel && sidebar && <Toolbox content={menuIcon} orientation='vertical' />}
-        </div>
         <div className='cws-content-and-sidebar'>
+          {!isDualPanel && sidebar && <InjectSideExpander>{menuIcon}</InjectSideExpander>}
           {sidebar && sidebarElement}
           <div className='cws-content'>{content}</div>
         </div>

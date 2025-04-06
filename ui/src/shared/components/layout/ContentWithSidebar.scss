@@ -18,17 +18,6 @@
       max-width: $maxContentWidth;
     }
 
-    .cws-toolbar {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: space-between;
-      max-width: $maxContentWidth;
-
-      .sidebar-button {
-        margin-right: auto; // push menu to left hand side
-      }
-    }
-
     .cws-content-and-sidebar {
       display: flex;
       flex-direction: column;
@@ -50,10 +39,6 @@
       flex-direction: row-reverse;
       justify-content: space-between;
       column-gap: 10px;
-
-      .cws-toolbar {
-        flex-direction: column;
-      }
 
       .cws-content-and-sidebar {
         flex-direction: row;

@@ -30,20 +30,16 @@
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0 5px;
+  column-gap: 30px;
 
   .nav-title {
     font-size: 1.05rem;
-    padding: 0.3rem 0.5rem;
+    padding: 0.3rem 0;
   }
 
   @media screen and (min-width: $maxMobileWidth) {
     justify-content: flex-start;
     align-items: center;
-
-    .nav-title {
-      padding: 0 0.9rem;
-    }
   }
 }
 

@@ -45,7 +45,7 @@ export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
   return (
     <VideoDbStateContext.Provider value={videoDbState}>
       <Suspense>
-        <ContentWithSidebar content={content} sidebar={filters} toolbarIcons={toolbar} />
+        <ContentWithSidebar content={content} sidebar={filters} />
         <InjectComponentTools>{toolbar}</InjectComponentTools>
       </Suspense>
     </VideoDbStateContext.Provider>

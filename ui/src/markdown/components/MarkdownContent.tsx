@@ -40,7 +40,6 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
     <ContentWithSidebar
       content={content}
       sidebar={singlePage ? null : sidebar}
-      toolbarIcons={toolbar}
       closeSidebarOnClick={true}
     />
   );
