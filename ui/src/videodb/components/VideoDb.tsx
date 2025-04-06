@@ -7,14 +7,14 @@ import { ContentWithSidebar } from '@/shared/components/layout';
 import { useTitle } from '@/shared/hooks';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
-import { VideoDbStateContext, useVideoDbState } from '../hooks/useVideoDbStateContext';
+import { VideoDbContext, useVideoDbContext } from '../hooks/useVideoDb';
 
 import { VideoDbContent } from './VideoDbContent';
 import { VideoFilters } from './VideoFilters';
 import { VideoToolbox } from './VideoToolbox';
 
 export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
-  const videoDbState = useVideoDbState(title, apiPath);
+  const videoDbState = useVideoDbContext(title, apiPath);
 
   useTitle(title);
 
@@ -43,11 +43,11 @@ export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
 
   // suspense is wrapped around routes and page elements separately to stop screen flashing
   return (
-    <VideoDbStateContext.Provider value={videoDbState}>
+    <VideoDbContext.Provider value={videoDbState}>
       <Suspense>
         <ContentWithSidebar content={content} sidebar={filters} />
         <InjectComponentTools>{toolbar}</InjectComponentTools>
       </Suspense>
-    </VideoDbStateContext.Provider>
+    </VideoDbContext.Provider>
   );
 };

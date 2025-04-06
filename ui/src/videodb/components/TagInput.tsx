@@ -1,9 +1,7 @@
-import { useContext } from 'react';
-
 import { MultiTagInput } from '@/shared/components/forms';
 
+import { useVideoDb } from '../hooks/useVideoDb';
 import { useGetTags } from '../hooks/useVideoDbQueries';
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 type TagInputProps = {
   tags: string | null;
@@ -23,8 +21,8 @@ export const TagInput = ({
   allowCreation = true,
 }: TagInputProps) => {
   const {
-    videoDbState: { apiPath },
-  } = useContext(VideoDbStateContext);
+    state: { apiPath },
+  } = useVideoDb();
   const tagsArray = tags ? tags.split('|') : [];
   const tagLookup = useGetTags(apiPath);
 

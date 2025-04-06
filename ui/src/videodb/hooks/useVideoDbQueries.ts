@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 
@@ -14,7 +12,7 @@ import {
   putVideoDbVideo,
 } from '../api';
 
-import { VideoDbStateContext } from './useVideoDbStateContext';
+import { useVideoDb } from './useVideoDb';
 
 export const useGetLookup = (path: string, lookupTable: string) => {
   return useCustomQuery({
@@ -39,8 +37,8 @@ export const useGetTags = (path: string) => {
 
 export const useGetVideos = (path: string, params?: { [key: string]: string }) => {
   const {
-    videoDbState: { sortOrder, shuffleSeed },
-  } = useContext(VideoDbStateContext);
+    state: { sortOrder, shuffleSeed },
+  } = useVideoDb();
 
   return useCustomQuery({
     queryKey: [

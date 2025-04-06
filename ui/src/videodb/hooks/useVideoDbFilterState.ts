@@ -1,9 +1,9 @@
-import { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { toIntOrUndefined } from '@/utils';
 
-import { VideoDbStateContext } from './useVideoDbStateContext';
+import { useVideoDb } from './useVideoDb';
 
 type FilterState = {
   maxLength: number | null;
@@ -96,7 +96,7 @@ const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) =>
 
 export const useVideoDbFilterState = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { videoDbReducer } = useContext(VideoDbStateContext);
+  const { dispatch } = useVideoDb();
   const [state, stateReducer] = useReducer(filterReducer, initialFilters);
   const [syncState, setSyncState] = useState(false);
 
@@ -123,7 +123,7 @@ export const useVideoDbFilterState = () => {
   useEffect(() => {
     if (syncState) {
       setSyncState(false);
-      videoDbReducer({ action: 'resetLimit' });
+      dispatch({ type: 'resetLimit' });
       setSearchParams((params) => getSearchParamsFromState(params, state));
     }
   }, [syncState]);

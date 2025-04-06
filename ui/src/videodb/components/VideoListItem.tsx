@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { Card, Collapse, Tag } from '@blueprintjs/core';
-import { ReactElement, forwardRef, useContext, useState } from 'react';
+import { ReactElement, forwardRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
@@ -8,8 +8,8 @@ import { VideoWithId } from '@/contracts/videodb';
 import { Flag } from '@/shared/components/forms';
 import { Icon } from '@/shared/components/icon';
 
+import { useVideoDb } from '../hooks/useVideoDb';
 import { useLookupValue, usePatchVideo } from '../hooks/useVideoDbQueries';
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 import { WatchedIcon } from './WatchedIcon';
 
@@ -22,8 +22,8 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
     const userIsAdmin = useUserIsAdmin();
     const [viewExpanded, setViewExpanded] = useState(false);
     const {
-      videoDbState: { apiPath },
-    } = useContext(VideoDbStateContext);
+      state: { apiPath },
+    } = useVideoDb();
     const { mutate, isPending } = usePatchVideo(apiPath, video.id, 'flag updated');
 
     const videoCategory = useLookupValue(apiPath, 'categories', video.category);

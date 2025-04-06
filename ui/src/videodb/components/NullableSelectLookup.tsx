@@ -1,9 +1,7 @@
-import { useContext } from 'react';
-
 import { NullableSelectKeyValue } from '@/shared/components/forms';
 
+import { useVideoDb } from '../hooks/useVideoDb';
 import { useGetLookup } from '../hooks/useVideoDbQueries';
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 type NullableSelectLookupProps = {
   lookupTable: string;
@@ -30,8 +28,8 @@ export const NullableSelectLookup = (props: NullableSelectLookupProps) => {
     filterable,
   } = props;
   const {
-    videoDbState: { apiPath },
-  } = useContext(VideoDbStateContext);
+    state: { apiPath },
+  } = useVideoDb();
   const lookupKeyValues = useGetLookup(apiPath, lookupTable);
 
   return (

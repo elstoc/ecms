@@ -1,11 +1,11 @@
 import { Card } from '@blueprintjs/core';
-import { createRef, startTransition, useContext } from 'react';
+import { createRef, startTransition } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useElementIsVisible } from '@/shared/hooks/useElementIsVisible';
 
+import { useVideoDb } from '../hooks/useVideoDb';
 import { useGetVideos } from '../hooks/useVideoDbQueries';
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 import { VideoListItem } from './VideoListItem';
 
@@ -14,9 +14,9 @@ import './VideoList.scss';
 export const VideoList = () => {
   const [searchParams] = useSearchParams();
   const {
-    videoDbState: { apiPath, limit },
-    videoDbReducer,
-  } = useContext(VideoDbStateContext);
+    state: { apiPath, limit },
+    dispatch,
+  } = useVideoDb();
   const {
     maxLength,
     titleContains,
@@ -44,7 +44,7 @@ export const VideoList = () => {
 
   useElementIsVisible(refLastVideo, () => {
     startTransition(() => {
-      videoDbReducer({ action: 'increaseLimit', currentlyLoaded: videos.length });
+      dispatch({ type: 'increaseLimit', currentlyLoaded: videos.length });
     });
   });
 

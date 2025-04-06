@@ -1,11 +1,11 @@
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { Icon } from '@/shared/components/icon';
 import { Toolbox } from '@/shared/components/layout';
 
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
+import { useVideoDb } from '../hooks/useVideoDb';
 import { downloadVideoCSV } from '../utils/downloadVideoCSV';
 
 import './VideoToolbox.scss';
@@ -15,9 +15,9 @@ export const VideoToolbox = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const {
-    videoDbState: { apiPath, sortOrder },
-    videoDbReducer,
-  } = useContext(VideoDbStateContext);
+    state: { apiPath, sortOrder },
+    dispatch,
+  } = useVideoDb();
 
   const downloadCSV = useCallback(async () => {
     await downloadVideoCSV(apiPath);
@@ -45,8 +45,8 @@ export const VideoToolbox = () => {
           name='sortAscAlpha'
           color={sortOrder === 'asc' ? 'black' : 'grey'}
           onClick={() =>
-            videoDbReducer({
-              action: 'setSortOrder',
+            dispatch({
+              type: 'setSortOrder',
               value: 'asc',
             })
           }
@@ -55,8 +55,8 @@ export const VideoToolbox = () => {
           name='shuffle'
           color={sortOrder === 'shuffle' ? 'black' : 'grey'}
           onClick={() =>
-            videoDbReducer({
-              action: 'setSortOrder',
+            dispatch({
+              type: 'setSortOrder',
               value: 'shuffle',
             })
           }

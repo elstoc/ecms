@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { VideoWithId } from '@/contracts/videodb';
 
+import { useVideoDb } from '../hooks/useVideoDb';
 import { useDeleteVideo, useGetVideo, usePutVideo } from '../hooks/useVideoDbQueries';
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 import { EditVideoForm } from './EditVideoForm';
 
@@ -13,8 +12,8 @@ type UpdateVideoProps = { id: number };
 export const UpdateVideo = ({ id }: UpdateVideoProps) => {
   const navigate = useNavigate();
   const {
-    videoDbState: { apiPath },
-  } = useContext(VideoDbStateContext);
+    state: { apiPath },
+  } = useVideoDb();
 
   const storedVideo = useGetVideo(apiPath, id);
   const { mutate: deleteMutate } = useDeleteVideo(apiPath, id, 'deleted');

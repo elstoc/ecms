@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { VideoWithId } from '@/contracts/videodb';
 
+import { useVideoDb } from '../hooks/useVideoDb';
 import { usePostVideo } from '../hooks/useVideoDbQueries';
-import { VideoDbStateContext } from '../hooks/useVideoDbStateContext';
 
 import { EditVideoForm } from './EditVideoForm';
 
@@ -35,8 +34,8 @@ const initialVideo = {
 export const AddVideo = () => {
   const navigate = useNavigate();
   const {
-    videoDbState: { apiPath },
-  } = useContext(VideoDbStateContext);
+    state: { apiPath },
+  } = useVideoDb();
 
   const { mutate } = usePostVideo(apiPath, 'saved');
 
