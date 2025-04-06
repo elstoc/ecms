@@ -5,9 +5,7 @@ const TOKEN_KEY = 'access-token';
 const TOKEN_EXPIRY_KEY = 'access-token-expiry';
 
 type User = { id: string; fullName?: string; roles?: string[]; hashedPassword?: string };
-
 type AccessToken = { accessToken: string; accessTokenExpiry: number };
-
 type IdAndAccessToken = AccessToken & { id: string };
 
 const setAccessToken = (token: string, expiry: number): void => {
