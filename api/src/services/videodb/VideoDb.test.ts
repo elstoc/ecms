@@ -1062,22 +1062,22 @@ describe('VideoDb', () => {
       ['shuffle', undefined],
       ['somethingelse', 1234],
     ])(
-      'runs the correct sql with LIMIT when limit param is defined (sort: %s, seed: %s)',
+      'runs the correct sliced array when limit param is defined (sort: %s, seed: %s)',
       async (sortOrder, shuffleSeed) => {
         mockStorage.contentFileExists.mockReturnValue(true);
         mockGet.mockResolvedValueOnce({ ver: 4 });
         await videoDb.initialise();
-        const expectedSql = baseSQL + baseOrderBy + ' LIMIT 100';
+        const expectedSql = baseSQL + baseOrderBy;
         const expectedParams = {};
 
-        mockGetAllWithParams.mockResolvedValue('videos');
-        const videos = await videoDb.queryVideos({ sortOrder, shuffleSeed }, 100);
+        mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const videos = await videoDb.queryVideos({ sortOrder, shuffleSeed }, 5);
 
         expect(mockGetAllWithParams).toHaveBeenCalled();
         const [sql, params] = mockGetAllWithParams.mock.calls[0];
         expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
         expect(params).toEqual(expectedParams);
-        expect(videos).toBe('videos');
+        expect(videos).toEqual([1, 2, 3, 4, 5]);
       },
     );
 

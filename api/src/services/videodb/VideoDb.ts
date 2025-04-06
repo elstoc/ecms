@@ -359,10 +359,6 @@ export class VideoDb {
 
     const shuffle = sortOrder === 'shuffle' && shuffleSeed;
 
-    if (limit && !shuffle) {
-      sql += ` LIMIT ${limit}`;
-    }
-
     let videos = await this.database?.getAllWithParams<VideoWithId>(sql, params);
     if (!videos) {
       throw new Error('Unexpected error querying videos');
@@ -370,6 +366,8 @@ export class VideoDb {
 
     if (shuffle) {
       videos = pShuffle(videos, shuffleSeed, limit);
+    } else if (limit) {
+      videos = videos.slice(0, limit);
     }
 
     return videos;
