@@ -8,7 +8,7 @@ type IncreaseLimit = { type: 'increaseLimit'; currentlyLoaded: number };
 type ResetLimit = { type: 'resetLimit' };
 type SetSortOrder = { type: 'setSortOrder'; value: 'asc' | 'shuffle' };
 
-type StateOperations = IncreaseLimit | ResetLimit | SetSortOrder;
+type StateAction = IncreaseLimit | ResetLimit | SetSortOrder;
 
 type VideoDbState = {
   apiPath: string;
@@ -20,10 +20,10 @@ type VideoDbState = {
 
 type VideoDbContextProps = {
   state: VideoDbState;
-  dispatch: React.Dispatch<StateOperations>;
+  dispatch: React.Dispatch<StateAction>;
 };
 
-const reducer: (state: VideoDbState, action: StateOperations) => VideoDbState = (state, action) => {
+const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (state, action) => {
   if (
     action.type === 'increaseLimit' &&
     action.currentlyLoaded + BATCH_SIZE >= state.limit + BATCH_SIZE
