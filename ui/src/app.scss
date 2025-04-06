@@ -35,7 +35,7 @@
     /* That is, from 500 to 1700px */
     @for $i from 5 through 17 {
       @media screen and (min-width: #{$i * 100}px) {
-        width: #{$i * 100 - 40}px;
+        width: #{$i * 100 - 20}px;
       }
     }
   }
