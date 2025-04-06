@@ -3,12 +3,12 @@ import { useSiteConfig } from '@/site';
 
 import { getUserInfo, login, logout } from '../api';
 
-export const useGetUserInfo = () => {
+export const useUserInfo = () => {
   return useCustomQuery({ queryKey: ['user-info'], queryFn: getUserInfo });
 };
 
 export const useUserIsAdmin = () => {
-  const user = useGetUserInfo();
+  const user = useUserInfo();
   const { authEnabled } = useSiteConfig();
   return !authEnabled || (user.roles ?? []).includes('admin');
 };

@@ -1,4 +1,4 @@
-import { useGetUserInfo } from '..';
+import { useUserInfo } from '..';
 import { Dialog, DialogBody } from '@blueprintjs/core';
 import { Suspense, useState } from 'react';
 
@@ -13,7 +13,7 @@ import './UserInfo.scss';
 
 export const UserInfo = () => {
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
-  const userData = useGetUserInfo();
+  const userData = useUserInfo();
   const { authEnabled } = useSiteConfig();
 
   if (!authEnabled) {
