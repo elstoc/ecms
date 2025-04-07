@@ -24,7 +24,7 @@ type EditVideoFormProps = {
 };
 
 export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideoFormProps) => {
-  const [video, videoReducer] = useEditVideoReducer(initialVideoState);
+  const [video, dispatch] = useEditVideoReducer(initialVideoState);
   const [collapseIsOpen, setCollapseIsOpen] = useState(false);
 
   const saveVideo = useCallback(async () => {
@@ -42,7 +42,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         className='title'
         inline={true}
         value={video.title}
-        onValueChange={(value) => videoReducer({ key: 'title', value })}
+        onValueChange={(value) => dispatch({ key: 'title', value })}
         autoFocus={true}
       />
       <ControlGroup className='first-group'>
@@ -51,14 +51,14 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           className='watched-status'
           selectedKey={video.watched}
           lookupTable='watched_status'
-          onSelectionChange={(value) => videoReducer({ key: 'watched', value })}
+          onSelectionChange={(value) => dispatch({ key: 'watched', value })}
         />
         <SelectLookup
           label='Category'
           className='category'
           lookupTable='categories'
           selectedKey={video.category}
-          onSelectionChange={(value) => videoReducer({ key: 'category', value })}
+          onSelectionChange={(value) => dispatch({ key: 'category', value })}
         />
       </ControlGroup>
       <ControlGroup className='second-group'>
@@ -66,13 +66,13 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           label='Episodes'
           className='num-episodes'
           value={video.num_episodes}
-          onValueChange={(value) => videoReducer({ key: 'num_episodes', value })}
+          onValueChange={(value) => dispatch({ key: 'num_episodes', value })}
         />
         <NullableIntInput
           label='Length'
           className='length'
           value={video.length_mins}
-          onValueChange={(value) => videoReducer({ key: 'length_mins', value })}
+          onValueChange={(value) => dispatch({ key: 'length_mins', value })}
         />
       </ControlGroup>
       <Card className='media'>
@@ -82,21 +82,21 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             className='media-type'
             lookupTable='media_types'
             selectedKey={video.primary_media_type}
-            onSelectionChange={(value) => videoReducer({ key: 'primary_media_type', value })}
+            onSelectionChange={(value) => dispatch({ key: 'primary_media_type', value })}
           />
           <NullableSelectLookup
             label='Location'
             className='media-location'
             lookupTable='media_locations'
             selectedKey={video.primary_media_location}
-            onSelectionChange={(value) => videoReducer({ key: 'primary_media_location', value })}
+            onSelectionChange={(value) => dispatch({ key: 'primary_media_location', value })}
           />
           <NullableSelectLookup
             label='Watched'
             className='watched-status'
             lookupTable='watched_status'
             selectedKey={video.primary_media_watched}
-            onSelectionChange={(value) => videoReducer({ key: 'primary_media_watched', value })}
+            onSelectionChange={(value) => dispatch({ key: 'primary_media_watched', value })}
           />
         </ControlGroup>
         <ControlGroup>
@@ -105,21 +105,21 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             className='media-type'
             lookupTable='media_types'
             selectedKey={video.other_media_type}
-            onSelectionChange={(value) => videoReducer({ key: 'other_media_type', value })}
+            onSelectionChange={(value) => dispatch({ key: 'other_media_type', value })}
           />
           <NullableSelectLookup
             label=''
             className='media-location'
             lookupTable='media_locations'
             selectedKey={video.other_media_location}
-            onSelectionChange={(value) => videoReducer({ key: 'other_media_location', value })}
+            onSelectionChange={(value) => dispatch({ key: 'other_media_location', value })}
           />
         </ControlGroup>
         <NullableStringInput
           label='Notes'
           className='notes'
           value={video.media_notes}
-          onValueChange={(value) => videoReducer({ key: 'media_notes', value })}
+          onValueChange={(value) => dispatch({ key: 'media_notes', value })}
         />
       </Card>
       <Switch
@@ -127,20 +127,20 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         className='priority-flag'
         inline={true}
         value={(video.priority_flag ?? 0) > 0}
-        onValueChange={(value) => videoReducer({ key: 'priority_flag', value: value ? 1 : 0 })}
+        onValueChange={(value) => dispatch({ key: 'priority_flag', value: value ? 1 : 0 })}
       />
       <TagInput
         label='Tags'
         inline={true}
         tags={video.tags}
-        onSelectionChange={(value) => videoReducer({ key: 'tags', value })}
+        onSelectionChange={(value) => dispatch({ key: 'tags', value })}
       />
       <NullableStringInput
         label='Progress'
         className='progress'
         inline={true}
         value={video.progress}
-        onValueChange={(value) => videoReducer({ key: 'progress', value })}
+        onValueChange={(value) => dispatch({ key: 'progress', value })}
       />
       <Button
         className='collapser'
@@ -153,19 +153,19 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           className='director'
           inline={true}
           value={video.director}
-          onValueChange={(value) => videoReducer({ key: 'director', value })}
+          onValueChange={(value) => dispatch({ key: 'director', value })}
         />
         <NullableStringInput
           label='Actors'
           inline={true}
           value={video.actors}
-          onValueChange={(value) => videoReducer({ key: 'actors', value })}
+          onValueChange={(value) => dispatch({ key: 'actors', value })}
         />
         <NullableStringInput
           label='Plot'
           inline={true}
           value={video.plot}
-          onValueChange={(value) => videoReducer({ key: 'plot', value })}
+          onValueChange={(value) => dispatch({ key: 'plot', value })}
         />
       </Collapse>
       <div className='form-buttons'>
