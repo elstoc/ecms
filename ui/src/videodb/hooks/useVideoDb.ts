@@ -2,18 +2,16 @@ import { createContext, useContext, useReducer } from 'react';
 
 import { getRandomSeed } from '@/utils';
 
-const BATCH_SIZE = 40;
-
-type IncreaseLimit = { type: 'increaseLimit'; currentlyLoaded: number };
-type ResetLimit = { type: 'resetLimit' };
+type SetPages = { type: 'setPages'; value: number };
+type ResetPages = { type: 'resetPages' };
 type SetSortOrder = { type: 'setSortOrder'; value: 'asc' | 'shuffle' };
 
-type StateAction = IncreaseLimit | ResetLimit | SetSortOrder;
+type StateAction = SetPages | ResetPages | SetSortOrder;
 
 type VideoDbState = {
   apiPath: string;
   title: string;
-  limit: number;
+  pages: number;
   sortOrder?: 'asc' | 'shuffle';
   shuffleSeed?: number;
 };
@@ -24,16 +22,14 @@ type VideoDbContextProps = {
 };
 
 const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (state, action) => {
-  if (
-    action.type === 'increaseLimit' &&
-    action.currentlyLoaded + BATCH_SIZE >= state.limit + BATCH_SIZE
-  ) {
-    return { ...state, limit: state.limit + BATCH_SIZE };
-  } else if (action.type === 'resetLimit') {
-    return { ...state, limit: BATCH_SIZE };
+  if (action.type === 'setPages') {
+    return { ...state, pages: action.value };
+  } else if (action.type === 'resetPages') {
+    return { ...state, pages: 1 };
   } else if (action.type === 'setSortOrder') {
     return {
       ...state,
+      pages: action.value === 'shuffle' || action.value !== state.sortOrder ? 1 : state.pages,
       sortOrder: action.value,
       shuffleSeed: action.value === 'shuffle' ? getRandomSeed() : undefined,
     };
@@ -43,14 +39,11 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
 
 export const VideoDbContext = createContext({} as VideoDbContextProps);
 
-export const useVideoDbContext: (title: string, apiPath: string) => VideoDbContextProps = (
-  title,
-  apiPath,
-) => {
+export const useVideoDbContext = (title: string, apiPath: string) => {
   const initialState: VideoDbState = {
     title,
     apiPath,
-    limit: BATCH_SIZE,
+    pages: 1,
     sortOrder: 'asc',
   };
   const [state, dispatch] = useReducer(reducer, initialState);

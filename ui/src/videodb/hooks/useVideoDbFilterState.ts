@@ -123,7 +123,7 @@ export const useVideoDbFilterState = () => {
   useEffect(() => {
     if (syncState) {
       setSyncState(false);
-      dispatch({ type: 'resetLimit' });
+      dispatch({ type: 'resetPages' });
       setSearchParams((params) => getSearchParamsFromState(params, state));
     }
   }, [syncState]);

@@ -1,7 +1,7 @@
 import { NullableSelectKeyValue } from '@/shared/components/forms';
 
 import { useVideoDb } from '../hooks/useVideoDb';
-import { useGetLookup } from '../hooks/useVideoDbQueries';
+import { useLookup } from '../hooks/useVideoDbQueries';
 
 type NullableSelectLookupProps = {
   lookupTable: string;
@@ -30,7 +30,7 @@ export const NullableSelectLookup = (props: NullableSelectLookupProps) => {
   const {
     state: { apiPath },
   } = useVideoDb();
-  const lookupKeyValues = useGetLookup(apiPath, lookupTable);
+  const lookupKeyValues = useLookup(apiPath, lookupTable);
 
   return (
     <NullableSelectKeyValue

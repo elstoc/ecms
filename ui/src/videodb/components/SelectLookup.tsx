@@ -1,7 +1,7 @@
 import { SelectKeyValue } from '@/shared/components/forms';
 
 import { useVideoDb } from '../hooks/useVideoDb';
-import { useGetLookup } from '../hooks/useVideoDbQueries';
+import { useLookup } from '../hooks/useVideoDbQueries';
 
 type SelectLookupProps = {
   lookupTable: string;
@@ -17,7 +17,7 @@ export const SelectLookup = (props: SelectLookupProps) => {
   const {
     state: { apiPath },
   } = useVideoDb();
-  const lookupKeyValues = useGetLookup(apiPath, lookupTable);
+  const lookupKeyValues = useLookup(apiPath, lookupTable);
 
   return (
     <SelectKeyValue

@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 
@@ -14,7 +16,7 @@ import {
 
 import { useVideoDb } from './useVideoDb';
 
-export const useGetLookup = (path: string, lookupTable: string) => {
+export const useLookup = (path: string, lookupTable: string) => {
   return useCustomQuery({
     queryKey: ['videoDb', 'lookup', path, lookupTable],
     queryFn: () => getVideoDbLookup(path, lookupTable),
@@ -24,7 +26,7 @@ export const useGetLookup = (path: string, lookupTable: string) => {
 };
 
 export const useLookupValue = (path: string, lookupTable: string, value?: string | null) => {
-  const lookup = useGetLookup(path, lookupTable);
+  const lookup = useLookup(path, lookupTable);
   return lookup[value ?? ''];
 };
 
@@ -35,21 +37,45 @@ export const useGetTags = (path: string) => {
   });
 };
 
-export const useGetVideos = (path: string, params?: { [key: string]: string }) => {
+export const useVideos = () => {
+  const [searchParams] = useSearchParams();
   const {
-    state: { sortOrder, shuffleSeed },
+    maxLength,
+    titleContains,
+    categories,
+    tags,
+    watched,
+    mediaWatched,
+    minResolution,
+    flaggedOnly,
+  } = Object.fromEntries(searchParams.entries());
+
+  const {
+    state: { apiPath, sortOrder, shuffleSeed, pages },
   } = useVideoDb();
+
+  const params = {
+    maxLength,
+    titleContains,
+    categories,
+    tags,
+    watched,
+    mediaWatched,
+    minResolution,
+    flaggedOnly,
+    pages: pages?.toString(),
+  };
 
   return useCustomQuery({
     queryKey: [
       'videoDb',
       'videos',
-      `${path}:${JSON.stringify(params)}`,
+      `${apiPath}:${JSON.stringify(params)}`,
       sortOrder as string,
       shuffleSeed ?? '',
     ],
     queryFn: () =>
-      getVideoDbVideos(path, {
+      getVideoDbVideos(apiPath, {
         ...params,
         sortOrder: sortOrder as string,
         shuffleSeed: shuffleSeed?.toString(),
