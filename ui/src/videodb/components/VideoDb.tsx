@@ -14,7 +14,7 @@ import { VideoFilters } from './VideoFilters';
 import { VideoToolbox } from './VideoToolbox';
 
 export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
-  const videoDbState = useVideoDbReducer(title, apiPath);
+  const reducerProps = useVideoDbReducer(title, apiPath);
 
   useTitle(title);
 
@@ -43,7 +43,7 @@ export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
 
   // suspense is wrapped around routes and page elements separately to stop screen flashing
   return (
-    <VideoDbContext.Provider value={videoDbState}>
+    <VideoDbContext.Provider value={reducerProps}>
       <Suspense>
         <ContentWithSidebar content={content} sidebar={filters} />
         <InjectComponentTools>{toolbar}</InjectComponentTools>
