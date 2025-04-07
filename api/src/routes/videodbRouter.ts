@@ -41,11 +41,11 @@ export const createVideoDbRouter = (site: Site): Router => {
         res.json(video);
       } else if (fn === 'getVideos') {
         const {
+          pages,
           maxLength,
           categories,
           tags,
           titleContains,
-          limit,
           watched,
           mediaWatched,
           minResolution,
@@ -66,7 +66,7 @@ export const createVideoDbRouter = (site: Site): Router => {
           sortOrder: sortOrder === undefined ? 'asc' : (sortOrder as string),
           shuffleSeed: parseInt(shuffleSeed?.toString() ?? '0'),
         };
-        const videos = await videoDb.queryVideos(filters, parseInt(limit as string));
+        const videos = await videoDb.queryVideos(filters, parseInt(pages as string));
         res.json(videos);
       }
     } catch (err: unknown) {

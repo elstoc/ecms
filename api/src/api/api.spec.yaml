@@ -335,13 +335,13 @@ paths:
       description: Get a list of videos from the database, filtering accordingly
       parameters:
         - $ref: '#/components/parameters/ComponentPath'
-        - in: query
-          name: limit
+        - name: pages
+          description: The number of pages requested
+          in: query
           required: false
-          description: Maximum number of records to return
           schema:
             type: integer
-            minimum: 1
+            minimum: 0
         - in: query
           name: maxLength
           required: false
