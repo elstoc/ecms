@@ -27,28 +27,26 @@ const initialFilters: FilterState = {
   flaggedOnly: null,
 };
 
-type SetStringField = {
-  action: 'setFilter';
+type SetStringFilter = {
+  type: 'setFilter';
   key: 'titleContains' | 'categories' | 'tags' | 'watched' | 'mediaWatched' | 'minResolution';
   value: string | null;
 };
+type SetNumericFilter = { type: 'setFilter'; key: 'maxLength'; value: number | null };
+type SetBooleanIntFilter = { type: 'setFilter'; key: 'flaggedOnly'; value: 0 | 1 | null };
+type SetAllFilters = { type: 'setAllFilters'; value: FilterState };
 
-type SetNumericField = { action: 'setFilter'; key: 'maxLength'; value: number | null };
+type SetIndividualFilter = SetStringFilter | SetNumericFilter | SetBooleanIntFilter;
+type FilterAction = SetIndividualFilter | SetAllFilters;
 
-type SetBooleanIntField = { action: 'setFilter'; key: 'flaggedOnly'; value: 0 | 1 | null };
-
-type SetIndividualFilter = SetStringField | SetNumericField | SetBooleanIntField;
-
-type FilterOperations = SetIndividualFilter | { action: 'setAllFilters'; value: FilterState };
-
-const filterReducer: (state: FilterState, operation: FilterOperations) => FilterState = (
+const filterReducer: (state: FilterState, action: FilterAction) => FilterState = (
   state,
-  operation,
+  action,
 ) => {
-  if (operation.action === 'setFilter') {
-    return { ...state, [operation.key]: operation.value };
-  } else if (operation.action === 'setAllFilters') {
-    return { ...operation.value };
+  if (action.type === 'setFilter') {
+    return { ...state, [action.key]: action.value };
+  } else if (action.type === 'setAllFilters') {
+    return { ...action.value };
   }
   return state;
 };
@@ -81,15 +79,15 @@ const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) =>
 export const useVideoDbFilterState = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { dispatch } = useVideoDb();
-  const [state, stateReducer] = useReducer(filterReducer, initialFilters);
+  const [filterState, filterDispatch] = useReducer(filterReducer, initialFilters);
   const [syncState, setSyncState] = useState(false);
 
   const handlerRef = useRef<NodeJS.Timeout | null>(null);
 
   // set state from search params on initial load
   useEffect(() => {
-    stateReducer({
-      action: 'setAllFilters',
+    filterDispatch({
+      type: 'setAllFilters',
       value: {
         maxLength: toIntOrUndefined(searchParams.get('maxLength')) ?? null,
         titleContains: searchParams.get('titleContains'),
@@ -108,19 +106,19 @@ export const useVideoDbFilterState = () => {
     if (syncState) {
       setSyncState(false);
       dispatch({ type: 'resetPages' });
-      setSearchParams((params) => getSearchParamsFromState(params, state));
+      setSearchParams((params) => getSearchParamsFromState(params, filterState));
     }
   }, [syncState]);
 
   const clearAllFilters = useCallback(() => {
-    stateReducer({ action: 'setAllFilters', value: initialFilters });
+    filterDispatch({ type: 'setAllFilters', value: initialFilters });
     setSearchParams();
-  }, [setSearchParams, stateReducer]);
+  }, [setSearchParams, filterDispatch]);
 
-  const updateState = useCallback(
+  const updateFilterState = useCallback(
     (operation: SetIndividualFilter) => {
       // update state immediately
-      stateReducer(operation);
+      filterDispatch(operation);
 
       // update search params with a delay (debounce)
       if (handlerRef.current) {
@@ -135,8 +133,8 @@ export const useVideoDbFilterState = () => {
         setSyncState(true);
       }, timeout);
     },
-    [stateReducer],
+    [filterDispatch],
   );
 
-  return { state, updateState, clearAllFilters };
+  return { filterState, updateFilterState, clearAllFilters };
 };

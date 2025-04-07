@@ -27,7 +27,7 @@ const watchedStatusOptions = [
 ];
 
 export const VideoFilters = () => {
-  const { state, updateState, clearAllFilters } = useVideoDbFilterState();
+  const { filterState, updateFilterState, clearAllFilters } = useVideoDbFilterState();
 
   return (
     <div className='video-filters'>
@@ -37,9 +37,9 @@ export const VideoFilters = () => {
         className='category'
         lookupTable='categories'
         inline={true}
-        selectedKey={state.categories}
+        selectedKey={filterState.categories}
         onSelectionChange={(value) =>
-          updateState({ action: 'setFilter', key: 'categories', value })
+          updateFilterState({ type: 'setFilter', key: 'categories', value })
         }
         nullValueRepr='All'
         filterable={false}
@@ -48,53 +48,59 @@ export const VideoFilters = () => {
         label='Min Resolution'
         inline={true}
         options={minResolutionOptions}
-        value={state.minResolution || ''}
-        onValueChange={(value) => updateState({ action: 'setFilter', key: 'minResolution', value })}
+        value={filterState.minResolution || ''}
+        onValueChange={(value) =>
+          updateFilterState({ type: 'setFilter', key: 'minResolution', value })
+        }
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={state.watched ?? ''}
-        onValueChange={(value) => updateState({ action: 'setFilter', key: 'watched', value })}
+        value={filterState.watched ?? ''}
+        onValueChange={(value) => updateFilterState({ type: 'setFilter', key: 'watched', value })}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={state.mediaWatched ?? ''}
-        onValueChange={(value) => updateState({ action: 'setFilter', key: 'mediaWatched', value })}
+        value={filterState.mediaWatched ?? ''}
+        onValueChange={(value) =>
+          updateFilterState({ type: 'setFilter', key: 'mediaWatched', value })
+        }
       />
       <NullableIntInput
         label='Max Length'
         className='max-length'
         inline={true}
-        value={state.maxLength}
-        onValueChange={(value) => updateState({ action: 'setFilter', key: 'maxLength', value })}
+        value={filterState.maxLength}
+        onValueChange={(value) => updateFilterState({ type: 'setFilter', key: 'maxLength', value })}
       />
       <TagInput
         label='Tags'
         className='tags'
         inline={true}
-        tags={state.tags}
+        tags={filterState.tags}
         allowCreation={false}
-        onSelectionChange={(value) => updateState({ action: 'setFilter', key: 'tags', value })}
+        onSelectionChange={(value) => updateFilterState({ type: 'setFilter', key: 'tags', value })}
       />
       <NullableStringInput
         label='Title Search'
         inline={true}
-        value={state.titleContains}
+        value={filterState.titleContains}
         placeholder=''
-        onValueChange={(value) => updateState({ action: 'setFilter', key: 'titleContains', value })}
+        onValueChange={(value) =>
+          updateFilterState({ type: 'setFilter', key: 'titleContains', value })
+        }
       />
       <Switch
         label='Flagged'
         className='flagged'
         inline={true}
-        value={state.flaggedOnly === 1}
+        value={filterState.flaggedOnly === 1}
         onValueChange={(value) =>
-          updateState({
-            action: 'setFilter',
+          updateFilterState({
+            type: 'setFilter',
             key: 'flaggedOnly',
             value: value ? 1 : 0,
           })
