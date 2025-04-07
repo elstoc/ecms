@@ -21,9 +21,9 @@ const initialFilters: FilterState = {
   categories: null,
   tags: null,
   titleContains: null,
-  watched: 'All',
-  mediaWatched: 'All',
-  minResolution: 'SD',
+  watched: '',
+  mediaWatched: '',
+  minResolution: '',
   flaggedOnly: null,
 };
 
@@ -66,30 +66,14 @@ const getSearchParamsFromState: (params: URLSearchParams, state: FilterState) =>
   params,
   state,
 ) => {
-  const {
-    titleContains,
-    maxLength,
-    categories,
-    watched,
-    mediaWatched,
-    minResolution,
-    tags,
-    flaggedOnly,
-  } = state;
-
-  const minResolutionParam = ['HD', 'UHD'].includes(minResolution ?? '') ? minResolution : '';
-  const watchedParam = ['Y', 'N'].includes(watched ?? '') ? watched : '';
-  const mediaWatchedParam = ['Y', 'N'].includes(mediaWatched ?? '') ? mediaWatched : '';
-  const flaggedOnlyParam = flaggedOnly ? '1' : '';
-
-  setOrDeleteParam(params, 'categories', categories);
-  setOrDeleteParam(params, 'maxLength', maxLength?.toString());
-  setOrDeleteParam(params, 'titleContains', titleContains);
-  setOrDeleteParam(params, 'tags', tags);
-  setOrDeleteParam(params, 'watched', watchedParam);
-  setOrDeleteParam(params, 'mediaWatched', mediaWatchedParam);
-  setOrDeleteParam(params, 'minResolution', minResolutionParam);
-  setOrDeleteParam(params, 'flaggedOnly', flaggedOnlyParam);
+  setOrDeleteParam(params, 'categories', state.categories);
+  setOrDeleteParam(params, 'maxLength', state.maxLength?.toString());
+  setOrDeleteParam(params, 'titleContains', state.titleContains);
+  setOrDeleteParam(params, 'tags', state.tags);
+  setOrDeleteParam(params, 'watched', state.watched);
+  setOrDeleteParam(params, 'mediaWatched', state.mediaWatched);
+  setOrDeleteParam(params, 'minResolution', state.minResolution);
+  setOrDeleteParam(params, 'flaggedOnly', state.flaggedOnly ? '1' : '');
 
   return params;
 };
@@ -111,9 +95,9 @@ export const useVideoDbFilterState = () => {
         titleContains: searchParams.get('titleContains'),
         categories: searchParams.get('categories') ?? null,
         tags: searchParams.get('tags') ?? null,
-        watched: searchParams.get('watched') ?? 'All',
-        mediaWatched: searchParams.get('mediaWatched') ?? 'All',
-        minResolution: searchParams.get('minResolution') ?? 'SD',
+        watched: searchParams.get('watched') ?? '',
+        mediaWatched: searchParams.get('mediaWatched') ?? '',
+        minResolution: searchParams.get('minResolution') ?? '',
         flaggedOnly: (toIntOrUndefined(searchParams.get('flaggedOnly')) as null | 0 | 1) ?? null,
       },
     });

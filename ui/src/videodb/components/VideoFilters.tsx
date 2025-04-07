@@ -15,13 +15,13 @@ import { TagInput } from './TagInput';
 import './VideoFilters.scss';
 
 const minResolutionOptions = [
-  { label: 'SD', value: 'SD' },
+  { label: 'SD', value: '' },
   { label: 'HD', value: 'HD' },
   { label: 'UHD', value: 'UHD' },
 ];
 
 const watchedStatusOptions = [
-  { label: 'All', value: 'All' },
+  { label: 'All', value: '' },
   { label: 'Y', value: 'Y' },
   { label: 'N', value: 'N' },
 ];
@@ -58,21 +58,21 @@ export const VideoFilters = () => {
         label='Min Resolution'
         inline={true}
         options={minResolutionOptions}
-        value={minResolution || 'SD'}
+        value={minResolution || ''}
         onValueChange={(value) => updateState({ action: 'setFilter', key: 'minResolution', value })}
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={watched ?? 'All'}
+        value={watched ?? ''}
         onValueChange={(value) => updateState({ action: 'setFilter', key: 'watched', value })}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={mediaWatched ?? 'All'}
+        value={mediaWatched ?? ''}
         onValueChange={(value) => updateState({ action: 'setFilter', key: 'mediaWatched', value })}
       />
       <NullableIntInput
