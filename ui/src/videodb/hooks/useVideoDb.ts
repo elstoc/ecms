@@ -39,7 +39,7 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
 
 export const VideoDbContext = createContext({} as VideoDbContextProps);
 
-export const useVideoDbContext = (title: string, apiPath: string) => {
+export const useVideoDbReducer = (title: string, apiPath: string) => {
   const initialState: VideoDbState = {
     title,
     apiPath,

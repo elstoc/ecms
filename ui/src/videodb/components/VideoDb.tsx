@@ -7,14 +7,14 @@ import { ContentWithSidebar } from '@/shared/components/layout';
 import { useTitle } from '@/shared/hooks';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
-import { VideoDbContext, useVideoDbContext } from '../hooks/useVideoDb';
+import { VideoDbContext, useVideoDbReducer } from '../hooks/useVideoDb';
 
 import { VideoDbContent } from './VideoDbContent';
 import { VideoFilters } from './VideoFilters';
 import { VideoToolbox } from './VideoToolbox';
 
 export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
-  const videoDbState = useVideoDbContext(title, apiPath);
+  const videoDbState = useVideoDbReducer(title, apiPath);
 
   useTitle(title);
 
