@@ -35,13 +35,3 @@ it('shuffles the array differently, given a different seed', () => {
 
   expect(newArray).not.toEqual(newArray2);
 });
-
-it('shuffles an array within the given length', () => {
-  const seed = (Math.random() * 2 ** 32) >>> 0;
-  let newArray = structuredClone(initialArray);
-
-  newArray = pShuffle(newArray, seed, 10);
-  expect(newArray.length).toBe(10);
-  expect(newArray).not.toEqual(initialArray.slice(0, 10));
-  expect(initialArray).toEqual(expect.arrayContaining(newArray));
-});

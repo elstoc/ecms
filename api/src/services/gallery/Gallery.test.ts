@@ -118,9 +118,9 @@ describe('Gallery', () => {
     it('(shuffle with fixed seed) returns metadata for each file in shuffled order (within defined page limit), plus page info', async () => {
       const expectedReturnData = {
         images: [
-          { filePath: 'gallery/image06.jpg' },
+          { filePath: 'gallery/image07.jpg' },
+          { filePath: 'gallery/image08.jpg' },
           { filePath: 'gallery/image04.jpg' },
-          { filePath: 'gallery/image02.jpg' },
         ],
         currentPage: 1,
         totalPages: 4,
