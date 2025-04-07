@@ -361,7 +361,7 @@ export class VideoDb {
     return { sql, params };
   }
 
-  public async queryVideos(filters?: VideoFilters, limit?: number): Promise<PaginatedVideos> {
+  public async queryVideos(filters?: VideoFilters, requestedPages = 1): Promise<PaginatedVideos> {
     const { sql, params } = this.buildVideoQuery(filters);
     let videos = await this.database?.getAllWithParams<VideoWithId>(sql, params);
 
@@ -371,14 +371,17 @@ export class VideoDb {
 
     const { videoDbPageSize } = this.config;
     const totalPages = Math.ceil(videos.length / videoDbPageSize);
-    const currentPage = 0;
+    const currentPage = Math.min(totalPages, requestedPages);
 
     const { sortOrder, shuffleSeed } = filters || {};
     const shuffle = sortOrder === 'shuffle' && shuffleSeed;
+    const limit = currentPage * videoDbPageSize;
 
     if (shuffle) {
-      videos = pShuffle(videos, shuffleSeed, limit);
-    } else if (limit) {
+      videos = pShuffle(videos, shuffleSeed);
+    }
+
+    if (limit) {
       videos = videos.slice(0, limit);
     }
 

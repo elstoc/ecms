@@ -50,6 +50,7 @@ describe('VideoDb', () => {
 
   const config = {
     omdbApiKey: 'omdb-key',
+    videoDbPageSize: 3,
   } as any;
 
   beforeEach(() => {
@@ -1056,48 +1057,6 @@ describe('VideoDb', () => {
       expect(videos).toEqual(['videos']);
     });
 
-    it.each([
-      [undefined, 1234],
-      ['asc', 1234],
-      ['shuffle', undefined],
-      ['somethingelse', 1234],
-    ])(
-      'runs the correct sliced array when limit param is defined (sort: %s, seed: %s)',
-      async (sortOrder, shuffleSeed) => {
-        mockStorage.contentFileExists.mockReturnValue(true);
-        mockGet.mockResolvedValueOnce({ ver: 4 });
-        await videoDb.initialise();
-        const expectedSql = baseSQL + baseOrderBy;
-        const expectedParams = {};
-
-        mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-        const { videos } = await videoDb.queryVideos({ sortOrder, shuffleSeed }, 5);
-
-        expect(mockGetAllWithParams).toHaveBeenCalled();
-        const [sql, params] = mockGetAllWithParams.mock.calls[0];
-        expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-        expect(params).toEqual(expectedParams);
-        expect(videos).toEqual([1, 2, 3, 4, 5]);
-      },
-    );
-
-    it('excludes the LIMIT from the SQL and uses pShuffle when requested and provided with seed', async () => {
-      mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
-      await videoDb.initialise();
-      const expectedSql = baseSQL + baseOrderBy;
-      const expectedParams = {};
-
-      mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-      const { videos } = await videoDb.queryVideos({ sortOrder: 'shuffle', shuffleSeed: 1234 }, 5);
-
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
-      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(params).toEqual(expectedParams);
-      expect(videos).toEqual([8, 7, 4, 3, 5]);
-    });
-
     it('runs the correct sql with filter params when all filter params are defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
       mockGet.mockResolvedValueOnce({ ver: 4 });
@@ -1142,6 +1101,76 @@ describe('VideoDb', () => {
       expect(params).toEqual(expectedParams);
       expect(videos).toEqual(['videos']);
     });
+
+    it.each([
+      [undefined, 1234],
+      ['asc', 1234],
+      ['shuffle', undefined],
+      ['somethingelse', 1234],
+    ])(
+      'returns the unaltered video array (no shuffling, max page count) (sort: %s, seed: %s)',
+      async (sortOrder, shuffleSeed) => {
+        mockStorage.contentFileExists.mockReturnValue(true);
+        mockGet.mockResolvedValueOnce({ ver: 4 });
+        await videoDb.initialise();
+        const expectedSql = baseSQL + baseOrderBy;
+        const expectedParams = {};
+
+        mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const { videos } = await videoDb.queryVideos({ sortOrder, shuffleSeed }, 4);
+
+        expect(mockGetAllWithParams).toHaveBeenCalled();
+        const [sql, params] = mockGetAllWithParams.mock.calls[0];
+        expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+        expect(params).toEqual(expectedParams);
+        expect(videos).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      },
+    );
+
+    it('uses pShuffle when requested and provided with seed and max page count', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockGet.mockResolvedValueOnce({ ver: 4 });
+      await videoDb.initialise();
+      const expectedSql = baseSQL + baseOrderBy;
+      const expectedParams = {};
+
+      mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5]);
+      const { videos } = await videoDb.queryVideos(
+        {
+          sortOrder: 'shuffle',
+          shuffleSeed: 1234,
+        },
+        2,
+      );
+
+      expect(mockGetAllWithParams).toHaveBeenCalled();
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual(expectedParams);
+      expect(videos).toEqual([2, 5, 1, 3, 4]);
+    });
+
+    it.each([
+      [1, 1],
+      [2, 2],
+      [3, 3],
+      [4, 4],
+      [5, 4],
+    ])(
+      'paginates results correctly (requested pages: %s, returned pages: %s)',
+      async (requestedPages: number, expectedPagesReturned: number) => {
+        mockStorage.contentFileExists.mockReturnValue(true);
+        mockGet.mockResolvedValueOnce({ ver: 4 });
+        await videoDb.initialise();
+
+        mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const { videos, totalPages, currentPage } = await videoDb.queryVideos({}, requestedPages);
+
+        expect(totalPages).toBe(4);
+        expect(currentPage).toBe(expectedPagesReturned);
+        expect(videos.length).toBe(Math.min(currentPage * 3, 10));
+      },
+    );
   });
 
   describe('shutdown', () => {
