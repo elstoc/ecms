@@ -1,4 +1,4 @@
-export type KeyValue<T> = {
+export type KeyValueOfType<T> = {
   [P in keyof T]: {
     key: P;
     value: T[P];
