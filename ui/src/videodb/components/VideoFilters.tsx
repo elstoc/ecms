@@ -42,7 +42,7 @@ export const VideoFilters = () => {
         lookupTable='categories'
         inline={true}
         selectedKey={uiFilters.categories}
-        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value }, 10)}
+        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value })}
         nullValueRepr='All'
         filterable={false}
       />
@@ -51,21 +51,21 @@ export const VideoFilters = () => {
         inline={true}
         options={minResolutionOptions}
         value={uiFilters.minResolution || ''}
-        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value }, 10)}
+        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value })}
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
         options={watchedStatusOptions}
         value={uiFilters.watched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'watched', value }, 10)}
+        onValueChange={(value) => updateUiFilter({ key: 'watched', value })}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
         options={watchedStatusOptions}
         value={uiFilters.mediaWatched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value }, 10)}
+        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
       />
       <NullableIntInput
         label='Max Length'
@@ -80,7 +80,7 @@ export const VideoFilters = () => {
         inline={true}
         tags={uiFilters.tags}
         allowCreation={false}
-        onSelectionChange={(value) => updateUiFilter({ key: 'tags', value }, 10)}
+        onSelectionChange={(value) => updateUiFilter({ key: 'tags', value })}
       />
       <NullableStringInput
         label='Title Search'
@@ -94,7 +94,7 @@ export const VideoFilters = () => {
         className='flagged'
         inline={true}
         value={uiFilters.flaggedOnly === 1}
-        onValueChange={(value) => updateUiFilter({ key: 'flaggedOnly', value: value ? 1 : 0 }, 10)}
+        onValueChange={(value) => updateUiFilter({ key: 'flaggedOnly', value: value ? 1 : 0 })}
       />
       <div className='filter-action-buttons'>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>

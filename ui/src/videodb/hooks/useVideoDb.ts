@@ -87,7 +87,7 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
 type VideoDbContextProps = {
   state: VideoDbState;
   dispatch: React.Dispatch<StateAction>;
-  updateUiFilter: (payload: KeyValue<Filters>, debounceTimeout: number) => void;
+  updateUiFilter: (payload: KeyValue<Filters>, debounceTimeout?: number) => void;
 };
 
 export const VideoDbContext = createContext({} as VideoDbContextProps);
