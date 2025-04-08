@@ -47,7 +47,7 @@ export const VideoToolbox = () => {
           onClick={() =>
             dispatch({
               type: 'setSortOrder',
-              value: 'asc',
+              payload: 'asc',
             })
           }
         />
@@ -57,7 +57,7 @@ export const VideoToolbox = () => {
           onClick={() =>
             dispatch({
               type: 'setSortOrder',
-              value: 'shuffle',
+              payload: 'shuffle',
             })
           }
         />

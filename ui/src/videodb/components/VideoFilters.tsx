@@ -7,7 +7,7 @@ import {
   Switch,
 } from '@/shared/components/forms';
 
-import { useVideoDbFilterState } from '../hooks/useVideoDbFilterState';
+import { useVideoDb } from '../hooks/useVideoDb';
 
 import { NullableSelectLookup } from './NullableSelectLookup';
 import { TagInput } from './TagInput';
@@ -27,7 +27,11 @@ const watchedStatusOptions = [
 ];
 
 export const VideoFilters = () => {
-  const { filterState, updateFilterState, clearAllFilters } = useVideoDbFilterState();
+  const {
+    state: { uiFilters },
+    dispatch,
+    updateUiFilter,
+  } = useVideoDb();
 
   return (
     <div className='video-filters'>
@@ -37,10 +41,8 @@ export const VideoFilters = () => {
         className='category'
         lookupTable='categories'
         inline={true}
-        selectedKey={filterState.categories}
-        onSelectionChange={(value) =>
-          updateFilterState({ type: 'setFilter', key: 'categories', value })
-        }
+        selectedKey={uiFilters.categories}
+        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value }, 10)}
         nullValueRepr='All'
         filterable={false}
       />
@@ -48,66 +50,54 @@ export const VideoFilters = () => {
         label='Min Resolution'
         inline={true}
         options={minResolutionOptions}
-        value={filterState.minResolution || ''}
-        onValueChange={(value) =>
-          updateFilterState({ type: 'setFilter', key: 'minResolution', value })
-        }
+        value={uiFilters.minResolution || ''}
+        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value }, 10)}
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={filterState.watched ?? ''}
-        onValueChange={(value) => updateFilterState({ type: 'setFilter', key: 'watched', value })}
+        value={uiFilters.watched ?? ''}
+        onValueChange={(value) => updateUiFilter({ key: 'watched', value }, 10)}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={filterState.mediaWatched ?? ''}
-        onValueChange={(value) =>
-          updateFilterState({ type: 'setFilter', key: 'mediaWatched', value })
-        }
+        value={uiFilters.mediaWatched ?? ''}
+        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value }, 10)}
       />
       <NullableIntInput
         label='Max Length'
         className='max-length'
         inline={true}
-        value={filterState.maxLength}
-        onValueChange={(value) => updateFilterState({ type: 'setFilter', key: 'maxLength', value })}
+        value={uiFilters.maxLength}
+        onValueChange={(value) => updateUiFilter({ key: 'maxLength', value }, 1000)}
       />
       <TagInput
         label='Tags'
         className='tags'
         inline={true}
-        tags={filterState.tags}
+        tags={uiFilters.tags}
         allowCreation={false}
-        onSelectionChange={(value) => updateFilterState({ type: 'setFilter', key: 'tags', value })}
+        onSelectionChange={(value) => updateUiFilter({ key: 'tags', value }, 10)}
       />
       <NullableStringInput
         label='Title Search'
         inline={true}
-        value={filterState.titleContains}
+        value={uiFilters.titleContains}
         placeholder=''
-        onValueChange={(value) =>
-          updateFilterState({ type: 'setFilter', key: 'titleContains', value })
-        }
+        onValueChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
       <Switch
         label='Flagged'
         className='flagged'
         inline={true}
-        value={filterState.flaggedOnly === 1}
-        onValueChange={(value) =>
-          updateFilterState({
-            type: 'setFilter',
-            key: 'flaggedOnly',
-            value: value ? 1 : 0,
-          })
-        }
+        value={uiFilters.flaggedOnly === 1}
+        onValueChange={(value) => updateUiFilter({ key: 'flaggedOnly', value: value ? 1 : 0 }, 10)}
       />
       <div className='filter-action-buttons'>
-        <Button onClick={clearAllFilters}>Reset Filters</Button>
+        <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
       </div>
     </div>
   );

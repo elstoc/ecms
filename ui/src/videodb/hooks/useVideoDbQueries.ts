@@ -1,5 +1,3 @@
-import { useSearchParams } from 'react-router-dom';
-
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 
@@ -38,31 +36,19 @@ export const useGetTags = (path: string) => {
 };
 
 export const useVideos = () => {
-  const [searchParams] = useSearchParams();
   const {
-    maxLength,
-    titleContains,
-    categories,
-    tags,
-    watched,
-    mediaWatched,
-    minResolution,
-    flaggedOnly,
-  } = Object.fromEntries(searchParams.entries());
-
-  const {
-    state: { apiPath, sortOrder, shuffleSeed, pages },
+    state: { apiPath, apiFilters, sortOrder, shuffleSeed, pages },
   } = useVideoDb();
 
   const params = {
-    maxLength,
-    titleContains,
-    categories,
-    tags,
-    watched,
-    mediaWatched,
-    minResolution,
-    flaggedOnly,
+    maxLength: apiFilters.maxLength?.toString(),
+    titleContains: apiFilters.titleContains || undefined,
+    categories: apiFilters.categories || undefined,
+    tags: apiFilters.tags || undefined,
+    watched: apiFilters.watched || undefined,
+    mediaWatched: apiFilters.mediaWatched || undefined,
+    minResolution: apiFilters.minResolution || undefined,
+    flaggedOnly: apiFilters.flaggedOnly?.toString(),
     pages: pages?.toString(),
   };
 

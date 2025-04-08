@@ -18,7 +18,7 @@ export const VideoList = () => {
 
   useElementIsVisible(refLastVideo, () => {
     startTransition(() => {
-      dispatch({ type: 'setPages', value: Math.min(totalPages, currentPage + 1) });
+      dispatch({ type: 'setPages', payload: Math.min(totalPages, currentPage + 1) });
     });
   });
 
