@@ -8,7 +8,6 @@ type StringInputParams = {
   placeholder?: string;
   label: string;
   inline?: boolean;
-  small?: boolean;
   className?: string;
   autoFocus?: boolean;
   onPressEnter?: () => void;
@@ -20,7 +19,6 @@ export const StringInput = ({
   placeholder,
   label,
   inline,
-  small,
   className = '',
   autoFocus,
   onPressEnter,
@@ -37,7 +35,6 @@ export const StringInput = ({
         value={value}
         onValueChange={(value) => onValueChange?.(value)}
         placeholder={placeholder}
-        small={small}
         autoFocus={autoFocus}
         onKeyDown={handleKeyDown}
       />
