@@ -1,8 +1,8 @@
 import { FormGroup, InputGroup } from '@blueprintjs/core';
 
-import './NullableStringInput.scss';
+import './Input.scss';
 
-type NullableStringInputParams = {
+type InputParams = {
   value?: string;
   onValueChange?: (value?: string) => void;
   label: string;
@@ -12,7 +12,7 @@ type NullableStringInputParams = {
   onPressEnter?: () => void;
 };
 
-export const NullableStringInput = ({
+export const Input = ({
   value,
   onValueChange,
   label,
@@ -20,7 +20,7 @@ export const NullableStringInput = ({
   className = '',
   autoFocus,
   onPressEnter,
-}: NullableStringInputParams) => {
+}: InputParams) => {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       onPressEnter?.();
@@ -28,7 +28,7 @@ export const NullableStringInput = ({
   };
 
   return (
-    <FormGroup label={label} inline={inline} className={`nullable-string-input ${className}`}>
+    <FormGroup label={label} inline={inline} className={`string-input ${className}`}>
       <InputGroup
         value={value || ''}
         onValueChange={(value) => onValueChange?.(value || undefined)}

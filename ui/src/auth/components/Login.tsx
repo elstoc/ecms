@@ -1,7 +1,7 @@
 import { Button, Card } from '@blueprintjs/core';
 import { useCallback, useState } from 'react';
 
-import { NullableStringInput, PasswordInput } from '@/shared/components/forms';
+import { Input, PasswordInput } from '@/shared/components/forms';
 
 import { useLogin } from '../hooks/useAuthQueries';
 
@@ -28,7 +28,7 @@ export const Login = () => {
   return (
     <div className='login'>
       <Card className='login-form'>
-        <NullableStringInput
+        <Input
           label='User ID'
           value={userId}
           onValueChange={(value) => setUserId(value ?? '')}

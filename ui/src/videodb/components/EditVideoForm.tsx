@@ -2,7 +2,7 @@ import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
 import { useCallback, useState } from 'react';
 
 import { VideoWithId } from '@/contracts/videodb';
-import { IntegerInput, NullableStringInput, Switch } from '@/shared/components/forms';
+import { Input, IntegerInput, Switch } from '@/shared/components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
@@ -32,7 +32,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
 
   return (
     <div className='edit-video-form'>
-      <NullableStringInput
+      <Input
         label=''
         className='title'
         inline={true}
@@ -110,7 +110,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             onSelectionChange={(value) => dispatch({ key: 'other_media_location', value })}
           />
         </ControlGroup>
-        <NullableStringInput
+        <Input
           label='Notes'
           className='notes'
           value={video.media_notes ?? undefined}
@@ -130,7 +130,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         tags={video.tags}
         onSelectionChange={(value) => dispatch({ key: 'tags', value })}
       />
-      <NullableStringInput
+      <Input
         label='Progress'
         className='progress'
         inline={true}
@@ -143,20 +143,20 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         icon={collapseIsOpen ? 'caret-up' : 'caret-down'}
       />
       <Collapse isOpen={collapseIsOpen}>
-        <NullableStringInput
+        <Input
           label='Director'
           className='director'
           inline={true}
           value={video.director ?? undefined}
           onValueChange={(value) => dispatch({ key: 'director', value: value ?? null })}
         />
-        <NullableStringInput
+        <Input
           label='Actors'
           inline={true}
           value={video.actors ?? undefined}
           onValueChange={(value) => dispatch({ key: 'actors', value: value ?? null })}
         />
-        <NullableStringInput
+        <Input
           label='Plot'
           inline={true}
           value={video.plot ?? undefined}

@@ -1,11 +1,6 @@
 import { Button } from '@blueprintjs/core';
 
-import {
-  IntegerInput,
-  NullableStringInput,
-  SegmentedControlInput,
-  Switch,
-} from '@/shared/components/forms';
+import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 
@@ -82,7 +77,7 @@ export const VideoFilters = () => {
         allowCreation={false}
         onSelectionChange={(value) => updateUiFilter({ key: 'tags', value })}
       />
-      <NullableStringInput
+      <Input
         label='Title Search'
         inline={true}
         value={uiFilters.titleContains ?? undefined}
