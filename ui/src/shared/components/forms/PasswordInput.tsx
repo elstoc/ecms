@@ -6,10 +6,8 @@ import './PasswordInput.scss';
 type PasswordInputParams = {
   value: string;
   onValueChange?: (value: string) => void;
-  placeholder?: string;
   label: string;
   inline?: boolean;
-  small?: boolean;
   className?: string;
   onPressEnter?: () => void;
 };
@@ -17,10 +15,8 @@ type PasswordInputParams = {
 export const PasswordInput = ({
   value,
   onValueChange,
-  placeholder,
   label,
   inline,
-  small,
   className = '',
   onPressEnter,
 }: PasswordInputParams) => {
@@ -37,7 +33,7 @@ export const PasswordInput = ({
       <Button
         icon={showPassword ? 'unlock' : 'lock'}
         intent={Intent.WARNING}
-        minimal={true}
+        variant='minimal'
         onClick={() => setShowPassword((shown) => !shown)}
       />
     </Tooltip>
@@ -48,10 +44,8 @@ export const PasswordInput = ({
       <InputGroup
         value={value}
         onValueChange={(value) => onValueChange?.(value)}
-        placeholder={placeholder}
         rightElement={lockButton}
         type={showPassword ? 'text' : 'password'}
-        small={small}
         onKeyDown={handleKeyDown}
       />
     </FormGroup>
