@@ -2,12 +2,7 @@ import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
 import { useCallback, useState } from 'react';
 
 import { VideoWithId } from '@/contracts/videodb';
-import {
-  NullableIntInput,
-  NullableStringInput,
-  StringInput,
-  Switch,
-} from '@/shared/components/forms';
+import { IntegerInput, NullableStringInput, StringInput, Switch } from '@/shared/components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
@@ -62,17 +57,17 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         />
       </ControlGroup>
       <ControlGroup className='second-group'>
-        <NullableIntInput
+        <IntegerInput
           label='Episodes'
           className='num-episodes'
-          value={video.num_episodes}
-          onValueChange={(value) => dispatch({ key: 'num_episodes', value })}
+          value={video.num_episodes ?? undefined}
+          onValueChange={(value) => dispatch({ key: 'num_episodes', value: value ?? null })}
         />
-        <NullableIntInput
+        <IntegerInput
           label='Length'
           className='length'
-          value={video.length_mins}
-          onValueChange={(value) => dispatch({ key: 'length_mins', value })}
+          value={video.length_mins ?? undefined}
+          onValueChange={(value) => dispatch({ key: 'length_mins', value: value ?? null })}
         />
       </ControlGroup>
       <Card className='media'>

@@ -1,7 +1,7 @@
 import { Button } from '@blueprintjs/core';
 
 import {
-  NullableIntInput,
+  IntegerInput,
   NullableStringInput,
   SegmentedControlInput,
   Switch,
@@ -67,12 +67,12 @@ export const VideoFilters = () => {
         value={uiFilters.mediaWatched ?? ''}
         onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
       />
-      <NullableIntInput
+      <IntegerInput
         label='Max Length'
         className='max-length'
         inline={true}
-        value={uiFilters.maxLength}
-        onValueChange={(value) => updateUiFilter({ key: 'maxLength', value }, 1000)}
+        value={uiFilters.maxLength ?? undefined}
+        onValueChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? null }, 1000)}
       />
       <TagInput
         label='Tags'

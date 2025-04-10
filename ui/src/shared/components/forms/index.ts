@@ -1,5 +1,5 @@
 export { MultiSelectKeyValue } from './MultiSelectKeyValue';
-export { NullableIntInput } from './NullableIntInput';
+export { IntegerInput } from './IntegerInput';
 export { NullableStringInput } from './NullableStringInput';
 export { StringInput } from './StringInput';
 export { PasswordInput } from './PasswordInput';

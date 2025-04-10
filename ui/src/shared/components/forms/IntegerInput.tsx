@@ -1,36 +1,31 @@
 import { FormGroup, NumericInput } from '@blueprintjs/core';
 
-import './NullableIntInput.scss';
+import './IntegerInput.scss';
 
-type NullableIntInputParams = {
-  value: number | null;
-  onValueChange?: (value: number | null) => void;
+type IntegerInputParams = {
+  value?: number;
+  onValueChange?: (value?: number) => void;
   label: string;
-  placeholder?: string;
   inline?: boolean;
-  small?: boolean;
   className?: string;
 };
 
-export const NullableIntInput = ({
+export const IntegerInput = ({
   value,
   onValueChange,
   label,
-  placeholder,
   inline,
-  small,
   className = '',
-}: NullableIntInputParams) => {
+}: IntegerInputParams) => {
   return (
     <FormGroup label={label} inline={inline} className={`nullable-int-input ${className}`}>
       <NumericInput
         value={value == null ? NumericInput.VALUE_EMPTY : value}
         buttonPosition='none'
-        placeholder={placeholder}
         onValueChange={(num, str) =>
-          onValueChange?.(str === NumericInput.VALUE_EMPTY ? null : parseInt(str))
+          onValueChange?.(str === NumericInput.VALUE_EMPTY ? undefined : parseInt(str))
         }
-        small={small}
+        size='small'
       />
     </FormGroup>
   );
