@@ -18,7 +18,7 @@ export const IntegerInput = ({
   className = '',
 }: IntegerInputParams) => {
   return (
-    <FormGroup label={label} inline={inline} className={`nullable-int-input ${className}`}>
+    <FormGroup label={label} inline={inline} className={`integer-input ${className}`}>
       <NumericInput
         value={value == null ? NumericInput.VALUE_EMPTY : value}
         buttonPosition='none'
