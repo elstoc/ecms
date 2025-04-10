@@ -5,7 +5,6 @@ import './StringInput.scss';
 type StringInputParams = {
   value: string;
   onValueChange?: (value: string) => void;
-  placeholder?: string;
   label: string;
   inline?: boolean;
   className?: string;
@@ -16,7 +15,6 @@ type StringInputParams = {
 export const StringInput = ({
   value,
   onValueChange,
-  placeholder,
   label,
   inline,
   className = '',
@@ -34,7 +32,6 @@ export const StringInput = ({
       <InputGroup
         value={value}
         onValueChange={(value) => onValueChange?.(value)}
-        placeholder={placeholder}
         autoFocus={autoFocus}
         onKeyDown={handleKeyDown}
       />

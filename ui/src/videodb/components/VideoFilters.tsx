@@ -86,7 +86,6 @@ export const VideoFilters = () => {
         label='Title Search'
         inline={true}
         value={uiFilters.titleContains ?? undefined}
-        placeholder=''
         onValueChange={(value) =>
           updateUiFilter({ key: 'titleContains', value: value ?? null }, 1000)
         }

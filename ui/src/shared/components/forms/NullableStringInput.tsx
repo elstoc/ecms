@@ -5,7 +5,6 @@ import './NullableStringInput.scss';
 type NullableStringInputParams = {
   value?: string;
   onValueChange?: (value?: string) => void;
-  placeholder?: string;
   label: string;
   inline?: boolean;
   className?: string;
@@ -14,7 +13,6 @@ type NullableStringInputParams = {
 export const NullableStringInput = ({
   value,
   onValueChange,
-  placeholder,
   label,
   inline,
   className = '',
@@ -24,7 +22,6 @@ export const NullableStringInput = ({
       <InputGroup
         value={value || ''}
         onValueChange={(value) => onValueChange?.(value || undefined)}
-        placeholder={placeholder}
       />
     </FormGroup>
   );
