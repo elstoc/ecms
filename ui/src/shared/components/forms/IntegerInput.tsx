@@ -25,7 +25,6 @@ export const IntegerInput = ({
         onValueChange={(num, str) =>
           onValueChange?.(str === NumericInput.VALUE_EMPTY ? undefined : parseInt(str))
         }
-        size='small'
       />
     </FormGroup>
   );
