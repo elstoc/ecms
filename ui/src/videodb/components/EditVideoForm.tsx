@@ -113,8 +113,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         <NullableStringInput
           label='Notes'
           className='notes'
-          value={video.media_notes}
-          onValueChange={(value) => dispatch({ key: 'media_notes', value })}
+          value={video.media_notes ?? undefined}
+          onValueChange={(value) => dispatch({ key: 'media_notes', value: value ?? null })}
         />
       </Card>
       <Switch
@@ -134,8 +134,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         label='Progress'
         className='progress'
         inline={true}
-        value={video.progress}
-        onValueChange={(value) => dispatch({ key: 'progress', value })}
+        value={video.progress ?? undefined}
+        onValueChange={(value) => dispatch({ key: 'progress', value: value ?? null })}
       />
       <Button
         className='collapser'
@@ -147,20 +147,20 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           label='Director'
           className='director'
           inline={true}
-          value={video.director}
-          onValueChange={(value) => dispatch({ key: 'director', value })}
+          value={video.director ?? undefined}
+          onValueChange={(value) => dispatch({ key: 'director', value: value ?? null })}
         />
         <NullableStringInput
           label='Actors'
           inline={true}
-          value={video.actors}
-          onValueChange={(value) => dispatch({ key: 'actors', value })}
+          value={video.actors ?? undefined}
+          onValueChange={(value) => dispatch({ key: 'actors', value: value ?? null })}
         />
         <NullableStringInput
           label='Plot'
           inline={true}
-          value={video.plot}
-          onValueChange={(value) => dispatch({ key: 'plot', value })}
+          value={video.plot ?? undefined}
+          onValueChange={(value) => dispatch({ key: 'plot', value: value ?? null })}
         />
       </Collapse>
       <div className='form-buttons'>

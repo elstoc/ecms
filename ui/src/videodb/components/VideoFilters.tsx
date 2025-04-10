@@ -85,9 +85,11 @@ export const VideoFilters = () => {
       <NullableStringInput
         label='Title Search'
         inline={true}
-        value={uiFilters.titleContains}
+        value={uiFilters.titleContains ?? undefined}
         placeholder=''
-        onValueChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
+        onValueChange={(value) =>
+          updateUiFilter({ key: 'titleContains', value: value ?? null }, 1000)
+        }
       />
       <Switch
         label='Flagged'
