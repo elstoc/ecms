@@ -2,7 +2,7 @@ import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
 import { useCallback, useState } from 'react';
 
 import { VideoWithId } from '@/contracts/videodb';
-import { IntegerInput, NullableStringInput, StringInput, Switch } from '@/shared/components/forms';
+import { IntegerInput, NullableStringInput, Switch } from '@/shared/components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
@@ -32,12 +32,12 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
 
   return (
     <div className='edit-video-form'>
-      <StringInput
+      <NullableStringInput
         label=''
         className='title'
         inline={true}
         value={video.title}
-        onValueChange={(value) => dispatch({ key: 'title', value })}
+        onValueChange={(value) => dispatch({ key: 'title', value: value ?? '' })}
         autoFocus={true}
       />
       <ControlGroup className='first-group'>

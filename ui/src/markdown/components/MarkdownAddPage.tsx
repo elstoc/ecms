@@ -2,7 +2,7 @@ import { Button, Card, Dialog, DialogBody } from '@blueprintjs/core';
 import { useContext, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { StringInput } from '@/shared/components/forms';
+import { NullableStringInput } from '@/shared/components/forms';
 
 import { getMarkdownPage } from '../api';
 import { useCreateMarkdownPage } from '../hooks/useMarkdownQueries';
@@ -57,10 +57,12 @@ const MarkdownAddPageContent = () => {
   return (
     <div className='markdown-add-page'>
       <Card className='add-page-form'>
-        <StringInput
+        <NullableStringInput
           label='Path'
           value={newPagePath}
-          onValueChange={(path) => setNewPagePath(path.replace(/[^a-z0-9\-_]/gi, '').toLowerCase())}
+          onValueChange={(path) =>
+            setNewPagePath(path?.replace(/[^a-z0-9\-_]/gi, '').toLowerCase() ?? '')
+          }
           onPressEnter={createPage}
           autoFocus={true}
           inline={true}

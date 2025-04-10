@@ -1,7 +1,7 @@
 import { Button, Card } from '@blueprintjs/core';
 import { useCallback, useState } from 'react';
 
-import { PasswordInput, StringInput } from '@/shared/components/forms';
+import { NullableStringInput, PasswordInput } from '@/shared/components/forms';
 
 import { useLogin } from '../hooks/useAuthQueries';
 
@@ -28,10 +28,10 @@ export const Login = () => {
   return (
     <div className='login'>
       <Card className='login-form'>
-        <StringInput
+        <NullableStringInput
           label='User ID'
           value={userId}
-          onValueChange={setUserId}
+          onValueChange={(value) => setUserId(value ?? '')}
           autoFocus={true}
           inline={true}
         />
