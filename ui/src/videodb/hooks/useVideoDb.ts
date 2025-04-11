@@ -23,18 +23,12 @@ type VideoDbState = {
   apiFilters: Filters;
 };
 
-type SetFilterAction = { type: 'setUiFilter'; payload: KeyValueOfType<Filters> };
-type ResetFiltersAction = { type: 'resetFilters' };
-type SyncFiltersAction = { type: 'syncFilters' };
-type SetPagesAction = { type: 'setPages'; payload: number };
-type SetSortOrderAction = { type: 'setSortOrder'; payload: 'asc' | 'shuffle' };
-
 type StateAction =
-  | SetPagesAction
-  | SetSortOrderAction
-  | SetFilterAction
-  | ResetFiltersAction
-  | SyncFiltersAction;
+  | { type: 'setUiFilter'; payload: KeyValueOfType<Filters> }
+  | { type: 'resetFilters' }
+  | { type: 'syncFilters' }
+  | { type: 'setPages'; payload: number }
+  | { type: 'setSortOrder'; payload: 'asc' | 'shuffle' };
 
 const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (state, action) => {
   if (action.type === 'setPages') {
