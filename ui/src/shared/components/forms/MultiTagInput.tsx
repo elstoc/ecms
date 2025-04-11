@@ -11,7 +11,6 @@ type MultiTagInputParams = {
   tags?: string[];
   onSelectionChange?: (selectedKeys?: string[]) => void;
   label: string;
-  inline?: boolean;
   className?: string;
   allowCreation?: boolean;
 };
@@ -21,7 +20,6 @@ export const MultiTagInput = ({
   tags,
   onSelectionChange,
   label,
-  inline,
   className = '',
   allowCreation = true,
 }: MultiTagInputParams) => {
@@ -85,7 +83,7 @@ export const MultiTagInput = ({
   };
 
   return (
-    <FormGroup label={label} inline={inline} className={`${className} multi-tag-input`}>
+    <FormGroup label={label} inline={true} className={`${className} multi-tag-input`}>
       <MultiSelect<string>
         items={allTags}
         selectedItems={tags ?? []}

@@ -73,7 +73,6 @@ export const VideoFilters = () => {
       <VideoTagInput
         label='Tags'
         className='tags'
-        inline={true}
         tags={uiFilters.tags?.split('|') ?? undefined}
         allowCreation={false}
         onSelectionChange={(value) =>

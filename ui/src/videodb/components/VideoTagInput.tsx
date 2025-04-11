@@ -7,7 +7,6 @@ type VideoTagInputProps = {
   tags?: string[];
   onSelectionChange?: (selectedTags?: string[]) => void;
   label: string;
-  inline?: boolean;
   className?: string;
   allowCreation?: boolean;
 };
@@ -16,7 +15,6 @@ export const VideoTagInput = ({
   tags,
   onSelectionChange,
   label,
-  inline,
   className,
   allowCreation = true,
 }: VideoTagInputProps) => {
@@ -31,7 +29,6 @@ export const VideoTagInput = ({
       tags={tags}
       onSelectionChange={(selectedTags) => onSelectionChange?.(selectedTags)}
       label={label}
-      inline={inline}
       className={className}
       allowCreation={allowCreation}
     />
