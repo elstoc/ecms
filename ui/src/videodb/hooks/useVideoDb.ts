@@ -7,9 +7,9 @@ const INITIAL_FILTERS = {
   categories: null,
   tags: null,
   titleContains: null,
-  watched: '',
-  mediaWatched: '',
-  minResolution: '',
+  watched: null,
+  mediaWatched: null,
+  minResolution: null,
   flaggedOnly: null,
 };
 
