@@ -1,4 +1,3 @@
-export { MultiSelectKeyValue } from './MultiSelectKeyValue';
 export { IntegerInput } from './IntegerInput';
 export { Input } from './Input';
 export { PasswordInput } from './PasswordInput';
