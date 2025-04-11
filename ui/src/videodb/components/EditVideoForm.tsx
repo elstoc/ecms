@@ -137,8 +137,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
       <TagInput
         label='Tags'
         inline={true}
-        tags={video.tags}
-        onSelectionChange={(value) => dispatch({ key: 'tags', value: value || null })}
+        tags={video.tags?.split('|') ?? undefined}
+        onSelectionChange={(value) => dispatch({ key: 'tags', value: value?.join('|') || null })}
       />
       <Input
         label='Progress'

@@ -73,9 +73,11 @@ export const VideoFilters = () => {
         label='Tags'
         className='tags'
         inline={true}
-        tags={uiFilters.tags}
+        tags={uiFilters.tags?.split('|') ?? undefined}
         allowCreation={false}
-        onSelectionChange={(value) => updateUiFilter({ key: 'tags', value: value || null })}
+        onSelectionChange={(value) =>
+          updateUiFilter({ key: 'tags', value: value?.join('|') || null })
+        }
       />
       <Input
         label='Title Search'
