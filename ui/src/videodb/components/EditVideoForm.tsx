@@ -6,7 +6,7 @@ import { Input, IntegerInput, Switch } from '@/shared/components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
-import { SelectLookup } from './SelectLookup';
+import { VideoSelectLookup } from './VideoSelectLookup';
 import { VideoTagInput } from './VideoTagInput';
 
 import './EditVideoForm.scss';
@@ -40,14 +40,14 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         autoFocus={true}
       />
       <ControlGroup className='first-group'>
-        <SelectLookup
+        <VideoSelectLookup
           label='Watched'
           className='watched-status'
           selectedKey={video.watched}
           lookupTable='watched_status'
           onSelectionChange={(value) => dispatch({ key: 'watched', value: value || null })}
         />
-        <SelectLookup
+        <VideoSelectLookup
           label='Category'
           className='category'
           lookupTable='categories'
@@ -71,7 +71,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
       </ControlGroup>
       <Card className='media'>
         <ControlGroup>
-          <SelectLookup
+          <VideoSelectLookup
             label='Media'
             className='media-type'
             lookupTable='media_types'
@@ -81,7 +81,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
               dispatch({ key: 'primary_media_type', value: value ?? null })
             }
           />
-          <SelectLookup
+          <VideoSelectLookup
             label='Location'
             className='media-location'
             lookupTable='media_locations'
@@ -91,7 +91,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
               dispatch({ key: 'primary_media_location', value: value ?? null })
             }
           />
-          <SelectLookup
+          <VideoSelectLookup
             label='Watched'
             className='watched-status'
             lookupTable='watched_status'
@@ -103,7 +103,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           />
         </ControlGroup>
         <ControlGroup>
-          <SelectLookup
+          <VideoSelectLookup
             label=''
             className='media-type'
             lookupTable='media_types'
@@ -113,7 +113,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
               dispatch({ key: 'other_media_type', value: value ?? null })
             }
           />
-          <SelectLookup
+          <VideoSelectLookup
             label=''
             className='media-location'
             lookupTable='media_locations'
