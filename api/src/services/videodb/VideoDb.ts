@@ -11,7 +11,7 @@ import { Config, pShuffle } from '@/utils';
 
 import { dbUpgradeSql } from './dbUpgradeSql';
 
-export const videoFields = [
+const videoFields = [
   'title',
   'category',
   'director',
@@ -166,13 +166,12 @@ export class VideoDb {
                      VALUES
                      ($${videoFields.join(', $')})
                      RETURNING id`;
+
     const params: { [key: string]: unknown } = {};
-    let key: keyof Video;
-    for (key in video) {
-      if (key !== 'tags') {
-        params[`$${key}`] = video[key];
-      }
-    }
+    videoFields.forEach((key) => {
+      params[`$${key}`] = video[key as keyof Video] ?? null;
+    });
+
     const result = await this.database?.getWithParams<{ id: number }>(sql, params);
     if (!result) {
       throw new Error('Unexpected error creating video');
@@ -190,13 +189,11 @@ export class VideoDb {
     const setList = videoFields.map((field) => `${field} = $${field}`);
     const sql = `UPDATE videos SET ${setList.join(', ')} WHERE id = $id`;
 
-    let key: keyof VideoWithId;
     const params: { [key: string]: unknown } = {};
-    for (key in video) {
-      if (key !== 'tags') {
-        params[`$${key}`] = video[key];
-      }
-    }
+    videoWithIdFields.forEach((key) => {
+      params[`$${key}`] = video[key as keyof Video] ?? null;
+    });
+
     await this.database?.runWithParams(sql, params);
 
     await this.createOrReplaceVideoTags(video.id, video.tags);
