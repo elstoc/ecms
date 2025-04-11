@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Video, VideoWithId } from '@/contracts/videodb';
 import { NotFoundError, NotPermittedError } from '@/errors';
 import { stripWhiteSpace } from '@/utils';
 
@@ -438,6 +439,57 @@ describe('VideoDb', () => {
       expect(insertedId).toBe(2468);
     });
 
+    it('converts any missing values to nulls when inserting', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockGet.mockResolvedValue({ ver: 4 });
+      mockGetWithParams.mockResolvedValue({ id: 2468 });
+
+      await videoDb.initialise();
+
+      const video = {
+        title: 'some-title',
+        category: 'some-category',
+        watched: 'Y',
+      };
+
+      const expectedSql = `INSERT INTO videos
+                                 (title, category, director, num_episodes, length_mins, watched, priority_flag, progress, imdb_id, image_url, year, actors, plot, primary_media_type, primary_media_location, primary_media_watched, other_media_type, other_media_location, media_notes)
+                                 VALUES
+                                 ($title, $category, $director, $num_episodes, $length_mins, $watched, $priority_flag, $progress, $imdb_id, $image_url, $year, $actors, $plot, $primary_media_type, $primary_media_location, $primary_media_watched, $other_media_type, $other_media_location, $media_notes)
+                                 RETURNING id`;
+
+      const expectedVideoParameters = {
+        $title: 'some-title',
+        $category: 'some-category',
+        $watched: 'Y',
+        $director: null,
+        $num_episodes: null,
+        $length_mins: null,
+        $priority_flag: null,
+        $progress: null,
+        $imdb_id: null,
+        $image_url: null,
+        $year: null,
+        $actors: null,
+        $plot: null,
+        $primary_media_type: null,
+        $primary_media_location: null,
+        $primary_media_watched: null,
+        $other_media_type: null,
+        $other_media_location: null,
+        $media_notes: null,
+      };
+
+      // TODO: Fix this type assertion when video contract is amended to remove nulls
+      const insertedId = await videoDb.addVideo(video as Video);
+
+      expect(mockGetWithParams).toHaveBeenCalled();
+      const [sql, videoParameters] = mockGetWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(videoParameters).toEqual(expectedVideoParameters);
+      expect(insertedId).toBe(2468);
+    });
+
     it('deletes but does not insert tags if tags are undefined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
       mockGet.mockResolvedValue({ ver: 4 });
@@ -646,6 +698,69 @@ describe('VideoDb', () => {
       };
 
       await videoDb.updateVideo(video);
+
+      expect(mockRunWithParams).toHaveBeenCalled();
+      const [sql, videoParameters] = mockRunWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(videoParameters).toEqual(expectedVideoParameters);
+    });
+
+    it('converts any missing values to nulls when updating', async () => {
+      const newVideo = {
+        id: 1,
+        title: 'some-title',
+        category: 'some-category',
+        watched: 'Y',
+      };
+
+      mockGet.mockResolvedValue({ video_exists: 1 });
+      const expectedSql = `UPDATE videos
+                                 SET title = $title,
+                                     category = $category,
+                                     director = $director,
+                                     num_episodes = $num_episodes,
+                                     length_mins = $length_mins,
+                                     watched = $watched,
+                                     priority_flag = $priority_flag,
+                                     progress = $progress,
+                                     imdb_id = $imdb_id,
+                                     image_url = $image_url,
+                                     year = $year,
+                                     actors = $actors,
+                                     plot = $plot,
+                                     primary_media_type = $primary_media_type,
+                                     primary_media_location = $primary_media_location,
+                                     primary_media_watched = $primary_media_watched,
+                                     other_media_type = $other_media_type,
+                                     other_media_location = $other_media_location,
+                                     media_notes = $media_notes
+                                 WHERE id = $id`;
+
+      const expectedVideoParameters = {
+        $id: 1,
+        $title: 'some-title',
+        $category: 'some-category',
+        $watched: 'Y',
+        $director: null,
+        $num_episodes: null,
+        $length_mins: null,
+        $priority_flag: null,
+        $progress: null,
+        $imdb_id: null,
+        $image_url: null,
+        $year: null,
+        $actors: null,
+        $plot: null,
+        $primary_media_type: null,
+        $primary_media_location: null,
+        $primary_media_watched: null,
+        $other_media_type: null,
+        $other_media_location: null,
+        $media_notes: null,
+      };
+
+      // TODO: Fix this type assertion when video contract is amended to remove nulls
+      await videoDb.updateVideo(newVideo as VideoWithId);
 
       expect(mockRunWithParams).toHaveBeenCalled();
       const [sql, videoParameters] = mockRunWithParams.mock.calls[0];
