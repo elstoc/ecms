@@ -39,7 +39,7 @@ export const VideoFilters = () => {
         displayUndefinedAs='All'
         inline={true}
         selectedKey={uiFilters.categories ?? undefined}
-        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value: value ?? null })}
+        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value })}
         filterable={false}
       />
       <SegmentedControlInput
@@ -47,45 +47,41 @@ export const VideoFilters = () => {
         inline={true}
         options={minResolutionOptions}
         value={uiFilters.minResolution || ''}
-        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value: value || null })}
+        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value })}
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
         options={watchedStatusOptions}
         value={uiFilters.watched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'watched', value: value || null })}
+        onValueChange={(value) => updateUiFilter({ key: 'watched', value })}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
         options={watchedStatusOptions}
         value={uiFilters.mediaWatched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value: value || null })}
+        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
       />
       <IntegerInput
         label='Max Length'
         className='max-length'
         inline={true}
-        value={uiFilters.maxLength ?? undefined}
-        onValueChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? null }, 1000)}
+        value={uiFilters.maxLength}
+        onValueChange={(value) => updateUiFilter({ key: 'maxLength', value }, 1000)}
       />
       <VideoTagInput
         label='Tags'
         className='tags'
         tags={uiFilters.tags?.split('|') ?? undefined}
         allowCreation={false}
-        onSelectionChange={(value) =>
-          updateUiFilter({ key: 'tags', value: value?.join('|') || null })
-        }
+        onSelectionChange={(value) => updateUiFilter({ key: 'tags', value: value?.join('|') })}
       />
       <Input
         label='Title Search'
         inline={true}
         value={uiFilters.titleContains ?? undefined}
-        onValueChange={(value) =>
-          updateUiFilter({ key: 'titleContains', value: value ?? null }, 1000)
-        }
+        onValueChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
       <Switch
         label='Flagged'

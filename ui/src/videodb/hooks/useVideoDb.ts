@@ -2,26 +2,15 @@ import { createContext, useCallback, useContext, useReducer, useRef } from 'reac
 
 import { KeyValueOfType, getRandomSeed } from '@/utils';
 
-const INITIAL_FILTERS = {
-  maxLength: null,
-  categories: null,
-  tags: null,
-  titleContains: null,
-  watched: null,
-  mediaWatched: null,
-  minResolution: null,
-  flaggedOnly: null,
-};
-
 type Filters = {
-  maxLength: number | null;
-  categories: string | null;
-  tags: string | null;
-  titleContains: string | null;
-  watched: string | null;
-  mediaWatched: string | null;
-  minResolution: string | null;
-  flaggedOnly: 0 | 1 | null;
+  maxLength?: number;
+  categories?: string;
+  tags?: string;
+  titleContains?: string;
+  watched?: string;
+  mediaWatched?: string;
+  minResolution?: string;
+  flaggedOnly?: 0 | 1;
 };
 
 type VideoDbState = {
@@ -69,8 +58,8 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
   } else if (action.type === 'resetFilters') {
     return {
       ...state,
-      uiFilters: INITIAL_FILTERS,
-      apiFilters: INITIAL_FILTERS,
+      uiFilters: {},
+      apiFilters: {},
       pages: 1,
     };
   } else if (action.type === 'syncFilters') {
@@ -99,8 +88,8 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
     apiPath,
     pages: 1,
     sortOrder: 'asc',
-    uiFilters: INITIAL_FILTERS,
-    apiFilters: INITIAL_FILTERS,
+    uiFilters: {},
+    apiFilters: {},
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
