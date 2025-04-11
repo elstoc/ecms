@@ -1,5 +1,5 @@
 import { Collapse } from '@blueprintjs/core';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import { useIsDualPanel } from '@/shared/hooks';
 import { InjectSideExpander } from '@/site/components/HeaderToolbox';
@@ -11,8 +11,8 @@ import { Toolbox } from './Toolbox';
 import './ContentWithSidebar.scss';
 
 type ContentWithSideBarProps = {
-  content: ReactElement;
-  sidebar: ReactElement | null;
+  content: ReactNode;
+  sidebar: ReactNode;
   closeSidebarOnClick?: boolean;
 };
 
