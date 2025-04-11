@@ -5,8 +5,8 @@ import { useLookup } from '../hooks/useVideoDbQueries';
 
 type NullableSelectLookupProps = {
   lookupTable: string;
-  selectedKey: string | null;
-  onSelectionChange?: (selectedKey: string | null) => void;
+  selectedKey?: string;
+  onSelectionChange?: (selectedKey?: string) => void;
   label: string;
   className?: string;
   inline?: boolean;

@@ -46,14 +46,14 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           className='watched-status'
           selectedKey={video.watched}
           lookupTable='watched_status'
-          onSelectionChange={(value) => dispatch({ key: 'watched', value })}
+          onSelectionChange={(value) => dispatch({ key: 'watched', value: value || null })}
         />
         <SelectLookup
           label='Category'
           className='category'
           lookupTable='categories'
           selectedKey={video.category}
-          onSelectionChange={(value) => dispatch({ key: 'category', value })}
+          onSelectionChange={(value) => dispatch({ key: 'category', value: value || null })}
         />
       </ControlGroup>
       <ControlGroup className='second-group'>
@@ -76,22 +76,28 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label='Media'
             className='media-type'
             lookupTable='media_types'
-            selectedKey={video.primary_media_type}
-            onSelectionChange={(value) => dispatch({ key: 'primary_media_type', value })}
+            selectedKey={video.primary_media_type ?? undefined}
+            onSelectionChange={(value) =>
+              dispatch({ key: 'primary_media_type', value: value ?? null })
+            }
           />
           <NullableSelectLookup
             label='Location'
             className='media-location'
             lookupTable='media_locations'
-            selectedKey={video.primary_media_location}
-            onSelectionChange={(value) => dispatch({ key: 'primary_media_location', value })}
+            selectedKey={video.primary_media_location ?? undefined}
+            onSelectionChange={(value) =>
+              dispatch({ key: 'primary_media_location', value: value ?? null })
+            }
           />
           <NullableSelectLookup
             label='Watched'
             className='watched-status'
             lookupTable='watched_status'
-            selectedKey={video.primary_media_watched}
-            onSelectionChange={(value) => dispatch({ key: 'primary_media_watched', value })}
+            selectedKey={video.primary_media_watched ?? undefined}
+            onSelectionChange={(value) =>
+              dispatch({ key: 'primary_media_watched', value: value ?? null })
+            }
           />
         </ControlGroup>
         <ControlGroup>
@@ -99,15 +105,19 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label=''
             className='media-type'
             lookupTable='media_types'
-            selectedKey={video.other_media_type}
-            onSelectionChange={(value) => dispatch({ key: 'other_media_type', value })}
+            selectedKey={video.other_media_type ?? undefined}
+            onSelectionChange={(value) =>
+              dispatch({ key: 'other_media_type', value: value ?? null })
+            }
           />
           <NullableSelectLookup
             label=''
             className='media-location'
             lookupTable='media_locations'
-            selectedKey={video.other_media_location}
-            onSelectionChange={(value) => dispatch({ key: 'other_media_location', value })}
+            selectedKey={video.other_media_location ?? undefined}
+            onSelectionChange={(value) =>
+              dispatch({ key: 'other_media_location', value: value ?? null })
+            }
           />
         </ControlGroup>
         <Input
@@ -128,7 +138,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         label='Tags'
         inline={true}
         tags={video.tags}
-        onSelectionChange={(value) => dispatch({ key: 'tags', value })}
+        onSelectionChange={(value) => dispatch({ key: 'tags', value: value || null })}
       />
       <Input
         label='Progress'

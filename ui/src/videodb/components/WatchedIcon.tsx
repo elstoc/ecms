@@ -4,7 +4,7 @@ const watchedColorLookup = { Y: 'green', N: 'crimson', P: 'orange', '': 'white' 
   [key: string]: string;
 };
 
-type WatchedIconProps = { watchedStatus?: string | null; medium?: string | null };
+type WatchedIconProps = { watchedStatus?: string; medium?: string };
 
 export const WatchedIcon = ({ watchedStatus }: WatchedIconProps) => {
   return <Icon icon='record' size={20} color={watchedColorLookup[watchedStatus || '']} />;

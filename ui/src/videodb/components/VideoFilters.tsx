@@ -36,8 +36,8 @@ export const VideoFilters = () => {
         className='category'
         lookupTable='categories'
         inline={true}
-        selectedKey={uiFilters.categories}
-        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value })}
+        selectedKey={uiFilters.categories ?? undefined}
+        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value: value ?? null })}
         nullValueRepr='All'
         filterable={false}
       />
@@ -46,21 +46,21 @@ export const VideoFilters = () => {
         inline={true}
         options={minResolutionOptions}
         value={uiFilters.minResolution || ''}
-        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value })}
+        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value: value || null })}
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
         options={watchedStatusOptions}
         value={uiFilters.watched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'watched', value })}
+        onValueChange={(value) => updateUiFilter({ key: 'watched', value: value || null })}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
         options={watchedStatusOptions}
         value={uiFilters.mediaWatched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
+        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value: value || null })}
       />
       <IntegerInput
         label='Max Length'
@@ -75,7 +75,7 @@ export const VideoFilters = () => {
         inline={true}
         tags={uiFilters.tags}
         allowCreation={false}
-        onSelectionChange={(value) => updateUiFilter({ key: 'tags', value })}
+        onSelectionChange={(value) => updateUiFilter({ key: 'tags', value: value || null })}
       />
       <Input
         label='Title Search'
