@@ -6,7 +6,6 @@ import { Input, IntegerInput, Switch } from '@/shared/components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
-import { NullableSelectLookup } from './NullableSelectLookup';
 import { SelectLookup } from './SelectLookup';
 import { TagInput } from './TagInput';
 
@@ -72,28 +71,31 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
       </ControlGroup>
       <Card className='media'>
         <ControlGroup>
-          <NullableSelectLookup
+          <SelectLookup
             label='Media'
             className='media-type'
             lookupTable='media_types'
+            allowUndefinedSelection={true}
             selectedKey={video.primary_media_type ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_type', value: value ?? null })
             }
           />
-          <NullableSelectLookup
+          <SelectLookup
             label='Location'
             className='media-location'
             lookupTable='media_locations'
+            allowUndefinedSelection={true}
             selectedKey={video.primary_media_location ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_location', value: value ?? null })
             }
           />
-          <NullableSelectLookup
+          <SelectLookup
             label='Watched'
             className='watched-status'
             lookupTable='watched_status'
+            allowUndefinedSelection={true}
             selectedKey={video.primary_media_watched ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_watched', value: value ?? null })
@@ -101,19 +103,21 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           />
         </ControlGroup>
         <ControlGroup>
-          <NullableSelectLookup
+          <SelectLookup
             label=''
             className='media-type'
             lookupTable='media_types'
+            allowUndefinedSelection={true}
             selectedKey={video.other_media_type ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'other_media_type', value: value ?? null })
             }
           />
-          <NullableSelectLookup
+          <SelectLookup
             label=''
             className='media-location'
             lookupTable='media_locations'
+            allowUndefinedSelection={true}
             selectedKey={video.other_media_location ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'other_media_location', value: value ?? null })

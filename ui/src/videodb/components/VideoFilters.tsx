@@ -4,7 +4,7 @@ import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/com
 
 import { useVideoDb } from '../hooks/useVideoDb';
 
-import { NullableSelectLookup } from './NullableSelectLookup';
+import { SelectLookup } from './SelectLookup';
 import { TagInput } from './TagInput';
 
 import './VideoFilters.scss';
@@ -31,14 +31,15 @@ export const VideoFilters = () => {
   return (
     <div className='video-filters'>
       <div className='filter-title'>Videos</div>
-      <NullableSelectLookup
+      <SelectLookup
         label='Category'
         className='category'
         lookupTable='categories'
+        allowUndefinedSelection={true}
+        displayUndefinedAs='All'
         inline={true}
         selectedKey={uiFilters.categories ?? undefined}
         onSelectionChange={(value) => updateUiFilter({ key: 'categories', value: value ?? null })}
-        nullValueRepr='All'
         filterable={false}
       />
       <SegmentedControlInput

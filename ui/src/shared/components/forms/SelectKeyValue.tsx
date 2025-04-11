@@ -7,8 +7,10 @@ export type KeyValue = { key: string; value: string };
 
 type SelectKeyValueParams = {
   allItems: { [key: string]: string };
-  selectedKey: string;
-  onSelectionChange?: (selectedKey: string) => void;
+  allowUndefinedSelection?: boolean;
+  displayUndefinedAs?: string;
+  selectedKey?: string;
+  onSelectionChange?: (selectedKey?: string) => void;
   label: string;
   className?: string;
   inline?: boolean;
@@ -16,7 +18,9 @@ type SelectKeyValueParams = {
 };
 
 export const SelectKeyValue = ({
-  allItems,
+  allItems: propsAllItems,
+  allowUndefinedSelection,
+  displayUndefinedAs,
   selectedKey,
   onSelectionChange,
   label,
@@ -24,12 +28,16 @@ export const SelectKeyValue = ({
   className = '',
   filterable = true,
 }: SelectKeyValueParams) => {
+  const allItems = { ...propsAllItems };
+  if (allowUndefinedSelection) {
+    allItems[''] = displayUndefinedAs || ' — ';
+  }
   const allItemsArray = Object.entries(allItems).map(([key, value]) => ({ key, value }));
 
   const popoverClassName = className ? `${className}-popover` : '';
 
   const changeSelection = (kv: KeyValue) => {
-    onSelectionChange?.(kv.key);
+    onSelectionChange?.(kv.key || undefined);
   };
 
   const filterValue: ItemPredicate<KeyValue> = (query, item) => {
@@ -52,7 +60,7 @@ export const SelectKeyValue = ({
         disabled={modifiers.disabled}
         onFocus={handleFocus}
         onClick={handleClick}
-        selected={keyValue.key === selectedKey}
+        selected={keyValue.key === (selectedKey ?? '')}
       />
     );
   };
@@ -69,7 +77,7 @@ export const SelectKeyValue = ({
         resetOnSelect={true}
         filterable={filterable}
       >
-        <Button text={allItems[selectedKey] ?? ' '} endIcon='caret-down' />
+        <Button text={allItems[selectedKey ?? ''] || ' '} endIcon='caret-down' />
       </Select>
     </FormGroup>
   );
