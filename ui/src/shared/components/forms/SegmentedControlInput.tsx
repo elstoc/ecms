@@ -8,7 +8,6 @@ type SegmentedControlInputParams = {
   onValueChange?: (value: string) => void;
   label: string;
   inline?: boolean;
-  small?: boolean;
   className?: string;
 };
 
@@ -18,7 +17,6 @@ export const SegmentedControlInput = ({
   label,
   options,
   inline,
-  small,
   className = '',
 }: SegmentedControlInputParams) => {
   return (
@@ -26,7 +24,6 @@ export const SegmentedControlInput = ({
       <SegmentedControl
         value={value}
         onValueChange={(value) => onValueChange?.(value)}
-        small={small}
         options={options}
       />
     </FormGroup>

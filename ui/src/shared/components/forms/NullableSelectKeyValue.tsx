@@ -5,7 +5,6 @@ type NullableSelectKeyValueParams = {
   selectedKey: string | null;
   onSelectionChange?: (selectedKey: string | null) => void;
   label: string;
-  small?: boolean;
   className?: string;
   inline?: boolean;
   nullValueRepr?: string;
@@ -14,7 +13,7 @@ type NullableSelectKeyValueParams = {
 
 export const NullableSelectKeyValue = (params: NullableSelectKeyValueParams) => {
   const allItems = { ...params.allItems };
-  const { selectedKey, label, small, className, inline, nullValueRepr, filterable } = params;
+  const { selectedKey, label, className, inline, nullValueRepr, filterable } = params;
   allItems[''] = nullValueRepr || ' — ';
 
   const changeSelection = (selectedKey: string) => {
@@ -27,7 +26,6 @@ export const NullableSelectKeyValue = (params: NullableSelectKeyValueParams) => 
       selectedKey={selectedKey ?? ''}
       onSelectionChange={changeSelection}
       label={label}
-      small={small}
       className={className}
       inline={inline}
       filterable={filterable}

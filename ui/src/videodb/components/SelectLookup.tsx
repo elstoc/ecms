@@ -8,12 +8,11 @@ type SelectLookupProps = {
   selectedKey: string;
   onSelectionChange?: (selectedKey: string) => void;
   label: string;
-  small?: boolean;
   className?: string;
 };
 
 export const SelectLookup = (props: SelectLookupProps) => {
-  const { lookupTable, selectedKey, onSelectionChange, label, small, className } = props;
+  const { lookupTable, selectedKey, onSelectionChange, label, className } = props;
   const {
     state: { apiPath },
   } = useVideoDb();
@@ -25,7 +24,6 @@ export const SelectLookup = (props: SelectLookupProps) => {
       allItems={lookupKeyValues}
       onSelectionChange={onSelectionChange}
       selectedKey={selectedKey}
-      small={small}
       className={className}
     />
   );

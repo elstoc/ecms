@@ -8,7 +8,6 @@ type NullableSelectLookupProps = {
   selectedKey: string | null;
   onSelectionChange?: (selectedKey: string | null) => void;
   label: string;
-  small?: boolean;
   className?: string;
   inline?: boolean;
   nullValueRepr?: string;
@@ -21,7 +20,6 @@ export const NullableSelectLookup = (props: NullableSelectLookupProps) => {
     selectedKey,
     onSelectionChange,
     label,
-    small,
     className,
     inline,
     nullValueRepr,
@@ -38,7 +36,6 @@ export const NullableSelectLookup = (props: NullableSelectLookupProps) => {
       allItems={lookupKeyValues}
       onSelectionChange={onSelectionChange}
       selectedKey={selectedKey}
-      small={small}
       className={className}
       inline={inline}
       nullValueRepr={nullValueRepr}

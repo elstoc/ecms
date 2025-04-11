@@ -10,7 +10,6 @@ type SelectKeyValueParams = {
   selectedKey: string;
   onSelectionChange?: (selectedKey: string) => void;
   label: string;
-  small?: boolean;
   className?: string;
   inline?: boolean;
   filterable?: boolean;
@@ -21,7 +20,6 @@ export const SelectKeyValue = ({
   selectedKey,
   onSelectionChange,
   label,
-  small,
   inline,
   className = '',
   filterable = true,
@@ -71,7 +69,7 @@ export const SelectKeyValue = ({
         resetOnSelect={true}
         filterable={filterable}
       >
-        <Button text={allItems[selectedKey] ?? ' '} small={small} rightIcon='caret-down' />
+        <Button text={allItems[selectedKey] ?? ' '} endIcon='caret-down' />
       </Select>
     </FormGroup>
   );
