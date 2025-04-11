@@ -7,7 +7,7 @@ import { Input, IntegerInput, Switch } from '@/shared/components/forms';
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
 import { SelectLookup } from './SelectLookup';
-import { TagInput } from './TagInput';
+import { VideoTagInput } from './VideoTagInput';
 
 import './EditVideoForm.scss';
 
@@ -138,7 +138,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         value={(video.priority_flag ?? 0) > 0}
         onValueChange={(value) => dispatch({ key: 'priority_flag', value: value ? 1 : 0 })}
       />
-      <TagInput
+      <VideoTagInput
         label='Tags'
         inline={true}
         tags={video.tags?.split('|') ?? undefined}

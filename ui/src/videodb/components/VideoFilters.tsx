@@ -5,7 +5,7 @@ import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/com
 import { useVideoDb } from '../hooks/useVideoDb';
 
 import { SelectLookup } from './SelectLookup';
-import { TagInput } from './TagInput';
+import { VideoTagInput } from './VideoTagInput';
 
 import './VideoFilters.scss';
 
@@ -70,7 +70,7 @@ export const VideoFilters = () => {
         value={uiFilters.maxLength ?? undefined}
         onValueChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? null }, 1000)}
       />
-      <TagInput
+      <VideoTagInput
         label='Tags'
         className='tags'
         inline={true}

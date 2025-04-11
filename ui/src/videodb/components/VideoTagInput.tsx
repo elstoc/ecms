@@ -3,7 +3,7 @@ import { MultiTagInput } from '@/shared/components/forms';
 import { useVideoDb } from '../hooks/useVideoDb';
 import { useGetTags } from '../hooks/useVideoDbQueries';
 
-type TagInputProps = {
+type VideoTagInputProps = {
   tags?: string[];
   onSelectionChange?: (selectedTags?: string[]) => void;
   label: string;
@@ -12,14 +12,14 @@ type TagInputProps = {
   allowCreation?: boolean;
 };
 
-export const TagInput = ({
+export const VideoTagInput = ({
   tags,
   onSelectionChange,
   label,
   inline,
   className,
   allowCreation = true,
-}: TagInputProps) => {
+}: VideoTagInputProps) => {
   const {
     state: { apiPath },
   } = useVideoDb();
