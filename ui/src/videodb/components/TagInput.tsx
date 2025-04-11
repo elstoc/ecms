@@ -28,10 +28,8 @@ export const TagInput = ({
   return (
     <MultiTagInput
       selectableTags={tagLookup}
-      tags={tags ?? []}
-      onSelectionChange={(selectedTags) =>
-        onSelectionChange?.(selectedTags.length > 0 ? selectedTags : undefined)
-      }
+      tags={tags}
+      onSelectionChange={(selectedTags) => onSelectionChange?.(selectedTags)}
       label={label}
       inline={inline}
       className={className}

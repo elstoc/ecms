@@ -7,9 +7,9 @@ import './MultiTagInput.scss';
 export type KeyValue = { key: string; value: string };
 
 type MultiTagInputParams = {
-  selectableTags: string[];
-  tags: string[];
-  onSelectionChange?: (selectedKeys: string[]) => void;
+  selectableTags?: string[];
+  tags?: string[];
+  onSelectionChange?: (selectedKeys?: string[]) => void;
   label: string;
   inline?: boolean;
   className?: string;
@@ -26,17 +26,18 @@ export const MultiTagInput = ({
   allowCreation = true,
 }: MultiTagInputParams) => {
   const [queryString, setQueryString] = useState('');
-  const allTags = Array.from(new Set([...selectableTags, ...tags])).sort((a, b) =>
+  const allTags = Array.from(new Set([...(selectableTags ?? []), ...(tags ?? [])])).sort((a, b) =>
     a.toLowerCase().localeCompare(b.toLowerCase()),
   );
 
   const popoverClassName = className ? `${className}-popover` : '';
 
   const toggleTag = (tag: string) => {
-    if (!tags.includes(tag)) {
-      onSelectionChange?.([...tags, tag]);
+    if (!tags?.includes(tag)) {
+      onSelectionChange?.([...(tags ?? []), tag]);
     } else {
-      onSelectionChange?.(tags.filter((tagToRemove) => tag !== tagToRemove));
+      const newTags = tags?.filter((tagToRemove) => tag !== tagToRemove);
+      onSelectionChange?.(newTags && newTags.length > 0 ? newTags : undefined);
     }
   };
 
@@ -45,7 +46,7 @@ export const MultiTagInput = ({
       <MenuItem
         text={tag}
         key={tag}
-        selected={tags.includes(tag)}
+        selected={tags?.includes(tag)}
         shouldDismissPopover={true}
         roleStructure='listoption'
         active={modifiers.active}
@@ -87,7 +88,7 @@ export const MultiTagInput = ({
     <FormGroup label={label} inline={inline} className={`${className} multi-tag-input`}>
       <MultiSelect<string>
         items={allTags}
-        selectedItems={tags}
+        selectedItems={tags ?? []}
         tagRenderer={(tag) => tag}
         itemRenderer={itemRenderer}
         createNewItemFromQuery={(tag) => tag}
