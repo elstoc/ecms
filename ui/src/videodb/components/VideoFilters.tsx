@@ -45,21 +45,21 @@ export const VideoFilters = () => {
       <SegmentedControlInput
         label='Min Resolution'
         inline={true}
-        options={minResolutionOptions}
+        describedCodes={minResolutionOptions}
         selectedCode={uiFilters.minResolution}
         onChange={(value) => updateUiFilter({ key: 'minResolution', value })}
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
-        options={watchedStatusOptions}
+        describedCodes={watchedStatusOptions}
         selectedCode={uiFilters.watched}
         onChange={(value) => updateUiFilter({ key: 'watched', value })}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
-        options={watchedStatusOptions}
+        describedCodes={watchedStatusOptions}
         selectedCode={uiFilters.mediaWatched}
         onChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
       />

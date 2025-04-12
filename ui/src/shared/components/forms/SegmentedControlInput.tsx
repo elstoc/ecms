@@ -11,7 +11,7 @@ type DescribedCode = {
 
 type SegmentedControlInputParams = {
   selectedCode?: string;
-  options: DescribedCode[];
+  describedCodes: DescribedCode[];
   onChange?: (selectedCode?: string) => void;
   label: string;
   inline?: boolean;
@@ -22,11 +22,11 @@ export const SegmentedControlInput = ({
   selectedCode,
   onChange,
   label,
-  options,
+  describedCodes,
   inline,
   className = '',
 }: SegmentedControlInputParams) => {
-  const controlOptions = options.map((option) => ({
+  const controlOptions = describedCodes.map((option) => ({
     value: option.code ?? UNDEFINED_CODE,
     label: option.description,
   }));
