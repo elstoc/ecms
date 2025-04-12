@@ -537,7 +537,9 @@ components:
           type: string
           nullable: true
         tags:
-          type: string
+          type: array
+          items:
+            type: string
           nullable: true
         primary_media_type:
           $ref: '#/components/schemas/VideoMediaType'
@@ -623,8 +625,9 @@ components:
           type: string
           nullable: true
         tags:
-          type: string
-          nullable: true
+          type: array
+          items:
+            type: string
     booleanInt:
       type: integer
       nullable: true

@@ -12,7 +12,7 @@ export type Video = {
   image_url: string | null;
   actors: string | null;
   plot: string | null;
-  tags: string | null;
+  tags: string[] | null;
   primary_media_type: string | null;
   primary_media_location: string | null;
   primary_media_watched: string | null;

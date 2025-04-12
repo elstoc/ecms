@@ -39,7 +39,6 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
       'media_locations',
       video.other_media_location,
     );
-    const tagArray = video.tags?.split('|') || [];
 
     let lengthText = '';
     if (video.num_episodes && video.length_mins) {
@@ -87,7 +86,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
             <div className='left'>
               <div className='tags'>
                 <Tag key='category'>{videoCategory}</Tag>
-                {tagArray.map((tagName) => (
+                {video.tags?.map((tagName) => (
                   <Tag key={tagName} minimal={true}>
                     {tagName}
                   </Tag>

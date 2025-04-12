@@ -209,17 +209,15 @@ export class VideoDb {
     await this.database?.exec(sql);
   }
 
-  private async createOrReplaceVideoTags(id: number, tags?: string | null): Promise<void> {
+  private async createOrReplaceVideoTags(id: number, tags?: string[] | null): Promise<void> {
     await this.deleteVideoTags(id);
 
-    if (!tags) return;
-
-    const tagsArray = tags.split('|');
+    if (!tags || tags.length === 0) return;
 
     const insertSql = `INSERT INTO video_tags (video_id, tag)
                            VALUES ($id, $tag)`;
 
-    for (const tag of tagsArray) {
+    for (const tag of tags) {
       const params = { $id: id, $tag: tag };
       await this.database?.runWithParams(insertSql, params);
     }
@@ -240,7 +238,9 @@ export class VideoDb {
       throw new Error(`Unexpected error getting video ${id}`);
     }
     const tags = await this.getVideoTags(id);
-    video.tags = tags?.join('|') ?? '';
+    if (tags && tags.length > 0) {
+      video.tags = tags;
+    }
 
     return video;
   }
@@ -381,6 +381,16 @@ export class VideoDb {
     if (limit) {
       videos = videos.slice(0, limit);
     }
+
+    videos = videos.map((video) => {
+      if (!video.tags) {
+        return video;
+      }
+      return {
+        ...video,
+        tags: (video.tags as unknown as string)?.split('|') ?? null,
+      };
+    });
 
     return {
       videos,

@@ -543,7 +543,7 @@ describe('VideoDb', () => {
         watched: 'Y',
         priority_flag: 1,
         progress: 'some-progress',
-        tags: 'tag1|tag2',
+        tags: ['tag1', 'tag2'],
       };
       const expectedTagInsertParams1 = { $id: 2468, $tag: 'tag1' };
       const expectedTagInsertParams2 = { $id: 2468, $tag: 'tag2' };
@@ -801,7 +801,7 @@ describe('VideoDb', () => {
         watched: 'Y',
         priority_flag: 1,
         progress: 'some-progress',
-        tags: 'tag1|tag2',
+        tags: ['tag1', 'tag2'],
       };
       const expectedTagInsertParams1 = { $id: 1, $tag: 'tag1' };
       const expectedTagInsertParams2 = { $id: 1, $tag: 'tag2' };
@@ -855,7 +855,7 @@ describe('VideoDb', () => {
       const actualTagSql = mockGetAll.mock.calls[0][0];
       expect(stripWhiteSpace(actualVideoSql)).toBe(stripWhiteSpace(expectedVideoSql));
       expect(stripWhiteSpace(actualTagSql)).toBe(stripWhiteSpace(expectedTagSql));
-      expect(video).toEqual({ video: 'video', tags: 'tag1|tag2' });
+      expect(video).toEqual({ video: 'video', tags: ['tag1', 'tag2'] });
     });
   });
 
