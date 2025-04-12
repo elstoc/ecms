@@ -10,15 +10,15 @@ import { VideoTagInput } from './VideoTagInput';
 import './VideoFilters.scss';
 
 const minResolutionOptions = [
-  { label: 'SD', value: '' },
-  { label: 'HD', value: 'HD' },
-  { label: 'UHD', value: 'UHD' },
+  { key: undefined, value: 'SD' },
+  { key: 'HD', value: 'HD' },
+  { key: 'UHD', value: 'UHD' },
 ];
 
 const watchedStatusOptions = [
-  { label: 'All', value: '' },
-  { label: 'Y', value: 'Y' },
-  { label: 'N', value: 'N' },
+  { key: undefined, value: 'All' },
+  { key: 'Y', value: 'Y' },
+  { key: 'N', value: 'N' },
 ];
 
 export const VideoFilters = () => {
@@ -46,22 +46,22 @@ export const VideoFilters = () => {
         label='Min Resolution'
         inline={true}
         options={minResolutionOptions}
-        value={uiFilters.minResolution || ''}
-        onValueChange={(value) => updateUiFilter({ key: 'minResolution', value })}
+        selectedKey={uiFilters.minResolution}
+        onChange={(value) => updateUiFilter({ key: 'minResolution', value })}
       />
       <SegmentedControlInput
         label='Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={uiFilters.watched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'watched', value })}
+        selectedKey={uiFilters.watched}
+        onChange={(value) => updateUiFilter({ key: 'watched', value })}
       />
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
         options={watchedStatusOptions}
-        value={uiFilters.mediaWatched ?? ''}
-        onValueChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
+        selectedKey={uiFilters.mediaWatched}
+        onChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
       />
       <IntegerInput
         label='Max Length'

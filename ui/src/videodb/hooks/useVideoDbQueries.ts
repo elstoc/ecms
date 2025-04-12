@@ -41,13 +41,9 @@ export const useVideos = () => {
   } = useVideoDb();
 
   const params = {
+    ...apiFilters,
     maxLength: apiFilters.maxLength?.toString(),
-    titleContains: apiFilters.titleContains,
-    categories: apiFilters.categories,
     tags: apiFilters.tags?.join('|'),
-    watched: apiFilters.watched || undefined,
-    mediaWatched: apiFilters.mediaWatched || undefined,
-    minResolution: apiFilters.minResolution || undefined,
     flaggedOnly: apiFilters.flaggedOnly?.toString(),
     pages: pages?.toString(),
   };
