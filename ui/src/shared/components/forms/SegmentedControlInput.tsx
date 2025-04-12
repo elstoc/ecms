@@ -4,14 +4,14 @@ import './SegmentedControlInput.scss';
 
 const UNDEFINED_CODE = 'UNDEFINED_CODE';
 
-type SegmentedControlOption = {
+type DescribedCode = {
   code?: string;
   description: string;
 };
 
 type SegmentedControlInputParams = {
   selectedCode?: string;
-  options: SegmentedControlOption[];
+  options: DescribedCode[];
   onChange?: (selectedCode?: string) => void;
   label: string;
   inline?: boolean;
