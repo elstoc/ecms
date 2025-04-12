@@ -45,14 +45,14 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           className='watched-status'
           selectedCode={video.watched}
           lookupTable='watched_status'
-          onSelectionChange={(value) => dispatch({ key: 'watched', value: value || null })}
+          onSelectionChange={(value) => dispatch({ key: 'watched', value: value || '' })}
         />
         <VideoSelectLookup
           label='Category'
           className='category'
           lookupTable='categories'
           selectedCode={video.category}
-          onSelectionChange={(value) => dispatch({ key: 'category', value: value || null })}
+          onSelectionChange={(value) => dispatch({ key: 'category', value: value || '' })}
         />
       </ControlGroup>
       <ControlGroup className='second-group'>
