@@ -44,7 +44,7 @@ export const useVideos = () => {
     ...apiFilters,
     maxLength: apiFilters.maxLength?.toString(),
     tags: apiFilters.tags?.join('|'),
-    flaggedOnly: apiFilters.flaggedOnly?.toString(),
+    flaggedOnly: apiFilters.flaggedOnly ? '1' : '0',
     pages: pages?.toString(),
   };
 

@@ -10,7 +10,7 @@ type Filters = {
   watched?: string;
   mediaWatched?: string;
   minResolution?: string;
-  flaggedOnly?: 0 | 1;
+  flaggedOnly?: boolean;
 };
 
 type VideoDbState = {
