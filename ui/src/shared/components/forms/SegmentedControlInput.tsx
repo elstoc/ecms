@@ -2,24 +2,24 @@ import { FormGroup, SegmentedControl } from '@blueprintjs/core';
 
 import './SegmentedControlInput.scss';
 
-const UNDEFINED_KEY = 'UNDEFINED_KEY';
+const UNDEFINED_CODE = 'UNDEFINED_CODE';
 
 type SegmentedControlOption = {
-  key?: string;
-  value: string;
+  code?: string;
+  description: string;
 };
 
 type SegmentedControlInputParams = {
-  selectedKey?: string;
+  selectedCode?: string;
   options: SegmentedControlOption[];
-  onChange?: (key?: string) => void;
+  onChange?: (selectedCode?: string) => void;
   label: string;
   inline?: boolean;
   className?: string;
 };
 
 export const SegmentedControlInput = ({
-  selectedKey,
+  selectedCode,
   onChange,
   label,
   options,
@@ -27,15 +27,17 @@ export const SegmentedControlInput = ({
   className = '',
 }: SegmentedControlInputParams) => {
   const controlOptions = options.map((option) => ({
-    value: option.key ?? UNDEFINED_KEY,
-    label: option.value,
+    value: option.code ?? UNDEFINED_CODE,
+    label: option.description,
   }));
 
   return (
     <FormGroup label={label} inline={inline} className={`segmented-control-input ${className}`}>
       <SegmentedControl
-        value={selectedKey ?? UNDEFINED_KEY}
-        onValueChange={(key) => onChange?.(key === UNDEFINED_KEY ? undefined : key)}
+        value={selectedCode ?? UNDEFINED_CODE}
+        onValueChange={(selectedCode) =>
+          onChange?.(selectedCode === UNDEFINED_CODE ? undefined : selectedCode)
+        }
         options={controlOptions}
       />
     </FormGroup>
