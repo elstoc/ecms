@@ -5,8 +5,8 @@ import { useLookup } from '../hooks/useVideoDbQueries';
 
 type VideoSelectLookupProps = {
   lookupTable: string;
-  allowUndefinedSelection?: boolean;
-  displayUndefinedAs?: string;
+  allowUndefinedKeySelection?: boolean;
+  valueForUndefinedKey?: string;
   selectedKey?: string;
   onSelectionChange?: (selectedKey?: string) => void;
   label: string;
@@ -18,8 +18,8 @@ type VideoSelectLookupProps = {
 export const VideoSelectLookup = (props: VideoSelectLookupProps) => {
   const {
     lookupTable,
-    allowUndefinedSelection,
-    displayUndefinedAs,
+    allowUndefinedKeySelection,
+    valueForUndefinedKey,
     selectedKey,
     onSelectionChange,
     label,
@@ -35,8 +35,8 @@ export const VideoSelectLookup = (props: VideoSelectLookupProps) => {
   return (
     <SelectKeyValue
       label={label}
-      allowUndefinedSelection={allowUndefinedSelection}
-      displayUndefinedAs={displayUndefinedAs}
+      allowUndefinedKeySelection={allowUndefinedKeySelection}
+      valueForUndefinedKey={valueForUndefinedKey}
       allItems={lookupKeyValues}
       onSelectionChange={onSelectionChange}
       selectedKey={selectedKey}

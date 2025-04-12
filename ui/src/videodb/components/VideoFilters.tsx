@@ -35,8 +35,8 @@ export const VideoFilters = () => {
         label='Category'
         className='category'
         lookupTable='categories'
-        allowUndefinedSelection={true}
-        displayUndefinedAs='All'
+        allowUndefinedKeySelection={true}
+        valueForUndefinedKey='All'
         inline={true}
         selectedKey={uiFilters.categories ?? undefined}
         onSelectionChange={(value) => updateUiFilter({ key: 'categories', value })}

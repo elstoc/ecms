@@ -3,12 +3,14 @@ import { ItemPredicate, ItemRenderer, Select } from '@blueprintjs/select';
 
 import './SelectKeyValue.scss';
 
+const UNDEFINED_VALUE_KEY = 'UNDEFINED_VALUE_KEY';
+
 export type KeyValue = { key: string; value: string };
 
 type SelectKeyValueParams = {
   allItems: { [key: string]: string };
-  allowUndefinedSelection?: boolean;
-  displayUndefinedAs?: string;
+  allowUndefinedKeySelection?: boolean;
+  valueForUndefinedKey?: string;
   selectedKey?: string;
   onSelectionChange?: (selectedKey?: string) => void;
   label: string;
@@ -19,8 +21,8 @@ type SelectKeyValueParams = {
 
 export const SelectKeyValue = ({
   allItems: propsAllItems,
-  allowUndefinedSelection,
-  displayUndefinedAs,
+  allowUndefinedKeySelection,
+  valueForUndefinedKey,
   selectedKey,
   onSelectionChange,
   label,
@@ -29,15 +31,15 @@ export const SelectKeyValue = ({
   filterable = true,
 }: SelectKeyValueParams) => {
   const allItems = { ...propsAllItems };
-  if (allowUndefinedSelection) {
-    allItems[''] = displayUndefinedAs || ' — ';
+  if (allowUndefinedKeySelection) {
+    allItems[UNDEFINED_VALUE_KEY] = valueForUndefinedKey || ' — ';
   }
   const allItemsArray = Object.entries(allItems).map(([key, value]) => ({ key, value }));
 
   const popoverClassName = className ? `${className}-popover` : '';
 
   const changeSelection = (kv: KeyValue) => {
-    onSelectionChange?.(kv.key || undefined);
+    onSelectionChange?.(kv.key === UNDEFINED_VALUE_KEY ? undefined : kv.key);
   };
 
   const filterValue: ItemPredicate<KeyValue> = (query, item) => {
@@ -60,7 +62,7 @@ export const SelectKeyValue = ({
         disabled={modifiers.disabled}
         onFocus={handleFocus}
         onClick={handleClick}
-        selected={keyValue.key === (selectedKey ?? '')}
+        selected={keyValue.key === selectedKey}
       />
     );
   };
@@ -77,7 +79,7 @@ export const SelectKeyValue = ({
         resetOnSelect={true}
         filterable={filterable}
       >
-        <Button text={allItems[selectedKey ?? ''] || ' '} endIcon='caret-down' />
+        <Button text={allItems[selectedKey ?? UNDEFINED_VALUE_KEY] || ' '} endIcon='caret-down' />
       </Select>
     </FormGroup>
   );

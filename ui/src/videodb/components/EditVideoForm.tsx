@@ -75,7 +75,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label='Media'
             className='media-type'
             lookupTable='media_types'
-            allowUndefinedSelection={true}
+            allowUndefinedKeySelection={true}
             selectedKey={video.primary_media_type ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_type', value: value ?? null })
@@ -85,7 +85,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label='Location'
             className='media-location'
             lookupTable='media_locations'
-            allowUndefinedSelection={true}
+            allowUndefinedKeySelection={true}
             selectedKey={video.primary_media_location ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_location', value: value ?? null })
@@ -95,7 +95,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label='Watched'
             className='watched-status'
             lookupTable='watched_status'
-            allowUndefinedSelection={true}
+            allowUndefinedKeySelection={true}
             selectedKey={video.primary_media_watched ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_watched', value: value ?? null })
@@ -107,7 +107,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label=''
             className='media-type'
             lookupTable='media_types'
-            allowUndefinedSelection={true}
+            allowUndefinedKeySelection={true}
             selectedKey={video.other_media_type ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'other_media_type', value: value ?? null })
@@ -117,7 +117,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label=''
             className='media-location'
             lookupTable='media_locations'
-            allowUndefinedSelection={true}
+            allowUndefinedKeySelection={true}
             selectedKey={video.other_media_location ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'other_media_location', value: value ?? null })
