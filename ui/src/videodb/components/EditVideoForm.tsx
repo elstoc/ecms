@@ -43,7 +43,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         <VideoSelectLookup
           label='Watched'
           className='watched-status'
-          selectedKey={video.watched}
+          selectedCode={video.watched}
           lookupTable='watched_status'
           onSelectionChange={(value) => dispatch({ key: 'watched', value: value || null })}
         />
@@ -51,7 +51,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           label='Category'
           className='category'
           lookupTable='categories'
-          selectedKey={video.category}
+          selectedCode={video.category}
           onSelectionChange={(value) => dispatch({ key: 'category', value: value || null })}
         />
       </ControlGroup>
@@ -75,8 +75,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label='Media'
             className='media-type'
             lookupTable='media_types'
-            allowUndefinedKeySelection={true}
-            selectedKey={video.primary_media_type ?? undefined}
+            allowUndefinedCodeSelection={true}
+            selectedCode={video.primary_media_type ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_type', value: value ?? null })
             }
@@ -85,8 +85,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label='Location'
             className='media-location'
             lookupTable='media_locations'
-            allowUndefinedKeySelection={true}
-            selectedKey={video.primary_media_location ?? undefined}
+            allowUndefinedCodeSelection={true}
+            selectedCode={video.primary_media_location ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_location', value: value ?? null })
             }
@@ -95,8 +95,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label='Watched'
             className='watched-status'
             lookupTable='watched_status'
-            allowUndefinedKeySelection={true}
-            selectedKey={video.primary_media_watched ?? undefined}
+            allowUndefinedCodeSelection={true}
+            selectedCode={video.primary_media_watched ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'primary_media_watched', value: value ?? null })
             }
@@ -107,8 +107,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label=''
             className='media-type'
             lookupTable='media_types'
-            allowUndefinedKeySelection={true}
-            selectedKey={video.other_media_type ?? undefined}
+            allowUndefinedCodeSelection={true}
+            selectedCode={video.other_media_type ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'other_media_type', value: value ?? null })
             }
@@ -117,8 +117,8 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             label=''
             className='media-location'
             lookupTable='media_locations'
-            allowUndefinedKeySelection={true}
-            selectedKey={video.other_media_location ?? undefined}
+            allowUndefinedCodeSelection={true}
+            selectedCode={video.other_media_location ?? undefined}
             onSelectionChange={(value) =>
               dispatch({ key: 'other_media_location', value: value ?? null })
             }

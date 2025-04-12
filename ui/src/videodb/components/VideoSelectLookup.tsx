@@ -1,13 +1,13 @@
-import { SelectKeyValue } from '@/shared/components/forms';
+import { SelectDescribedCode } from '@/shared/components/forms';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 import { useLookup } from '../hooks/useVideoDbQueries';
 
 type VideoSelectLookupProps = {
   lookupTable: string;
-  allowUndefinedKeySelection?: boolean;
-  valueForUndefinedKey?: string;
-  selectedKey?: string;
+  allowUndefinedCodeSelection?: boolean;
+  valueForUndefinedCode?: string;
+  selectedCode?: string;
   onSelectionChange?: (selectedKey?: string) => void;
   label: string;
   inline?: boolean;
@@ -18,9 +18,9 @@ type VideoSelectLookupProps = {
 export const VideoSelectLookup = (props: VideoSelectLookupProps) => {
   const {
     lookupTable,
-    allowUndefinedKeySelection,
-    valueForUndefinedKey,
-    selectedKey,
+    allowUndefinedCodeSelection,
+    valueForUndefinedCode,
+    selectedCode,
     onSelectionChange,
     label,
     inline,
@@ -30,16 +30,16 @@ export const VideoSelectLookup = (props: VideoSelectLookupProps) => {
   const {
     state: { apiPath },
   } = useVideoDb();
-  const lookupKeyValues = useLookup(apiPath, lookupTable);
+  const lookupValues = useLookup(apiPath, lookupTable);
 
   return (
-    <SelectKeyValue
+    <SelectDescribedCode
       label={label}
-      allowUndefinedKeySelection={allowUndefinedKeySelection}
-      valueForUndefinedKey={valueForUndefinedKey}
-      allItems={lookupKeyValues}
+      allowUndefinedCodeSelection={allowUndefinedCodeSelection}
+      valueForUndefinedCode={valueForUndefinedCode}
+      allItems={lookupValues}
       onSelectionChange={onSelectionChange}
-      selectedKey={selectedKey}
+      selectedCode={selectedCode}
       className={className}
       inline={inline}
       filterable={filterable}
