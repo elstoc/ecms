@@ -1,10 +1,10 @@
 export type Video = {
   title: string;
   category: string;
+  watched: string;
   director: string | null;
   num_episodes: number | null;
   length_mins: number | null;
-  watched: string;
   priority_flag: number | null;
   progress: string | null;
   year: number | null;
