@@ -23,7 +23,7 @@ export const useLookup = (path: string, lookupTable: string) => {
   });
 };
 
-export const useLookupValue = (path: string, lookupTable: string, value?: string | null) => {
+export const useLookupValue = (path: string, lookupTable: string, value?: string) => {
   const lookup = useLookup(path, lookupTable);
   return lookup[value ?? ''];
 };

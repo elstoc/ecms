@@ -6,13 +6,13 @@ import { getVideoDbVideos } from '../api';
 
 const videoColumnParams: ColumnParam<VideoWithId>[] = [
   { title: 'Id', getField: (video) => video.id },
-  { title: 'Flag', getField: (video) => video.priority_flag || null },
+  { title: 'Flag', getField: (video) => video.priority_flag },
   { title: 'Title', getField: (video) => video.title },
   { title: 'Category', getField: (video) => video.category },
   { title: 'NumEpisodes', getField: (video) => video.num_episodes },
   { title: 'Length', getField: (video) => video.length_mins },
   { title: 'Watched', getField: (video) => video.watched },
-  { title: 'Tags', getField: (video) => video.tags?.join('|') || null },
+  { title: 'Tags', getField: (video) => video.tags?.join('|') },
   { title: 'Primary Media', getField: (video) => video.primary_media_type },
   { title: 'Primary Media Location', getField: (video) => video.primary_media_location },
   { title: 'Primary Media Watched', getField: (video) => video.primary_media_watched },

@@ -448,6 +448,7 @@ describe('EndpointValidator', () => {
               type: 'object',
               fullPath: 'requestBody',
               additionalProperties: false,
+              required: ['field1', 'field2'],
               properties: {
                 field1: {
                   type: 'array',

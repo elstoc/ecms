@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Video, VideoWithId } from '@/contracts/videodb';
 import { NotFoundError, NotPermittedError } from '@/errors';
 import { stripWhiteSpace } from '@/utils';
 
@@ -280,13 +279,11 @@ describe('VideoDb', () => {
         year: 1923,
         actors: 'some-actors',
         plot: 'stuff happened',
-        tags: null,
         primary_media_type: 'BD4K',
         primary_media_location: 'MOVW',
         primary_media_watched: 'Y',
         other_media_type: 'BD',
         other_media_location: 'MOVW',
-        media_notes: null,
       };
 
       await expect(videoDb.addVideo(video, regularUser)).rejects.toThrow(new NotPermittedError());
@@ -320,13 +317,11 @@ describe('VideoDb', () => {
         year: 1923,
         actors: 'some-actors',
         plot: 'stuff happened',
-        tags: null,
         primary_media_type: 'BD4K',
         primary_media_location: 'MOVW',
         primary_media_watched: 'Y',
         other_media_type: 'BD',
         other_media_location: 'MOVW',
-        media_notes: null,
       };
 
       await expect(videoDb.addVideo(video, adminUser)).resolves.toBeDefined();
@@ -360,13 +355,11 @@ describe('VideoDb', () => {
         year: 1923,
         actors: 'some-actors',
         plot: 'stuff happened',
-        tags: null,
         primary_media_type: 'BD4K',
         primary_media_location: 'MOVW',
         primary_media_watched: 'Y',
         other_media_type: 'BD',
         other_media_location: 'MOVW',
-        media_notes: null,
       };
 
       await expect(videoDb.addVideo(video, regularUser)).resolves.toBeDefined();
@@ -393,13 +386,11 @@ describe('VideoDb', () => {
         year: 1923,
         actors: 'some-actors',
         plot: 'stuff happened',
-        tags: null,
         primary_media_type: 'BD4K',
         primary_media_location: 'MOVW',
         primary_media_watched: 'Y',
         other_media_type: 'BD',
         other_media_location: 'MOVW',
-        media_notes: null,
       };
 
       const expectedSql = `INSERT INTO videos
@@ -480,8 +471,7 @@ describe('VideoDb', () => {
         $media_notes: null,
       };
 
-      // TODO: Fix this type assertion when video contract is amended to remove nulls
-      const insertedId = await videoDb.addVideo(video as Video);
+      const insertedId = await videoDb.addVideo(video);
 
       expect(mockGetWithParams).toHaveBeenCalled();
       const [sql, videoParameters] = mockGetWithParams.mock.calls[0];
@@ -511,13 +501,11 @@ describe('VideoDb', () => {
         year: 1923,
         actors: 'some-actors',
         plot: 'stuff happened',
-        tags: null,
         primary_media_type: 'BD4K',
         primary_media_location: 'MOVW',
         primary_media_watched: 'Y',
         other_media_type: 'BD',
         other_media_location: 'MOVW',
-        media_notes: null,
       };
 
       const expectedTagDeleteSql = 'DELETE FROM video_tags WHERE video_id = 2468';
@@ -579,13 +567,11 @@ describe('VideoDb', () => {
       year: 1923,
       actors: 'some-actors',
       plot: 'stuff happened',
-      tags: null,
       primary_media_type: 'BD4K',
       primary_media_location: 'MOVW',
       primary_media_watched: 'Y',
       other_media_type: 'BD',
       other_media_location: 'MOVW',
-      media_notes: null,
     };
 
     beforeEach(async () => {
@@ -759,8 +745,7 @@ describe('VideoDb', () => {
         $media_notes: null,
       };
 
-      // TODO: Fix this type assertion when video contract is amended to remove nulls
-      await videoDb.updateVideo(newVideo as VideoWithId);
+      await videoDb.updateVideo(newVideo);
 
       expect(mockRunWithParams).toHaveBeenCalled();
       const [sql, videoParameters] = mockRunWithParams.mock.calls[0];

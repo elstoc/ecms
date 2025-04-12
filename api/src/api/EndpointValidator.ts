@@ -200,7 +200,9 @@ export class EndpointValidator {
 
     for (const [key, value] of Object.entries(objectToValidate)) {
       if (validationSchema.properties[key]) {
-        this.validateValue(errors, value, validationSchema.properties[key]);
+        if (value != null || validationSchema.required?.includes(key)) {
+          this.validateValue(errors, value, validationSchema.properties[key]);
+        }
       } else if (!validationSchema.additionalProperties) {
         this.pushError(errors, `${validationSchema.fullPath}.${key}`, 'field is not permitted');
       }

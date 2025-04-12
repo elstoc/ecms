@@ -1,6 +1,6 @@
-type StringParam<T> = { title: string; getField: (record: T) => string | null };
+type StringParam<T> = { title: string; getField: (record: T) => string | undefined };
 
-type NumericParam<T> = { title: string; getField: (record: T) => number | null };
+type NumericParam<T> = { title: string; getField: (record: T) => number | undefined };
 
 export type ColumnParam<T> = StringParam<T> | NumericParam<T>;
 

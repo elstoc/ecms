@@ -209,7 +209,7 @@ export class VideoDb {
     await this.database?.exec(sql);
   }
 
-  private async createOrReplaceVideoTags(id: number, tags?: string[] | null): Promise<void> {
+  private async createOrReplaceVideoTags(id: number, tags?: string[]): Promise<void> {
     await this.deleteVideoTags(id);
 
     if (!tags || tags.length === 0) return;
@@ -388,7 +388,7 @@ export class VideoDb {
       }
       return {
         ...video,
-        tags: (video.tags as unknown as string)?.split('|') ?? null,
+        tags: (video.tags as unknown as string)?.split('|'),
       };
     });
 

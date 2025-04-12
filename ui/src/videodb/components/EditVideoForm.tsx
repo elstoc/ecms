@@ -60,13 +60,13 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           label='Episodes'
           className='num-episodes'
           value={video.num_episodes ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'num_episodes', value: value ?? null })}
+          onValueChange={(value) => dispatch({ key: 'num_episodes', value })}
         />
         <IntegerInput
           label='Length'
           className='length'
           value={video.length_mins ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'length_mins', value: value ?? null })}
+          onValueChange={(value) => dispatch({ key: 'length_mins', value })}
         />
       </ControlGroup>
       <Card className='media'>
@@ -77,9 +77,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             lookupTable='media_types'
             allowUndefinedCodeSelection={true}
             selectedCode={video.primary_media_type ?? undefined}
-            onSelectionChange={(value) =>
-              dispatch({ key: 'primary_media_type', value: value ?? null })
-            }
+            onSelectionChange={(value) => dispatch({ key: 'primary_media_type', value })}
           />
           <VideoSelectLookup
             label='Location'
@@ -87,9 +85,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             lookupTable='media_locations'
             allowUndefinedCodeSelection={true}
             selectedCode={video.primary_media_location ?? undefined}
-            onSelectionChange={(value) =>
-              dispatch({ key: 'primary_media_location', value: value ?? null })
-            }
+            onSelectionChange={(value) => dispatch({ key: 'primary_media_location', value })}
           />
           <VideoSelectLookup
             label='Watched'
@@ -97,9 +93,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             lookupTable='watched_status'
             allowUndefinedCodeSelection={true}
             selectedCode={video.primary_media_watched ?? undefined}
-            onSelectionChange={(value) =>
-              dispatch({ key: 'primary_media_watched', value: value ?? null })
-            }
+            onSelectionChange={(value) => dispatch({ key: 'primary_media_watched', value })}
           />
         </ControlGroup>
         <ControlGroup>
@@ -109,9 +103,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             lookupTable='media_types'
             allowUndefinedCodeSelection={true}
             selectedCode={video.other_media_type ?? undefined}
-            onSelectionChange={(value) =>
-              dispatch({ key: 'other_media_type', value: value ?? null })
-            }
+            onSelectionChange={(value) => dispatch({ key: 'other_media_type', value })}
           />
           <VideoSelectLookup
             label=''
@@ -119,16 +111,14 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
             lookupTable='media_locations'
             allowUndefinedCodeSelection={true}
             selectedCode={video.other_media_location ?? undefined}
-            onSelectionChange={(value) =>
-              dispatch({ key: 'other_media_location', value: value ?? null })
-            }
+            onSelectionChange={(value) => dispatch({ key: 'other_media_location', value })}
           />
         </ControlGroup>
         <Input
           label='Notes'
           className='notes'
           value={video.media_notes ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'media_notes', value: value ?? null })}
+          onValueChange={(value) => dispatch({ key: 'media_notes', value })}
         />
       </Card>
       <Switch
@@ -141,14 +131,14 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
       <VideoTagInput
         label='Tags'
         tags={video.tags ?? undefined}
-        onSelectionChange={(value) => dispatch({ key: 'tags', value: value || null })}
+        onSelectionChange={(value) => dispatch({ key: 'tags', value })}
       />
       <Input
         label='Progress'
         className='progress'
         inline={true}
         value={video.progress ?? undefined}
-        onValueChange={(value) => dispatch({ key: 'progress', value: value ?? null })}
+        onValueChange={(value) => dispatch({ key: 'progress', value })}
       />
       <Button
         className='collapser'
@@ -161,19 +151,19 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           className='director'
           inline={true}
           value={video.director ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'director', value: value ?? null })}
+          onValueChange={(value) => dispatch({ key: 'director', value })}
         />
         <Input
           label='Actors'
           inline={true}
           value={video.actors ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'actors', value: value ?? null })}
+          onValueChange={(value) => dispatch({ key: 'actors', value })}
         />
         <Input
           label='Plot'
           inline={true}
           value={video.plot ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'plot', value: value ?? null })}
+          onValueChange={(value) => dispatch({ key: 'plot', value })}
         />
       </Collapse>
       <div className='form-buttons'>
