@@ -38,7 +38,7 @@ export const VideoFilters = () => {
         allowUndefinedCodeSelection={true}
         valueForUndefinedCode='All'
         inline={true}
-        selectedCode={uiFilters.categories ?? undefined}
+        selectedCode={uiFilters.categories}
         onSelectionChange={(value) => updateUiFilter({ key: 'categories', value })}
         filterable={false}
       />
@@ -80,7 +80,7 @@ export const VideoFilters = () => {
       <Input
         label='Title Search'
         inline={true}
-        value={uiFilters.titleContains ?? undefined}
+        value={uiFilters.titleContains}
         onValueChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
       <Switch
