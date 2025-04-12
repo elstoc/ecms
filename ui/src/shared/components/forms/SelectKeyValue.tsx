@@ -3,7 +3,7 @@ import { ItemPredicate, ItemRenderer, Select } from '@blueprintjs/select';
 
 import './SelectKeyValue.scss';
 
-const UNDEFINED_VALUE_KEY = 'UNDEFINED_VALUE_KEY';
+const UNDEFINED_KEY = 'UNDEFINED_KEY';
 
 export type KeyValue = { key: string; value: string };
 
@@ -32,14 +32,14 @@ export const SelectKeyValue = ({
 }: SelectKeyValueParams) => {
   const allItems = { ...propsAllItems };
   if (allowUndefinedKeySelection) {
-    allItems[UNDEFINED_VALUE_KEY] = valueForUndefinedKey || ' — ';
+    allItems[UNDEFINED_KEY] = valueForUndefinedKey || ' — ';
   }
   const allItemsArray = Object.entries(allItems).map(([key, value]) => ({ key, value }));
 
   const popoverClassName = className ? `${className}-popover` : '';
 
   const changeSelection = (kv: KeyValue) => {
-    onSelectionChange?.(kv.key === UNDEFINED_VALUE_KEY ? undefined : kv.key);
+    onSelectionChange?.(kv.key === UNDEFINED_KEY ? undefined : kv.key);
   };
 
   const filterValue: ItemPredicate<KeyValue> = (query, item) => {
@@ -79,7 +79,7 @@ export const SelectKeyValue = ({
         resetOnSelect={true}
         filterable={filterable}
       >
-        <Button text={allItems[selectedKey ?? UNDEFINED_VALUE_KEY] || ' '} endIcon='caret-down' />
+        <Button text={allItems[selectedKey ?? UNDEFINED_KEY] || ' '} endIcon='caret-down' />
       </Select>
     </FormGroup>
   );
