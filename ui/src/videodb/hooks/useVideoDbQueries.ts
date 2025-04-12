@@ -44,7 +44,7 @@ export const useVideos = () => {
     maxLength: apiFilters.maxLength?.toString(),
     titleContains: apiFilters.titleContains,
     categories: apiFilters.categories,
-    tags: apiFilters.tags,
+    tags: apiFilters.tags?.join('|'),
     watched: apiFilters.watched || undefined,
     mediaWatched: apiFilters.mediaWatched || undefined,
     minResolution: apiFilters.minResolution || undefined,

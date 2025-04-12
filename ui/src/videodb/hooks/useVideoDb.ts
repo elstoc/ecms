@@ -5,7 +5,7 @@ import { KeyValueOfType, getRandomSeed } from '@/utils';
 type Filters = {
   maxLength?: number;
   categories?: string;
-  tags?: string;
+  tags?: string[];
   titleContains?: string;
   watched?: string;
   mediaWatched?: string;
