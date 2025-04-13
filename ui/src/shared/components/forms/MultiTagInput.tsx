@@ -8,8 +8,8 @@ export type KeyValue = { key: string; value: string };
 
 type MultiTagInputParams = {
   selectableTags?: string[];
-  tags?: string[];
-  onSelectionChange?: (selectedKeys?: string[]) => void;
+  selectedTags?: string[];
+  onChange?: (selectedTags?: string[]) => void;
   label: string;
   className?: string;
   allowCreation?: boolean;
@@ -17,25 +17,25 @@ type MultiTagInputParams = {
 
 export const MultiTagInput = ({
   selectableTags,
-  tags,
-  onSelectionChange,
+  selectedTags,
+  onChange,
   label,
   className = '',
   allowCreation = true,
 }: MultiTagInputParams) => {
   const [queryString, setQueryString] = useState('');
-  const allTags = Array.from(new Set([...(selectableTags ?? []), ...(tags ?? [])])).sort((a, b) =>
-    a.toLowerCase().localeCompare(b.toLowerCase()),
+  const allTags = Array.from(new Set([...(selectableTags ?? []), ...(selectedTags ?? [])])).sort(
+    (a, b) => a.toLowerCase().localeCompare(b.toLowerCase()),
   );
 
   const popoverClassName = className ? `${className}-popover` : '';
 
   const toggleTag = (tag: string) => {
-    if (!tags?.includes(tag)) {
-      onSelectionChange?.([...(tags ?? []), tag]);
+    if (!selectedTags?.includes(tag)) {
+      onChange?.([...(selectedTags ?? []), tag]);
     } else {
-      const newTags = tags?.filter((tagToRemove) => tag !== tagToRemove);
-      onSelectionChange?.(newTags && newTags.length > 0 ? newTags : undefined);
+      const newTags = selectedTags?.filter((tagToRemove) => tag !== tagToRemove);
+      onChange?.(newTags && newTags.length > 0 ? newTags : undefined);
     }
   };
 
@@ -44,7 +44,7 @@ export const MultiTagInput = ({
       <MenuItem
         text={tag}
         key={tag}
-        selected={tags?.includes(tag)}
+        selected={selectedTags?.includes(tag)}
         shouldDismissPopover={true}
         roleStructure='listoption'
         active={modifiers.active}
@@ -86,14 +86,14 @@ export const MultiTagInput = ({
     <FormGroup label={label} inline={true} className={`${className} multi-tag-input`}>
       <MultiSelect<string>
         items={allTags}
-        selectedItems={tags ?? []}
+        selectedItems={selectedTags ?? []}
         tagRenderer={(tag) => tag}
         itemRenderer={itemRenderer}
         createNewItemFromQuery={(tag) => tag}
         createNewItemRenderer={optionalCreateItemRenderer}
         onItemSelect={toggleTag}
         onRemove={toggleTag}
-        onClear={() => onSelectionChange?.([])}
+        onClear={() => onChange?.([])}
         itemPredicate={filterTag}
         query={queryString}
         onQueryChange={setQueryString}

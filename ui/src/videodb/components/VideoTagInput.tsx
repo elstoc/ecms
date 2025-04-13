@@ -4,16 +4,16 @@ import { useVideoDb } from '../hooks/useVideoDb';
 import { useGetTags } from '../hooks/useVideoDbQueries';
 
 type VideoTagInputProps = {
-  tags?: string[];
-  onSelectionChange?: (selectedTags?: string[]) => void;
+  selectedTags?: string[];
+  onChange?: (selectedTags?: string[]) => void;
   label: string;
   className?: string;
   allowCreation?: boolean;
 };
 
 export const VideoTagInput = ({
-  tags,
-  onSelectionChange,
+  selectedTags,
+  onChange,
   label,
   className,
   allowCreation = true,
@@ -26,8 +26,8 @@ export const VideoTagInput = ({
   return (
     <MultiTagInput
       selectableTags={tagLookup}
-      tags={tags}
-      onSelectionChange={(selectedTags) => onSelectionChange?.(selectedTags)}
+      selectedTags={selectedTags}
+      onChange={(selectedTags) => onChange?.(selectedTags)}
       label={label}
       className={className}
       allowCreation={allowCreation}
