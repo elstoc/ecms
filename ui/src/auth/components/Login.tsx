@@ -38,7 +38,7 @@ export const Login = () => {
         <PasswordInput
           label='Password'
           value={password}
-          onValueChange={setPassword}
+          onChange={setPassword}
           onPressEnter={handleLogin}
           inline={true}
         />

@@ -5,7 +5,7 @@ import './PasswordInput.scss';
 
 type PasswordInputParams = {
   value: string;
-  onValueChange?: (value: string) => void;
+  onChange?: (value: string) => void;
   label: string;
   inline?: boolean;
   className?: string;
@@ -14,7 +14,7 @@ type PasswordInputParams = {
 
 export const PasswordInput = ({
   value,
-  onValueChange,
+  onChange,
   label,
   inline,
   className = '',
@@ -43,7 +43,7 @@ export const PasswordInput = ({
     <FormGroup label={label} inline={inline} className={`password-input ${className}`}>
       <InputGroup
         value={value}
-        onValueChange={(value) => onValueChange?.(value)}
+        onValueChange={(value) => onChange?.(value)}
         rightElement={lockButton}
         type={showPassword ? 'text' : 'password'}
         onKeyDown={handleKeyDown}
