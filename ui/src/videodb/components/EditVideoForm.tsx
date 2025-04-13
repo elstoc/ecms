@@ -60,13 +60,13 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           label='Episodes'
           className='num-episodes'
           value={video.num_episodes ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'num_episodes', value })}
+          onChange={(value) => dispatch({ key: 'num_episodes', value })}
         />
         <IntegerInput
           label='Length'
           className='length'
           value={video.length_mins ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'length_mins', value })}
+          onChange={(value) => dispatch({ key: 'length_mins', value })}
         />
       </ControlGroup>
       <Card className='media'>

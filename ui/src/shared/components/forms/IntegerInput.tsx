@@ -4,7 +4,7 @@ import './IntegerInput.scss';
 
 type IntegerInputParams = {
   value?: number;
-  onValueChange?: (value?: number) => void;
+  onChange?: (value?: number) => void;
   label: string;
   inline?: boolean;
   className?: string;
@@ -12,7 +12,7 @@ type IntegerInputParams = {
 
 export const IntegerInput = ({
   value,
-  onValueChange,
+  onChange,
   label,
   inline,
   className = '',
@@ -23,7 +23,7 @@ export const IntegerInput = ({
         value={value == null ? NumericInput.VALUE_EMPTY : value}
         buttonPosition='none'
         onValueChange={(num, str) =>
-          onValueChange?.(str === NumericInput.VALUE_EMPTY ? undefined : parseInt(str))
+          onChange?.(str === NumericInput.VALUE_EMPTY ? undefined : parseInt(str))
         }
       />
     </FormGroup>

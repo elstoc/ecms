@@ -68,7 +68,7 @@ export const VideoFilters = () => {
         className='max-length'
         inline={true}
         value={uiFilters.maxLength}
-        onValueChange={(value) => updateUiFilter({ key: 'maxLength', value }, 1000)}
+        onChange={(value) => updateUiFilter({ key: 'maxLength', value }, 1000)}
       />
       <VideoTagInput
         label='Tags'
