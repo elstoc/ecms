@@ -1,5 +1,5 @@
 import { Card } from '@blueprintjs/core';
-import { createRef, startTransition } from 'react';
+import { startTransition, useRef } from 'react';
 
 import { useElementIsVisible } from '@/shared/hooks/useElementIsVisible';
 
@@ -14,7 +14,7 @@ export const VideoList = () => {
   const { dispatch } = useVideoDb();
 
   const { videos, currentPage, totalPages } = useVideos();
-  const refLastVideo = createRef<HTMLDivElement>();
+  const refLastVideo = useRef<HTMLDivElement>(null);
 
   useElementIsVisible(refLastVideo, () => {
     startTransition(() => {
