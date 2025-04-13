@@ -1,10 +1,10 @@
 import { Card } from '@blueprintjs/core';
-import { Suspense, useContext } from 'react';
+import { Suspense } from 'react';
 
 import { ContentWithSidebar } from '@/shared/components/layout';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
-import { MarkdownStateContext } from '../hooks/useMarkdown';
+import { useMarkdown } from '../hooks/useMarkdown';
 
 import { MarkdownNav } from './MarkdownNav';
 import { MarkdownPage } from './MarkdownPage';
@@ -17,7 +17,7 @@ type MarkdownContentProps = { apiPath: string };
 export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
   const {
     state: { singlePage },
-  } = useContext(MarkdownStateContext);
+  } = useMarkdown();
 
   const sidebar = (
     <Suspense>

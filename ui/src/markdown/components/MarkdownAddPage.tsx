@@ -1,11 +1,11 @@
 import { Button, Card, Dialog, DialogBody } from '@blueprintjs/core';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Input } from '@/shared/components/forms';
 
 import { getMarkdownPage } from '../api';
-import { MarkdownStateContext } from '../hooks/useMarkdown';
+import { useMarkdown } from '../hooks/useMarkdown';
 import { useCreateMarkdownPage } from '../hooks/useMarkdownQueries';
 
 import './MarkdownAddPage.scss';
@@ -30,7 +30,7 @@ const MarkdownAddPageContent = () => {
   const navigate = useNavigate();
   const {
     state: { pageApiPath },
-  } = useContext(MarkdownStateContext);
+  } = useMarkdown();
   const { mutate } = useCreateMarkdownPage('page created');
 
   const [errorText, setErrorText] = useState('');

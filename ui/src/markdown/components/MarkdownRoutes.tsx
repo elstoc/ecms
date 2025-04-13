@@ -1,10 +1,10 @@
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { MarkdownTree } from '@/contracts/markdown';
 import { NotFoundPage } from '@/shared/components/NotFoundPage';
 
-import { MarkdownStateContext } from '../hooks/useMarkdown';
+import { useMarkdown } from '../hooks/useMarkdown';
 import { useGetMarkdownTree } from '../hooks/useMarkdownQueries';
 
 import { MarkdownContent } from './MarkdownContent';
@@ -12,7 +12,7 @@ import { MarkdownContent } from './MarkdownContent';
 export const MarkdownRoutes = () => {
   const {
     state: { rootApiPath, singlePage },
-  } = useContext(MarkdownStateContext);
+  } = useMarkdown();
   const markdownTree = useGetMarkdownTree(rootApiPath);
 
   if (!markdownTree.children) return <></>;

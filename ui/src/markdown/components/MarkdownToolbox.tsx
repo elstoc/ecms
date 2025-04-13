@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 
@@ -6,7 +6,7 @@ import { Icon } from '@/shared/components/icon';
 import { Toolbox } from '@/shared/components/layout';
 import { splitFrontMatter } from '@/utils';
 
-import { MarkdownStateContext } from '../hooks/useMarkdown';
+import { useMarkdown } from '../hooks/useMarkdown';
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
 
 import './MarkdownToolbox.scss';
@@ -19,7 +19,7 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
 
   const {
     state: { editedMarkdown, singlePage, currentPage },
-  } = useContext(MarkdownStateContext);
+  } = useMarkdown();
   const mode = searchParams.get('mode');
   const { mutate: saveMutate } = useUpdateMarkdownPage(apiPath, 'page saved');
   const { mutate: deleteMutate } = useDeleteMarkdownPage(apiPath, 'page deleted');

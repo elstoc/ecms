@@ -1,6 +1,6 @@
-import { Suspense, lazy, useContext } from 'react';
+import { Suspense, lazy } from 'react';
 
-import { MarkdownStateContext } from '../hooks/useMarkdown';
+import { useMarkdown } from '../hooks/useMarkdown';
 
 import './MarkdownEditPage.scss';
 
@@ -10,9 +10,9 @@ export const MarkdownEditPage = () => {
   const {
     state: { editedMarkdown },
     dispatch,
-  } = useContext(MarkdownStateContext);
+  } = useMarkdown();
 
-  const setEditedMarkdown = (value: string) => dispatch({ key: 'editedMarkdown', value });
+  const setEditedMarkdown = (payload: string) => dispatch({ type: 'setEditedMarkdown', payload });
 
   return (
     <Suspense>

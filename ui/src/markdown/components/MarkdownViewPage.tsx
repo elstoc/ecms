@@ -1,11 +1,11 @@
-import { ReactNode, Suspense, lazy, useContext } from 'react';
+import { ReactNode, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import YAML from 'yaml';
 
 import { useTitle } from '@/shared/hooks';
 import { splitFrontMatter } from '@/utils';
 
-import { MarkdownStateContext } from '../hooks/useMarkdown';
+import { useMarkdown } from '../hooks/useMarkdown';
 
 import './MarkdownViewPage.scss';
 
@@ -18,7 +18,7 @@ const basename = (path: string): string => {
 export const MarkdownViewPage = () => {
   const {
     state: { currentPage, pageApiPath },
-  } = useContext(MarkdownStateContext);
+  } = useMarkdown();
 
   const [yaml, markdown] = splitFrontMatter(currentPage?.content || '');
   const pageTitle = YAML.parse(yaml)?.title || basename(pageApiPath) || 'Home';

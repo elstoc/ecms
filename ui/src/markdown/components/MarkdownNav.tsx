@@ -1,9 +1,9 @@
-import { Fragment, useContext } from 'react';
+import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { MarkdownTree } from '@/contracts/markdown';
 
-import { MarkdownStateContext } from '../hooks/useMarkdown';
+import { useMarkdown } from '../hooks/useMarkdown';
 import { useGetMarkdownTree } from '../hooks/useMarkdownQueries';
 
 import './MarkdownNav.scss';
@@ -11,7 +11,7 @@ import './MarkdownNav.scss';
 export const MarkdownNav = () => {
   const {
     state: { rootUiPath, rootApiPath },
-  } = useContext(MarkdownStateContext);
+  } = useMarkdown();
   const markdownTree = useGetMarkdownTree(rootApiPath);
 
   const navContent = (

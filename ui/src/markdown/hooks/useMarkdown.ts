@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useContext, useReducer } from 'react';
 
 import { MarkdownPage } from '../api';
 
@@ -11,47 +11,45 @@ type MarkdownState = {
   singlePage: boolean;
 };
 
-type SetStringValue = { key: 'pageApiPath' | 'editedMarkdown'; value: string };
-type SetCurrentPageDetails = {
-  key: 'currentPageDetails';
-  value: { currentPage: MarkdownPage; pageApiPath: string; editedMarkdown: string };
-};
+type StateActions =
+  | { type: 'setPageApiPath'; payload: string }
+  | { type: 'setEditedMarkdown'; payload: string }
+  | {
+      type: 'setCurrentPageDetails';
+      payload: { currentPage: MarkdownPage; pageApiPath: string; editedMarkdown: string };
+    };
 
-type StateActions = SetStringValue | SetCurrentPageDetails;
+const reducer: (state: MarkdownState, action: StateActions) => MarkdownState = (state, action) => {
+  if (action.type === 'setPageApiPath') {
+    return { ...state, pageApiPath: action.payload };
+  } else if (action.type === 'setEditedMarkdown') {
+    return { ...state, editedMarkdown: action.payload };
+  } else if (action.type === 'setCurrentPageDetails') {
+    return { ...state, ...action.payload };
+  }
+  return state;
+};
 
 type MarkdownStateContextProps = {
   state: MarkdownState;
   dispatch: React.Dispatch<StateActions>;
 };
 
-const reducer: (state: MarkdownState, action: StateActions) => MarkdownState = (
-  state,
-  operation,
-) => {
-  if (operation.key === 'pageApiPath') {
-    return { ...state, pageApiPath: operation.value };
-  } else if (operation.key === 'editedMarkdown') {
-    return { ...state, editedMarkdown: operation.value };
-  } else if (operation.key === 'currentPageDetails') {
-    return { ...state, ...operation.value };
-  }
-  return state;
-};
+export const MarkdownContext = createContext({} as MarkdownStateContextProps);
 
-export const MarkdownStateContext = createContext({} as MarkdownStateContextProps);
-
-export const useMarkdownReducer: (
+export const useMarkdownReducer = (
   rootUiPath: string,
   rootApiPath: string,
   singlePage: boolean,
-) => MarkdownStateContextProps = (rootUiPath, rootApiPath, singlePage) => {
-  const initialState = {
+) => {
+  const [state, dispatch] = useReducer(reducer, {
     rootUiPath,
     rootApiPath,
-    pageApiPath: '',
     singlePage,
+    pageApiPath: '',
     editedMarkdown: '',
-  };
-  const [state, dispatch] = useReducer(reducer, initialState);
+  });
   return { state, dispatch };
 };
+
+export const useMarkdown = () => useContext(MarkdownContext);
