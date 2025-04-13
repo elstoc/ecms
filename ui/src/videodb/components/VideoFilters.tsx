@@ -81,7 +81,7 @@ export const VideoFilters = () => {
         label='Title Search'
         inline={true}
         value={uiFilters.titleContains}
-        onValueChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
+        onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
       <Switch
         label='Flagged'

@@ -4,7 +4,7 @@ import './Input.scss';
 
 type InputParams = {
   value?: string;
-  onValueChange?: (value?: string) => void;
+  onChange?: (value?: string) => void;
   label: string;
   inline?: boolean;
   className?: string;
@@ -14,7 +14,7 @@ type InputParams = {
 
 export const Input = ({
   value,
-  onValueChange,
+  onChange,
   label,
   inline,
   className = '',
@@ -31,7 +31,7 @@ export const Input = ({
     <FormGroup label={label} inline={inline} className={`string-input ${className}`}>
       <InputGroup
         value={value || ''}
-        onValueChange={(value) => onValueChange?.(value || undefined)}
+        onValueChange={(value) => onChange?.(value || undefined)}
         autoFocus={autoFocus}
         onKeyDown={handleKeyDown}
       />

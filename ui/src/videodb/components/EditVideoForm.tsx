@@ -36,7 +36,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         className='title'
         inline={true}
         value={video.title}
-        onValueChange={(value) => dispatch({ key: 'title', value: value ?? '' })}
+        onChange={(value) => dispatch({ key: 'title', value: value ?? '' })}
         autoFocus={true}
       />
       <ControlGroup className='first-group'>
@@ -118,7 +118,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           label='Notes'
           className='notes'
           value={video.media_notes ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'media_notes', value })}
+          onChange={(value) => dispatch({ key: 'media_notes', value })}
         />
       </Card>
       <Switch
@@ -138,7 +138,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         className='progress'
         inline={true}
         value={video.progress ?? undefined}
-        onValueChange={(value) => dispatch({ key: 'progress', value })}
+        onChange={(value) => dispatch({ key: 'progress', value })}
       />
       <Button
         className='collapser'
@@ -151,19 +151,19 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
           className='director'
           inline={true}
           value={video.director ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'director', value })}
+          onChange={(value) => dispatch({ key: 'director', value })}
         />
         <Input
           label='Actors'
           inline={true}
           value={video.actors ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'actors', value })}
+          onChange={(value) => dispatch({ key: 'actors', value })}
         />
         <Input
           label='Plot'
           inline={true}
           value={video.plot ?? undefined}
-          onValueChange={(value) => dispatch({ key: 'plot', value })}
+          onChange={(value) => dispatch({ key: 'plot', value })}
         />
       </Collapse>
       <div className='form-buttons'>

@@ -60,7 +60,7 @@ const MarkdownAddPageContent = () => {
         <Input
           label='Path'
           value={newPagePath}
-          onValueChange={(path) =>
+          onChange={(path) =>
             setNewPagePath(path?.replace(/[^a-z0-9\-_]/gi, '').toLowerCase() ?? '')
           }
           onPressEnter={createPage}

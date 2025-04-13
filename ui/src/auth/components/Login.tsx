@@ -31,7 +31,7 @@ export const Login = () => {
         <Input
           label='User ID'
           value={userId}
-          onValueChange={(value) => setUserId(value ?? '')}
+          onChange={(value) => setUserId(value ?? '')}
           autoFocus={true}
           inline={true}
         />
