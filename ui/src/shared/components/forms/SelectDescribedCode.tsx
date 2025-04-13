@@ -12,7 +12,7 @@ type SelectDescribedCodeParams = {
   allowUndefinedCodeSelection?: boolean;
   valueForUndefinedCode?: string;
   selectedCode?: string;
-  onSelectionChange?: (selectedCode?: string) => void;
+  onChange?: (selectedCode?: string) => void;
   label: string;
   className?: string;
   inline?: boolean;
@@ -24,7 +24,7 @@ export const SelectDescribedCode = ({
   allowUndefinedCodeSelection,
   valueForUndefinedCode,
   selectedCode,
-  onSelectionChange,
+  onChange,
   label,
   inline,
   className = '',
@@ -42,7 +42,7 @@ export const SelectDescribedCode = ({
   const popoverClassName = className ? `${className}-popover` : '';
 
   const changeSelection = (dc: DescribedCode) => {
-    onSelectionChange?.(dc.code === UNDEFINED_CODE ? undefined : dc.code);
+    onChange?.(dc.code === UNDEFINED_CODE ? undefined : dc.code);
   };
 
   const filterValue: ItemPredicate<DescribedCode> = (query, item) => {

@@ -38,7 +38,7 @@ export const VideoSelectLookup = (props: VideoSelectLookupProps) => {
       allowUndefinedCodeSelection={allowUndefinedCodeSelection}
       valueForUndefinedCode={valueForUndefinedCode}
       allItems={lookupValues}
-      onSelectionChange={onSelectionChange}
+      onChange={onSelectionChange}
       selectedCode={selectedCode}
       className={className}
       inline={inline}
