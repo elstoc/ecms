@@ -28,7 +28,7 @@ export const VideoList = () => {
         const lastVideo = index === videos.length - 1;
         return (
           <VideoListItem
-            key={`${video.id}${lastVideo}`} // forces replacement and therefore unwatching of any previously watched element
+            key={`${video.id}${lastVideo}`} // forces replacement and therefore unwatching of any previously-watched element
             video={video}
             ref={lastVideo ? refLastVideo : null}
           />
