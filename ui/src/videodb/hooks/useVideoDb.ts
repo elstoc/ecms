@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useReducer, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { KeyValueOfType, getRandomSeed } from '@/utils';
+import { KeyValueOfType, getRandomSeed, toIntOrUndefined } from '@/utils';
 
 type Filters = {
   maxLength?: number;
@@ -12,6 +13,24 @@ type Filters = {
   minResolution?: string;
   flaggedOnly?: boolean;
 };
+
+export const searchParamsFromFilters = (apiFilters: Filters) => ({
+  ...apiFilters,
+  maxLength: apiFilters.maxLength?.toString(),
+  tags: apiFilters.tags?.join('|'),
+  flaggedOnly: apiFilters.flaggedOnly ? '1' : undefined,
+});
+
+export const filtersFromSearchParams = (searchParamEntries: Record<string, string>) => ({
+  maxLength: toIntOrUndefined(searchParamEntries.maxLength),
+  categories: searchParamEntries.categories,
+  tags: searchParamEntries.tags?.split('|'),
+  titleContains: searchParamEntries.titleContains,
+  watched: searchParamEntries.watched,
+  mediaWatched: searchParamEntries.mediaWatched,
+  minResolution: searchParamEntries.minResolution,
+  flaggedOnly: searchParamEntries.flaggedOnly === '1',
+});
 
 type VideoDbState = {
   apiPath: string;
@@ -77,14 +96,18 @@ export const VideoDbContext = createContext({} as VideoDbContextProps);
 
 export const useVideoDbReducer = (title: string, apiPath: string) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [searchParams] = useSearchParams();
+  const initialFilters = filtersFromSearchParams(Object.fromEntries(searchParams.entries()));
+
   const initialState: VideoDbState = {
     title,
     apiPath,
     pages: 1,
     sortOrder: 'asc',
-    uiFilters: {},
-    apiFilters: {},
+    uiFilters: initialFilters,
+    apiFilters: initialFilters,
   };
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const updateUiFilter = useCallback(
