@@ -4,12 +4,12 @@ import './Flag.scss';
 
 type FlagParams = {
   value: boolean | undefined;
-  onValueChange?: (value: boolean) => void;
+  onChange?: (value: boolean) => void;
   className?: string;
   color?: string;
 };
 
-export const Flag = ({ value, onValueChange, className = '', color }: FlagParams) => {
+export const Flag = ({ value, onChange, className = '', color }: FlagParams) => {
   let calculatedColor = color || 'firebrick';
   if (value === false) {
     calculatedColor = 'lightgrey';
@@ -19,7 +19,7 @@ export const Flag = ({ value, onValueChange, className = '', color }: FlagParams
 
   return (
     <Icon
-      onClick={onValueChange && (() => onValueChange(!value))}
+      onClick={onChange && (() => onChange(!value))}
       className={`flag-component ${value === false ? '' : 'checked'} ${className}`}
       name='flag'
       color={calculatedColor}
