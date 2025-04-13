@@ -19,7 +19,7 @@ export const JustifiedGallery = () => {
       startTransition(() => {
         dispatch({
           type: 'setPages',
-          value: Math.min(totalPages, currentPage + 1),
+          payload: Math.min(totalPages, currentPage + 1),
         });
       }),
     [currentPage, totalPages],

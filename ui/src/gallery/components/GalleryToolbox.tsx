@@ -17,14 +17,14 @@ export const GalleryToolbox = () => {
         onClick={() =>
           dispatch({
             type: 'setSortOrder',
-            value: sortOrder === 'desc' ? 'asc' : 'desc',
+            payload: sortOrder === 'desc' ? 'asc' : 'desc',
           })
         }
       />
       <Icon
         name='shuffle'
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}
-        onClick={() => dispatch({ type: 'setSortOrder', value: 'shuffle' })}
+        onClick={() => dispatch({ type: 'setSortOrder', payload: 'shuffle' })}
       />
     </Toolbox>
   );
