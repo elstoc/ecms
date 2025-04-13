@@ -88,7 +88,7 @@ export const VideoFilters = () => {
         className='flagged'
         inline={true}
         value={!!uiFilters.flaggedOnly}
-        onValueChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
+        onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
       />
       <div className='filter-action-buttons'>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>

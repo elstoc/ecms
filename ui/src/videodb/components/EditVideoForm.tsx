@@ -126,7 +126,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
         className='priority-flag'
         inline={true}
         value={(video.priority_flag ?? 0) > 0}
-        onValueChange={(value) => dispatch({ key: 'priority_flag', value: value ? 1 : 0 })}
+        onChange={(value) => dispatch({ key: 'priority_flag', value: value ? 1 : 0 })}
       />
       <VideoTagInput
         label='Tags'
