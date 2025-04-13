@@ -6,8 +6,8 @@ import { Icon } from '@/shared/components/icon';
 import { Toolbox } from '@/shared/components/layout';
 import { splitFrontMatter } from '@/utils';
 
+import { MarkdownStateContext } from '../hooks/useMarkdown';
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
-import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownToolbox.scss';
 
@@ -18,7 +18,7 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
   const navigate = useNavigate();
 
   const {
-    markdownState: { editedMarkdown, singlePage, currentPage },
+    state: { editedMarkdown, singlePage, currentPage },
   } = useContext(MarkdownStateContext);
   const mode = searchParams.get('mode');
   const { mutate: saveMutate } = useUpdateMarkdownPage(apiPath, 'page saved');

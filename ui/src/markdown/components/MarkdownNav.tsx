@@ -3,14 +3,14 @@ import { NavLink } from 'react-router-dom';
 
 import { MarkdownTree } from '@/contracts/markdown';
 
+import { MarkdownStateContext } from '../hooks/useMarkdown';
 import { useGetMarkdownTree } from '../hooks/useMarkdownQueries';
-import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownNav.scss';
 
 export const MarkdownNav = () => {
   const {
-    markdownState: { rootUiPath, rootApiPath },
+    state: { rootUiPath, rootApiPath },
   } = useContext(MarkdownStateContext);
   const markdownTree = useGetMarkdownTree(rootApiPath);
 

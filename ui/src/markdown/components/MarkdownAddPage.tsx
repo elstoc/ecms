@@ -5,8 +5,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Input } from '@/shared/components/forms';
 
 import { getMarkdownPage } from '../api';
+import { MarkdownStateContext } from '../hooks/useMarkdown';
 import { useCreateMarkdownPage } from '../hooks/useMarkdownQueries';
-import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import './MarkdownAddPage.scss';
 
@@ -29,7 +29,7 @@ export const MarkdownAddPage = () => {
 const MarkdownAddPageContent = () => {
   const navigate = useNavigate();
   const {
-    markdownState: { pageApiPath },
+    state: { pageApiPath },
   } = useContext(MarkdownStateContext);
   const { mutate } = useCreateMarkdownPage('page created');
 

@@ -4,7 +4,7 @@ import { Suspense, useContext } from 'react';
 import { ContentWithSidebar } from '@/shared/components/layout';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
-import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
+import { MarkdownStateContext } from '../hooks/useMarkdown';
 
 import { MarkdownNav } from './MarkdownNav';
 import { MarkdownPage } from './MarkdownPage';
@@ -16,7 +16,7 @@ type MarkdownContentProps = { apiPath: string };
 
 export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
   const {
-    markdownState: { singlePage },
+    state: { singlePage },
   } = useContext(MarkdownStateContext);
 
   const sidebar = (

@@ -5,7 +5,7 @@ import YAML from 'yaml';
 import { useTitle } from '@/shared/hooks';
 import { splitFrontMatter } from '@/utils';
 
-import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
+import { MarkdownStateContext } from '../hooks/useMarkdown';
 
 import './MarkdownViewPage.scss';
 
@@ -17,7 +17,7 @@ const basename = (path: string): string => {
 
 export const MarkdownViewPage = () => {
   const {
-    markdownState: { currentPage, pageApiPath },
+    state: { currentPage, pageApiPath },
   } = useContext(MarkdownStateContext);
 
   const [yaml, markdown] = splitFrontMatter(currentPage?.content || '');

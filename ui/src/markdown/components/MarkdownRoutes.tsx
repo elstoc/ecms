@@ -4,14 +4,14 @@ import { Route, Routes } from 'react-router-dom';
 import { MarkdownTree } from '@/contracts/markdown';
 import { NotFoundPage } from '@/shared/components/NotFoundPage';
 
+import { MarkdownStateContext } from '../hooks/useMarkdown';
 import { useGetMarkdownTree } from '../hooks/useMarkdownQueries';
-import { MarkdownStateContext } from '../hooks/useMarkdownStateContext';
 
 import { MarkdownContent } from './MarkdownContent';
 
 export const MarkdownRoutes = () => {
   const {
-    markdownState: { rootApiPath, singlePage },
+    state: { rootApiPath, singlePage },
   } = useContext(MarkdownStateContext);
   const markdownTree = useGetMarkdownTree(rootApiPath);
 

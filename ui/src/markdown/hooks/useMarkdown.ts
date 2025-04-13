@@ -17,14 +17,14 @@ type SetCurrentPageDetails = {
   value: { currentPage: MarkdownPage; pageApiPath: string; editedMarkdown: string };
 };
 
-type StateOperations = SetStringValue | SetCurrentPageDetails;
+type StateActions = SetStringValue | SetCurrentPageDetails;
 
 type MarkdownStateContextProps = {
-  markdownState: MarkdownState;
-  markdownReducer: React.Dispatch<StateOperations>;
+  state: MarkdownState;
+  dispatch: React.Dispatch<StateActions>;
 };
 
-const markdownStateReducer: (state: MarkdownState, operation: StateOperations) => MarkdownState = (
+const reducer: (state: MarkdownState, action: StateActions) => MarkdownState = (
   state,
   operation,
 ) => {
@@ -40,7 +40,7 @@ const markdownStateReducer: (state: MarkdownState, operation: StateOperations) =
 
 export const MarkdownStateContext = createContext({} as MarkdownStateContextProps);
 
-export const useMarkdownState: (
+export const useMarkdownReducer: (
   rootUiPath: string,
   rootApiPath: string,
   singlePage: boolean,
@@ -52,6 +52,6 @@ export const useMarkdownState: (
     singlePage,
     editedMarkdown: '',
   };
-  const [markdownState, markdownReducer] = useReducer(markdownStateReducer, initialState);
-  return { markdownState, markdownReducer };
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return { state, dispatch };
 };
