@@ -24,13 +24,16 @@ export const VideoList = () => {
 
   return (
     <Card className='video-list'>
-      {videos.map((video, index) => (
-        <VideoListItem
-          key={video.id}
-          video={video}
-          ref={index === videos.length - 1 ? refLastVideo : null}
-        />
-      ))}
+      {videos.map((video, index) => {
+        const lastVideo = index === videos.length - 1;
+        return (
+          <VideoListItem
+            key={`${video.id}${lastVideo}`} // forces replacement and therefore unwatching of any previously watched element
+            video={video}
+            ref={lastVideo ? refLastVideo : null}
+          />
+        );
+      })}
     </Card>
   );
 };
