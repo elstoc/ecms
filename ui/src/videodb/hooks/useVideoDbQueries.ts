@@ -12,7 +12,7 @@ import {
   putVideoDbVideo,
 } from '../api';
 
-import { searchParamsFromFilters, useVideoDb } from './useVideoDb';
+import { useVideoDb } from './useVideoDb';
 
 export const useLookup = (path: string, lookupTable: string) => {
   return useCustomQuery({
@@ -41,7 +41,10 @@ export const useVideos = () => {
   } = useVideoDb();
 
   const params = {
-    ...searchParamsFromFilters(apiFilters),
+    ...apiFilters,
+    maxLength: apiFilters.maxLength?.toString(),
+    tags: apiFilters.tags?.join('|'),
+    flaggedOnly: apiFilters.flaggedOnly ? '1' : undefined,
     pages: pages?.toString(),
   };
 

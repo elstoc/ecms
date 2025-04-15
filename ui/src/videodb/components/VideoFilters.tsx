@@ -1,10 +1,8 @@
 import { Button } from '@blueprintjs/core';
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 
-import { searchParamsFromFilters, useVideoDb } from '../hooks/useVideoDb';
+import { useVideoDb } from '../hooks/useVideoDb';
 
 import { SelectVideoDbLookup } from './SelectVideoDbLookup';
 import { VideoTagInput } from './VideoTagInput';
@@ -24,19 +22,11 @@ const watchedStatusOptions = [
 ];
 
 export const VideoFilters = () => {
-  const [, setSearchParams] = useSearchParams();
   const {
-    state: { uiFilters, apiFilters },
+    state: { uiFilters },
     dispatch,
     updateUiFilter,
   } = useVideoDb();
-
-  useEffect(() => {
-    const params = new URLSearchParams(
-      JSON.parse(JSON.stringify(searchParamsFromFilters(apiFilters))),
-    );
-    setSearchParams(params);
-  }, [apiFilters]);
 
   return (
     <div className='video-filters'>
