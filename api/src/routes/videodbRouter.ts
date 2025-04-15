@@ -40,33 +40,20 @@ export const createVideoDbRouter = (site: Site): Router => {
         const video = await videoDb.deleteVideo(parseInt(req.query.id as string), req.user);
         res.json(video);
       } else if (fn === 'getVideos') {
-        const {
-          pages,
-          maxLength,
-          categories,
-          tags,
-          titleContains,
-          watched,
-          mediaWatched,
-          minResolution,
-          flaggedOnly,
-          sortOrder,
-          shuffleSeed,
-        } = req.query;
+        const query = req.query as Record<string, string>;
         const filters = {
-          maxLength: maxLength === undefined ? undefined : parseInt(maxLength as string),
-          categories: categories === undefined ? undefined : (categories as string)?.split('|'),
-          tags: tags === undefined ? undefined : (tags as string)?.split('|'),
-          titleContains: titleContains === undefined ? undefined : (titleContains as string),
-          watched: watched === undefined ? undefined : (watched as string),
-          mediaWatched: mediaWatched === undefined ? undefined : (mediaWatched as string),
-          flaggedOnly:
-            flaggedOnly === undefined ? undefined : parseInt(flaggedOnly as string) === 1,
-          minResolution: minResolution === undefined ? undefined : (minResolution as string),
-          sortOrder: sortOrder === undefined ? 'asc' : (sortOrder as string),
-          shuffleSeed: parseInt(shuffleSeed?.toString() ?? '0'),
+          maxLength: parseInt(query.maxLength ?? '0') || undefined,
+          categories: query.categories?.split('|'),
+          tags: query.tags?.split('|'),
+          titleContains: query.titleContains,
+          watched: query.watched,
+          mediaWatched: query.mediaWatched,
+          flaggedOnly: query.flaggedOnly === '1',
+          minResolution: query.minResolution,
+          sortOrder: query.sortOrder || 'asc',
+          shuffleSeed: parseInt(query.shuffleSeed ?? '0'),
         };
-        const videos = await videoDb.queryVideos(filters, parseInt(pages as string));
+        const videos = await videoDb.queryVideos(filters, parseInt(query.pages));
         res.json(videos);
       }
     } catch (err: unknown) {
