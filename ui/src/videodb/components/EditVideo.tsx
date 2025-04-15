@@ -8,9 +8,9 @@ import { NotFoundPage } from '@/shared/components/NotFoundPage';
 import { AddVideo } from './AddVideo';
 import { UpdateVideo } from './UpdateVideo';
 
-type ModeOnly = { mode?: 'update' | 'add' };
+type EditVideoProps = { mode?: 'update' | 'add' };
 
-export const AddOrUpdateVideo = ({ mode }: ModeOnly) => {
+export const EditVideo = ({ mode }: EditVideoProps) => {
   const { id } = useParams();
   const userIsAdmin = useUserIsAdmin();
   const navigate = useNavigate();

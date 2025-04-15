@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { ContentWithSidebar } from '@/shared/components/layout';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
-import { AddOrUpdateVideo } from './AddOrUpdateVideo';
+import { EditVideo } from './EditVideo';
 import { VideoFilters } from './VideoFilters';
 import { VideoList } from './VideoList';
 import { VideoToolbox } from './VideoToolbox';
@@ -31,7 +31,7 @@ export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
         <VideoToolbox />
       </InjectComponentTools>
       <ContentWithSidebar content={content} sidebar={sidebar} />
-      <AddOrUpdateVideo mode={mode} />
+      <EditVideo mode={mode} />
     </div>
   );
 };
