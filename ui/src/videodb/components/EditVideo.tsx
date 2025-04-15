@@ -16,7 +16,7 @@ export const EditVideo = ({ mode }: EditVideoProps) => {
   const navigate = useNavigate();
 
   if (!userIsAdmin) {
-    return <></>;
+    return;
   }
 
   if (mode === 'update' && !Number.isInteger(parseInt(id || 'x'))) {
