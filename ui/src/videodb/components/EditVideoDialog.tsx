@@ -7,7 +7,7 @@ import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { AddVideo } from './AddVideo';
 import { UpdateVideo } from './UpdateVideo';
 
-export const EditVideo = () => {
+export const EditVideoDialog = () => {
   const { mode } = useParams();
   const userIsAdmin = useUserIsAdmin();
   const navigate = useNavigate();
