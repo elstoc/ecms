@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
+import { useParams } from 'react-router';
 
+import { NotFoundPage } from '@/shared/components/NotFoundPage';
 import { ContentWithSidebar } from '@/shared/components/layout';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
@@ -10,9 +12,13 @@ import { VideoToolbox } from './VideoToolbox';
 
 import './VideoDbContent.scss';
 
-type VideoDbContentProps = { mode?: 'update' | 'add' };
+export const VideoDbContent = () => {
+  const { mode } = useParams();
 
-export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
+  if (mode && mode !== 'add' && mode !== 'update') {
+    return <NotFoundPage />;
+  }
+
   const content = (
     <Suspense>
       <VideoList />
@@ -31,7 +37,7 @@ export const VideoDbContent = ({ mode }: VideoDbContentProps) => {
         <VideoToolbox />
       </InjectComponentTools>
       <ContentWithSidebar content={content} sidebar={sidebar} />
-      <EditVideo mode={mode} />
+      <EditVideo />
     </div>
   );
 };
