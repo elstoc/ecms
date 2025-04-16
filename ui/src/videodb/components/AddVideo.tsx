@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { VideoWithId } from '@/contracts/videodb';
 
-import { useVideoDb } from '../hooks/useVideoDb';
 import { usePostVideo } from '../hooks/useVideoDbQueries';
 
 import { EditVideoForm } from './EditVideoForm';
@@ -16,11 +15,7 @@ const initialVideo = {
 
 export const AddVideo = () => {
   const navigate = useNavigate();
-  const {
-    state: { apiPath },
-  } = useVideoDb();
-
-  const { mutate } = usePostVideo(apiPath, 'saved');
+  const { mutate } = usePostVideo('saved');
 
   const addVideo = async (video: VideoWithId) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

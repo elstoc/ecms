@@ -65,13 +65,21 @@ export const useVideos = () => {
   });
 };
 
-export const useGetVideo = (path: string, id: number) => {
-  return useCustomQuery({ queryKey: [], queryFn: () => getVideoDbVideo(path, id), gcTime: 0 });
+export const useGetVideo = (id: number) => {
+  const {
+    state: { apiPath },
+  } = useVideoDb();
+
+  return useCustomQuery({ queryKey: [], queryFn: () => getVideoDbVideo(apiPath, id), gcTime: 0 });
 };
 
-export const usePostVideo = (path: string, successMessage: string) => {
+export const usePostVideo = (successMessage: string) => {
+  const {
+    state: { apiPath },
+  } = useVideoDb();
+
   return useMutationWithToast<Video>({
-    mutationFn: (video) => postVideoDbVideo(path, video),
+    mutationFn: (video) => postVideoDbVideo(apiPath, video),
     invalidateKeys: [
       ['videoDb', 'videos'],
       ['videoDb', 'tags'],
@@ -80,9 +88,13 @@ export const usePostVideo = (path: string, successMessage: string) => {
   });
 };
 
-export const useDeleteVideo = (path: string, id: number, successMessage: string) => {
-  return useMutationWithToast<void>({
-    mutationFn: () => deleteVideoDbVideo(path, id),
+export const useDeleteVideo = (successMessage: string) => {
+  const {
+    state: { apiPath },
+  } = useVideoDb();
+
+  return useMutationWithToast<number>({
+    mutationFn: (id: number) => deleteVideoDbVideo(apiPath, id),
     invalidateKeys: [
       ['videoDb', 'videos'],
       ['videoDb', 'tags'],
@@ -91,9 +103,13 @@ export const useDeleteVideo = (path: string, id: number, successMessage: string)
   });
 };
 
-export const usePutVideo = (path: string, id: number, successMessage: string) => {
+export const usePutVideo = (successMessage: string) => {
+  const {
+    state: { apiPath },
+  } = useVideoDb();
+
   return useMutationWithToast<VideoWithId>({
-    mutationFn: (video) => putVideoDbVideo(path, video),
+    mutationFn: (video) => putVideoDbVideo(apiPath, video),
     invalidateKeys: [
       ['videoDb', 'videos'],
       ['videoDb', 'tags'],

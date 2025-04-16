@@ -1,33 +1,24 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { VideoWithId } from '@/contracts/videodb';
-import { NotFoundPage } from '@/shared/components/NotFoundPage';
-
-import { useVideoDb } from '../hooks/useVideoDb';
 import { useDeleteVideo, useGetVideo, usePutVideo } from '../hooks/useVideoDbQueries';
 
 import { EditVideoForm } from './EditVideoForm';
 
-export const UpdateVideo = () => {
+type UpdateVideoProps = { id: number };
+
+export const UpdateVideo = ({ id }: UpdateVideoProps) => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const {
-    state: { apiPath },
-  } = useVideoDb();
+  const storedVideo = useGetVideo(id);
+  const { mutate: deleteMutate } = useDeleteVideo('deleted');
+  const { mutate: putMutate } = usePutVideo('saved');
 
-  const idInt = parseInt(id || 'x');
-  if (!Number.isInteger(idInt)) {
-    return <NotFoundPage />;
-  }
+  const onSuccess = () => navigate(-1);
 
-  const storedVideo = useGetVideo(apiPath, idInt);
-  const { mutate: deleteMutate } = useDeleteVideo(apiPath, idInt, 'deleted');
-  const { mutate: putMutate } = usePutVideo(apiPath, idInt, 'saved');
-
-  const putVideo = async (video: VideoWithId) =>
-    putMutate(video, { onSuccess: () => navigate(-1) });
-
-  const deleteVideo = async () => deleteMutate(undefined, { onSuccess: () => navigate(-1) });
-
-  return <EditVideoForm initialVideoState={storedVideo} onSave={putVideo} onDelete={deleteVideo} />;
+  return (
+    <EditVideoForm
+      initialVideoState={storedVideo}
+      onSave={async (video) => putMutate(video, { onSuccess })}
+      onDelete={async () => deleteMutate(id, { onSuccess })}
+    />
+  );
 };
