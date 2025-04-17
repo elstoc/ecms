@@ -23,35 +23,33 @@ export const VideoToolbox = () => {
   }, [apiPath]);
 
   return (
-    <div className='video-toolbox'>
-      <Toolbox>
-        {userIsAdmin && (
-          <>
-            <Icon name='add' onClick={() => navigate('./add')} />
-            <Icon className='download-icon' name='download' onClick={downloadCSV} />
-          </>
-        )}
-        <Icon
-          name='sortAscAlpha'
-          color={sortOrder === 'asc' ? 'black' : 'grey'}
-          onClick={() =>
-            dispatch({
-              type: 'setSortOrder',
-              payload: 'asc',
-            })
-          }
-        />
-        <Icon
-          name='shuffle'
-          color={sortOrder === 'shuffle' ? 'black' : 'grey'}
-          onClick={() =>
-            dispatch({
-              type: 'setSortOrder',
-              payload: 'shuffle',
-            })
-          }
-        />
-      </Toolbox>
-    </div>
+    <Toolbox>
+      {userIsAdmin && (
+        <>
+          <Icon name='add' onClick={() => navigate('./add')} />
+          <Icon className='download-icon' name='download' onClick={downloadCSV} />
+        </>
+      )}
+      <Icon
+        name='sortAscAlpha'
+        color={sortOrder === 'asc' ? 'black' : 'grey'}
+        onClick={() =>
+          dispatch({
+            type: 'setSortOrder',
+            payload: 'asc',
+          })
+        }
+      />
+      <Icon
+        name='shuffle'
+        color={sortOrder === 'shuffle' ? 'black' : 'grey'}
+        onClick={() =>
+          dispatch({
+            type: 'setSortOrder',
+            payload: 'shuffle',
+          })
+        }
+      />
+    </Toolbox>
   );
 };
