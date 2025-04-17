@@ -12,7 +12,7 @@ type TesselateProps = { tiles: TileInfo[] };
 /*
     Takes an array of React Elements (tiles) that all have the same height
     and tesselates them into a grid by reducing the height of each row
-    and therefore scaling that row's content
+    and thereby scaling that row's content
     Input elements should be styled to fill the content of their container (width/height = 100%)
     as this component will wrap them in a bunch of divs
 */
