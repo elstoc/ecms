@@ -46,14 +46,14 @@ export const EditVideo = () => {
           {mode === 'add' && (
             <EditVideoForm
               key='add'
-              initialVideoState={video}
+              initialVideo={video}
               onSave={async (newVideo) => postMutate(newVideo, { onSuccess })}
             />
           )}
           {mode === 'update' && (
             <EditVideoForm
               key='update'
-              initialVideoState={video}
+              initialVideo={video}
               onSave={async (updatedVideo) => putMutate({ id, ...updatedVideo }, { onSuccess })}
               onDelete={async () => deleteMutate(id, { onSuccess })}
             />

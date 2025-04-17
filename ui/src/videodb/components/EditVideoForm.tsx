@@ -1,5 +1,5 @@
 import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { Video } from '@/contracts/videodb';
 import { Input, IntegerInput, Switch } from '@/shared/components/forms';
@@ -12,22 +12,14 @@ import { VideoTagInput } from './VideoTagInput';
 import './EditVideoForm.scss';
 
 type EditVideoFormProps = {
-  initialVideoState: Video;
+  initialVideo: Video;
   onSave?: (video: Video) => Promise<void>;
   onDelete?: () => Promise<void>;
 };
 
-export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideoFormProps) => {
-  const [video, dispatch] = useEditVideoReducer(initialVideoState);
+export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormProps) => {
+  const [video, dispatch] = useEditVideoReducer(initialVideo);
   const [collapseIsOpen, setCollapseIsOpen] = useState(false);
-
-  const saveVideo = useCallback(async () => {
-    onSave?.(video);
-  }, [onSave, video]);
-
-  const deleteVideo = useCallback(async () => {
-    onDelete?.();
-  }, [onDelete, video]);
 
   return (
     <div className='edit-video-form'>
@@ -168,12 +160,12 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
       </Collapse>
       <div className='form-buttons'>
         {onDelete && (
-          <Button tabIndex={-1} className='delete-button' onClick={deleteVideo}>
+          <Button tabIndex={-1} className='delete-button' onClick={() => onDelete?.()}>
             Delete Video
           </Button>
         )}
         {onSave && (
-          <Button className='save-button' onClick={saveVideo}>
+          <Button className='save-button' onClick={() => onSave?.(video)}>
             Save Changes
           </Button>
         )}
