@@ -10,23 +10,8 @@ type VideoTagInputProps = {
   allowCreation?: boolean;
 };
 
-export const VideoTagInput = ({
-  selectedTags,
-  onChange,
-  label,
-  className,
-  allowCreation = true,
-}: VideoTagInputProps) => {
+export const VideoTagInput = (props: VideoTagInputProps) => {
   const tagLookup = useGetTags();
 
-  return (
-    <MultiTagInput
-      selectableTags={tagLookup}
-      selectedTags={selectedTags}
-      onChange={(selectedTags) => onChange?.(selectedTags)}
-      label={label}
-      className={className}
-      allowCreation={allowCreation}
-    />
-  );
+  return <MultiTagInput selectableTags={tagLookup} {...props} />;
 };
