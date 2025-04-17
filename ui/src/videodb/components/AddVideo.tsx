@@ -2,19 +2,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { VideoWithId } from '@/contracts/videodb';
 
-import { usePostVideo } from '../hooks/useVideoDbQueries';
+import { EMPTY_VIDEO, useGetVideo, usePostVideo } from '../hooks/useVideoDbQueries';
 
 import { EditVideoForm } from './EditVideoForm';
 
-const initialVideo = {
-  id: 0,
-  title: '',
-  category: '',
-  watched: '',
-};
-
 export const AddVideo = () => {
   const navigate = useNavigate();
+  const video = useGetVideo(EMPTY_VIDEO);
   const { mutate } = usePostVideo('saved');
 
   const addVideo = async (video: VideoWithId) => {
@@ -23,5 +17,5 @@ export const AddVideo = () => {
     mutate(videoWithoutId, { onSuccess: () => navigate(-1) });
   };
 
-  return <EditVideoForm initialVideoState={initialVideo} onSave={addVideo} />;
+  return <EditVideoForm initialVideoState={video} onSave={addVideo} />;
 };

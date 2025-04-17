@@ -8,7 +8,7 @@ type UpdateVideoProps = { id: number };
 
 export const UpdateVideo = ({ id }: UpdateVideoProps) => {
   const navigate = useNavigate();
-  const storedVideo = useGetVideo(id);
+  const video = useGetVideo(id);
   const { mutate: deleteMutate } = useDeleteVideo('deleted');
   const { mutate: putMutate } = usePutVideo('saved');
 
@@ -16,7 +16,7 @@ export const UpdateVideo = ({ id }: UpdateVideoProps) => {
 
   return (
     <EditVideoForm
-      initialVideoState={storedVideo}
+      initialVideoState={video}
       onSave={async (video) => putMutate(video, { onSuccess })}
       onDelete={async () => deleteMutate(id, { onSuccess })}
     />

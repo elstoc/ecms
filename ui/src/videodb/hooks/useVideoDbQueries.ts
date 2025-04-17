@@ -14,6 +14,8 @@ import {
 
 import { useVideoDb } from './useVideoDb';
 
+export const EMPTY_VIDEO = -99;
+
 export const useLookup = (path: string, lookupTable: string) => {
   return useCustomQuery({
     queryKey: ['videoDb', 'lookup', path, lookupTable],
@@ -70,7 +72,19 @@ export const useGetVideo = (id: number) => {
     state: { apiPath },
   } = useVideoDb();
 
-  return useCustomQuery({ queryKey: [], queryFn: () => getVideoDbVideo(apiPath, id), gcTime: 0 });
+  const queryFn = async () => {
+    if (id === EMPTY_VIDEO) {
+      return {
+        id: 0,
+        title: '',
+        category: '',
+        watched: '',
+      };
+    }
+    return getVideoDbVideo(apiPath, id);
+  };
+
+  return useCustomQuery({ queryKey: [], queryFn, gcTime: 0 });
 };
 
 export const usePostVideo = (successMessage: string) => {
