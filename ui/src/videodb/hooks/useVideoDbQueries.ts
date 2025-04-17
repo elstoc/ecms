@@ -89,7 +89,7 @@ export const useGetVideo = (id: number) => {
     return getVideoDbVideo(apiPath, id);
   };
 
-  return useCustomQuery({ queryKey: [id], queryFn, gcTime: 0 });
+  return useCustomQuery({ queryKey: ['videodb', 'video', id], queryFn, gcTime: 0 });
 };
 
 export const usePostVideo = (successMessage: string) => {
@@ -126,6 +126,7 @@ export const usePutVideo = (successMessage: string) => {
     invalidateKeys: [
       ['videoDb', 'videos'],
       ['videoDb', 'tags'],
+      ['videoDb', 'video'],
     ],
     successMessage,
   });

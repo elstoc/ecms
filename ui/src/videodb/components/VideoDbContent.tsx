@@ -13,9 +13,12 @@ import { VideoToolbox } from './VideoToolbox';
 import './VideoDbContent.scss';
 
 export const VideoDbContent = () => {
-  const { mode } = useParams();
+  const { mode, id } = useParams();
 
-  if (mode && mode !== 'add' && mode !== 'update') {
+  if (
+    (mode && !['add', 'update'].includes(mode)) ||
+    (mode === 'update' && !Number.isInteger(parseInt(id ?? '')))
+  ) {
     return <NotFoundPage />;
   }
 
