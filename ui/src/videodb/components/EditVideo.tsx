@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 
 import {
-  EMPTY_VIDEO,
+  EMPTY_VIDEO_ID,
   useDeleteVideo,
   useGetVideo,
   usePostVideo,
@@ -19,7 +19,7 @@ export const EditVideo = () => {
   const navigate = useNavigate();
 
   const { mode, id: idParam } = useParams();
-  const id = mode === 'update' ? parseInt(idParam ?? '') : EMPTY_VIDEO;
+  const id = mode === 'update' ? parseInt(idParam ?? '') : EMPTY_VIDEO_ID;
 
   const video = useGetVideo(id);
 

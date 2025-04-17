@@ -14,7 +14,7 @@ import {
 
 import { useVideoDb } from './useVideoDb';
 
-export const EMPTY_VIDEO = -99;
+export const EMPTY_VIDEO_ID = -99;
 
 const useApiPath = () => {
   const {
@@ -82,7 +82,7 @@ export const useGetVideo = (id: number) => {
   const apiPath = useApiPath();
 
   const queryFn = async () => {
-    if (id === EMPTY_VIDEO) {
+    if (id === EMPTY_VIDEO_ID) {
       return {
         title: '',
         category: '',
