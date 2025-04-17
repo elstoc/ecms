@@ -8,7 +8,6 @@ import { VideoWithId } from '@/contracts/videodb';
 import { Flag } from '@/shared/components/forms';
 import { Icon } from '@/shared/components/icon';
 
-import { useVideoDb } from '../hooks/useVideoDb';
 import { useLookupValue, usePatchVideo } from '../hooks/useVideoDbQueries';
 
 import { WatchedIcon } from './WatchedIcon';
@@ -21,24 +20,13 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
     const [searchParams] = useSearchParams();
     const userIsAdmin = useUserIsAdmin();
     const [viewExpanded, setViewExpanded] = useState(false);
-    const {
-      state: { apiPath },
-    } = useVideoDb();
-    const { mutate, isPending } = usePatchVideo(apiPath, video.id, 'flag updated');
+    const { mutate, isPending } = usePatchVideo(video.id, 'flag updated');
 
-    const videoCategory = useLookupValue(apiPath, 'categories', video.category);
-    const primaryMediaType = useLookupValue(apiPath, 'media_types', video.primary_media_type);
-    const otherMediaType = useLookupValue(apiPath, 'media_types', video.other_media_type);
-    const primaryMediaLocation = useLookupValue(
-      apiPath,
-      'media_locations',
-      video.primary_media_location,
-    );
-    const otherMediaLocation = useLookupValue(
-      apiPath,
-      'media_locations',
-      video.other_media_location,
-    );
+    const videoCategory = useLookupValue('categories', video.category);
+    const primaryMediaType = useLookupValue('media_types', video.primary_media_type);
+    const otherMediaType = useLookupValue('media_types', video.other_media_type);
+    const primaryMediaLocation = useLookupValue('media_locations', video.primary_media_location);
+    const otherMediaLocation = useLookupValue('media_locations', video.other_media_location);
 
     let lengthText = '';
     if (video.num_episodes && video.length_mins) {

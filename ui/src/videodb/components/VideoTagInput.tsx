@@ -1,6 +1,5 @@
 import { MultiTagInput } from '@/shared/components/forms';
 
-import { useVideoDb } from '../hooks/useVideoDb';
 import { useGetTags } from '../hooks/useVideoDbQueries';
 
 type VideoTagInputProps = {
@@ -18,10 +17,7 @@ export const VideoTagInput = ({
   className,
   allowCreation = true,
 }: VideoTagInputProps) => {
-  const {
-    state: { apiPath },
-  } = useVideoDb();
-  const tagLookup = useGetTags(apiPath);
+  const tagLookup = useGetTags();
 
   return (
     <MultiTagInput

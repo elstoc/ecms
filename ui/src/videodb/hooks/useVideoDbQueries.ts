@@ -23,24 +23,28 @@ const useApiPath = () => {
   return apiPath;
 };
 
-export const useLookup = (path: string, lookupTable: string) => {
+export const useLookup = (lookupTable: string) => {
+  const apiPath = useApiPath();
+
   return useCustomQuery({
-    queryKey: ['videoDb', 'lookup', path, lookupTable],
-    queryFn: () => getVideoDbLookup(path, lookupTable),
+    queryKey: ['videoDb', 'lookup', apiPath, lookupTable],
+    queryFn: () => getVideoDbLookup(apiPath, lookupTable),
     staleTime: 60 * 60 * 1000,
     refetchInterval: 60 * 60 * 1000,
   });
 };
 
-export const useLookupValue = (path: string, lookupTable: string, value?: string) => {
-  const lookup = useLookup(path, lookupTable);
+export const useLookupValue = (lookupTable: string, value?: string) => {
+  const lookup = useLookup(lookupTable);
   return lookup[value ?? ''];
 };
 
-export const useGetTags = (path: string) => {
+export const useGetTags = () => {
+  const apiPath = useApiPath();
+
   return useCustomQuery({
-    queryKey: ['videoDb', 'tags', path],
-    queryFn: () => getVideoDbTags(path),
+    queryKey: ['videoDb', 'tags', apiPath],
+    queryFn: () => getVideoDbTags(apiPath),
   });
 };
 
@@ -132,9 +136,11 @@ export const usePutVideo = (successMessage: string) => {
   });
 };
 
-export const usePatchVideo = (path: string, id: number, successMessage: string) => {
+export const usePatchVideo = (id: number, successMessage: string) => {
+  const apiPath = useApiPath();
+
   return useMutationWithToast<VideoUpdate>({
-    mutationFn: (videoUpdate) => patchVideoDbVideo(path, videoUpdate),
+    mutationFn: (videoUpdate) => patchVideoDbVideo(apiPath, videoUpdate),
     invalidateKeys: [['videoDb', 'videos']],
     successMessage,
   });

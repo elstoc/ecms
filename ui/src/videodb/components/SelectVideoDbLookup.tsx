@@ -1,6 +1,5 @@
 import { SelectDescribedCode } from '@/shared/components/forms';
 
-import { useVideoDb } from '../hooks/useVideoDb';
 import { useLookup } from '../hooks/useVideoDbQueries';
 
 type SelectVideoDbLookupProps = {
@@ -27,10 +26,8 @@ export const SelectVideoDbLookup = (props: SelectVideoDbLookupProps) => {
     filterable,
     className,
   } = props;
-  const {
-    state: { apiPath },
-  } = useVideoDb();
-  const lookupValues = useLookup(apiPath, lookupTable);
+
+  const lookupValues = useLookup(lookupTable);
 
   return (
     <SelectDescribedCode
