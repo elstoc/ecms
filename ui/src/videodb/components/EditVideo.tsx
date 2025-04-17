@@ -18,14 +18,14 @@ export const EditVideo = () => {
   const userIsAdmin = useUserIsAdmin();
   const navigate = useNavigate();
 
+  const { mutate: deleteMutate } = useDeleteVideo('deleted');
+  const { mutate: putMutate } = usePutVideo('saved');
+  const { mutate: postMutate } = usePostVideo('saved');
+
   const { mode, id: idParam } = useParams();
   const id = mode === 'update' ? parseInt(idParam ?? '') : EMPTY_VIDEO_ID;
 
   const video = useGetVideo(id);
-
-  const { mutate: deleteMutate } = useDeleteVideo('deleted');
-  const { mutate: putMutate } = usePutVideo('saved');
-  const { mutate: postMutate } = usePostVideo('saved');
 
   if (!userIsAdmin) {
     return;
