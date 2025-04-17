@@ -15,11 +15,12 @@ import {
 import { EditVideoForm } from './EditVideoForm';
 
 export const EditVideo = () => {
-  const { mode, id: idParam } = useParams();
   const userIsAdmin = useUserIsAdmin();
   const navigate = useNavigate();
 
+  const { mode, id: idParam } = useParams();
   const id = mode === 'update' ? parseInt(idParam ?? '') : EMPTY_VIDEO;
+
   const video = useGetVideo(id);
 
   const { mutate: deleteMutate } = useDeleteVideo('deleted');
