@@ -16,6 +16,13 @@ import { useVideoDb } from './useVideoDb';
 
 export const EMPTY_VIDEO = -99;
 
+const useApiPath = () => {
+  const {
+    state: { apiPath },
+  } = useVideoDb();
+  return apiPath;
+};
+
 export const useLookup = (path: string, lookupTable: string) => {
   return useCustomQuery({
     queryKey: ['videoDb', 'lookup', path, lookupTable],
@@ -68,9 +75,7 @@ export const useVideos = () => {
 };
 
 export const useGetVideo = (id: number) => {
-  const {
-    state: { apiPath },
-  } = useVideoDb();
+  const apiPath = useApiPath();
 
   const queryFn = async () => {
     if (id === EMPTY_VIDEO) {
@@ -84,13 +89,11 @@ export const useGetVideo = (id: number) => {
     return getVideoDbVideo(apiPath, id);
   };
 
-  return useCustomQuery({ queryKey: [], queryFn, gcTime: 0 });
+  return useCustomQuery({ queryKey: [id], queryFn, gcTime: 0 });
 };
 
 export const usePostVideo = (successMessage: string) => {
-  const {
-    state: { apiPath },
-  } = useVideoDb();
+  const apiPath = useApiPath();
 
   return useMutationWithToast<Video>({
     mutationFn: (video) => postVideoDbVideo(apiPath, video),
@@ -103,9 +106,7 @@ export const usePostVideo = (successMessage: string) => {
 };
 
 export const useDeleteVideo = (successMessage: string) => {
-  const {
-    state: { apiPath },
-  } = useVideoDb();
+  const apiPath = useApiPath();
 
   return useMutationWithToast<number>({
     mutationFn: (id: number) => deleteVideoDbVideo(apiPath, id),
@@ -118,9 +119,7 @@ export const useDeleteVideo = (successMessage: string) => {
 };
 
 export const usePutVideo = (successMessage: string) => {
-  const {
-    state: { apiPath },
-  } = useVideoDb();
+  const apiPath = useApiPath();
 
   return useMutationWithToast<VideoWithId>({
     mutationFn: (video) => putVideoDbVideo(apiPath, video),
