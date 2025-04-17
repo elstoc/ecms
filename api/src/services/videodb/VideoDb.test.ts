@@ -828,7 +828,7 @@ describe('VideoDb', () => {
       mockGet.mockResolvedValueOnce({ video_exists: 1 }).mockResolvedValue({ video: 'video' });
       mockGetAll.mockResolvedValue([{ tag: 'tag1' }, { tag: 'tag2' }]);
 
-      const expectedVideoSql = `SELECT id, title, category, director, num_episodes, length_mins, watched, priority_flag, progress,
+      const expectedVideoSql = `SELECT title, category, director, num_episodes, length_mins, watched, priority_flag, progress,
                               imdb_id, image_url, year, actors, plot, primary_media_type, primary_media_location, primary_media_watched, other_media_type, other_media_location, media_notes
                               FROM videos
                               WHERE id = 12`;

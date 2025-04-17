@@ -228,12 +228,12 @@ export class VideoDb {
     await this.database?.exec(deleteSql);
   }
 
-  public async getVideo(id: number): Promise<VideoWithId> {
+  public async getVideo(id: number): Promise<Video> {
     await this.throwIfNoVideo(id);
-    const sql = `SELECT id, ${videoFields.join(', ')}
+    const sql = `SELECT ${videoFields.join(', ')}
                      FROM   videos
                      WHERE  id = ${id}`;
-    const video = await this.database?.get<VideoWithId>(sql);
+    const video = await this.database?.get<Video>(sql);
     if (!video) {
       throw new Error(`Unexpected error getting video ${id}`);
     }
