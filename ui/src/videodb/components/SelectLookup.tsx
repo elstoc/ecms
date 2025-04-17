@@ -7,7 +7,7 @@ type SelectLookupProps = {
   allowUndefinedCodeSelection?: boolean;
   valueForUndefinedCode?: string;
   selectedCode?: string;
-  onSelectionChange?: (selectedKey?: string) => void;
+  onChange?: (selectedKey?: string) => void;
   label: string;
   inline?: boolean;
   filterable?: boolean;

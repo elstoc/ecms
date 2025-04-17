@@ -37,14 +37,14 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           className='watched-status'
           selectedCode={video.watched}
           lookupTable='watched_status'
-          onSelectionChange={(value) => dispatch({ key: 'watched', value: value || '' })}
+          onChange={(value) => dispatch({ key: 'watched', value: value || '' })}
         />
         <SelectLookup
           label='Category'
           className='category'
           lookupTable='categories'
           selectedCode={video.category}
-          onSelectionChange={(value) => dispatch({ key: 'category', value: value || '' })}
+          onChange={(value) => dispatch({ key: 'category', value: value || '' })}
         />
       </ControlGroup>
       <ControlGroup className='second-group'>
@@ -69,7 +69,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='media_types'
             allowUndefinedCodeSelection={true}
             selectedCode={video.primary_media_type ?? undefined}
-            onSelectionChange={(value) => dispatch({ key: 'primary_media_type', value })}
+            onChange={(value) => dispatch({ key: 'primary_media_type', value })}
           />
           <SelectLookup
             label='Location'
@@ -77,7 +77,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='media_locations'
             allowUndefinedCodeSelection={true}
             selectedCode={video.primary_media_location ?? undefined}
-            onSelectionChange={(value) => dispatch({ key: 'primary_media_location', value })}
+            onChange={(value) => dispatch({ key: 'primary_media_location', value })}
           />
           <SelectLookup
             label='Watched'
@@ -85,7 +85,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='watched_status'
             allowUndefinedCodeSelection={true}
             selectedCode={video.primary_media_watched ?? undefined}
-            onSelectionChange={(value) => dispatch({ key: 'primary_media_watched', value })}
+            onChange={(value) => dispatch({ key: 'primary_media_watched', value })}
           />
         </ControlGroup>
         <ControlGroup>
@@ -95,7 +95,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='media_types'
             allowUndefinedCodeSelection={true}
             selectedCode={video.other_media_type ?? undefined}
-            onSelectionChange={(value) => dispatch({ key: 'other_media_type', value })}
+            onChange={(value) => dispatch({ key: 'other_media_type', value })}
           />
           <SelectLookup
             label=''
@@ -103,7 +103,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='media_locations'
             allowUndefinedCodeSelection={true}
             selectedCode={video.other_media_location ?? undefined}
-            onSelectionChange={(value) => dispatch({ key: 'other_media_location', value })}
+            onChange={(value) => dispatch({ key: 'other_media_location', value })}
           />
         </ControlGroup>
         <Input

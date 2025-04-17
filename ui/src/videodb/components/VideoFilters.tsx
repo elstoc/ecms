@@ -39,7 +39,7 @@ export const VideoFilters = () => {
         valueForUndefinedCode='All'
         inline={true}
         selectedCode={uiFilters.categories}
-        onSelectionChange={(value) => updateUiFilter({ key: 'categories', value })}
+        onChange={(value) => updateUiFilter({ key: 'categories', value })}
         filterable={false}
       />
       <SegmentedControlInput
