@@ -15,31 +15,8 @@ type SelectLookupProps = {
 };
 
 export const SelectLookup = (props: SelectLookupProps) => {
-  const {
-    lookupTable,
-    allowUndefinedCodeSelection,
-    valueForUndefinedCode,
-    selectedCode,
-    onSelectionChange,
-    label,
-    inline,
-    filterable,
-    className,
-  } = props;
-
+  const { lookupTable, ...passProps } = props;
   const lookupValues = useLookup(lookupTable);
 
-  return (
-    <SelectDescribedCode
-      label={label}
-      allowUndefinedCodeSelection={allowUndefinedCodeSelection}
-      valueForUndefinedCode={valueForUndefinedCode}
-      allItems={lookupValues}
-      onChange={onSelectionChange}
-      selectedCode={selectedCode}
-      className={className}
-      inline={inline}
-      filterable={filterable}
-    />
-  );
+  return <SelectDescribedCode allItems={lookupValues} {...passProps} />;
 };
