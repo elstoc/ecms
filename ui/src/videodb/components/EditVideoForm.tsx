@@ -14,7 +14,7 @@ import './EditVideoForm.scss';
 type EditVideoFormProps = {
   initialVideoState: VideoWithId;
   onSave?: (video: VideoWithId) => Promise<void>;
-  onDelete?: (id: number) => Promise<void>;
+  onDelete?: () => Promise<void>;
 };
 
 export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideoFormProps) => {
@@ -26,7 +26,7 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
   }, [onSave, video]);
 
   const deleteVideo = useCallback(async () => {
-    onDelete?.(video.id);
+    onDelete?.();
   }, [onDelete, video]);
 
   return (
