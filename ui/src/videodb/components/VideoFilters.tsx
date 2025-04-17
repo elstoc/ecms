@@ -4,7 +4,7 @@ import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/com
 
 import { useVideoDb } from '../hooks/useVideoDb';
 
-import { SelectVideoDbLookup } from './SelectVideoDbLookup';
+import { SelectLookup } from './SelectLookup';
 import { VideoTagInput } from './VideoTagInput';
 
 import './VideoFilters.scss';
@@ -31,7 +31,7 @@ export const VideoFilters = () => {
   return (
     <div className='video-filters'>
       <div className='filter-title'>Videos</div>
-      <SelectVideoDbLookup
+      <SelectLookup
         label='Category'
         className='category'
         lookupTable='categories'

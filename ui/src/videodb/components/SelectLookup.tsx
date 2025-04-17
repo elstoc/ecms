@@ -2,7 +2,7 @@ import { SelectDescribedCode } from '@/shared/components/forms';
 
 import { useLookup } from '../hooks/useVideoDbQueries';
 
-type SelectVideoDbLookupProps = {
+type SelectLookupProps = {
   lookupTable: string;
   allowUndefinedCodeSelection?: boolean;
   valueForUndefinedCode?: string;
@@ -14,7 +14,7 @@ type SelectVideoDbLookupProps = {
   className?: string;
 };
 
-export const SelectVideoDbLookup = (props: SelectVideoDbLookupProps) => {
+export const SelectLookup = (props: SelectLookupProps) => {
   const {
     lookupTable,
     allowUndefinedCodeSelection,
