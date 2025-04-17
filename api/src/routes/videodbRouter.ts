@@ -28,7 +28,7 @@ export const createVideoDbRouter = (site: Site): Router => {
         const id = await videoDb.addVideo(req.body.video, req.user);
         res.json({ id });
       } else if (fn === 'putVideo') {
-        await videoDb.updateVideo(req.body.video, req.user);
+        await videoDb.updateVideo(req.body.id, req.body.video, req.user);
         res.sendStatus(200);
       } else if (fn === 'patchVideo') {
         await videoDb.patchVideo(req.body, req.user);

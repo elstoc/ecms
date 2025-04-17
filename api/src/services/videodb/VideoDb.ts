@@ -182,21 +182,21 @@ export class VideoDb {
     return result.id;
   }
 
-  public async updateVideo(video: VideoWithId, user?: User): Promise<void> {
+  public async updateVideo(id: number, video: Video, user?: User): Promise<void> {
     this.throwIfNotAdmin(user);
-    await this.throwIfNoVideo(video.id);
+    await this.throwIfNoVideo(id);
 
     const setList = videoFields.map((field) => `${field} = $${field}`);
     const sql = `UPDATE videos SET ${setList.join(', ')} WHERE id = $id`;
 
-    const params: { [key: string]: unknown } = {};
-    videoWithIdFields.forEach((key) => {
+    const params: { [key: string]: unknown } = { $id: id };
+    videoFields.forEach((key) => {
       params[`$${key}`] = video[key as keyof Video] ?? null;
     });
 
     await this.database?.runWithParams(sql, params);
 
-    await this.createOrReplaceVideoTags(video.id, video.tags);
+    await this.createOrReplaceVideoTags(id, video.tags);
   }
 
   public async patchVideo(update: VideoUpdate, user?: User): Promise<void> {

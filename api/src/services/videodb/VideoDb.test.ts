@@ -553,7 +553,6 @@ describe('VideoDb', () => {
 
   describe('updateVideo', () => {
     const video = {
-      id: 1,
       title: 'some-title',
       category: 'some-category',
       director: 'some-director',
@@ -592,7 +591,7 @@ describe('VideoDb', () => {
       mockGet.mockResolvedValue({ ver: 4 });
       await videoDb.initialise();
 
-      await expect(videoDb.updateVideo(video, regularUser)).rejects.toThrow(
+      await expect(videoDb.updateVideo(1, video, regularUser)).rejects.toThrow(
         new NotPermittedError(),
       );
     });
@@ -609,7 +608,7 @@ describe('VideoDb', () => {
       mockGet.mockResolvedValueOnce({ ver: 4 }).mockResolvedValue({ video_exists: 1 });
       await videoDb.initialise();
 
-      await expect(videoDb.updateVideo(video, adminUser)).resolves.toBeUndefined();
+      await expect(videoDb.updateVideo(1, video, adminUser)).resolves.toBeUndefined();
     });
 
     it('does not throw error if user is not admin and auth disabled', async () => {
@@ -624,13 +623,13 @@ describe('VideoDb', () => {
       mockGet.mockResolvedValueOnce({ ver: 4 }).mockResolvedValue({ video_exists: 1 });
       await videoDb.initialise();
 
-      await expect(videoDb.updateVideo(video, regularUser)).resolves.toBeUndefined();
+      await expect(videoDb.updateVideo(1, video, regularUser)).resolves.toBeUndefined();
     });
 
     it('throws error if video id does not exist', async () => {
       mockGet.mockResolvedValue({ video_exists: 0 });
 
-      await expect(videoDb.updateVideo(video)).rejects.toThrow(
+      await expect(videoDb.updateVideo(1, video)).rejects.toThrow(
         new NotFoundError('video id 1 does not exist'),
       );
       expect(mockGet).toHaveBeenCalledWith('SELECT COUNT() AS video_exists FROM videos WHERE id=1');
@@ -683,7 +682,7 @@ describe('VideoDb', () => {
         $media_notes: null,
       };
 
-      await videoDb.updateVideo(video);
+      await videoDb.updateVideo(1, video);
 
       expect(mockRunWithParams).toHaveBeenCalled();
       const [sql, videoParameters] = mockRunWithParams.mock.calls[0];
@@ -745,7 +744,7 @@ describe('VideoDb', () => {
         $media_notes: null,
       };
 
-      await videoDb.updateVideo(newVideo);
+      await videoDb.updateVideo(1, newVideo);
 
       expect(mockRunWithParams).toHaveBeenCalled();
       const [sql, videoParameters] = mockRunWithParams.mock.calls[0];
@@ -762,7 +761,7 @@ describe('VideoDb', () => {
       await videoDb.initialise();
 
       const expectedTagDeleteSql = 'DELETE FROM video_tags WHERE video_id = 1';
-      await videoDb.updateVideo(video);
+      await videoDb.updateVideo(1, video);
 
       expect(mockExec).toHaveBeenCalledWith(expectedTagDeleteSql);
       expect(mockRunWithParams).toHaveBeenCalledTimes(1); //for the video update
@@ -777,7 +776,6 @@ describe('VideoDb', () => {
       await videoDb.initialise();
 
       const videoWithMedia = {
-        id: 1,
         title: 'some-title',
         category: 'some-category',
         director: 'some-director',
@@ -793,7 +791,7 @@ describe('VideoDb', () => {
 
       const expectedTagDeleteSql = 'DELETE FROM video_tags WHERE video_id = 1';
       const expectedTagInsertSql = 'INSERT INTO video_tags (video_id, tag) VALUES ($id, $tag)';
-      await videoDb.updateVideo(videoWithMedia as any);
+      await videoDb.updateVideo(1, videoWithMedia as any);
 
       expect(mockExec).toHaveBeenCalledWith(expectedTagDeleteSql);
       expect(mockRunWithParams).toHaveBeenCalledTimes(3);
