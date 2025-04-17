@@ -15,12 +15,12 @@ import {
 import { EditVideoForm } from './EditVideoForm';
 
 export const EditVideo = () => {
-  const { mode, id } = useParams();
+  const { mode, id: idParam } = useParams();
   const userIsAdmin = useUserIsAdmin();
   const navigate = useNavigate();
 
-  const videoId = mode === 'update' ? parseInt(id ?? '') : EMPTY_VIDEO;
-  const video = useGetVideo(videoId);
+  const id = mode === 'update' ? parseInt(idParam ?? '') : EMPTY_VIDEO;
+  const video = useGetVideo(id);
 
   const { mutate: deleteMutate } = useDeleteVideo('deleted');
   const { mutate: putMutate } = usePutVideo('saved');
@@ -53,10 +53,8 @@ export const EditVideo = () => {
             <EditVideoForm
               key='update'
               initialVideoState={video}
-              onSave={async (updatedVideo) =>
-                putMutate({ id: videoId, ...updatedVideo }, { onSuccess })
-              }
-              onDelete={async () => deleteMutate(videoId, { onSuccess })}
+              onSave={async (updatedVideo) => putMutate({ id, ...updatedVideo }, { onSuccess })}
+              onDelete={async () => deleteMutate(id, { onSuccess })}
             />
           )}
         </Suspense>
