@@ -5,7 +5,7 @@ import { NotFoundPage } from '@/shared/components/NotFoundPage';
 import { ContentWithSidebar } from '@/shared/components/layout';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
-import { EditVideoDialog } from './EditVideoDialog';
+import { EditVideo } from './EditVideo';
 import { VideoFilters } from './VideoFilters';
 import { VideoList } from './VideoList';
 import { VideoToolbox } from './VideoToolbox';
@@ -40,7 +40,7 @@ export const VideoDbContent = () => {
         <VideoToolbox />
       </InjectComponentTools>
       <ContentWithSidebar content={content} sidebar={sidebar} />
-      <EditVideoDialog />
+      <EditVideo />
     </div>
   );
 };

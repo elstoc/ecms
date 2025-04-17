@@ -15,7 +15,7 @@ import {
 
 import { EditVideoForm } from './EditVideoForm';
 
-export const EditVideoDialog = () => {
+export const EditVideo = () => {
   const { mode, id } = useParams();
   const userIsAdmin = useUserIsAdmin();
   const navigate = useNavigate();
