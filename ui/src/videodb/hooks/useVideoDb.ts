@@ -33,14 +33,16 @@ type StateAction =
 const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (state, action) => {
   if (action.type === 'setPages') {
     return { ...state, pages: action.payload };
-  } else if (action.type === 'setSortOrder') {
+  }
+  if (action.type === 'setSortOrder') {
     return {
       ...state,
       pages: action.payload === 'shuffle' || action.payload !== state.sortOrder ? 1 : state.pages,
       sortOrder: action.payload,
       shuffleSeed: action.payload === 'shuffle' ? getRandomSeed() : undefined,
     };
-  } else if (action.type === 'setUiFilter') {
+  }
+  if (action.type === 'setUiFilter') {
     const { key, value } = action.payload;
     return {
       ...state,
@@ -49,21 +51,22 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
         [key]: value,
       },
     };
-  } else if (action.type === 'resetFilters') {
+  }
+  if (action.type === 'resetFilters') {
     return {
       ...state,
       uiFilters: {},
       apiFilters: {},
       pages: 1,
     };
-  } else if (action.type === 'syncFilters') {
+  }
+  if (action.type === 'syncFilters') {
     return {
       ...state,
       apiFilters: state.uiFilters,
       pages: 1,
     };
   }
-
   return state;
 };
 
