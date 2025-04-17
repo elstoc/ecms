@@ -27,13 +27,8 @@ export const VideoToolbox = () => {
       <Toolbox>
         {userIsAdmin && (
           <>
-            <Icon name='add' disabled={!userIsAdmin} onClick={() => navigate('./add')} />
-            <Icon
-              className='download-icon'
-              name='download'
-              disabled={!userIsAdmin}
-              onClick={downloadCSV}
-            />
+            <Icon name='add' onClick={() => navigate('./add')} />
+            <Icon className='download-icon' name='download' onClick={downloadCSV} />
           </>
         )}
         <Icon
