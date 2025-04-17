@@ -19,7 +19,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
     const navigate = useNavigate();
     const userIsAdmin = useUserIsAdmin();
     const [viewExpanded, setViewExpanded] = useState(false);
-    const { mutate, isPending } = usePatchVideo(video.id, 'flag updated');
+    const { mutate, isPending } = usePatchVideo('flag updated');
 
     const videoCategory = useLookupValue('categories', video.category);
     const primaryMediaType = useLookupValue('media_types', video.primary_media_type);

@@ -135,7 +135,7 @@ export const usePutVideo = (successMessage: string) => {
   });
 };
 
-export const usePatchVideo = (id: number, successMessage: string) => {
+export const usePatchVideo = (successMessage: string) => {
   const apiPath = useApiPath();
 
   return useMutationWithToast<VideoUpdate>({
