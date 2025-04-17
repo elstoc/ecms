@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import { Card, Collapse, Tag } from '@blueprintjs/core';
 import { ReactElement, forwardRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { VideoWithId } from '@/contracts/videodb';
@@ -17,7 +17,6 @@ import './VideoListItem.scss';
 export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
   ({ video }, ref): ReactElement => {
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
     const userIsAdmin = useUserIsAdmin();
     const [viewExpanded, setViewExpanded] = useState(false);
     const { mutate, isPending } = usePatchVideo(video.id, 'flag updated');
@@ -38,7 +37,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
     }
 
     const preventCardClick = (e: React.MouseEvent) => e.stopPropagation();
-    const openVideo = () => navigate(`./update/${video.id}?${searchParams.toString()}`);
+    const openVideo = () => navigate(`./update/${video.id}`);
     const togglePriorityFlag = (checked: boolean) =>
       mutate({ id: video.id, priority_flag: checked ? 1 : 0 });
 

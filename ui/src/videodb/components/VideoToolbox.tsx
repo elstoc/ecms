@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { Icon } from '@/shared/components/icon';
@@ -12,7 +12,6 @@ import './VideoToolbox.scss';
 
 export const VideoToolbox = () => {
   const userIsAdmin = useUserIsAdmin();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const {
     state: { apiPath, sortOrder },
@@ -28,11 +27,7 @@ export const VideoToolbox = () => {
       <Toolbox>
         {userIsAdmin && (
           <>
-            <Icon
-              name='add'
-              disabled={!userIsAdmin}
-              onClick={() => navigate(`./add?${searchParams.toString()}`)}
-            />
+            <Icon name='add' disabled={!userIsAdmin} onClick={() => navigate('./add')} />
             <Icon
               className='download-icon'
               name='download'
