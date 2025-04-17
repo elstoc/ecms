@@ -1,7 +1,7 @@
 import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
 import { useCallback, useState } from 'react';
 
-import { VideoWithId } from '@/contracts/videodb';
+import { Video, VideoWithId } from '@/contracts/videodb';
 import { Input, IntegerInput, Switch } from '@/shared/components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
@@ -13,7 +13,7 @@ import './EditVideoForm.scss';
 
 type EditVideoFormProps = {
   initialVideoState: VideoWithId;
-  onSave?: (video: VideoWithId) => Promise<void>;
+  onSave?: (video: Video) => Promise<void>;
   onDelete?: () => Promise<void>;
 };
 
@@ -22,7 +22,9 @@ export const EditVideoForm = ({ initialVideoState, onSave, onDelete }: EditVideo
   const [collapseIsOpen, setCollapseIsOpen] = useState(false);
 
   const saveVideo = useCallback(async () => {
-    onSave?.(video);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...videoWithoutId } = video;
+    onSave?.(videoWithoutId);
   }, [onSave, video]);
 
   const deleteVideo = useCallback(async () => {
