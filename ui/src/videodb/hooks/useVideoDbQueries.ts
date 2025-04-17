@@ -84,7 +84,6 @@ export const useGetVideo = (id: number) => {
   const queryFn = async () => {
     if (id === EMPTY_VIDEO) {
       return {
-        id: 0,
         title: '',
         category: '',
         watched: '',

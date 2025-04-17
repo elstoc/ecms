@@ -12,9 +12,9 @@ export const getVideoDbVideos = async (
   return data;
 };
 
-export const getVideoDbVideo = async (path: string, id: number): Promise<VideoWithId> => {
+export const getVideoDbVideo = async (path: string, id: number): Promise<Video> => {
   const url = 'videodb/video';
-  const { data } = await axiosSecureClient.get<VideoWithId>(url, { params: { path, id } });
+  const { data } = await axiosSecureClient.get<Video>(url, { params: { path, id } });
   return data;
 };
 
