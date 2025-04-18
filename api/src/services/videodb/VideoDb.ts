@@ -67,6 +67,29 @@ export type VideoFilters = {
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
+const videoNullMapper = (video: Video) => ({
+  title: video.title,
+  category: video.category,
+  watched: video.watched,
+  director: video.director ?? undefined,
+  num_episodes: video.num_episodes ?? undefined,
+  length_mins: video.length_mins ?? undefined,
+  priority_flag: video.priority_flag ?? undefined,
+  progress: video.progress ?? undefined,
+  year: video.year ?? undefined,
+  imdb_id: video.imdb_id ?? undefined,
+  image_url: video.image_url ?? undefined,
+  actors: video.actors ?? undefined,
+  plot: video.plot ?? undefined,
+  tags: video.tags ?? undefined,
+  primary_media_type: video.primary_media_type ?? undefined,
+  primary_media_location: video.primary_media_location ?? undefined,
+  primary_media_watched: video.primary_media_watched ?? undefined,
+  other_media_type: video.other_media_type ?? undefined,
+  other_media_location: video.other_media_location ?? undefined,
+  media_notes: video.media_notes ?? undefined,
+});
+
 export class VideoDb {
   private apiPath: string;
   private initialising = false;
@@ -243,7 +266,7 @@ export class VideoDb {
       video.tags = tags;
     }
 
-    return video;
+    return videoNullMapper(video);
   }
 
   public async deleteVideo(id: number, user?: User): Promise<void> {
@@ -393,11 +416,13 @@ export class VideoDb {
     }
 
     videos = videos.map((video) => {
+      const mappedVideo = videoNullMapper(video);
       if (!video.tags) {
-        return video;
+        return { id: video.id, ...mappedVideo };
       }
       return {
-        ...video,
+        id: video.id,
+        ...mappedVideo,
         tags: (video.tags as unknown as string)?.split('|'),
       };
     });

@@ -58,6 +58,10 @@ describe('VideoDb', () => {
     videoDb = new VideoDb(apiPath, config, mockLogger, mockStorage as any);
   });
 
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('initialise', () => {
     it('gets the database with the correct path', async () => {
       mockStorage.contentFileExists.mockReturnValue(false);
@@ -823,7 +827,8 @@ describe('VideoDb', () => {
     });
 
     it('attempts to get video and tags', async () => {
-      mockGet.mockResolvedValueOnce({ video_exists: 1 }).mockResolvedValue({ video: 'video' });
+      const mockVideo = { title: '1', category: '1', watched: 'Y' };
+      mockGet.mockResolvedValueOnce({ video_exists: 1 }).mockResolvedValue(mockVideo);
       mockGetAll.mockResolvedValue([{ tag: 'tag1' }, { tag: 'tag2' }]);
 
       const expectedVideoSql = `SELECT title, category, director, num_episodes, length_mins, watched, priority_flag, progress,
@@ -838,7 +843,7 @@ describe('VideoDb', () => {
       const actualTagSql = mockGetAll.mock.calls[0][0];
       expect(stripWhiteSpace(actualVideoSql)).toBe(stripWhiteSpace(expectedVideoSql));
       expect(stripWhiteSpace(actualTagSql)).toBe(stripWhiteSpace(expectedTagSql));
-      expect(video).toEqual({ video: 'video', tags: ['tag1', 'tag2'] });
+      expect(video).toEqual({ ...mockVideo, tags: ['tag1', 'tag2'] });
     });
   });
 
@@ -925,6 +930,21 @@ describe('VideoDb', () => {
   });
 
   describe('queryVideos', () => {
+    const mockVideo = { title: 'some-title', category: 'some-category', watched: 'Y' };
+    const mockVideoWithId = { id: 1, ...mockVideo };
+    const mockManyVideos = [
+      { id: 1, ...mockVideo },
+      { id: 2, ...mockVideo },
+      { id: 3, ...mockVideo },
+      { id: 4, ...mockVideo },
+      { id: 5, ...mockVideo },
+      { id: 6, ...mockVideo },
+      { id: 7, ...mockVideo },
+      { id: 8, ...mockVideo },
+      { id: 9, ...mockVideo },
+      { id: 10, ...mockVideo },
+    ];
+
     const baseSQL = `SELECT v.id, v.title, v.category, v.director, v.num_episodes, v.length_mins, v.watched, v.priority_flag, v.progress, v.imdb_id, v.image_url, v.year, v.actors, v.plot,
                                 v.primary_media_type, v.primary_media_location, v.primary_media_watched, v.other_media_type, v.other_media_location, v.media_notes,
                                 vt.tags
@@ -948,14 +968,14 @@ describe('VideoDb', () => {
       await videoDb.initialise();
       const expectedSql = baseSQL + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos();
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({});
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql to retrieve all videos when empty filter params object is defined', async () => {
@@ -964,14 +984,14 @@ describe('VideoDb', () => {
       await videoDb.initialise();
       const expectedSql = baseSQL + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({});
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({});
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when maxLength filter param is defined', async () => {
@@ -981,14 +1001,14 @@ describe('VideoDb', () => {
       const expectedSql = baseSQL + ' WHERE (length_mins <= $maxLength)' + baseOrderBy;
       const expectedParams = { $maxLength: 3 };
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ maxLength: 3 });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when categories filter param is defined', async () => {
@@ -999,14 +1019,14 @@ describe('VideoDb', () => {
         baseSQL + ' WHERE (category IN ($category0, $category1, $category2))' + baseOrderBy;
       const expectedParams = { $category0: 'MOV', $category1: 'TV', $category2: 'TVDOC' };
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ categories: ['MOV', 'TV', 'TVDOC'] });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when watched filter param is Y', async () => {
@@ -1015,13 +1035,13 @@ describe('VideoDb', () => {
       await videoDb.initialise();
       const expectedSql = baseSQL + " WHERE (watched IN ('Y', 'P'))" + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ watched: 'Y' });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when watched filter param is N', async () => {
@@ -1030,13 +1050,13 @@ describe('VideoDb', () => {
       await videoDb.initialise();
       const expectedSql = baseSQL + " WHERE (watched IN ('N', 'P'))" + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ watched: 'N' });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when mediaWatched filter param is Y', async () => {
@@ -1045,13 +1065,13 @@ describe('VideoDb', () => {
       await videoDb.initialise();
       const expectedSql = baseSQL + " WHERE (primary_media_watched IN ('Y', 'P'))" + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ mediaWatched: 'Y' });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when mediaWatched filter param is N', async () => {
@@ -1060,13 +1080,13 @@ describe('VideoDb', () => {
       await videoDb.initialise();
       const expectedSql = baseSQL + " WHERE (primary_media_watched IN ('N', 'P'))" + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ mediaWatched: 'N' });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with HD and UHD media types when minResolution is set to HD', async () => {
@@ -1078,13 +1098,13 @@ describe('VideoDb', () => {
         " WHERE (primary_media_type IN ('BD4K', 'DL2160', 'BD', 'DL1080', 'DL720'))" +
         baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ minResolution: 'HD' });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with UHD media types when minResolution is set to UHD', async () => {
@@ -1094,13 +1114,13 @@ describe('VideoDb', () => {
       const expectedSql =
         baseSQL + " WHERE (primary_media_type IN ('BD4K', 'DL2160'))" + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ minResolution: 'UHD' });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when tags filter param is defined', async () => {
@@ -1113,14 +1133,14 @@ describe('VideoDb', () => {
         baseOrderBy;
       const expectedParams = { $tag0: 'tag0', $tag1: 'tag1', $tag2: 'tag2' };
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ tags: ['tag0', 'tag1', 'tag2'] });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when titleContains filter param is defined', async () => {
@@ -1130,14 +1150,14 @@ describe('VideoDb', () => {
       const expectedSql = baseSQL + ' WHERE (LOWER(title) LIKE $titleContains)' + baseOrderBy;
       const expectedParams = { $titleContains: '%sometitle%' };
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ titleContains: 'sOmeTiTle' });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when flaggedOnly param is defined', async () => {
@@ -1146,13 +1166,13 @@ describe('VideoDb', () => {
       await videoDb.initialise();
       const expectedSql = baseSQL + ' WHERE (priority_flag > 0)' + baseOrderBy;
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ flaggedOnly: true });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when videoIds filter param is defined', async () => {
@@ -1163,14 +1183,14 @@ describe('VideoDb', () => {
         baseSQL + ' WHERE (id IN ($videoId0, $videoId1, $videoId2))' + baseOrderBy;
       const expectedParams = { $videoId0: 11, $videoId1: 22, $videoId2: 33 };
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({ videoIds: [11, 22, 33] });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when all filter params are defined', async () => {
@@ -1203,7 +1223,7 @@ describe('VideoDb', () => {
         $videoId2: 33,
       };
 
-      mockGetAllWithParams.mockResolvedValue(['videos']);
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
       const { videos } = await videoDb.queryVideos({
         titleContains: 'title',
         maxLength: 120,
@@ -1220,7 +1240,7 @@ describe('VideoDb', () => {
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
-      expect(videos).toEqual(['videos']);
+      expect(videos).toEqual([mockVideoWithId]);
     });
 
     it.each([
@@ -1237,14 +1257,14 @@ describe('VideoDb', () => {
         const expectedSql = baseSQL + baseOrderBy;
         const expectedParams = {};
 
-        mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        mockGetAllWithParams.mockResolvedValue(mockManyVideos);
         const { videos } = await videoDb.queryVideos({ sortOrder, shuffleSeed }, 4);
 
         expect(mockGetAllWithParams).toHaveBeenCalled();
         const [sql, params] = mockGetAllWithParams.mock.calls[0];
         expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
         expect(params).toEqual(expectedParams);
-        expect(videos).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        expect(videos).toEqual(mockManyVideos);
       },
     );
 
@@ -1255,7 +1275,7 @@ describe('VideoDb', () => {
       const expectedSql = baseSQL + baseOrderBy;
       const expectedParams = {};
 
-      mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5]);
+      mockGetAllWithParams.mockResolvedValue(structuredClone(mockManyVideos));
       const { videos } = await videoDb.queryVideos(
         {
           sortOrder: 'shuffle',
@@ -1268,7 +1288,14 @@ describe('VideoDb', () => {
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
-      expect(videos).toEqual([2, 5, 1, 3, 4]);
+      expect(videos).toEqual([
+        mockManyVideos[8],
+        mockManyVideos[3],
+        mockManyVideos[4],
+        mockManyVideos[2],
+        mockManyVideos[6],
+        mockManyVideos[9],
+      ]);
     });
 
     it.each([
@@ -1284,7 +1311,7 @@ describe('VideoDb', () => {
         mockGet.mockResolvedValueOnce({ ver: 4 });
         await videoDb.initialise();
 
-        mockGetAllWithParams.mockResolvedValue([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        mockGetAllWithParams.mockResolvedValue(mockManyVideos);
         const { videos, totalPages, currentPage } = await videoDb.queryVideos({}, requestedPages);
 
         expect(totalPages).toBe(4);
