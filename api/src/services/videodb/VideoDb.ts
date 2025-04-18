@@ -60,6 +60,7 @@ export type VideoFilters = {
   mediaWatched?: string;
   minResolution?: string;
   flaggedOnly?: boolean;
+  // the following are not in the corresponding UI type
   videoIds?: number[];
   sortOrder?: string;
   shuffleSeed?: number;

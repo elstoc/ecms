@@ -96,7 +96,12 @@ export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
                 )}
                 {video.media_notes && (
                   <div>
-                    <strong>Notes:</strong> {video.media_notes}
+                    <strong>Media notes:</strong> {video.media_notes}
+                  </div>
+                )}
+                {video.progress && (
+                  <div>
+                    <strong>Progress:</strong> {video.progress}
                   </div>
                 )}
               </div>
