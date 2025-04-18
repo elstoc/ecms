@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { Card, Collapse, Tag } from '@blueprintjs/core';
-import { ReactElement, forwardRef, useState } from 'react';
+import { ReactElement, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
@@ -14,11 +14,16 @@ import { WatchedIcon } from './WatchedIcon';
 
 import './VideoListItem.scss';
 
-export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
-  ({ video }, ref): ReactElement => {
+type VideoListItemProps = {
+  video: VideoWithId;
+  expanded: boolean;
+  toggleExpanded: () => void;
+};
+
+export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
+  ({ video, expanded, toggleExpanded }, ref): ReactElement => {
     const navigate = useNavigate();
     const userIsAdmin = useUserIsAdmin();
-    const [viewExpanded, setViewExpanded] = useState(false);
     const { mutate, isPending } = usePatchVideo('flag updated');
 
     const videoCategory = useLookupValue('categories', video.category);
@@ -44,8 +49,8 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
     return (
       <Card
         ref={ref}
-        className={`video-list-item ${viewExpanded ? 'expanded' : ''}`}
-        onClick={() => setViewExpanded((prev) => !prev)}
+        className={`video-list-item ${expanded ? 'expanded' : ''}`}
+        onClick={toggleExpanded}
       >
         <div className='primary-info'>
           <div className='left'>
@@ -68,7 +73,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, { video: VideoWithId }>(
             />
           </div>
         </div>
-        <Collapse isOpen={viewExpanded}>
+        <Collapse isOpen={expanded}>
           <div className='secondary-info'>
             <div className='left'>
               <div className='tags'>

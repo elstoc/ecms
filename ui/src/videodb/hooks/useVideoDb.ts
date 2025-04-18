@@ -21,6 +21,7 @@ type VideoDbState = {
   shuffleSeed?: number;
   uiFilters: Filters;
   apiFilters: Filters;
+  expandedVideoIds: number[];
 };
 
 type StateAction =
@@ -28,7 +29,8 @@ type StateAction =
   | { type: 'resetFilters' }
   | { type: 'syncFilters' }
   | { type: 'setPages'; payload: number }
-  | { type: 'setSortOrder'; payload: 'asc' | 'shuffle' };
+  | { type: 'setSortOrder'; payload: 'asc' | 'shuffle' }
+  | { type: 'toggleVideoExpanded'; payload: number };
 
 const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (state, action) => {
   if (action.type === 'setPages') {
@@ -67,6 +69,18 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
       pages: 1,
     };
   }
+  if (action.type === 'toggleVideoExpanded') {
+    const expandedVideoIds = state.expandedVideoIds;
+    if (expandedVideoIds.includes(action.payload)) {
+      expandedVideoIds.filter((videoId) => videoId !== action.payload);
+    } else {
+      expandedVideoIds.push(action.payload);
+    }
+    return {
+      ...state,
+      expandedVideoIds,
+    };
+  }
   return state;
 };
 
@@ -88,6 +102,7 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
     sortOrder: 'asc',
     uiFilters: {},
     apiFilters: {},
+    expandedVideoIds: [],
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);

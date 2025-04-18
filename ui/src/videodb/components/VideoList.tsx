@@ -11,7 +11,7 @@ import { VideoListItem } from './VideoListItem';
 import './VideoList.scss';
 
 export const VideoList = () => {
-  const { dispatch } = useVideoDb();
+  const { state, dispatch } = useVideoDb();
 
   const { videos, currentPage, totalPages } = useVideos();
   const refLastVideo = useRef<HTMLDivElement>(null);
@@ -31,6 +31,8 @@ export const VideoList = () => {
             key={`${video.id}${lastVideo}`} // forces replacement and therefore unwatching of any previously-watched element
             video={video}
             ref={lastVideo ? refLastVideo : null}
+            expanded={state.expandedVideoIds.includes(video.id)}
+            toggleExpanded={() => dispatch({ type: 'toggleVideoExpanded', payload: video.id })}
           />
         );
       })}
