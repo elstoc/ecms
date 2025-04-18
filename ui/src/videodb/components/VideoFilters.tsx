@@ -23,7 +23,7 @@ const watchedStatusOptions = [
 
 export const VideoFilters = () => {
   const {
-    state: { uiFilters },
+    state: { uiFilters, showOnlyExpandedIds, expandedVideoIds },
     dispatch,
     updateUiFilter,
   } = useVideoDb();
@@ -91,7 +91,18 @@ export const VideoFilters = () => {
         onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
       />
       <div className='filter-action-buttons'>
-        <Button onClick={() => dispatch({ type: 'resetVideoExpanded' })}>Collapse all</Button>
+        <Button
+          disabled={expandedVideoIds.length === 0}
+          onClick={() => dispatch({ type: 'toggleShowOnlyExpanded' })}
+        >
+          {showOnlyExpandedIds ? 'Reapply filters' : 'Show expanded'}
+        </Button>
+        <Button
+          disabled={expandedVideoIds.length === 0}
+          onClick={() => dispatch({ type: 'resetVideoExpanded' })}
+        >
+          Collapse all
+        </Button>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
       </div>
     </div>

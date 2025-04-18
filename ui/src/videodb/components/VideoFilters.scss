@@ -47,11 +47,8 @@
   .filter-action-buttons {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-
-    > * {
-      margin-left: 1em;
-    }
+    justify-content: space-between;
+    margin-top: 2em;
 
     button {
       font-size: 1rem;

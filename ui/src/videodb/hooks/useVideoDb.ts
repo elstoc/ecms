@@ -22,6 +22,7 @@ type VideoDbState = {
   uiFilters: Filters;
   apiFilters: Filters;
   expandedVideoIds: number[];
+  showOnlyExpandedIds: boolean;
 };
 
 type StateAction =
@@ -31,7 +32,8 @@ type StateAction =
   | { type: 'setPages'; payload: number }
   | { type: 'setSortOrder'; payload: 'asc' | 'shuffle' }
   | { type: 'toggleVideoExpanded'; payload: number }
-  | { type: 'resetVideoExpanded' };
+  | { type: 'resetVideoExpanded' }
+  | { type: 'toggleShowOnlyExpanded' };
 
 const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (state, action) => {
   if (action.type === 'setPages') {
@@ -71,21 +73,29 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
     };
   }
   if (action.type === 'toggleVideoExpanded') {
-    const expandedVideoIds = state.expandedVideoIds;
+    let expandedVideoIds = state.expandedVideoIds;
     if (expandedVideoIds.includes(action.payload)) {
-      expandedVideoIds.filter((videoId) => videoId !== action.payload);
+      expandedVideoIds = expandedVideoIds.filter((videoId) => videoId !== action.payload);
     } else {
       expandedVideoIds.push(action.payload);
     }
     return {
       ...state,
       expandedVideoIds,
+      showOnlyExpandedIds: expandedVideoIds.length === 0 ? false : state.showOnlyExpandedIds,
     };
   }
   if (action.type === 'resetVideoExpanded') {
     return {
       ...state,
       expandedVideoIds: [],
+      showOnlyExpandedIds: false,
+    };
+  }
+  if (action.type === 'toggleShowOnlyExpanded') {
+    return {
+      ...state,
+      showOnlyExpandedIds: state.expandedVideoIds.length === 0 ? false : !state.showOnlyExpandedIds,
     };
   }
   return state;
@@ -110,6 +120,7 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
     uiFilters: {},
     apiFilters: {},
     expandedVideoIds: [],
+    showOnlyExpandedIds: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);

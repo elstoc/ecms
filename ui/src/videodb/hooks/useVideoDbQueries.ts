@@ -50,22 +50,33 @@ export const useGetTags = () => {
 
 export const useVideos = () => {
   const {
-    state: { apiPath, apiFilters, sortOrder, shuffleSeed, pages },
+    state: {
+      apiPath,
+      apiFilters,
+      sortOrder,
+      shuffleSeed,
+      pages,
+      showOnlyExpandedIds,
+      expandedVideoIds,
+    },
   } = useVideoDb();
 
-  const params = {
-    ...apiFilters,
-    maxLength: apiFilters.maxLength?.toString(),
-    tags: apiFilters.tags?.join('|'),
-    flaggedOnly: apiFilters.flaggedOnly ? '1' : undefined,
-    pages: pages?.toString(),
-  };
+  const params = showOnlyExpandedIds
+    ? { videoIds: expandedVideoIds.join('|') || undefined }
+    : {
+        ...apiFilters,
+        maxLength: apiFilters.maxLength?.toString(),
+        tags: apiFilters.tags?.join('|'),
+        flaggedOnly: apiFilters.flaggedOnly ? '1' : undefined,
+      };
 
   return useCustomQuery({
     queryKey: [
       'videoDb',
       'videos',
-      `${apiPath}:${JSON.stringify(params)}`,
+      apiPath,
+      JSON.stringify(params),
+      pages?.toString(),
       sortOrder as string,
       shuffleSeed ?? '',
     ],
@@ -74,6 +85,7 @@ export const useVideos = () => {
         ...params,
         sortOrder: sortOrder as string,
         shuffleSeed: shuffleSeed?.toString(),
+        pages: pages?.toString(),
       }),
   });
 };
