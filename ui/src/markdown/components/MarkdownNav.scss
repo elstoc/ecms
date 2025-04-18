@@ -1,8 +1,7 @@
 @import '../../variables.scss';
 
 .markdown-nav {
-  position: sticky;
-  top: 1em;
+  min-height: 100%;
   display: block;
   font-family: $headingFont;
   font-size: 1rem;
