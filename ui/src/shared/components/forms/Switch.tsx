@@ -8,12 +8,24 @@ type SwitchParams = {
   onChange?: (value: boolean) => void;
   inline?: boolean;
   className?: string;
+  disabled?: boolean;
 };
 
-export const Switch = ({ value, onChange, label, inline, className = '' }: SwitchParams) => {
+export const Switch = ({
+  value,
+  onChange,
+  label,
+  inline,
+  className = '',
+  disabled,
+}: SwitchParams) => {
   return (
     <FormGroup label={label} inline={inline} className={`${className} switch-component`}>
-      <BlueprintSwitch checked={value} onChange={(ev) => onChange?.(ev.target.checked)} />
+      <BlueprintSwitch
+        disabled={disabled}
+        checked={value}
+        onChange={(ev) => onChange?.(ev.target.checked)}
+      />
     </FormGroup>
   );
 };

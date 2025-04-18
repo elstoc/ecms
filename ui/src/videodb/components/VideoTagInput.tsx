@@ -8,6 +8,7 @@ type VideoTagInputProps = {
   label: string;
   className?: string;
   allowCreation?: boolean;
+  disabled?: boolean;
 };
 
 export const VideoTagInput = (props: VideoTagInputProps) => {

@@ -17,6 +17,7 @@ type SelectDescribedCodeParams = {
   className?: string;
   inline?: boolean;
   filterable?: boolean;
+  disabled?: boolean;
 };
 
 export const SelectDescribedCode = ({
@@ -29,6 +30,7 @@ export const SelectDescribedCode = ({
   inline,
   className = '',
   filterable = true,
+  disabled,
 }: SelectDescribedCodeParams) => {
   const allItems = { ...propsAllItems };
   if (allowUndefinedCodeSelection) {
@@ -82,7 +84,11 @@ export const SelectDescribedCode = ({
         resetOnSelect={true}
         filterable={filterable}
       >
-        <Button text={allItems[selectedCode ?? UNDEFINED_CODE] || ' '} endIcon='caret-down' />
+        <Button
+          disabled={disabled}
+          text={allItems[selectedCode ?? UNDEFINED_CODE] || ' '}
+          endIcon='caret-down'
+        />
       </Select>
     </FormGroup>
   );

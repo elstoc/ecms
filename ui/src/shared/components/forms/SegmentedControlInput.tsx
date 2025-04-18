@@ -16,6 +16,7 @@ type SegmentedControlInputParams = {
   label: string;
   inline?: boolean;
   className?: string;
+  disabled?: boolean;
 };
 
 export const SegmentedControlInput = ({
@@ -25,6 +26,7 @@ export const SegmentedControlInput = ({
   describedCodes,
   inline,
   className = '',
+  disabled,
 }: SegmentedControlInputParams) => {
   const controlOptions = describedCodes.map((option) => ({
     value: option.code ?? UNDEFINED_CODE,
@@ -38,7 +40,7 @@ export const SegmentedControlInput = ({
         onValueChange={(selectedCode) =>
           onChange?.(selectedCode === UNDEFINED_CODE ? undefined : selectedCode)
         }
-        options={controlOptions}
+        options={controlOptions.map((option) => ({ ...option, disabled }))}
       />
     </FormGroup>
   );

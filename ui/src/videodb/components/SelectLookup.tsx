@@ -11,6 +11,7 @@ type SelectLookupProps = {
   label: string;
   inline?: boolean;
   filterable?: boolean;
+  disabled?: boolean;
   className?: string;
 };
 

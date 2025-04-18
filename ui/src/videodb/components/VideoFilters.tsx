@@ -38,6 +38,7 @@ export const VideoFilters = () => {
         allowUndefinedCodeSelection={true}
         valueForUndefinedCode='All'
         inline={true}
+        disabled={showOnlyExpandedIds}
         selectedCode={uiFilters.categories}
         onChange={(value) => updateUiFilter({ key: 'categories', value })}
         filterable={false}
@@ -45,6 +46,7 @@ export const VideoFilters = () => {
       <SegmentedControlInput
         label='Min Resolution'
         inline={true}
+        disabled={showOnlyExpandedIds}
         describedCodes={minResolutionOptions}
         selectedCode={uiFilters.minResolution}
         onChange={(value) => updateUiFilter({ key: 'minResolution', value })}
@@ -52,6 +54,7 @@ export const VideoFilters = () => {
       <SegmentedControlInput
         label='Watched'
         inline={true}
+        disabled={showOnlyExpandedIds}
         describedCodes={watchedStatusOptions}
         selectedCode={uiFilters.watched}
         onChange={(value) => updateUiFilter({ key: 'watched', value })}
@@ -59,6 +62,7 @@ export const VideoFilters = () => {
       <SegmentedControlInput
         label='Media Watched'
         inline={true}
+        disabled={showOnlyExpandedIds}
         describedCodes={watchedStatusOptions}
         selectedCode={uiFilters.mediaWatched}
         onChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
@@ -67,6 +71,7 @@ export const VideoFilters = () => {
         label='Max Length'
         className='max-length'
         inline={true}
+        disabled={showOnlyExpandedIds}
         value={uiFilters.maxLength}
         onChange={(value) => updateUiFilter({ key: 'maxLength', value }, 1000)}
       />
@@ -75,11 +80,13 @@ export const VideoFilters = () => {
         className='tags'
         selectedTags={uiFilters.tags}
         allowCreation={false}
+        disabled={showOnlyExpandedIds}
         onChange={(value) => updateUiFilter({ key: 'tags', value })}
       />
       <Input
         label='Title Search'
         inline={true}
+        disabled={showOnlyExpandedIds}
         value={uiFilters.titleContains}
         onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
@@ -87,6 +94,7 @@ export const VideoFilters = () => {
         label='Flagged'
         className='flagged'
         inline={true}
+        disabled={showOnlyExpandedIds}
         value={!!uiFilters.flaggedOnly}
         onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
       />

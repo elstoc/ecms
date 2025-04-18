@@ -13,6 +13,7 @@ type MultiTagInputParams = {
   label: string;
   className?: string;
   allowCreation?: boolean;
+  disabled?: boolean;
 };
 
 export const MultiTagInput = ({
@@ -22,6 +23,7 @@ export const MultiTagInput = ({
   label,
   className = '',
   allowCreation = true,
+  disabled,
 }: MultiTagInputParams) => {
   const [queryString, setQueryString] = useState('');
   const allTags = Array.from(new Set([...(selectableTags ?? []), ...(selectedTags ?? [])])).sort(
@@ -86,6 +88,7 @@ export const MultiTagInput = ({
     <FormGroup label={label} inline={true} className={`${className} multi-tag-input`}>
       <MultiSelect<string>
         items={allTags}
+        disabled={disabled}
         selectedItems={selectedTags ?? []}
         tagRenderer={(tag) => tag}
         itemRenderer={itemRenderer}
