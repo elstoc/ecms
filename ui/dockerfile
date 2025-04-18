@@ -1,4 +1,4 @@
-FROM node:iron-alpine3.21 AS BUILDER
+FROM node:iron-alpine3.21 AS builder
 ENV NODE_ENV development
 
 RUN ["mkdir", "-p", "/app"]
@@ -7,8 +7,9 @@ COPY . ./app
 
 WORKDIR ./app
 
-RUN npm ci
+RUN npm ci --include-dev
 RUN npm run build
+RUN npm ci --omit-dev
 
 #################
 
