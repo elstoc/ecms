@@ -52,6 +52,7 @@ export const createVideoDbRouter = (site: Site): Router => {
           minResolution: query.minResolution,
           sortOrder: query.sortOrder || 'asc',
           shuffleSeed: parseInt(query.shuffleSeed ?? '0'),
+          videoIds: query.videoIds?.split('|').map(Number),
         };
         const videos = await videoDb.queryVideos(filters, parseInt(query.pages));
         res.json(videos);

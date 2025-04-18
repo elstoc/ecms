@@ -60,6 +60,7 @@ export type VideoFilters = {
   mediaWatched?: string;
   minResolution?: string;
   flaggedOnly?: boolean;
+  videoIds?: number[];
   sortOrder?: string;
   shuffleSeed?: number;
 };
@@ -299,6 +300,7 @@ export class VideoDb {
       mediaWatched,
       minResolution,
       flaggedOnly,
+      videoIds,
     } = filters || {};
 
     if (maxLength !== undefined) {
@@ -341,6 +343,14 @@ export class VideoDb {
     }
     if (flaggedOnly) {
       whereClauses.push('priority_flag > 0');
+    }
+    if (videoIds !== undefined) {
+      const idParams: { [key: string]: number } = {};
+      videoIds.forEach((id, index) => {
+        idParams['$videoId' + index.toString()] = id;
+      });
+      whereClauses.push(`id IN (${Object.keys(idParams).join(', ')})`);
+      params = { ...params, ...idParams };
     }
 
     if (whereClauses.length > 0) {

@@ -1155,6 +1155,24 @@ describe('VideoDb', () => {
       expect(videos).toEqual(['videos']);
     });
 
+    it('runs the correct sql with filter params when videoIds filter param is defined', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockGet.mockResolvedValueOnce({ ver: 4 });
+      await videoDb.initialise();
+      const expectedSql =
+        baseSQL + ' WHERE (id IN ($videoId0, $videoId1, $videoId2))' + baseOrderBy;
+      const expectedParams = { $videoId0: 11, $videoId1: 22, $videoId2: 33 };
+
+      mockGetAllWithParams.mockResolvedValue(['videos']);
+      const { videos } = await videoDb.queryVideos({ videoIds: [11, 22, 33] });
+
+      expect(mockGetAllWithParams).toHaveBeenCalled();
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual(expectedParams);
+      expect(videos).toEqual(['videos']);
+    });
+
     it('runs the correct sql with filter params when all filter params are defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
       mockGet.mockResolvedValueOnce({ ver: 4 });
@@ -1168,7 +1186,8 @@ describe('VideoDb', () => {
                                             AND (watched IN ('Y', 'P'))
                                             AND (primary_media_watched IN ('N', 'P'))
                                             AND (primary_media_type IN ('BD4K', 'DL2160'))
-                                            AND (priority_flag > 0)` +
+                                            AND (priority_flag > 0)
+                                            AND (id IN ($videoId0, $videoId1, $videoId2))` +
         baseOrderBy;
       const expectedParams = {
         $titleContains: '%title%',
@@ -1179,6 +1198,9 @@ describe('VideoDb', () => {
         $tag1: 'tag1',
         $tag2: 'tag2',
         $maxLength: 120,
+        $videoId0: 11,
+        $videoId1: 22,
+        $videoId2: 33,
       };
 
       mockGetAllWithParams.mockResolvedValue(['videos']);
@@ -1191,6 +1213,7 @@ describe('VideoDb', () => {
         mediaWatched: 'N',
         minResolution: 'UHD',
         flaggedOnly: true,
+        videoIds: [11, 22, 33],
       });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
