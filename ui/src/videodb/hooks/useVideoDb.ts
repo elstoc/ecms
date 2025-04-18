@@ -63,6 +63,7 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
       uiFilters: {},
       apiFilters: {},
       pages: 1,
+      showOnlyExpandedIds: false,
     };
   }
   if (action.type === 'syncFilters') {
