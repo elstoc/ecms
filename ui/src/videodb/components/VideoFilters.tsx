@@ -93,15 +93,15 @@ export const VideoFilters = () => {
       <div className='filter-action-buttons'>
         <Button
           disabled={expandedVideoIds.length === 0}
-          onClick={() => dispatch({ type: 'toggleShowOnlyExpanded' })}
-        >
-          {showOnlyExpandedIds ? 'Reapply filters' : 'Show expanded'}
-        </Button>
-        <Button
-          disabled={expandedVideoIds.length === 0}
           onClick={() => dispatch({ type: 'resetVideoExpanded' })}
         >
           Collapse all
+        </Button>
+        <Button
+          disabled={expandedVideoIds.length === 0}
+          onClick={() => dispatch({ type: 'toggleShowOnlyExpanded' })}
+        >
+          {showOnlyExpandedIds ? 'Reapply filters' : 'Show expanded'}
         </Button>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
       </div>
