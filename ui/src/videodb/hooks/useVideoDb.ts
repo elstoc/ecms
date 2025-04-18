@@ -30,7 +30,8 @@ type StateAction =
   | { type: 'syncFilters' }
   | { type: 'setPages'; payload: number }
   | { type: 'setSortOrder'; payload: 'asc' | 'shuffle' }
-  | { type: 'toggleVideoExpanded'; payload: number };
+  | { type: 'toggleVideoExpanded'; payload: number }
+  | { type: 'resetVideoExpanded' };
 
 const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (state, action) => {
   if (action.type === 'setPages') {
@@ -79,6 +80,12 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
     return {
       ...state,
       expandedVideoIds,
+    };
+  }
+  if (action.type === 'resetVideoExpanded') {
+    return {
+      ...state,
+      expandedVideoIds: [],
     };
   }
   return state;

@@ -91,6 +91,7 @@ export const VideoFilters = () => {
         onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
       />
       <div className='filter-action-buttons'>
+        <Button onClick={() => dispatch({ type: 'resetVideoExpanded' })}>Collapse all</Button>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
       </div>
     </div>
