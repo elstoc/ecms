@@ -34,7 +34,7 @@ export const RESIZE_OPTIONS = {
     desc: ImageSize.forExif,
     width: 1,
     height: 1,
-    quality: 0,
+    quality: 1,
     stripExif: false,
     addBorder: false,
   },

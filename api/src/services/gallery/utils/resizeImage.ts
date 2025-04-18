@@ -1,4 +1,4 @@
-import gm from 'gm';
+import sharp from 'sharp';
 
 import { ImageSize } from '@/contracts/gallery';
 
@@ -12,17 +12,24 @@ type ResizeConfig = {
   version?: number;
 };
 
-export const resizeImage = (sourceImage: Buffer, config: ResizeConfig): Promise<Buffer> => {
+export const resizeImage = async (sourceImage: Buffer, config: ResizeConfig): Promise<Buffer> => {
   const { width, height, quality, stripExif, addBorder } = config;
-  return new Promise((resolve, reject) => {
-    let resizedImage = gm(sourceImage).resize(width, height).quality(quality);
 
-    if (addBorder) resizedImage = resizedImage.borderColor('rgb(60,60,60)').border(2, 2);
-    if (stripExif) resizedImage = resizedImage.strip();
+  let resizeSharp = sharp(sourceImage).resize(width, height, { fit: 'inside' });
 
-    return resizedImage.toBuffer('JPG', (err, buffer) => {
-      if (err) reject(new Error('Image resize failed: ' + err.message));
-      else resolve(buffer);
+  if (!stripExif) {
+    resizeSharp = resizeSharp.keepExif();
+  }
+
+  if (addBorder) {
+    resizeSharp = resizeSharp.extend({
+      top: 2,
+      bottom: 2,
+      left: 2,
+      right: 2,
+      background: { r: 60, g: 60, b: 60, alpha: 1 },
     });
-  });
+  }
+
+  return await resizeSharp.jpeg({ quality }).toBuffer();
 };
