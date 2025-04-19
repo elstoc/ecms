@@ -11,7 +11,7 @@
     "lint-fix": "eslint . --fix --ext .ts",
     "prettier": "prettier -c src",
     "prettier-fix": "prettier --write src",
-    "test": "jest",
+    "test": "jest ./src",
     "test:coverage": "jest --coverage"
   },
   "author": "C Elston",
