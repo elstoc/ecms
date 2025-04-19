@@ -68,6 +68,7 @@ export const useVideos = () => {
         maxLength: apiFilters.maxLength?.toString(),
         tags: apiFilters.tags?.join('|'),
         flaggedOnly: apiFilters.flaggedOnly ? '1' : undefined,
+        hasProgressNotes: apiFilters.hasProgressNotes ? '1' : undefined,
       };
 
   return useCustomQuery({

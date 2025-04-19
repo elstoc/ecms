@@ -90,14 +90,24 @@ export const VideoFilters = () => {
         value={uiFilters.titleContains}
         onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
-      <Switch
-        label='Flagged'
-        className='flagged'
-        inline={true}
-        disabled={showOnlyExpandedIds}
-        value={!!uiFilters.flaggedOnly}
-        onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
-      />
+      <div className='switches'>
+        <Switch
+          label='In progress'
+          className='has-progress-notes'
+          inline={true}
+          disabled={showOnlyExpandedIds}
+          value={!!uiFilters.hasProgressNotes}
+          onChange={(value) => updateUiFilter({ key: 'hasProgressNotes', value })}
+        />
+        <Switch
+          label='Flagged'
+          className='flagged'
+          inline={true}
+          disabled={showOnlyExpandedIds}
+          value={!!uiFilters.flaggedOnly}
+          onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
+        />
+      </div>
       <div className='filter-action-buttons'>
         <Button
           disabled={expandedVideoIds.length === 0}

@@ -11,6 +11,7 @@ type Filters = {
   mediaWatched?: string;
   minResolution?: string;
   flaggedOnly?: boolean;
+  hasProgressNotes?: boolean;
 };
 
 type VideoDbState = {
