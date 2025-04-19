@@ -427,6 +427,12 @@ paths:
           schema:
             $ref: '#/components/schemas/booleanInt'
         - in: query
+          name: hasProgressNotes
+          required: false
+          description: filter videos with non-empty progress notes
+          schema:
+            $ref: '#/components/schemas/booleanInt'
+        - in: query
           required: false
           name: sortOrder
           description: order to sort results (default asc)

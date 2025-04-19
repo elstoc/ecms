@@ -1175,6 +1175,22 @@ describe('VideoDb', () => {
       expect(videos).toEqual([mockVideoWithId]);
     });
 
+    it('runs the correct sql with filter params when hasProgressNotes param is defined', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockGet.mockResolvedValueOnce({ ver: 4 });
+      await videoDb.initialise();
+      const expectedSql =
+        baseSQL + " WHERE (progress IS NOT NULL AND progress != '')" + baseOrderBy;
+
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
+      const { videos } = await videoDb.queryVideos({ hasProgressNotes: true });
+
+      expect(mockGetAllWithParams).toHaveBeenCalled();
+      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(videos).toEqual([mockVideoWithId]);
+    });
+
     it('runs the correct sql with filter params when videoIds filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
       mockGet.mockResolvedValueOnce({ ver: 4 });
@@ -1207,6 +1223,7 @@ describe('VideoDb', () => {
                                             AND (primary_media_watched IN ('N', 'P'))
                                             AND (primary_media_type IN ('BD4K', 'DL2160'))
                                             AND (priority_flag > 0)
+                                            AND (progress IS NOT NULL AND progress != '')
                                             AND (id IN ($videoId0, $videoId1, $videoId2))` +
         baseOrderBy;
       const expectedParams = {
@@ -1233,6 +1250,7 @@ describe('VideoDb', () => {
         mediaWatched: 'N',
         minResolution: 'UHD',
         flaggedOnly: true,
+        hasProgressNotes: true,
         videoIds: [11, 22, 33],
       });
 

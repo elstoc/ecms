@@ -49,6 +49,7 @@ export const createVideoDbRouter = (site: Site): Router => {
           watched: query.watched,
           mediaWatched: query.mediaWatched,
           flaggedOnly: query.flaggedOnly === '1',
+          hasProgressNotes: query.hasProgressNotes === '1',
           minResolution: query.minResolution,
           sortOrder: query.sortOrder || 'asc',
           shuffleSeed: parseInt(query.shuffleSeed ?? '0'),

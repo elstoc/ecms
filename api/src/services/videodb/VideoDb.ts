@@ -60,6 +60,7 @@ export type VideoFilters = {
   mediaWatched?: string;
   minResolution?: string;
   flaggedOnly?: boolean;
+  hasProgressNotes?: boolean;
   // the following are not in the corresponding UI type
   videoIds?: number[];
   sortOrder?: string;
@@ -324,6 +325,7 @@ export class VideoDb {
       mediaWatched,
       minResolution,
       flaggedOnly,
+      hasProgressNotes,
       videoIds,
     } = filters || {};
 
@@ -367,6 +369,9 @@ export class VideoDb {
     }
     if (flaggedOnly) {
       whereClauses.push('priority_flag > 0');
+    }
+    if (hasProgressNotes) {
+      whereClauses.push("progress IS NOT NULL AND progress != ''");
     }
     if (videoIds !== undefined) {
       const idParams: { [key: string]: number } = {};
