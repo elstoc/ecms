@@ -26,6 +26,7 @@ describe('Site', () => {
   const getGallery = jest.fn();
   const getMarkdown = jest.fn();
   const getVideoDb = jest.fn();
+  const getCalibreDb = jest.fn();
   const shutdown = jest.fn();
 
   beforeEach(() => {
@@ -34,6 +35,7 @@ describe('Site', () => {
       getGallery,
       getMarkdown,
       getVideoDb,
+      getCalibreDb,
       shutdown,
     }));
     site = new Site(config, mockStorage as any, mockLogger);
@@ -54,9 +56,14 @@ describe('Site', () => {
     expect(getMarkdown).toHaveBeenCalledTimes(1);
   });
 
-  it('getVideoDb calls getVideo from root component', async () => {
+  it('getVideoDb calls getVideoDb from root component', async () => {
     await site.getVideoDb('/path');
     expect(getVideoDb).toHaveBeenCalledTimes(1);
+  });
+
+  it('getCalibreDb calls getCalibreDb from root component', async () => {
+    await site.getCalibreDb('/path');
+    expect(getCalibreDb).toHaveBeenCalledTimes(1);
   });
 
   it('shutdown calls shutdown from root component', async () => {

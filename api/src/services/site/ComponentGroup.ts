@@ -9,6 +9,8 @@ import { Markdown } from '@/services/markdown';
 import { VideoDb } from '@/services/videodb';
 import { Config, sortByWeightAndTitle } from '@/utils';
 
+import { CalibreDb } from '../calibredb/CalibreDb';
+
 import { Component } from './Component';
 
 export class ComponentGroup {
@@ -73,6 +75,11 @@ export class ComponentGroup {
   public async getVideoDb(apiPath: string): Promise<VideoDb> {
     this.logger.debug(`Site.getVideoDb(${apiPath})`);
     return await this.getComponentAtPath(apiPath).getVideoDb(apiPath);
+  }
+
+  public async getCalibreDb(apiPath: string): Promise<CalibreDb> {
+    this.logger.debug(`Site.getCalibreDb(${apiPath})`);
+    return await this.getComponentAtPath(apiPath).getCalibreDb(apiPath);
   }
 
   public async shutdown(): Promise<void> {

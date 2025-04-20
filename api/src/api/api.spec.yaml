@@ -451,6 +451,14 @@ paths:
       responses:
         '200':
           description: OK
+  /calibredb/books:
+    get:
+      description: Get a list of books from the database
+      parameters:
+        - $ref: '#/components/parameters/ComponentPath'
+      responses:
+        '200':
+          description: OK
 components:
   parameters:
     ComponentPath:

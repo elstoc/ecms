@@ -2,6 +2,7 @@
 import YAML from 'yaml';
 
 import { NotFoundError } from '@/errors';
+import { CalibreDb } from '@/services/calibredb/CalibreDb';
 import { Gallery } from '@/services/gallery/Gallery';
 import { Markdown } from '@/services/markdown/Markdown';
 import { Component } from '@/services/site';
@@ -13,6 +14,7 @@ jest.mock('yaml');
 jest.mock('@/services/gallery/Gallery');
 jest.mock('@/services/markdown/Markdown');
 jest.mock('@/services/videodb/VideoDb');
+jest.mock('@/services/calibredb/CalibreDb');
 jest.mock('./ComponentGroup');
 
 const config = {
@@ -36,6 +38,7 @@ const mockLogger = {
 const mockGallery = Gallery as jest.Mock;
 const mockMarkdown = Markdown as jest.Mock;
 const mockVideoDb = VideoDb as jest.Mock;
+const mockCalibreDb = CalibreDb as jest.Mock;
 const mockComponentGroup = ComponentGroup as jest.Mock;
 const contentFileBuf = Buffer.from('content-file');
 const yamlParseMock = YAML.parse as jest.Mock;
@@ -625,6 +628,24 @@ describe('Component', () => {
       const videoDbComponent = await component.getVideoDb('x');
 
       expect((videoDbComponent as any)?.name).toEqual('mocked videodb');
+    });
+
+    it('returns a CalibreDb object when called for a calibredb component', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+      mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+      yamlParseMock.mockReturnValue({
+        type: 'calibredb',
+      });
+      mockCalibreDb.mockImplementation(() => ({
+        name: 'mocked calibredb',
+        initialise: () => true,
+      }));
+
+      const videoDbComponent = await component.getCalibreDb('x');
+
+      expect((videoDbComponent as any)?.name).toEqual('mocked calibredb');
     });
 
     it('creates a ComponentGroup and calls getVideoDb on it, when called for a componentgroup component', async () => {

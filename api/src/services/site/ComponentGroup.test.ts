@@ -223,6 +223,18 @@ describe('RootComponent', () => {
     });
   });
 
+  describe('getCalibreDb', () => {
+    it('gets the appropriate calibredb object', async () => {
+      const site = new ComponentGroup(config, mockStorage as any, mockLogger, 'parent');
+      mockComponent.mockImplementation((_, inputFilePath) => ({
+        getCalibreDb: () => inputFilePath,
+      }));
+      const calibredb = await site.getCalibreDb('parent/videoDbComponent/foo/bar');
+
+      expect(calibredb).toBe('parent/videoDbComponent');
+    });
+  });
+
   describe('shutdown', () => {
     it('runs shutdown on every created site component', async () => {
       const mockShutdown = jest.fn();

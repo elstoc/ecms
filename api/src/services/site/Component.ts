@@ -11,6 +11,8 @@ import { Markdown } from '@/services/markdown';
 import { VideoDb } from '@/services/videodb';
 import { Config } from '@/utils';
 
+import { CalibreDb } from '../calibredb/CalibreDb';
+
 import { ComponentGroup } from './ComponentGroup';
 
 export class Component {
@@ -18,6 +20,7 @@ export class Component {
   private gallery?: Gallery;
   private markdown?: Markdown;
   private videoDb?: VideoDb;
+  private calibreDb?: CalibreDb;
   private componentGroup?: ComponentGroup;
   private metadataFromSourceTime = -1;
   private metadata?: ComponentMetadata;
@@ -199,6 +202,26 @@ export class Component {
     this.videoDb ??= new VideoDb(this.contentDir, this.config, this.logger, this.storage);
     await this.videoDb.initialise();
     return this.videoDb;
+  }
+
+  public async getCalibreDb(apiPath: string): Promise<CalibreDb> {
+    await this.getMetadata();
+    if (this.metadata?.type === ComponentTypes.componentgroup) {
+      this.componentGroup ??= new ComponentGroup(
+        this.config,
+        this.storage,
+        this.logger,
+        this.contentDir,
+      );
+      return this.componentGroup.getCalibreDb(apiPath);
+    }
+    if (this.metadata?.type !== ComponentTypes.calibredb) {
+      throw new NotFoundError(
+        `No ${ComponentTypes.calibredb} component found at the path ${this.contentDir}`,
+      );
+    }
+    this.calibreDb ??= new CalibreDb(this.contentDir, this.config, this.logger, this.storage);
+    return this.calibreDb;
   }
 
   public async shutdown(): Promise<void> {

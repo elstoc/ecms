@@ -12,6 +12,7 @@ import {
 } from './middleware';
 import {
   createAuthRouter,
+  createCalibreDbRouter,
   createGalleryRouter,
   createMarkdownRouter,
   createSiteRouter,
@@ -48,6 +49,7 @@ export const createApp = async (
   app.use('/gallery', createGalleryRouter(site));
   app.use('/markdown', createMarkdownRouter(site));
   app.use('/videodb', createVideoDbRouter(site));
+  app.use('/calibredb', createCalibreDbRouter(site));
 
   app.use(createErrorHandlerMiddleware(logger));
 

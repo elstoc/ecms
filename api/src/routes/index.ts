@@ -3,3 +3,4 @@ export { createGalleryRouter } from './galleryRouter';
 export { createMarkdownRouter } from './mdRouter';
 export { createSiteRouter } from './siteRouter';
 export { createVideoDbRouter } from './videodbRouter';
+export { createCalibreDbRouter } from './calibredbRouter';

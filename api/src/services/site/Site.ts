@@ -8,6 +8,8 @@ import { Markdown } from '@/services/markdown';
 import { VideoDb } from '@/services/videodb';
 import { Config } from '@/utils';
 
+import { CalibreDb } from '../calibredb/CalibreDb';
+
 import { ComponentGroup } from './ComponentGroup';
 
 export class Site {
@@ -35,6 +37,10 @@ export class Site {
 
   public async getVideoDb(apiPath: string): Promise<VideoDb> {
     return await this.components.getVideoDb(apiPath);
+  }
+
+  public async getCalibreDb(apiPath: string): Promise<CalibreDb> {
+    return await this.components.getCalibreDb(apiPath);
   }
 
   public getConfig(): SiteConfig {
