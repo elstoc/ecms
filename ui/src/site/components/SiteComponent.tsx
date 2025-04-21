@@ -1,3 +1,4 @@
+import { CalibreDb } from '@/calibredb/components/CalibreDb';
 import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
 import { Gallery } from '@/gallery';
 import { Markdown } from '@/markdown';
@@ -12,6 +13,8 @@ export const SiteComponent = ({ metadata }: SiteComponentProps) => {
     return <Markdown key={metadata.apiPath} {...metadata} />;
   } else if (metadata.type === ComponentTypes.videodb) {
     return <VideoDb key={metadata.apiPath} {...metadata} />;
+  } else if (metadata.type === ComponentTypes.calibredb) {
+    return <CalibreDb key={metadata.apiPath} {...metadata} />;
   }
 
   return <div>Component Type Not Supported</div>;

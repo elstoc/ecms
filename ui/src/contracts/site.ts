@@ -1,9 +1,14 @@
-export type SiteConfig = { authEnabled: boolean; footerText: string; siteTitle: string };
+export type SiteConfig = {
+  authEnabled: boolean;
+  footerText: string;
+  siteTitle: string;
+};
 
 export enum ComponentTypes {
   gallery = 'gallery',
   markdown = 'markdown',
   videodb = 'videodb',
+  calibredb = 'calibredb',
   componentgroup = 'componentgroup',
 }
 
@@ -31,6 +36,11 @@ export type VideoDbMetadata = ComponentMetadataCommon & {
   defaultComponent?: boolean;
 };
 
+export type CalibreDbMetadata = ComponentMetadataCommon & {
+  type: ComponentTypes.calibredb;
+  defaultComponent?: boolean;
+};
+
 export type ComponentGroupMetadata = ComponentMetadataCommon & {
   type: ComponentTypes.componentgroup;
   components: ComponentMetadata[];
@@ -41,4 +51,5 @@ export type ComponentMetadata =
   | GalleryMetadata
   | MarkdownMetadata
   | VideoDbMetadata
+  | CalibreDbMetadata
   | ComponentGroupMetadata;
