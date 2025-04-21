@@ -1,11 +1,30 @@
-import { BookListItem } from '@/calibredb/components/BookListItem';
+import { Card } from '@blueprintjs/core';
+import { startTransition, useRef } from 'react';
 
-import { Book } from '../api';
+import { useElementIsVisible } from '@/shared/hooks';
 
-type BookListProps = {
-  books: Book[];
-};
+import { useCalibreDb } from '../hooks/useCalibreDb';
+import { useBooks } from '../hooks/useCalibreDbQueries';
 
-export const BookList = ({ books }: BookListProps) => {
-  return books.map((book) => <BookListItem key={book.title} book={book} />);
+import { BookListItem } from './BookListItem';
+
+export const BookList = () => {
+  const { dispatch } = useCalibreDb();
+  const { books, currentPage, totalPages } = useBooks();
+  const refLastBook = useRef<HTMLDivElement>(null);
+
+  useElementIsVisible(refLastBook, () => {
+    startTransition(() => {
+      dispatch({ type: 'setPages', payload: Math.min(totalPages, currentPage + 1) });
+    });
+  });
+
+  return (
+    <Card className='book-list'>
+      {books.map((book, index) => {
+        const lastBook = index === books.length - 1;
+        return <BookListItem key={book.title} book={book} ref={lastBook ? refLastBook : null} />;
+      })}
+    </Card>
+  );
 };

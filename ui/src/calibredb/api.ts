@@ -1,16 +1,11 @@
+import { PaginatedBooks } from '@/contracts/calibredb';
 import { axiosSecureClient } from '@/shared/api';
 
-export type Book = {
-  title: string;
-};
-
-type PaginatedBooks = {
-  books: Book[];
-};
-
-export const getCalibreDbBooks = async (path: string): Promise<PaginatedBooks> => {
+export const getCalibreDbBooks = async (path: string, pages: number): Promise<PaginatedBooks> => {
   const url = 'calibredb/books';
-  const { data } = await axiosSecureClient.get<PaginatedBooks>(url, { params: { path } });
+  const { data } = await axiosSecureClient.get<PaginatedBooks>(url, {
+    params: { path, pages: pages.toString() },
+  });
 
   return data;
 };
