@@ -9,11 +9,14 @@ type SiteComponentProps = { metadata: ComponentMetadata };
 export const SiteComponent = ({ metadata }: SiteComponentProps) => {
   if (metadata.type === ComponentTypes.gallery) {
     return <Gallery key={metadata.apiPath} {...metadata} />;
-  } else if (metadata.type === ComponentTypes.markdown) {
+  }
+  if (metadata.type === ComponentTypes.markdown) {
     return <Markdown key={metadata.apiPath} {...metadata} />;
-  } else if (metadata.type === ComponentTypes.videodb) {
+  }
+  if (metadata.type === ComponentTypes.videodb) {
     return <VideoDb key={metadata.apiPath} {...metadata} />;
-  } else if (metadata.type === ComponentTypes.calibredb) {
+  }
+  if (metadata.type === ComponentTypes.calibredb) {
     return <CalibreDb key={metadata.apiPath} {...metadata} />;
   }
 
