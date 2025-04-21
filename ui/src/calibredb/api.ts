@@ -9,3 +9,14 @@ export const getCalibreDbBooks = async (path: string, pages: number): Promise<Pa
 
   return data;
 };
+
+export const getCalibreDbLookup = async (
+  path: string,
+  lookupTable: string,
+): Promise<{ [key: string]: string }> => {
+  const url = 'calibredb/lookup';
+  const { data } = await axiosSecureClient.get<{ [key: string]: string }>(url, {
+    params: { path, table: lookupTable },
+  });
+  return data;
+};
