@@ -456,6 +456,13 @@ paths:
       description: Get a list of books from the database
       parameters:
         - $ref: '#/components/parameters/ComponentPath'
+        - name: pages
+          description: The number of pages requested
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: OK

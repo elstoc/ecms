@@ -42,6 +42,7 @@ export type Config = {
   omdbApiKey: string;
   galleryPageSize: number;
   videoDbPageSize: number;
+  calibreDbPageSize: number;
 };
 
 export const getConfig = (): Config => {
@@ -63,5 +64,6 @@ export const getConfig = (): Config => {
     omdbApiKey: getOptionalStringConfig('OMDB_API_KEY', ''),
     galleryPageSize: parseInt(getOptionalStringConfig('GALLERY_PAGE_SIZE', '25')),
     videoDbPageSize: parseInt(getOptionalStringConfig('VIDEODB_PAGE_SIZE', '40')),
+    calibreDbPageSize: parseInt(getOptionalStringConfig('CALIBREDB_PAGE_SIZE', '40')),
   };
 };

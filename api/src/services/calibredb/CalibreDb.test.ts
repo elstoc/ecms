@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OPEN_READONLY } from 'sqlite3';
+import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 
 import { CalibreDb } from '@/services/calibredb/CalibreDb';
 
@@ -12,7 +12,9 @@ const mockStorage = {
 
 const apiPath = 'books';
 const apiDbPath = 'books/metadata.db';
-const config = {} as any;
+const config = {
+  calibreDbPageSize: 3,
+} as any;
 
 const mockLogger = {
   debug: jest.fn(),
@@ -57,7 +59,10 @@ describe('CalibreDb', () => {
 
       expect(mockStorage.getContentDb).toHaveBeenCalledTimes(1);
       expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(1);
-      expect(mockStorage.getContentDb).toHaveBeenCalledWith(apiDbPath, OPEN_READONLY);
+      expect(mockStorage.getContentDb).toHaveBeenCalledWith(
+        apiDbPath,
+        OPEN_READONLY | OPEN_FULLMUTEX,
+      );
     });
 
     it('does not re-initialise an already-initialised database', async () => {
@@ -72,16 +77,49 @@ describe('CalibreDb', () => {
   });
 
   describe('getBooks', () => {
-    it('returns an empty array of books', async () => {
-      const mockBooks = ['book1', 'book2'];
-      mockGetAll.mockResolvedValue(mockBooks);
+    const mockManyBooks = [
+      { title: 'Book 1' },
+      { title: 'Book 2' },
+      { title: 'Book 3' },
+      { title: 'Book 4' },
+      { title: 'Book 5' },
+      { title: 'Book 6' },
+      { title: 'Book 7' },
+      { title: 'Book 8' },
+      { title: 'Book 9' },
+      { title: 'Book 10' },
+    ];
+
+    it('returns an array of books', async () => {
+      mockGetAll.mockResolvedValue(mockManyBooks);
       mockStorage.contentFileExists.mockReturnValue(true);
       await calibreDb.initialise();
 
-      const books = await calibreDb.getBooks();
+      const books = await calibreDb.getBooks(10);
 
-      expect(books).toEqual({ books: mockBooks });
+      expect(books.books).toEqual(mockManyBooks);
     });
+
+    it.each([
+      [1, 1],
+      [2, 2],
+      [3, 3],
+      [4, 4],
+      [5, 4],
+    ])(
+      'paginates results correctly (requested pages: %s, returned pages: %s)',
+      async (requestedPages: number, expectedPagesReturned: number) => {
+        mockGetAll.mockResolvedValue(mockManyBooks);
+        mockStorage.contentFileExists.mockReturnValue(true);
+        await calibreDb.initialise();
+
+        const { books, totalPages, currentPage } = await calibreDb.getBooks(requestedPages);
+
+        expect(totalPages).toBe(4);
+        expect(currentPage).toBe(expectedPagesReturned);
+        expect(books.length).toBe(Math.min(currentPage * 3, 10));
+      },
+    );
   });
 
   describe('shutdown', () => {

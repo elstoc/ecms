@@ -3,6 +3,7 @@ import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 import { Logger } from 'winston';
 
 import { DatabaseAdapter, StorageAdapter } from '@/adapters';
+import { PaginatedBooks } from '@/contracts/calibredb';
 import { Config } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
@@ -43,11 +44,27 @@ export class CalibreDb {
     }
   }
 
-  public async getBooks() {
-    const sql = 'SELECT title FROM books LIMIT 100';
-    const books = await this.database?.getAll<{ title: string }>(sql);
+  public async getBooks(requestedPages = 1): Promise<PaginatedBooks> {
+    const sql = 'SELECT title FROM books ORDER BY title';
+    let books = await this.database?.getAll<{ title: string }>(sql);
+
+    if (!books) {
+      throw new Error('Unexpected error querying books');
+    }
+
+    const { calibreDbPageSize } = this.config;
+    const totalPages = Math.ceil(books.length / calibreDbPageSize);
+    const currentPage = Math.min(totalPages, requestedPages);
+    const limit = currentPage * calibreDbPageSize;
+
+    if (limit) {
+      books = books.slice(0, limit);
+    }
+
     return {
       books,
+      currentPage,
+      totalPages,
     };
   }
 
