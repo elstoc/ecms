@@ -8,6 +8,12 @@ import { Config } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
+type BookDao = {
+  id: number;
+  title: string;
+  authors: string;
+};
+
 export enum LookupTables {
   authors = 'authors',
 }
@@ -57,9 +63,25 @@ export class CalibreDb {
     }
   }
 
+  private toBookDto(book: BookDao): Book {
+    return {
+      id: book.id,
+      title: book.title,
+      authors: book.authors?.split('|').map(Number) || undefined,
+    };
+  }
+
   public async getBooks(requestedPages = 1): Promise<PaginatedBooks> {
-    const sql = 'SELECT id, title FROM books ORDER BY title';
-    let books = await this.database?.getAll<Book>(sql);
+    const sql = `
+    SELECT id, title, authors.authors
+    FROM books
+    LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') authors
+               FROM books_authors_link bal
+               GROUP BY book) authors ON books.id = authors.book
+    ORDER BY title
+    `;
+
+    let books = await this.database?.getAll<BookDao>(sql);
 
     if (!books) {
       throw new Error('Unexpected error querying books');
@@ -75,7 +97,7 @@ export class CalibreDb {
     }
 
     return {
-      books,
+      books: books.map(this.toBookDto),
       currentPage,
       totalPages,
     };

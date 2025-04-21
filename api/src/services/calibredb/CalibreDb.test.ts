@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 
-import { CalibreDb } from '@/services/calibredb/CalibreDb';
+import { stripWhiteSpace } from '@/utils';
+
+import { CalibreDb } from './CalibreDb';
 
 jest.mock('@/adapters');
 
@@ -77,6 +79,15 @@ describe('CalibreDb', () => {
   });
 
   describe('getBooks', () => {
+    const baseSql = `
+    SELECT id, title, authors.authors
+    FROM books
+    LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') authors
+               FROM books_authors_link bal
+               GROUP BY book) authors ON books.id = authors.book
+    ORDER BY title
+    `;
+
     const mockManyBooks = [
       { id: 1, title: 'Book 1' },
       { id: 2, title: 'Book 2' },
@@ -90,13 +101,16 @@ describe('CalibreDb', () => {
       { id: 10, title: 'Book 10' },
     ];
 
-    it('returns an array of books', async () => {
+    it('runs correct SQL and returns an array of books', async () => {
       mockGetAll.mockResolvedValue(mockManyBooks);
       mockStorage.contentFileExists.mockReturnValue(true);
       await calibreDb.initialise();
 
       const books = await calibreDb.getBooks(10);
 
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const actualSql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(actualSql)).toBe(stripWhiteSpace(baseSql));
       expect(books.books).toEqual(mockManyBooks);
     });
 
