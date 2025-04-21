@@ -459,6 +459,7 @@ export class VideoDb {
   }
 
   public async shutdown(): Promise<void> {
+    this.logger.info(`shutting down database at ${this.apiPath}`);
     await this.database?.close();
   }
 }
