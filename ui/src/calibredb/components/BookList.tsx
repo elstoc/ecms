@@ -23,7 +23,7 @@ export const BookList = () => {
     <Card className='book-list'>
       {books.map((book, index) => {
         const lastBook = index === books.length - 1;
-        return <BookListItem key={book.title} book={book} ref={lastBook ? refLastBook : null} />;
+        return <BookListItem key={book.id} book={book} ref={lastBook ? refLastBook : null} />;
       })}
     </Card>
   );
