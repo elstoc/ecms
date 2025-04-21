@@ -58,12 +58,12 @@ export class LocalFileStorageAdapter implements StorageAdapter {
     return dir.filter(fileMatcher);
   }
 
-  public async getContentDb(contentPath: string): Promise<DatabaseAdapter> {
+  public async getContentDb(contentPath: string, mode?: number): Promise<DatabaseAdapter> {
     if (!this.contentFileExists(contentPath)) {
       await this.storeContentFile(contentPath, Buffer.from(''));
     }
     const db = new SQLiteDatabaseAdapter(this.getContentFullPath(contentPath));
-    await db.initialise();
+    await db.initialise(mode);
     await db.exec('PRAGMA foreign_keys = ON');
     return db;
   }

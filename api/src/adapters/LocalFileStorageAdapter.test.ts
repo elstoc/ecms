@@ -726,17 +726,17 @@ describe('LocalFileStorageAdapter', () => {
       expect(promiseWriteFileMock).not.toHaveBeenCalled();
     });
 
-    it('creates and initialises a sqlite database adapter instance with the correct path', async () => {
+    it('creates and initialises a sqlite database adapter instance with the correct path and mode', async () => {
       existsSyncMock.mockReturnValue(true);
       statsyncMock.mockImplementation((path) => ({
         isFile: () => path.endsWith('file'),
         isDirectory: () => !path.endsWith('file'),
       }));
 
-      await storage.getContentDb('path/to/file');
+      await storage.getContentDb('path/to/file', 1234);
 
       expect(mockSQLiteDatabaseAdapter).toHaveBeenCalledWith(`${dataDir}/content/path/to/file`);
-      expect(mockInit).toHaveBeenCalled();
+      expect(mockInit).toHaveBeenCalledWith(1234);
       expect(mockExec).toHaveBeenCalledWith('PRAGMA foreign_keys = ON');
     });
   });

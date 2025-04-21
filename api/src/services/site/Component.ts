@@ -221,11 +221,13 @@ export class Component {
       );
     }
     this.calibreDb ??= new CalibreDb(this.contentDir, this.config, this.logger, this.storage);
+    await this.calibreDb.initialise();
     return this.calibreDb;
   }
 
   public async shutdown(): Promise<void> {
     await this.videoDb?.shutdown();
-    await this?.componentGroup?.shutdown();
+    await this.calibreDb?.shutdown();
+    await this.componentGroup?.shutdown();
   }
 }

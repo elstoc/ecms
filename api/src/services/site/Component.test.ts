@@ -560,6 +560,97 @@ describe('Component', () => {
     });
   });
 
+  describe('getCalibreDb', () => {
+    describe('throws an error', () => {
+      it('if no yaml file is found', async () => {
+        mockStorage.contentFileExists.mockReturnValue(false);
+        mockStorage.contentDirectoryExists.mockReturnValue(true);
+
+        await expect(component.getCalibreDb('x')).rejects.toThrow(
+          new NotFoundError('A yaml file does not exist for the path my-component'),
+        );
+        expect(mockStorage.contentFileExists).toHaveBeenCalledWith('my-component.yaml');
+      });
+
+      it('if no content directory is found', async () => {
+        mockStorage.contentFileExists.mockReturnValue(true);
+        mockStorage.contentDirectoryExists.mockReturnValue(false);
+
+        await expect(component.getCalibreDb('x')).rejects.toThrow(
+          new NotFoundError('A content directory does not exist for the path my-component'),
+        );
+        expect(mockStorage.contentDirectoryExists).toHaveBeenCalledWith('my-component');
+      });
+
+      it('if the type is invalid', async () => {
+        mockStorage.contentFileExists.mockReturnValue(true);
+        mockStorage.contentDirectoryExists.mockReturnValue(true);
+        mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+        mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+        yamlParseMock.mockReturnValue({
+          type: 'invalid-type',
+        });
+
+        await expect(component.getCalibreDb('x')).rejects.toThrow(
+          new NotFoundError('Valid component type not found'),
+        );
+      });
+
+      it.each(['markdown', 'gallery'])('when called for a %s component', async (type: string) => {
+        mockStorage.contentFileExists.mockReturnValue(true);
+        mockStorage.contentDirectoryExists.mockReturnValue(true);
+        mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+        mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+        yamlParseMock.mockReturnValue({
+          type,
+          singlePage: false,
+        });
+
+        await expect(component.getCalibreDb('x')).rejects.toThrow(
+          new NotFoundError('No calibredb component found at the path my-component'),
+        );
+      });
+    });
+
+    it('returns a CalibreDb object when called for a calibredb component', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+      mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+      yamlParseMock.mockReturnValue({
+        type: 'calibredb',
+      });
+      mockCalibreDb.mockImplementation(() => ({
+        name: 'mocked calibredb',
+        initialise: () => true,
+      }));
+
+      const videoDbComponent = await component.getCalibreDb('x');
+
+      expect((videoDbComponent as any)?.name).toEqual('mocked calibredb');
+    });
+
+    it('creates a ComponentGroup and calls getCalibreDb on it, when called for a componentgroup component', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+      mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+      yamlParseMock.mockReturnValue({
+        type: 'componentgroup',
+      });
+      const listComponents = jest.fn();
+      mockComponentGroup.mockImplementation(() => ({
+        getCalibreDb: () => ({ name: 'mocked calibredb via componentGroup' }),
+        list: listComponents,
+      }));
+
+      const calibreDbComponent = await component.getCalibreDb('x');
+
+      expect(listComponents).toHaveBeenCalled();
+      expect(calibreDbComponent).toEqual({ name: 'mocked calibredb via componentGroup' });
+    });
+  });
+
   describe('getVideoDb', () => {
     describe('throws an error', () => {
       it('if no yaml file is found', async () => {
@@ -630,24 +721,6 @@ describe('Component', () => {
       expect((videoDbComponent as any)?.name).toEqual('mocked videodb');
     });
 
-    it('returns a CalibreDb object when called for a calibredb component', async () => {
-      mockStorage.contentFileExists.mockReturnValue(true);
-      mockStorage.contentDirectoryExists.mockReturnValue(true);
-      mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
-      mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
-      yamlParseMock.mockReturnValue({
-        type: 'calibredb',
-      });
-      mockCalibreDb.mockImplementation(() => ({
-        name: 'mocked calibredb',
-        initialise: () => true,
-      }));
-
-      const videoDbComponent = await component.getCalibreDb('x');
-
-      expect((videoDbComponent as any)?.name).toEqual('mocked calibredb');
-    });
-
     it('creates a ComponentGroup and calls getVideoDb on it, when called for a componentgroup component', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
       mockStorage.contentDirectoryExists.mockReturnValue(true);
@@ -670,19 +743,26 @@ describe('Component', () => {
   });
 
   describe('shutdown', () => {
-    const initialise = jest.fn(),
-      shutdown = jest.fn(),
+    const videoDbInit = jest.fn(),
+      videoDbShutdown = jest.fn(),
+      calibreDbInit = jest.fn(),
+      calibreDbShutdown = jest.fn(),
+      componentGroupShutdown = jest.fn(),
       list = jest.fn(),
       getVideoDb = jest.fn();
 
     beforeEach(() => {
       jest.resetAllMocks();
       mockVideoDb.mockImplementation(() => ({
-        initialise,
-        shutdown,
+        initialise: videoDbInit,
+        shutdown: videoDbShutdown,
+      }));
+      mockCalibreDb.mockImplementation(() => ({
+        initialise: calibreDbInit,
+        shutdown: calibreDbShutdown,
       }));
       mockComponentGroup.mockImplementation(() => ({
-        shutdown,
+        shutdown: componentGroupShutdown,
         list,
         getVideoDb,
       }));
@@ -700,7 +780,22 @@ describe('Component', () => {
       await component.getVideoDb('x');
       await component.shutdown();
 
-      expect(shutdown).toHaveBeenCalledTimes(1);
+      expect(videoDbShutdown).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls calibreDb.shutdown if a calibreDb object has been created', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+      mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+      yamlParseMock.mockReturnValue({
+        type: 'calibredb',
+      });
+
+      await component.getCalibreDb('x');
+      await component.shutdown();
+
+      expect(calibreDbShutdown).toHaveBeenCalledTimes(1);
     });
 
     it('calls componentGroup.shutdown if a componentGroup object has been created', async () => {
@@ -715,7 +810,7 @@ describe('Component', () => {
       await component.getVideoDb('x');
       await component.shutdown();
 
-      expect(shutdown).toHaveBeenCalledTimes(1);
+      expect(componentGroupShutdown).toHaveBeenCalledTimes(1);
     });
 
     it('does not call videoDb.shutdown or componentGroup.shutdown if a videoDb or componentgroup object has not been created', async () => {
@@ -729,7 +824,23 @@ describe('Component', () => {
 
       await component.shutdown();
 
-      expect(shutdown).not.toHaveBeenCalled();
+      expect(videoDbShutdown).not.toHaveBeenCalled();
+      expect(componentGroupShutdown).not.toHaveBeenCalled();
+    });
+
+    it('does not call calibreDb.shutdown or componentGroup.shutdown if a calibreDb or componentgroup object has not been created', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+      mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+      yamlParseMock.mockReturnValue({
+        type: 'calibredb',
+      });
+
+      await component.shutdown();
+
+      expect(calibreDbShutdown).not.toHaveBeenCalled();
+      expect(componentGroupShutdown).not.toHaveBeenCalled();
     });
   });
 });

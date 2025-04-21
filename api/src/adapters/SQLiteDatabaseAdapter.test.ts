@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Database } from 'sqlite3';
+import { Database, OPEN_CREATE, OPEN_FULLMUTEX, OPEN_READWRITE } from 'sqlite3';
 
 import { DatabaseAdapter } from './DatabaseAdapter';
 import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
@@ -24,7 +24,7 @@ describe('SQLiteDatabaseAdapter', () => {
       expect(mockDatabase).toHaveBeenCalled();
       expect(mockDatabase.mock.calls[0][0]).toBe(dbFullPath);
 
-      const cb = mockDatabase.mock.calls[0][1] as any;
+      const cb = mockDatabase.mock.calls[0][2] as any;
       cb(null);
 
       await expect(initPromise).resolves.toBeUndefined();
@@ -37,17 +37,44 @@ describe('SQLiteDatabaseAdapter', () => {
       expect(mockDatabase).toHaveBeenCalled();
       expect(mockDatabase.mock.calls[0][0]).toBe(dbFullPath);
 
-      const cb = mockDatabase.mock.calls[0][1] as any;
+      const cb = mockDatabase.mock.calls[0][2] as any;
       cb(executionError);
 
       await expect(initPromise).rejects.toThrow(executionError);
+    });
+
+    it('initialises using the given mode if one is provided', async () => {
+      const mode = 1234;
+      const initPromise = adapter.initialise(mode);
+
+      expect(mockDatabase).toHaveBeenCalled();
+      expect(mockDatabase.mock.calls[0][0]).toBe(dbFullPath);
+      expect(mockDatabase.mock.calls[0][1]).toBe(mode);
+
+      const cb = mockDatabase.mock.calls[0][2] as any;
+      cb(null);
+
+      await expect(initPromise).resolves.toBeUndefined();
+    });
+
+    it('initialises using the default mode if one is not provided', async () => {
+      const initPromise = adapter.initialise();
+
+      expect(mockDatabase).toHaveBeenCalled();
+      expect(mockDatabase.mock.calls[0][0]).toBe(dbFullPath);
+      expect(mockDatabase.mock.calls[0][1]).toBe(OPEN_READWRITE | OPEN_CREATE | OPEN_FULLMUTEX);
+
+      const cb = mockDatabase.mock.calls[0][2] as any;
+      cb(null);
+
+      await expect(initPromise).resolves.toBeUndefined();
     });
   });
 
   describe('close', () => {
     beforeEach(async () => {
       const initPromise = adapter.initialise();
-      const initCb = mockDatabase.mock.calls[0][1] as any;
+      const initCb = mockDatabase.mock.calls[0][2] as any;
       initCb(null);
       await initPromise;
     });
@@ -82,7 +109,7 @@ describe('SQLiteDatabaseAdapter', () => {
   describe('get', () => {
     beforeEach(async () => {
       const initPromise = adapter.initialise();
-      const initCb = mockDatabase.mock.calls[0][1] as any;
+      const initCb = mockDatabase.mock.calls[0][2] as any;
       initCb(null);
       await initPromise;
     });
@@ -118,7 +145,7 @@ describe('SQLiteDatabaseAdapter', () => {
   describe('all', () => {
     beforeEach(async () => {
       const initPromise = adapter.initialise();
-      const initCb = mockDatabase.mock.calls[0][1] as any;
+      const initCb = mockDatabase.mock.calls[0][2] as any;
       initCb(null);
       await initPromise;
     });
@@ -154,7 +181,7 @@ describe('SQLiteDatabaseAdapter', () => {
   describe('exec', () => {
     beforeEach(async () => {
       const initPromise = adapter.initialise();
-      const initCb = mockDatabase.mock.calls[0][1] as any;
+      const initCb = mockDatabase.mock.calls[0][2] as any;
       initCb(null);
       await initPromise;
     });
@@ -190,7 +217,7 @@ describe('SQLiteDatabaseAdapter', () => {
   describe('runWithParams', () => {
     beforeEach(async () => {
       const initPromise = adapter.initialise();
-      const initCb = mockDatabase.mock.calls[0][1] as any;
+      const initCb = mockDatabase.mock.calls[0][2] as any;
       initCb(null);
       await initPromise;
     });
@@ -228,7 +255,7 @@ describe('SQLiteDatabaseAdapter', () => {
   describe('getWithParams', () => {
     beforeEach(async () => {
       const initPromise = adapter.initialise();
-      const initCb = mockDatabase.mock.calls[0][1] as any;
+      const initCb = mockDatabase.mock.calls[0][2] as any;
       initCb(null);
       await initPromise;
     });
@@ -266,7 +293,7 @@ describe('SQLiteDatabaseAdapter', () => {
   describe('getAllWithParams', () => {
     beforeEach(async () => {
       const initPromise = adapter.initialise();
-      const initCb = mockDatabase.mock.calls[0][1] as any;
+      const initCb = mockDatabase.mock.calls[0][2] as any;
       initCb(null);
       await initPromise;
     });

@@ -1,5 +1,5 @@
 export interface DatabaseAdapter {
-  initialise(): Promise<void>;
+  initialise(mode?: number): Promise<void>;
   close(): Promise<void>;
   exec(sql: string): Promise<void>;
   runWithParams(sql: string, params: unknown): Promise<void>;

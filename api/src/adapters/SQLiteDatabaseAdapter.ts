@@ -1,4 +1,4 @@
-import { Database } from 'sqlite3';
+import { Database, OPEN_CREATE, OPEN_FULLMUTEX, OPEN_READWRITE } from 'sqlite3';
 
 import { DatabaseAdapter } from './DatabaseAdapter';
 
@@ -7,9 +7,9 @@ export class SQLiteDatabaseAdapter implements DatabaseAdapter {
 
   public constructor(private dbFullPath: string) {}
 
-  public initialise(): Promise<void> {
+  public initialise(mode = OPEN_READWRITE | OPEN_CREATE | OPEN_FULLMUTEX): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.database = new Database(this.dbFullPath, (err: Error | null) => {
+      this.database = new Database(this.dbFullPath, mode, (err: Error | null) => {
         err ? reject(err) : resolve();
       });
     });
