@@ -122,6 +122,51 @@ describe('CalibreDb', () => {
     );
   });
 
+  describe('getLookupValues', () => {
+    const mockResultRows = [
+      { code: 1, description: 'description 1' },
+      { code: 2, description: 'description 2' },
+      { code: 3, description: 'description 3' },
+    ];
+
+    const expectedReturnVal = {
+      '1': 'description 1',
+      '2': 'description 2',
+      '3': 'description 3',
+    };
+
+    beforeEach(async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      await calibreDb.initialise();
+    });
+
+    it('throws an error if passed an invalid table name', async () => {
+      await expect(calibreDb.getLookupValues('invalid-table')).rejects.toThrow(
+        'invalid table name invalid-table',
+      );
+    });
+
+    describe('authors', () => {
+      it('throws an error if no rows are returned', async () => {
+        mockGetAll.mockResolvedValue(undefined);
+
+        await expect(calibreDb.getLookupValues('authors')).rejects.toThrow(
+          'No authors records found',
+        );
+      });
+
+      it('attempts to run authors SQL and returns mapped results', async () => {
+        const sql = 'SELECT id as code, name as description FROM authors';
+        mockGetAll.mockResolvedValue(mockResultRows);
+
+        const actualReturnVal = await calibreDb.getLookupValues('authors');
+
+        expect(mockGetAll).toHaveBeenCalledWith(sql);
+        expect(actualReturnVal).toEqual(expectedReturnVal);
+      });
+    });
+  });
+
   describe('shutdown', () => {
     it('closes the database', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);

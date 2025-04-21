@@ -18,6 +18,10 @@ export const createCalibreDbRouter = (site: Site): Router => {
         const books = await calibreDb.getBooks(parseInt(query.pages));
         res.json(books);
       }
+      if (fn === 'getLookup') {
+        const values = await calibreDb.getLookupValues(req.query.table as string);
+        res.json(values);
+      }
     } catch (err: unknown) {
       next?.(err);
     }
@@ -25,5 +29,6 @@ export const createCalibreDbRouter = (site: Site): Router => {
 
   const router = Router();
   router.get('/books', async (req, res, next) => calibreDbHandler(req, res, next, 'getBooks'));
+  router.get('/lookup', async (req, res, next) => calibreDbHandler(req, res, next, 'getLookup'));
   return router;
 };

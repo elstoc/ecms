@@ -8,6 +8,19 @@ import { Config } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
+export enum LookupTables {
+  authors = 'authors',
+}
+
+export type LookupRow = {
+  code: number;
+  description: string;
+};
+
+export type LookupValues = {
+  [key: number]: string;
+};
+
 export class CalibreDb {
   private apiPath: string;
   private initialising = false;
@@ -66,6 +79,33 @@ export class CalibreDb {
       currentPage,
       totalPages,
     };
+  }
+
+  private async getAuthors(): Promise<LookupRow[] | undefined> {
+    const sql = 'SELECT id as code, name as description FROM authors';
+    return await this.database?.getAll<LookupRow>(sql);
+  }
+
+  public async getLookupValues(tableName: string): Promise<LookupValues> {
+    if (!Object.values(LookupTables).includes(tableName as LookupTables)) {
+      throw new Error(`invalid table name ${tableName}`);
+    }
+
+    let lookupRows: LookupRow[] | undefined;
+    if (tableName === 'authors') {
+      lookupRows = await this.getAuthors();
+    }
+
+    if (!lookupRows) {
+      throw new Error(`No ${tableName} records found`);
+    }
+
+    const returnVal: LookupValues = {};
+    lookupRows.forEach((row) => {
+      returnVal[row.code] = row.description;
+    });
+
+    return returnVal;
   }
 
   public async shutdown(): Promise<void> {

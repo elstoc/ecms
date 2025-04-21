@@ -451,6 +451,21 @@ paths:
       responses:
         '200':
           description: OK
+  /calibredb/lookup:
+    get:
+      description: Get the contents of a lookup table
+      parameters:
+        - $ref: '#/components/parameters/ComponentPath'
+        - in: query
+          name: table
+          description: The name of the lookup table
+          schema:
+            type: string
+            enum:
+              - authors
+      responses:
+        '200':
+          description: OK
   /calibredb/books:
     get:
       description: Get a list of books from the database
