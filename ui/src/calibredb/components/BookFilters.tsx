@@ -26,6 +26,17 @@ export const BookFilters = () => {
         onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
         filterable={true}
       />
+      <SelectLookup
+        label='Format'
+        className='format'
+        lookupTable='formats'
+        allowUndefinedCodeSelection={true}
+        valueForUndefinedCode='All'
+        inline={true}
+        selectedCode={uiFilters.format?.toString()}
+        onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
+        filterable={true}
+      />
     </div>
   );
 };

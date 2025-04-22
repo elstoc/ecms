@@ -4,6 +4,7 @@ import { KeyValueOfType } from '@/utils';
 
 export type BookFilters = {
   author?: number;
+  format?: number;
 };
 
 type CalibreDbState = {
