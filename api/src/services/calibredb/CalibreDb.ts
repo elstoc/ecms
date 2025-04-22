@@ -18,11 +18,13 @@ type BookDao = {
   title: string;
   authors: string;
   format: number | null;
+  shelf_path: number | null;
 };
 
 export enum LookupTables {
   authors = 'authors',
   formats = 'formats',
+  shelfPaths = 'shelfPaths',
 }
 
 export type LookupRow = {
@@ -76,6 +78,7 @@ export class CalibreDb {
       title: book.title,
       authors: book.authors?.split('|').map(Number) || undefined,
       format: book.format ?? undefined,
+      shelfPath: book.shelf_path ?? undefined,
     };
   }
 
@@ -89,7 +92,7 @@ export class CalibreDb {
     const { author, format } = filters;
 
     let sql = `
-    SELECT id, title, authors.authors, format.format
+    SELECT id, title, authors.authors, format.format, shelf_path.shelf_path
     FROM books
     LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') authors
                FROM books_authors_link bal
@@ -97,6 +100,9 @@ export class CalibreDb {
     LEFT JOIN (SELECT book, MIN(format_link.value) as format
                FROM books_custom_column_7_link format_link
                GROUP BY book) format ON books.id = format.book
+    LEFT JOIN (SELECT book, MIN(shelfpath_link.value) as shelf_path
+               FROM books_custom_column_39_link shelfpath_link
+               GROUP BY book) shelf_path ON books.id = shelf_path.book
     `;
 
     if (author) {
@@ -157,6 +163,11 @@ export class CalibreDb {
     return await this.database?.getAll<LookupRow>(sql);
   }
 
+  private async getShelfPaths(): Promise<LookupRow[] | undefined> {
+    const sql = 'SELECT id as code, value as description FROM custom_column_39';
+    return await this.database?.getAll<LookupRow>(sql);
+  }
+
   public async getLookupValues(tableName: string): Promise<LookupValues> {
     if (!Object.values(LookupTables).includes(tableName as LookupTables)) {
       throw new Error(`invalid table name ${tableName}`);
@@ -168,6 +179,9 @@ export class CalibreDb {
     }
     if (tableName === 'formats') {
       lookupRows = await this.getFormats();
+    }
+    if (tableName === 'shelfPaths') {
+      lookupRows = await this.getShelfPaths();
     }
 
     if (!lookupRows) {

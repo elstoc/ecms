@@ -464,6 +464,7 @@ paths:
             enum:
               - authors
               - formats
+              - shelfPaths
       responses:
         '200':
           description: OK

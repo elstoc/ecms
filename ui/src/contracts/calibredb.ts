@@ -3,6 +3,7 @@ export type Book = {
   title: string;
   authors?: number[];
   format?: number;
+  shelfPath?: number;
 };
 
 export type PaginatedBooks = {
