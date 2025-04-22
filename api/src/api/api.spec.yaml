@@ -464,7 +464,7 @@ paths:
             enum:
               - authors
               - formats
-              - shelfPaths
+              - paths
               - collections
               - koboStatuses
               - kindleStatuses

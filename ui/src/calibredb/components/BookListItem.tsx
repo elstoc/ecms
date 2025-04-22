@@ -13,14 +13,14 @@ type BookListItemProps = {
 export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ book }, ref) => {
   const authors = useLookup('authors');
   const format = useLookupValue('formats', book.format);
-  const shelfPath = useLookupValue('shelfPaths', book.shelfPath);
+  const path = useLookupValue('paths', book.path);
 
   return (
     <Card ref={ref}>
       <div>{book.title}</div>
       <div>{book.authors?.map((id) => authors[id]).join(', ')}</div>
       <div>{format}</div>
-      <div>{shelfPath}</div>
+      <div>{path}</div>
     </Card>
   );
 });
