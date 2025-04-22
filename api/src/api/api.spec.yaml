@@ -463,6 +463,7 @@ paths:
             type: string
             enum:
               - authors
+              - formats
       responses:
         '200':
           description: OK

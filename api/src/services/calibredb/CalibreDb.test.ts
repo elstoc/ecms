@@ -205,6 +205,26 @@ describe('CalibreDb', () => {
         expect(actualReturnVal).toEqual(expectedReturnVal);
       });
     });
+
+    describe('formats', () => {
+      it('throws an error if no rows are returned', async () => {
+        mockGetAllWithParams.mockResolvedValue(undefined);
+
+        await expect(calibreDb.getLookupValues('formats')).rejects.toThrow(
+          'No formats records found',
+        );
+      });
+
+      it('attempts to run formats SQL and returns mapped results', async () => {
+        const sql = 'SELECT id as code, value as description FROM custom_column_7';
+        mockGetAll.mockResolvedValue(mockResultRows);
+
+        const actualReturnVal = await calibreDb.getLookupValues('formats');
+
+        expect(mockGetAll).toHaveBeenCalledWith(sql);
+        expect(actualReturnVal).toEqual(expectedReturnVal);
+      });
+    });
   });
 
   describe('shutdown', () => {
