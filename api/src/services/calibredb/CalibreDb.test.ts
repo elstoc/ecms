@@ -3,7 +3,7 @@ import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 
 import { stripWhiteSpace } from '@/utils';
 
-import { CalibreDb } from './CalibreDb';
+import { CalibreDb, lookupTableSql } from './CalibreDb';
 
 jest.mock('@/adapters');
 
@@ -205,6 +205,8 @@ describe('CalibreDb', () => {
   });
 
   describe('getLookupValues', () => {
+    const lookupTables = Object.keys(lookupTableSql);
+
     const mockResultRows = [
       { code: 1, description: 'description 1' },
       { code: 2, description: 'description 2' },
@@ -228,64 +230,20 @@ describe('CalibreDb', () => {
       );
     });
 
-    describe('authors', () => {
-      it('throws an error if no rows are returned', async () => {
-        mockGetAllWithParams.mockResolvedValue(undefined);
+    it.each(lookupTables)('throws an error if no rows are returned (%s)', async (table: string) => {
+      mockGetAllWithParams.mockResolvedValue(undefined);
 
-        await expect(calibreDb.getLookupValues('authors')).rejects.toThrow(
-          'No authors records found',
-        );
-      });
-
-      it('attempts to run authors SQL and returns mapped results', async () => {
-        const sql = 'SELECT id as code, name as description FROM authors';
-        mockGetAll.mockResolvedValue(mockResultRows);
-
-        const actualReturnVal = await calibreDb.getLookupValues('authors');
-
-        expect(mockGetAll).toHaveBeenCalledWith(sql);
-        expect(actualReturnVal).toEqual(expectedReturnVal);
-      });
+      await expect(calibreDb.getLookupValues(table)).rejects.toThrow(`No ${table} records found`);
     });
 
-    describe('formats', () => {
-      it('throws an error if no rows are returned', async () => {
-        mockGetAllWithParams.mockResolvedValue(undefined);
+    it.each(lookupTables)('runs %s SQL and returns mapped results', async (table: string) => {
+      const sql = lookupTableSql[table];
+      mockGetAll.mockResolvedValue(mockResultRows);
 
-        await expect(calibreDb.getLookupValues('formats')).rejects.toThrow(
-          'No formats records found',
-        );
-      });
+      const actualReturnVal = await calibreDb.getLookupValues(table);
 
-      it('attempts to run formats SQL and returns mapped results', async () => {
-        const sql = 'SELECT id as code, value as description FROM custom_column_7';
-        mockGetAll.mockResolvedValue(mockResultRows);
-
-        const actualReturnVal = await calibreDb.getLookupValues('formats');
-
-        expect(mockGetAll).toHaveBeenCalledWith(sql);
-        expect(actualReturnVal).toEqual(expectedReturnVal);
-      });
-    });
-
-    describe('shelfPaths', () => {
-      it('throws an error if no rows are returned', async () => {
-        mockGetAllWithParams.mockResolvedValue(undefined);
-
-        await expect(calibreDb.getLookupValues('shelfPaths')).rejects.toThrow(
-          'No shelfPaths records found',
-        );
-      });
-
-      it('attempts to run shelfPaths SQL and returns mapped results', async () => {
-        const sql = 'SELECT id as code, value as description FROM custom_column_39';
-        mockGetAll.mockResolvedValue(mockResultRows);
-
-        const actualReturnVal = await calibreDb.getLookupValues('shelfPaths');
-
-        expect(mockGetAll).toHaveBeenCalledWith(sql);
-        expect(actualReturnVal).toEqual(expectedReturnVal);
-      });
+      expect(mockGetAll).toHaveBeenCalledWith(sql);
+      expect(actualReturnVal).toEqual(expectedReturnVal);
     });
   });
 

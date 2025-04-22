@@ -21,10 +21,14 @@ type BookDao = {
   shelf_path: number | null;
 };
 
-const lookupTableSql: Record<string, string> = {
+export const lookupTableSql: Record<string, string> = {
   authors: 'SELECT id as code, name as description FROM authors',
   formats: 'SELECT id as code, value as description FROM custom_column_7',
   shelfPaths: 'SELECT id as code, value as description FROM custom_column_39',
+  collections: 'SELECT id as code, value as description FROM custom_column_14',
+  koboStatuses: 'SELECT id as code, value as description FROM custom_column_21',
+  kindleStatuses: 'SELECT id as code, value as description FROM custom_column_22',
+  tabletStatuses: 'SELECT id as code, value as description FROM custom_column_23',
 };
 
 export type LookupRow = {

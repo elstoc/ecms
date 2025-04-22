@@ -465,6 +465,10 @@ paths:
               - authors
               - formats
               - shelfPaths
+              - collections
+              - koboStatuses
+              - kindleStatuses
+              - tabletStatuses
       responses:
         '200':
           description: OK
