@@ -21,11 +21,11 @@ type BookDao = {
   shelf_path: number | null;
 };
 
-export enum LookupTables {
-  authors = 'authors',
-  formats = 'formats',
-  shelfPaths = 'shelfPaths',
-}
+const lookupTableSql: Record<string, string> = {
+  authors: 'SELECT id as code, name as description FROM authors',
+  formats: 'SELECT id as code, value as description FROM custom_column_7',
+  shelfPaths: 'SELECT id as code, value as description FROM custom_column_39',
+};
 
 export type LookupRow = {
   code: number;
@@ -153,36 +153,12 @@ export class CalibreDb {
     };
   }
 
-  private async getAuthors(): Promise<LookupRow[] | undefined> {
-    const sql = 'SELECT id as code, name as description FROM authors';
-    return await this.database?.getAll<LookupRow>(sql);
-  }
-
-  private async getFormats(): Promise<LookupRow[] | undefined> {
-    const sql = 'SELECT id as code, value as description FROM custom_column_7';
-    return await this.database?.getAll<LookupRow>(sql);
-  }
-
-  private async getShelfPaths(): Promise<LookupRow[] | undefined> {
-    const sql = 'SELECT id as code, value as description FROM custom_column_39';
-    return await this.database?.getAll<LookupRow>(sql);
-  }
-
   public async getLookupValues(tableName: string): Promise<LookupValues> {
-    if (!Object.values(LookupTables).includes(tableName as LookupTables)) {
+    if (!Object.keys(lookupTableSql).includes(tableName)) {
       throw new Error(`invalid table name ${tableName}`);
     }
 
-    let lookupRows: LookupRow[] | undefined;
-    if (tableName === 'authors') {
-      lookupRows = await this.getAuthors();
-    }
-    if (tableName === 'formats') {
-      lookupRows = await this.getFormats();
-    }
-    if (tableName === 'shelfPaths') {
-      lookupRows = await this.getShelfPaths();
-    }
+    const lookupRows = await this.database?.getAll<LookupRow>(lookupTableSql[tableName]);
 
     if (!lookupRows) {
       throw new Error(`No ${tableName} records found`);
