@@ -3,6 +3,8 @@ import { Suspense } from 'react';
 import { BookList } from '@/calibredb/components/BookList';
 import { ContentWithSidebar } from '@/shared/components/layout';
 
+import { BookFilters } from './BookFilters';
+
 export const CalibreDbContent = () => {
   const content = (
     <Suspense>
@@ -12,7 +14,7 @@ export const CalibreDbContent = () => {
 
   const sidebar = (
     <Suspense>
-      <div>Sidebar placeholder</div>
+      <BookFilters />
     </Suspense>
   );
 

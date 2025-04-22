@@ -1,5 +1,6 @@
 import { Button, FormGroup, MenuItem } from '@blueprintjs/core';
-import { ItemPredicate, ItemRenderer, Select } from '@blueprintjs/select';
+import { ItemListPredicate, ItemRenderer, Select } from '@blueprintjs/select';
+import { useMemo } from 'react';
 
 import './SelectDescribedCode.scss';
 
@@ -32,14 +33,26 @@ export const SelectDescribedCode = ({
   filterable = true,
   disabled,
 }: SelectDescribedCodeParams) => {
-  const allItems = { ...propsAllItems };
-  if (allowUndefinedCodeSelection) {
-    allItems[UNDEFINED_CODE] = valueForUndefinedCode || ' — ';
-  }
-  const allItemsArray = Object.entries(allItems).map(([code, description]) => ({
-    code,
-    description,
-  }));
+  const allItems = useMemo(() => {
+    const allItems = { ...propsAllItems };
+    if (allowUndefinedCodeSelection) {
+      allItems[UNDEFINED_CODE] = valueForUndefinedCode || ' — ';
+    }
+    return allItems;
+  }, [propsAllItems]);
+
+  const allItemsSortedArray = useMemo(() => {
+    const allItemsArray = Object.entries(allItems).map(([code, description]) => ({
+      code,
+      description,
+    }));
+
+    const sortedArray = allItemsArray.sort((a, b) =>
+      a.code === UNDEFINED_CODE ? -1 : a.description.localeCompare(b.description),
+    );
+
+    return sortedArray;
+  }, [allItems]);
 
   const popoverClassName = className ? `${className}-popover` : '';
 
@@ -47,8 +60,17 @@ export const SelectDescribedCode = ({
     onChange?.(dc.code === UNDEFINED_CODE ? undefined : dc.code);
   };
 
-  const filterValue: ItemPredicate<DescribedCode> = (query, item) => {
-    return query.length === 0 || item.description.toLowerCase().includes(query.toLowerCase());
+  const filterAll: ItemListPredicate<DescribedCode> = (query, items) => {
+    let newItems = [...items];
+
+    if (query.length > 0) {
+      newItems = newItems.filter((item) =>
+        item.description.toLowerCase().includes(query.toLowerCase()),
+      );
+    }
+
+    newItems = newItems.slice(0, 50);
+    return newItems;
   };
 
   const itemRenderer: ItemRenderer<DescribedCode> = (
@@ -75,9 +97,9 @@ export const SelectDescribedCode = ({
   return (
     <FormGroup label={label} inline={inline} className={`${className} select-described-code`}>
       <Select<DescribedCode>
-        items={allItemsArray.sort((a, b) => a.description.localeCompare(b.description))}
+        items={allItemsSortedArray}
         itemRenderer={itemRenderer}
-        itemPredicate={filterValue}
+        itemListPredicate={filterAll}
         onItemSelect={changeSelection}
         popoverProps={{ minimal: true }}
         popoverContentProps={{ className: `${popoverClassName} select-described-code-popover` }}
