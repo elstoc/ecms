@@ -15,7 +15,10 @@ export const createCalibreDbRouter = (site: Site): Router => {
       const calibreDb = await site.getCalibreDb(path);
       if (fn === 'getBooks') {
         const query = req.query as Record<string, string>;
-        const books = await calibreDb.getBooks(parseInt(query.pages));
+        const filters = {
+          author: query.author ? parseInt(query.author) : undefined,
+        };
+        const books = await calibreDb.getBooks(filters, parseInt(query.pages));
         res.json(books);
       }
       if (fn === 'getLookup') {

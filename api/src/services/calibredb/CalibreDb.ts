@@ -8,6 +8,10 @@ import { Config } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
+type Filters = {
+  author?: number;
+};
+
 type BookDao = {
   id: number;
   title: string;
@@ -71,17 +75,43 @@ export class CalibreDb {
     };
   }
 
-  public async getBooks(requestedPages = 1): Promise<PaginatedBooks> {
-    const sql = `
+  private buildBookQuery(filters: Filters): {
+    sql: string;
+    params: Record<string, unknown>;
+  } {
+    const params: Record<string, unknown> = {};
+    const whereClauses: string[] = [];
+
+    const { author } = filters;
+
+    let sql = `
     SELECT id, title, authors.authors
     FROM books
     LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') authors
                FROM books_authors_link bal
                GROUP BY book) authors ON books.id = authors.book
-    ORDER BY title
     `;
 
-    let books = await this.database?.getAll<BookDao>(sql);
+    if (author) {
+      whereClauses.push(
+        'EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author)',
+      );
+      params['$author'] = author;
+    }
+
+    if (whereClauses.length > 0) {
+      sql += ` WHERE (${whereClauses.join(') AND (')})`;
+    }
+
+    sql += ' ORDER BY title';
+
+    return { params, sql };
+  }
+
+  public async getBooks(filters: Filters, requestedPages = 1): Promise<PaginatedBooks> {
+    const { sql, params } = this.buildBookQuery(filters);
+
+    let books = await this.database?.getAllWithParams<BookDao>(sql, params);
 
     if (!books) {
       throw new Error('Unexpected error querying books');

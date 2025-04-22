@@ -28,11 +28,13 @@ describe('CalibreDb', () => {
   let calibreDb: CalibreDb;
   const mockInit = jest.fn();
   const mockGetAll = jest.fn();
+  const mockGetAllWithParams = jest.fn();
   const mockClose = jest.fn();
 
   const mockDb = {
     initialise: mockInit,
     getAll: mockGetAll,
+    getAllWithParams: mockGetAllWithParams,
     close: mockClose,
   };
 
@@ -84,9 +86,9 @@ describe('CalibreDb', () => {
     FROM books
     LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') authors
                FROM books_authors_link bal
-               GROUP BY book) authors ON books.id = authors.book
-    ORDER BY title
-    `;
+               GROUP BY book) authors ON books.id = authors.book`;
+
+    const orderBySql = ' ORDER BY title';
 
     const mockManyBooks = [
       { id: 1, title: 'Book 1' },
@@ -101,16 +103,37 @@ describe('CalibreDb', () => {
       { id: 10, title: 'Book 10' },
     ];
 
-    it('runs correct SQL and returns an array of books', async () => {
-      mockGetAll.mockResolvedValue(mockManyBooks);
+    it('runs correct SQL and params with no filters and returns an array of books', async () => {
+      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
       mockStorage.contentFileExists.mockReturnValue(true);
       await calibreDb.initialise();
 
-      const books = await calibreDb.getBooks(10);
+      const books = await calibreDb.getBooks({}, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
-      const actualSql = mockGetAll.mock.calls[0][0];
-      expect(stripWhiteSpace(actualSql)).toBe(stripWhiteSpace(baseSql));
+      const expectedSql = baseSql + orderBySql;
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({});
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
+    it('runs correct SQL and params with author filter and returns an array of books', async () => {
+      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
+      mockStorage.contentFileExists.mockReturnValue(true);
+      await calibreDb.initialise();
+
+      const expectedSql =
+        baseSql +
+        ' WHERE (EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author))' +
+        orderBySql;
+
+      const books = await calibreDb.getBooks({ author: 1234 }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({ $author: 1234 });
       expect(books.books).toEqual(mockManyBooks);
     });
 
@@ -123,11 +146,11 @@ describe('CalibreDb', () => {
     ])(
       'paginates results correctly (requested pages: %s, returned pages: %s)',
       async (requestedPages: number, expectedPagesReturned: number) => {
-        mockGetAll.mockResolvedValue(mockManyBooks);
+        mockGetAllWithParams.mockResolvedValue(mockManyBooks);
         mockStorage.contentFileExists.mockReturnValue(true);
         await calibreDb.initialise();
 
-        const { books, totalPages, currentPage } = await calibreDb.getBooks(requestedPages);
+        const { books, totalPages, currentPage } = await calibreDb.getBooks({}, requestedPages);
 
         expect(totalPages).toBe(4);
         expect(currentPage).toBe(expectedPagesReturned);
@@ -162,7 +185,7 @@ describe('CalibreDb', () => {
 
     describe('authors', () => {
       it('throws an error if no rows are returned', async () => {
-        mockGetAll.mockResolvedValue(undefined);
+        mockGetAllWithParams.mockResolvedValue(undefined);
 
         await expect(calibreDb.getLookupValues('authors')).rejects.toThrow(
           'No authors records found',

@@ -478,6 +478,13 @@ paths:
           schema:
             type: integer
             minimum: 1
+        - name: author
+          description: Author ID
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: OK
