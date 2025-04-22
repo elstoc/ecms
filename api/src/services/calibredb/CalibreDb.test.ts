@@ -140,6 +140,45 @@ describe('CalibreDb', () => {
       expect(books.books).toEqual(mockManyBooks);
     });
 
+    it('runs correct SQL and params with format filter and returns an array of books', async () => {
+      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
+      mockStorage.contentFileExists.mockReturnValue(true);
+      await calibreDb.initialise();
+
+      const expectedSql =
+        baseSql +
+        ' WHERE (EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format))' +
+        orderBySql;
+
+      const books = await calibreDb.getBooks({ format: 1234 }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({ $format: 1234 });
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
+    it('runs correct SQL and params with all filters and returns an array of books', async () => {
+      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
+      mockStorage.contentFileExists.mockReturnValue(true);
+      await calibreDb.initialise();
+
+      const expectedSql =
+        baseSql +
+        ' WHERE (EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author))' +
+        ' AND (EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format))' +
+        orderBySql;
+
+      const books = await calibreDb.getBooks({ author: 2345, format: 1234 }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({ $author: 2345, $format: 1234 });
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
     it.each([
       [1, 1],
       [2, 2],

@@ -10,6 +10,7 @@ const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, ti
 
 type Filters = {
   author?: number;
+  format?: number;
 };
 
 type BookDao = {
@@ -85,7 +86,7 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author } = filters;
+    const { author, format } = filters;
 
     let sql = `
     SELECT id, title, authors.authors, format.format
@@ -103,6 +104,13 @@ export class CalibreDb {
         'EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author)',
       );
       params['$author'] = author;
+    }
+
+    if (format) {
+      whereClauses.push(
+        'EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format)',
+      );
+      params['$format'] = format;
     }
 
     if (whereClauses.length > 0) {

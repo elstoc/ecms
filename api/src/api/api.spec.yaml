@@ -486,6 +486,13 @@ paths:
           schema:
             type: integer
             minimum: 1
+        - name: format
+          description: Format ID
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: OK
