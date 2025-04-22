@@ -31,3 +31,8 @@ export const useLookup = (lookupTable: string) => {
     refetchInterval: 60 * 60 * 1000,
   });
 };
+
+export const useLookupValue = (lookupTable: string, value?: number) => {
+  const lookup = useLookup(lookupTable);
+  return lookup[value ?? ''];
+};

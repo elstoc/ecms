@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 
 import { Book } from '@/contracts/calibredb';
 
-import { useLookup } from '../hooks/useCalibreDbQueries';
+import { useLookup, useLookupValue } from '../hooks/useCalibreDbQueries';
 
 type BookListItemProps = {
   book: Book;
@@ -12,11 +12,13 @@ type BookListItemProps = {
 
 export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ book }, ref) => {
   const authors = useLookup('authors');
+  const format = useLookupValue('formats', book.format);
 
   return (
     <Card ref={ref}>
       <div>{book.title}</div>
       <div>{book.authors?.map((id) => authors[id]).join(', ')}</div>
+      <div>{format}</div>
     </Card>
   );
 });
