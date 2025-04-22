@@ -82,11 +82,14 @@ describe('CalibreDb', () => {
 
   describe('getBooks', () => {
     const baseSql = `
-    SELECT id, title, authors.authors
+    SELECT id, title, authors.authors, format.format
     FROM books
     LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') authors
                FROM books_authors_link bal
-               GROUP BY book) authors ON books.id = authors.book`;
+               GROUP BY book) authors ON books.id = authors.book
+    LEFT JOIN (SELECT book, MIN(format_link.value) as format
+               FROM books_custom_column_7_link format_link
+               GROUP BY book) format ON books.id = format.book`;
 
     const orderBySql = ' ORDER BY title';
 
