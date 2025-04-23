@@ -17,8 +17,15 @@ type BookDao = {
   id: number;
   title: string;
   authors: string;
+  rating: number | null;
   format: number | null;
   path: number | null;
+  collections: string | null;
+  kobo_status: number | null;
+  kindle_status: number | null;
+  tablet_status: number | null;
+  read: number;
+  fixed: number;
 };
 
 export const lookupTableSql: Record<string, string> = {
@@ -81,8 +88,15 @@ export class CalibreDb {
       id: book.id,
       title: book.title,
       authors: book.authors?.split('|').map(Number) || undefined,
+      rating: book.rating ?? undefined,
       format: book.format ?? undefined,
       path: book.path ?? undefined,
+      collections: book.collections?.split('|').map(Number) || undefined,
+      koboStatus: book.kobo_status ?? undefined,
+      kindleStatus: book.kindle_status ?? undefined,
+      tabletStatus: book.tablet_status ?? undefined,
+      read: book.read === 1,
+      fixed: book.fixed === 1,
     };
   }
 
@@ -96,17 +110,40 @@ export class CalibreDb {
     const { author, format } = filters;
 
     let sql = `
-    SELECT id, title, authors.authors, formats.format, paths.path
+    SELECT books.id, title, authors.authors, ratings.rating, formats.format, paths.path, collections.collections,
+           kobo_statuses.kobo_status, kindle_statuses.kindle_status, tablet_statuses.tablet_status,
+           IFNULL(read.read, 0) AS read, IFNULL(fixed.fixed, 0) AS fixed
     FROM books
-    LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') authors
+    LEFT JOIN (SELECT book, ratings.rating / 2 as rating
+               FROM books_ratings_link ratings_link
+               JOIN ratings ON ratings_link.rating = ratings.id) ratings ON books.id = ratings.book
+    LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') AS authors
                FROM books_authors_link bal
                GROUP BY book) authors ON books.id = authors.book
-    LEFT JOIN (SELECT book, MIN(format_link.value) as format
+    LEFT JOIN (SELECT book, MIN(value) AS format
                FROM books_custom_column_7_link format_link
                GROUP BY book) formats ON books.id = formats.book
-    LEFT JOIN (SELECT book, MIN(shelfpath_link.value) as path
-               FROM books_custom_column_39_link shelfpath_link
+    LEFT JOIN (SELECT book, MIN(value) AS path
+               FROM books_custom_column_39_link path_link
                GROUP BY book) paths ON books.id = paths.book
+    LEFT JOIN (SELECT book, GROUP_CONCAT(value, '|') AS collections
+               FROM books_custom_column_14_link collection_link
+               GROUP BY book) collections ON books.id = collections.book
+    LEFT JOIN (SELECT book, MIN(value) AS kobo_status
+               FROM books_custom_column_21_link collection_link
+               GROUP BY book) kobo_statuses ON books.id = kobo_statuses.book
+    LEFT JOIN (SELECT book, MIN(value) AS kindle_status
+               FROM books_custom_column_22_link collection_link
+               GROUP BY book) kindle_statuses ON books.id = kindle_statuses.book
+    LEFT JOIN (SELECT book, MIN(value) AS tablet_status
+               FROM books_custom_column_23_link collection_link
+               GROUP BY book) tablet_statuses ON books.id = tablet_statuses.book
+    LEFT JOIN (SELECT book, MIN(read.value) as read
+               FROM custom_column_42 read
+               GROUP BY book) read ON books.id = read.book
+    LEFT JOIN (SELECT book, MIN(fixed.value) as fixed
+               FROM custom_column_25 fixed
+               GROUP BY book) fixed ON books.id = fixed.book
     `;
 
     if (author) {
