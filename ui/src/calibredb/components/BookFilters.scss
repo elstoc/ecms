@@ -35,4 +35,16 @@
       background-color: white;
     }
   }
+
+  .filter-action-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 1rem;
+
+    button {
+      margin-top: 0;
+      font-size: 1rem;
+    }
+  }
 }

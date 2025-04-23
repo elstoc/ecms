@@ -18,6 +18,7 @@ type CalibreDbState = {
 type StateAction =
   | { type: 'setPages'; payload: number }
   | { type: 'syncFilters' }
+  | { type: 'resetFilters' }
   | { type: 'setUiFilter'; payload: KeyValueOfType<BookFilters> };
 
 const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = (state, action) => {
@@ -38,6 +39,13 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
     return {
       ...state,
       apiFilters: state.uiFilters,
+    };
+  }
+  if (action.type === 'resetFilters') {
+    return {
+      ...state,
+      uiFilters: {},
+      apiFilters: {},
     };
   }
   return state;

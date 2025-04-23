@@ -1,3 +1,5 @@
+import { Button } from '@blueprintjs/core';
+
 import { toIntOrUndefined } from '@/utils';
 
 import { useCalibreDb } from '../hooks/useCalibreDb';
@@ -10,6 +12,7 @@ export const BookFilters = () => {
   const {
     state: { uiFilters },
     updateUiFilter,
+    dispatch,
   } = useCalibreDb();
 
   return (
@@ -37,6 +40,9 @@ export const BookFilters = () => {
         onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
         filterable={true}
       />
+      <div className='filter-action-buttons'>
+        <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
+      </div>
     </div>
   );
 };
