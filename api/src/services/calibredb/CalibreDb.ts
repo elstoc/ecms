@@ -28,6 +28,43 @@ type BookDao = {
   fixed: number;
 };
 
+export const baseBooksSql = `
+    SELECT books.id, title, authors.authors, ratings.rating, formats.format, paths.path, collections.collections,
+           kobo_statuses.kobo_status, kindle_statuses.kindle_status, tablet_statuses.tablet_status,
+           IFNULL(read.read, 0) AS read, IFNULL(fixed.fixed, 0) AS fixed
+    FROM books
+    LEFT JOIN (SELECT book, ratings.rating / 2 as rating
+               FROM books_ratings_link ratings_link
+               JOIN ratings ON ratings_link.rating = ratings.id) ratings ON books.id = ratings.book
+    LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') AS authors
+               FROM books_authors_link bal
+               GROUP BY book) authors ON books.id = authors.book
+    LEFT JOIN (SELECT book, MIN(value) AS format
+               FROM books_custom_column_7_link format_link
+               GROUP BY book) formats ON books.id = formats.book
+    LEFT JOIN (SELECT book, MIN(value) AS path
+               FROM books_custom_column_39_link path_link
+               GROUP BY book) paths ON books.id = paths.book
+    LEFT JOIN (SELECT book, GROUP_CONCAT(value, '|') AS collections
+               FROM books_custom_column_14_link collection_link
+               GROUP BY book) collections ON books.id = collections.book
+    LEFT JOIN (SELECT book, MIN(value) AS kobo_status
+               FROM books_custom_column_21_link collection_link
+               GROUP BY book) kobo_statuses ON books.id = kobo_statuses.book
+    LEFT JOIN (SELECT book, MIN(value) AS kindle_status
+               FROM books_custom_column_22_link collection_link
+               GROUP BY book) kindle_statuses ON books.id = kindle_statuses.book
+    LEFT JOIN (SELECT book, MIN(value) AS tablet_status
+               FROM books_custom_column_23_link collection_link
+               GROUP BY book) tablet_statuses ON books.id = tablet_statuses.book
+    LEFT JOIN (SELECT book, MIN(read.value) as read
+               FROM custom_column_42 read
+               GROUP BY book) read ON books.id = read.book
+    LEFT JOIN (SELECT book, MIN(fixed.value) as fixed
+               FROM custom_column_25 fixed
+               GROUP BY book) fixed ON books.id = fixed.book
+    `;
+
 export const lookupTableSql: Record<string, string> = {
   authors: 'SELECT id as code, name as description FROM authors',
   formats: 'SELECT id as code, value as description FROM custom_column_7',
@@ -109,43 +146,6 @@ export class CalibreDb {
 
     const { author, format } = filters;
 
-    let sql = `
-    SELECT books.id, title, authors.authors, ratings.rating, formats.format, paths.path, collections.collections,
-           kobo_statuses.kobo_status, kindle_statuses.kindle_status, tablet_statuses.tablet_status,
-           IFNULL(read.read, 0) AS read, IFNULL(fixed.fixed, 0) AS fixed
-    FROM books
-    LEFT JOIN (SELECT book, ratings.rating / 2 as rating
-               FROM books_ratings_link ratings_link
-               JOIN ratings ON ratings_link.rating = ratings.id) ratings ON books.id = ratings.book
-    LEFT JOIN (SELECT book, GROUP_CONCAT(author, '|') AS authors
-               FROM books_authors_link bal
-               GROUP BY book) authors ON books.id = authors.book
-    LEFT JOIN (SELECT book, MIN(value) AS format
-               FROM books_custom_column_7_link format_link
-               GROUP BY book) formats ON books.id = formats.book
-    LEFT JOIN (SELECT book, MIN(value) AS path
-               FROM books_custom_column_39_link path_link
-               GROUP BY book) paths ON books.id = paths.book
-    LEFT JOIN (SELECT book, GROUP_CONCAT(value, '|') AS collections
-               FROM books_custom_column_14_link collection_link
-               GROUP BY book) collections ON books.id = collections.book
-    LEFT JOIN (SELECT book, MIN(value) AS kobo_status
-               FROM books_custom_column_21_link collection_link
-               GROUP BY book) kobo_statuses ON books.id = kobo_statuses.book
-    LEFT JOIN (SELECT book, MIN(value) AS kindle_status
-               FROM books_custom_column_22_link collection_link
-               GROUP BY book) kindle_statuses ON books.id = kindle_statuses.book
-    LEFT JOIN (SELECT book, MIN(value) AS tablet_status
-               FROM books_custom_column_23_link collection_link
-               GROUP BY book) tablet_statuses ON books.id = tablet_statuses.book
-    LEFT JOIN (SELECT book, MIN(read.value) as read
-               FROM custom_column_42 read
-               GROUP BY book) read ON books.id = read.book
-    LEFT JOIN (SELECT book, MIN(fixed.value) as fixed
-               FROM custom_column_25 fixed
-               GROUP BY book) fixed ON books.id = fixed.book
-    `;
-
     if (author) {
       whereClauses.push(
         'EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author)',
@@ -159,6 +159,8 @@ export class CalibreDb {
       );
       params['$format'] = format;
     }
+
+    let sql = baseBooksSql;
 
     if (whereClauses.length > 0) {
       sql += ` WHERE (${whereClauses.join(') AND (')})`;
