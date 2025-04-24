@@ -498,6 +498,13 @@ paths:
           schema:
             type: integer
             minimum: 1
+        - name: bookPath
+          description: Path ID
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: OK

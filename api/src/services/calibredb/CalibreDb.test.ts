@@ -3,7 +3,7 @@ import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 
 import { stripWhiteSpace } from '@/utils';
 
-import { CalibreDb, baseBooksSql, lookupTableSql } from './CalibreDb';
+import { CalibreDb, baseBooksSql, filterSql, lookupTableSql } from './CalibreDb';
 
 jest.mock('@/adapters');
 
@@ -96,11 +96,13 @@ describe('CalibreDb', () => {
       { id: 10, title: 'Book 10', fixed: false, read: false },
     ];
 
-    it('runs correct SQL and params with no filters and returns an array of books', async () => {
+    beforeEach(async () => {
       mockGetAllWithParams.mockResolvedValue(mockManyBooks);
       mockStorage.contentFileExists.mockReturnValue(true);
       await calibreDb.initialise();
+    });
 
+    it('runs correct SQL and params with no filters and returns an array of books', async () => {
       const books = await calibreDb.getBooks({}, 10);
 
       const expectedSql = baseBooksSql + orderBySql;
@@ -112,14 +114,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL and params with author filter and returns an array of books', async () => {
-      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
-      mockStorage.contentFileExists.mockReturnValue(true);
-      await calibreDb.initialise();
-
-      const expectedSql =
-        baseBooksSql +
-        ' WHERE (EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author))' +
-        orderBySql;
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql['author'] + orderBySql;
 
       const books = await calibreDb.getBooks({ author: 1234 }, 10);
 
@@ -131,14 +126,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL and params with format filter and returns an array of books', async () => {
-      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
-      mockStorage.contentFileExists.mockReturnValue(true);
-      await calibreDb.initialise();
-
-      const expectedSql =
-        baseBooksSql +
-        ' WHERE (EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format))' +
-        orderBySql;
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql['format'] + orderBySql;
 
       const books = await calibreDb.getBooks({ format: 1234 }, 10);
 
@@ -149,23 +137,35 @@ describe('CalibreDb', () => {
       expect(books.books).toEqual(mockManyBooks);
     });
 
-    it('runs correct SQL and params with all filters and returns an array of books', async () => {
-      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
-      mockStorage.contentFileExists.mockReturnValue(true);
-      await calibreDb.initialise();
+    it('runs correct SQL and params with bookPath filter and returns an array of books', async () => {
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql['bookPath'] + orderBySql;
 
-      const expectedSql =
-        baseBooksSql +
-        ' WHERE (EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author))' +
-        ' AND (EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format))' +
-        orderBySql;
-
-      const books = await calibreDb.getBooks({ author: 2345, format: 1234 }, 10);
+      const books = await calibreDb.getBooks({ bookPath: 1234 }, 10);
 
       expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(params).toEqual({ $author: 2345, $format: 1234 });
+      expect(params).toEqual({ $bookPath: 1234 });
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
+    it('runs correct SQL and params with all filters and returns an array of books', async () => {
+      const expectedSql =
+        baseBooksSql +
+        ' WHERE ' +
+        filterSql['author'] +
+        ' AND ' +
+        filterSql['format'] +
+        ' AND ' +
+        filterSql['bookPath'] +
+        orderBySql;
+
+      const books = await calibreDb.getBooks({ author: 2345, format: 1234, bookPath: 2468 }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({ $author: 2345, $format: 1234, $bookPath: 2468 });
       expect(books.books).toEqual(mockManyBooks);
     });
 
@@ -178,10 +178,6 @@ describe('CalibreDb', () => {
     ])(
       'paginates results correctly (requested pages: %s, returned pages: %s)',
       async (requestedPages: number, expectedPagesReturned: number) => {
-        mockGetAllWithParams.mockResolvedValue(mockManyBooks);
-        mockStorage.contentFileExists.mockReturnValue(true);
-        await calibreDb.initialise();
-
         const { books, totalPages, currentPage } = await calibreDb.getBooks({}, requestedPages);
 
         expect(totalPages).toBe(4);

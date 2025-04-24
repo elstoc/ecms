@@ -11,6 +11,7 @@ const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, ti
 type Filters = {
   author?: number;
   format?: number;
+  bookPath?: number;
 };
 
 type BookDao = {
@@ -73,6 +74,14 @@ export const lookupTableSql: Record<string, string> = {
   koboStatuses: 'SELECT id as code, value as description FROM custom_column_21',
   kindleStatuses: 'SELECT id as code, value as description FROM custom_column_22',
   tabletStatuses: 'SELECT id as code, value as description FROM custom_column_23',
+};
+
+export const filterSql = {
+  author: '(EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author))',
+  format:
+    '(EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format))',
+  bookPath:
+    '(EXISTS (SELECT 1 FROM books_custom_column_39_link WHERE book = books.id AND value = $bookPath))',
 };
 
 export type LookupRow = {
@@ -144,26 +153,25 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author, format } = filters;
+    const { author, format, bookPath } = filters;
 
     if (author) {
-      whereClauses.push(
-        'EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author)',
-      );
+      whereClauses.push(filterSql.author);
       params['$author'] = author;
     }
-
     if (format) {
-      whereClauses.push(
-        'EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format)',
-      );
+      whereClauses.push(filterSql.format);
       params['$format'] = format;
+    }
+    if (bookPath) {
+      whereClauses.push(filterSql.bookPath);
+      params['$bookPath'] = bookPath;
     }
 
     let sql = baseBooksSql;
 
     if (whereClauses.length > 0) {
-      sql += ` WHERE (${whereClauses.join(') AND (')})`;
+      sql += ` WHERE ${whereClauses.join(' AND ')}`;
     }
 
     sql += ' ORDER BY title';
