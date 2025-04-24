@@ -505,6 +505,13 @@ paths:
           schema:
             type: integer
             minimum: 1
+        - name: pathPrefix
+          description: First part of the book's path
+          in: query
+          required: false
+          schema:
+            type: string
+            minLength: 1
       responses:
         '200':
           description: OK

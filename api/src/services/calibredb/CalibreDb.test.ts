@@ -149,6 +149,18 @@ describe('CalibreDb', () => {
       expect(books.books).toEqual(mockManyBooks);
     });
 
+    it('runs correct SQL and params with pathPrefix filter and returns an array of books', async () => {
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql['pathPrefix'] + orderBySql;
+
+      const books = await calibreDb.getBooks({ pathPrefix: 'NonFiction' }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({ $pathPrefixLike: 'NonFiction%' });
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
     it('runs correct SQL and params with all filters and returns an array of books', async () => {
       const expectedSql =
         baseBooksSql +

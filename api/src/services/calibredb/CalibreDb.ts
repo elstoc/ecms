@@ -12,6 +12,7 @@ type Filters = {
   author?: number;
   format?: number;
   bookPath?: number;
+  pathPrefix?: string;
 };
 
 type BookDao = {
@@ -77,11 +78,19 @@ export const lookupTableSql: Record<string, string> = {
 };
 
 export const filterSql = {
-  author: '(EXISTS (SELECT 1 FROM books_authors_link WHERE book = books.id AND author = $author))',
-  format:
-    '(EXISTS (SELECT 1 FROM books_custom_column_7_link WHERE book = books.id AND value = $format))',
-  bookPath:
-    '(EXISTS (SELECT 1 FROM books_custom_column_39_link WHERE book = books.id AND value = $bookPath))',
+  author: `(EXISTS (SELECT 1 FROM books_authors_link
+                    WHERE book = books.id
+                    AND author = $author))`,
+  format: `(EXISTS (SELECT 1 FROM books_custom_column_7_link
+                    WHERE book = books.id
+                    AND value = $format))`,
+  bookPath: `(EXISTS (SELECT 1 FROM books_custom_column_39_link
+                      WHERE book = books.id
+                      AND value = $bookPath))`,
+  pathPrefix: `(EXISTS (SELECT 1 FROM books_custom_column_39_link lnk
+                        JOIN custom_column_39 clm ON lnk.book = books.id
+                        WHERE lnk.value = clm.id
+                        AND clm.value LIKE $pathPrefixLike))`,
 };
 
 export type LookupRow = {
@@ -153,7 +162,7 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author, format, bookPath } = filters;
+    const { author, format, bookPath, pathPrefix } = filters;
 
     if (author) {
       whereClauses.push(filterSql.author);
@@ -166,6 +175,10 @@ export class CalibreDb {
     if (bookPath) {
       whereClauses.push(filterSql.bookPath);
       params['$bookPath'] = bookPath;
+    }
+    if (pathPrefix) {
+      whereClauses.push(filterSql.pathPrefix);
+      params['$pathPrefixLike'] = `${pathPrefix}%`;
     }
 
     let sql = baseBooksSql;
