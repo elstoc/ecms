@@ -11,8 +11,8 @@ const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, ti
 type Filters = {
   author?: number;
   format?: number;
-  bookPath?: number;
-  pathPrefix?: string;
+  bookPath?: string;
+  exactPath?: boolean;
 };
 
 type BookDao = {
@@ -84,13 +84,14 @@ export const filterSql = {
   format: `(EXISTS (SELECT 1 FROM books_custom_column_7_link
                     WHERE book = books.id
                     AND value = $format))`,
-  bookPath: `(EXISTS (SELECT 1 FROM books_custom_column_39_link
-                      WHERE book = books.id
-                      AND value = $bookPath))`,
-  pathPrefix: `(EXISTS (SELECT 1 FROM books_custom_column_39_link lnk
-                        JOIN custom_column_39 clm ON lnk.book = books.id
-                        WHERE lnk.value = clm.id
-                        AND clm.value LIKE $pathPrefixLike))`,
+  bookPathPrefix: `(EXISTS (SELECT 1 FROM books_custom_column_39_link lnk
+                            JOIN custom_column_39 clm ON lnk.book = books.id
+                            WHERE lnk.value = clm.id
+                            AND clm.value LIKE $pathPrefixLike))`,
+  bookPath: `(EXISTS (SELECT 1 FROM books_custom_column_39_link lnk
+                      JOIN custom_column_39 clm ON lnk.book = books.id
+                      WHERE lnk.value = clm.id
+                      AND clm.value = $bookPath))`,
 };
 
 export type LookupRow = {
@@ -162,7 +163,7 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author, format, bookPath, pathPrefix } = filters;
+    const { author, format, bookPath, exactPath } = filters;
 
     if (author) {
       whereClauses.push(filterSql.author);
@@ -173,12 +174,13 @@ export class CalibreDb {
       params['$format'] = format;
     }
     if (bookPath) {
-      whereClauses.push(filterSql.bookPath);
-      params['$bookPath'] = bookPath;
-    }
-    if (pathPrefix) {
-      whereClauses.push(filterSql.pathPrefix);
-      params['$pathPrefixLike'] = `${pathPrefix}%`;
+      if (exactPath) {
+        whereClauses.push(filterSql.bookPath);
+        params['$bookPath'] = bookPath;
+      } else {
+        whereClauses.push(filterSql.bookPathPrefix);
+        params['$pathPrefixLike'] = `${bookPath}%`;
+      }
     }
 
     let sql = baseBooksSql;

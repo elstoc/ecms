@@ -499,19 +499,18 @@ paths:
             type: integer
             minimum: 1
         - name: bookPath
-          description: Path ID
-          in: query
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-        - name: pathPrefix
-          description: First part of the book's path
+          description: Path of the book
           in: query
           required: false
           schema:
             type: string
-            minLength: 1
+            minimum: 1
+        - name: exactPath
+          description: Whether to filter by the exact bookPath
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/booleanInt'
       responses:
         '200':
           description: OK
