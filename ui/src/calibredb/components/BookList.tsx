@@ -8,6 +8,8 @@ import { useBooks } from '../hooks/useCalibreDbQueries';
 
 import { BookListItem } from './BookListItem';
 
+import './BookList.scss';
+
 export const BookList = () => {
   const { dispatch } = useCalibreDb();
   const { books, currentPage, totalPages } = useBooks();
