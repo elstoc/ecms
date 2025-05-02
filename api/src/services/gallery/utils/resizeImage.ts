@@ -18,7 +18,7 @@ export const resizeImage = async (sourceImage: Buffer, config: ResizeConfig): Pr
   let resizeSharp = sharp(sourceImage).resize(width, height, { fit: 'inside' });
 
   if (!stripExif) {
-    resizeSharp = resizeSharp.keepExif();
+    resizeSharp = resizeSharp.keepMetadata();
   }
 
   if (addBorder) {
