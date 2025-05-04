@@ -7,6 +7,7 @@ export type BookFilters = {
   format?: number;
   bookPath?: string;
   exactPath?: boolean;
+  readStatus?: boolean;
 };
 
 type CalibreDbState = {

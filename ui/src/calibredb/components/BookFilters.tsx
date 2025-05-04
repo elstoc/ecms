@@ -16,6 +16,12 @@ const modeOptions = [
   { code: 'search', description: 'Search' },
 ];
 
+const readStatusOptions = [
+  { code: undefined, description: 'All' },
+  { code: 'Y', description: 'Y' },
+  { code: 'N', description: 'N' },
+];
+
 export const BookFilters = () => {
   const allPaths = useAllPaths();
   const {
@@ -23,6 +29,11 @@ export const BookFilters = () => {
     updateUiFilter,
     dispatch,
   } = useCalibreDb();
+
+  let readStatusCode: 'Y' | 'N' | undefined;
+  if (uiFilters.readStatus != null) {
+    readStatusCode = uiFilters.readStatus ? 'Y' : 'N';
+  }
 
   return (
     <div className='book-filters'>
@@ -55,6 +66,15 @@ export const BookFilters = () => {
         selectedCode={uiFilters.format?.toString()}
         onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
         filterable={true}
+      />
+      <SegmentedControlInput
+        label='Read'
+        inline={true}
+        describedCodes={readStatusOptions}
+        selectedCode={readStatusCode}
+        onChange={(value) =>
+          updateUiFilter({ key: 'readStatus', value: value ? value === 'Y' : undefined })
+        }
       />
       <SuggestItem
         label='Path'

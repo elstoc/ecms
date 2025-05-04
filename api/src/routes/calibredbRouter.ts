@@ -20,6 +20,7 @@ export const createCalibreDbRouter = (site: Site): Router => {
           format: query.format ? parseInt(query.format) : undefined,
           bookPath: query.bookPath,
           exactPath: query.exactPath === '1',
+          readStatus: query.readStatus == null ? undefined : query.readStatus === '1',
         };
         const books = await calibreDb.getBooks(filters, parseInt(query.pages));
         res.json(books);

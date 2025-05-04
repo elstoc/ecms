@@ -14,6 +14,7 @@ type Filters = {
   format?: number;
   bookPath?: string;
   exactPath?: boolean;
+  readStatus?: boolean;
 };
 
 type BookDao = {
@@ -93,6 +94,7 @@ export const filterSql = {
                       JOIN custom_column_39 clm ON lnk.book = books.id
                       WHERE lnk.value = clm.id
                       AND clm.value = $bookPath))`,
+  readStatus: '(IFNULL(read.read, 0) = $readStatus)',
 };
 
 export const pathSql = 'SELECT path FROM books WHERE id = $id';
@@ -189,7 +191,7 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author, format, bookPath, exactPath } = filters;
+    const { author, format, bookPath, exactPath, readStatus } = filters;
 
     if (author) {
       whereClauses.push(filterSql.author);
@@ -207,6 +209,10 @@ export class CalibreDb {
         whereClauses.push(filterSql.bookPathPrefix);
         params['$pathPrefixLike'] = `${bookPath}%`;
       }
+    }
+    if (readStatus != null) {
+      whereClauses.push(filterSql.readStatus);
+      params['$readStatus'] = readStatus ? 1 : 0;
     }
 
     let sql = baseBooksSql;

@@ -525,6 +525,12 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/booleanInt'
+        - name: readStatus
+          description: Whether the book has been read or not
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/booleanInt'
       responses:
         '200':
           description: OK
