@@ -4,6 +4,7 @@ import { Logger } from 'winston';
 
 import { DatabaseAdapter, StorageAdapter } from '@/adapters';
 import { Book, PaginatedBooks } from '@/contracts/calibredb';
+import { NotFoundError } from '@/errors';
 import { Config } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
@@ -94,6 +95,8 @@ export const filterSql = {
                       AND clm.value = $bookPath))`,
 };
 
+export const pathSql = 'SELECT path FROM books WHERE id = $id';
+
 export type LookupRow = {
   code: number;
   description: string;
@@ -154,6 +157,29 @@ export class CalibreDb {
       read: book.read === 1,
       fixed: book.fixed === 1,
     };
+  }
+
+  private async getBookContentDir(id: number): Promise<string> {
+    const result = await this.database?.getWithParams<{ path: string }>(pathSql, { $id: id });
+    const { path: bookDir } = result ?? {};
+    const bookContentDir = path.join(this.apiPath, bookDir ?? '');
+
+    if (!bookDir || !this.storage.contentDirectoryExists(bookContentDir)) {
+      throw new NotFoundError('No book files found');
+    }
+
+    return bookContentDir;
+  }
+
+  public async getCoverImage(id: number): Promise<Buffer> {
+    const bookContentDir = await this.getBookContentDir(id);
+    const coverPath = path.join(bookContentDir, 'cover.jpg');
+
+    if (!this.storage.contentFileExists(coverPath)) {
+      throw new NotFoundError('No cover found');
+    }
+
+    return await this.storage.getContentFile(coverPath);
   }
 
   private buildBookQuery(filters: Filters): {

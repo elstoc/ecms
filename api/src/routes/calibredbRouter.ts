@@ -28,6 +28,11 @@ export const createCalibreDbRouter = (site: Site): Router => {
         const values = await calibreDb.getLookupValues(req.query.table as string);
         res.json(values);
       }
+      if (fn === 'getCover') {
+        const id = parseInt((req.query.id as string) ?? '0');
+        const coverFileBuf = await calibreDb.getCoverImage(id);
+        res.send(coverFileBuf);
+      }
     } catch (err: unknown) {
       next?.(err);
     }
@@ -36,5 +41,6 @@ export const createCalibreDbRouter = (site: Site): Router => {
   const router = Router();
   router.get('/books', async (req, res, next) => calibreDbHandler(req, res, next, 'getBooks'));
   router.get('/lookup', async (req, res, next) => calibreDbHandler(req, res, next, 'getLookup'));
+  router.get('/cover', async (req, res, next) => calibreDbHandler(req, res, next, 'getCover'));
   return router;
 };

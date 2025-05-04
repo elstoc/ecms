@@ -451,6 +451,20 @@ paths:
       responses:
         '200':
           description: OK
+  /calibredb/cover:
+    get:
+      description: Get the cover image for the given book
+      parameters:
+        - $ref: '#/components/parameters/ComponentPath'
+        - in: query
+          name: id
+          description: The id of the book
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: OK
   /calibredb/lookup:
     get:
       description: Get the contents of a lookup table

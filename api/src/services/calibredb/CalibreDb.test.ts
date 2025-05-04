@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 
+import { NotFoundError } from '@/errors';
 import { stripWhiteSpace } from '@/utils';
 
-import { CalibreDb, baseBooksSql, filterSql, lookupTableSql } from './CalibreDb';
+import { CalibreDb, baseBooksSql, filterSql, lookupTableSql, pathSql } from './CalibreDb';
 
 jest.mock('@/adapters');
 
 const mockStorage = {
   contentFileExists: jest.fn() as jest.Mock,
+  contentDirectoryExists: jest.fn() as jest.Mock,
+  getContentFile: jest.fn() as jest.Mock,
   getContentDb: jest.fn() as jest.Mock,
 };
 
@@ -28,12 +31,14 @@ describe('CalibreDb', () => {
   let calibreDb: CalibreDb;
   const mockInit = jest.fn();
   const mockGetAll = jest.fn();
+  const mockGetWithParams = jest.fn();
   const mockGetAllWithParams = jest.fn();
   const mockClose = jest.fn();
 
   const mockDb = {
     initialise: mockInit,
     getAll: mockGetAll,
+    getWithParams: mockGetWithParams,
     getAllWithParams: mockGetAllWithParams,
     close: mockClose,
   };
@@ -242,6 +247,62 @@ describe('CalibreDb', () => {
 
       expect(mockGetAll).toHaveBeenCalledWith(sql);
       expect(actualReturnVal).toEqual(expectedReturnVal);
+    });
+  });
+
+  describe('getCoverImage', () => {
+    beforeEach(async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      await calibreDb.initialise();
+    });
+
+    it('runs the correct SQL and returns the expected file if everything exists', async () => {
+      const path = 'some/book/path';
+      mockGetWithParams.mockResolvedValue({ path });
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.getContentFile.mockResolvedValue('image');
+
+      const returnVal = await calibreDb.getCoverImage(123);
+
+      expect(mockGetWithParams).toHaveBeenCalledWith(pathSql, { $id: 123 });
+      expect(mockStorage.contentDirectoryExists).toHaveBeenCalledWith('books/some/book/path');
+      expect(mockStorage.contentFileExists).toHaveBeenCalledWith('books/some/book/path/cover.jpg');
+      expect(mockStorage.getContentFile).toHaveBeenCalledWith('books/some/book/path/cover.jpg');
+      expect(returnVal).toBe('image');
+    });
+
+    it('throws an error if no rows are returned', async () => {
+      mockGetWithParams.mockResolvedValue(undefined);
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.getContentFile.mockResolvedValue('image');
+
+      await expect(calibreDb.getCoverImage(123)).rejects.toThrow(
+        new NotFoundError('No book files found'),
+      );
+    });
+
+    it('throws an error if the content directory at that path does not exist', async () => {
+      mockGetWithParams.mockResolvedValue({ path: 'some-path' });
+      mockStorage.contentDirectoryExists.mockReturnValue(false);
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.getContentFile.mockResolvedValue('image');
+
+      await expect(calibreDb.getCoverImage(123)).rejects.toThrow(
+        new NotFoundError('No book files found'),
+      );
+    });
+
+    it('throws an error if the content directory exists but cover.jpg does not', async () => {
+      mockGetWithParams.mockResolvedValue({ path: 'some-path' });
+      mockStorage.contentDirectoryExists.mockReturnValue(true);
+      mockStorage.contentFileExists.mockReturnValue(false);
+      mockStorage.getContentFile.mockResolvedValue('image');
+
+      await expect(calibreDb.getCoverImage(123)).rejects.toThrow(
+        new NotFoundError('No cover found'),
+      );
     });
   });
 
