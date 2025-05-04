@@ -173,7 +173,7 @@ export class CalibreDb {
       whereClauses.push(filterSql.format);
       params['$format'] = format;
     }
-    if (bookPath) {
+    if (exactPath || bookPath) {
       if (exactPath) {
         whereClauses.push(filterSql.bookPath);
         params['$bookPath'] = bookPath;
