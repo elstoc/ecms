@@ -1,6 +1,6 @@
 import { Button } from '@blueprintjs/core';
 
-import { Switch } from '@/shared/components/forms';
+import { SegmentedControlInput, Switch } from '@/shared/components/forms';
 import { SuggestItem } from '@/shared/components/forms/SuggestItem';
 import { toIntOrUndefined } from '@/utils';
 
@@ -11,10 +11,15 @@ import { SelectLookup } from './SelectLookup';
 
 import './BookFilters.scss';
 
+const modeOptions = [
+  { code: 'browse', description: 'Browse' },
+  { code: 'search', description: 'Search' },
+];
+
 export const BookFilters = () => {
   const allPaths = useAllPaths();
   const {
-    state: { uiFilters },
+    state: { uiFilters, mode },
     updateUiFilter,
     dispatch,
   } = useCalibreDb();
@@ -22,6 +27,13 @@ export const BookFilters = () => {
   return (
     <div className='book-filters'>
       <div className='filter-title'>Books</div>
+      <SegmentedControlInput
+        label='Mode'
+        inline={true}
+        describedCodes={modeOptions}
+        selectedCode={mode}
+        onChange={() => dispatch({ type: 'toggleMode' })}
+      />
       <SelectLookup
         label='Author'
         className='author'
@@ -58,6 +70,7 @@ export const BookFilters = () => {
         label='Exact path'
         className='exact-path'
         inline={true}
+        disabled={mode === 'browse'}
         value={!!uiFilters.exactPath}
         onChange={(value) => updateUiFilter({ key: 'exactPath', value })}
       />

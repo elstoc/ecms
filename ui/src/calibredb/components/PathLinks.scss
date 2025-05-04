@@ -1,0 +1,10 @@
+#app .path-links {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    justify-content: left;
+    font-size: 1.1em;
+    margin: 3px 5px;
+  }
+}
