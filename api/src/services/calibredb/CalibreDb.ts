@@ -5,7 +5,7 @@ import { Logger } from 'winston';
 import { DatabaseAdapter, StorageAdapter } from '@/adapters';
 import { Book, PaginatedBooks } from '@/contracts/calibredb';
 import { NotFoundError } from '@/errors';
-import { Config } from '@/utils';
+import { Config, pShuffle } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
@@ -15,6 +15,8 @@ type Filters = {
   bookPath?: string;
   exactPath?: boolean;
   readStatus?: boolean;
+  sortOrder?: string;
+  shuffleSeed?: number;
 };
 
 type BookDao = {
@@ -95,6 +97,12 @@ export const filterSql = {
                       WHERE lnk.value = clm.id
                       AND clm.value = $bookPath))`,
   readStatus: '(IFNULL(read.read, 0) = $readStatus)',
+};
+
+export const sortOrderSql: Record<string, string> = {
+  author: ' ORDER BY author_sort, title',
+  title: ' ORDER BY title',
+  shuffle: ' ORDER BY id',
 };
 
 export const pathSql = 'SELECT path FROM books WHERE id = $id';
@@ -191,7 +199,7 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author, format, bookPath, exactPath, readStatus } = filters;
+    const { author, format, bookPath, exactPath, readStatus, sortOrder } = filters;
 
     if (author) {
       whereClauses.push(filterSql.author);
@@ -221,12 +229,12 @@ export class CalibreDb {
       sql += ` WHERE ${whereClauses.join(' AND ')}`;
     }
 
-    sql += ' ORDER BY title';
+    sql += sortOrderSql[sortOrder ?? 'title'];
 
     return { params, sql };
   }
 
-  public async getBooks(filters: Filters, requestedPages = 1): Promise<PaginatedBooks> {
+  public async getBooks(filters: Filters, requestedPages: number): Promise<PaginatedBooks> {
     const { sql, params } = this.buildBookQuery(filters);
 
     let books = await this.database?.getAllWithParams<BookDao>(sql, params);
@@ -240,12 +248,16 @@ export class CalibreDb {
     const currentPage = Math.min(totalPages, requestedPages);
     const limit = currentPage * calibreDbPageSize;
 
+    if (filters.sortOrder === 'shuffle') {
+      books = pShuffle(books, filters.shuffleSeed);
+    }
+
     if (limit) {
       books = books.slice(0, limit);
     }
 
     return {
-      books: books.map(this.toBookDto),
+      books: books.map((book) => this.toBookDto(book)),
       currentPage,
       totalPages,
     };

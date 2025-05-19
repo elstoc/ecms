@@ -4,7 +4,14 @@ import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 import { NotFoundError } from '@/errors';
 import { stripWhiteSpace } from '@/utils';
 
-import { CalibreDb, baseBooksSql, filterSql, lookupTableSql, pathSql } from './CalibreDb';
+import {
+  CalibreDb,
+  baseBooksSql,
+  filterSql,
+  lookupTableSql,
+  pathSql,
+  sortOrderSql,
+} from './CalibreDb';
 
 jest.mock('@/adapters');
 
@@ -86,8 +93,6 @@ describe('CalibreDb', () => {
   });
 
   describe('getBooks', () => {
-    const orderBySql = ' ORDER BY title';
-
     const mockManyBooks = [
       { id: 1, title: 'Book 1', fixed: false, read: false },
       { id: 2, title: 'Book 2', fixed: false, read: false },
@@ -102,7 +107,7 @@ describe('CalibreDb', () => {
     ];
 
     beforeEach(async () => {
-      mockGetAllWithParams.mockResolvedValue(mockManyBooks);
+      mockGetAllWithParams.mockResolvedValue(structuredClone(mockManyBooks));
       mockStorage.contentFileExists.mockReturnValue(true);
       await calibreDb.initialise();
     });
@@ -110,7 +115,7 @@ describe('CalibreDb', () => {
     it('runs correct SQL and params with no filters and returns an array of books', async () => {
       const books = await calibreDb.getBooks({}, 10);
 
-      const expectedSql = baseBooksSql + orderBySql;
+      const expectedSql = baseBooksSql + sortOrderSql.title;
       expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
       const [sql, params] = mockGetAllWithParams.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
@@ -119,7 +124,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL and params with author filter and returns an array of books', async () => {
-      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.author + orderBySql;
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.author + sortOrderSql.title;
 
       const books = await calibreDb.getBooks({ author: 1234 }, 10);
 
@@ -131,7 +136,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL and params with format filter and returns an array of books', async () => {
-      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.format + orderBySql;
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.format + sortOrderSql.title;
 
       const books = await calibreDb.getBooks({ format: 1234 }, 10);
 
@@ -143,7 +148,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL and params with bookPath filter and returns an array of books', async () => {
-      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.bookPathPrefix + orderBySql;
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.bookPathPrefix + sortOrderSql.title;
 
       const books = await calibreDb.getBooks({ bookPath: 'Fiction' }, 10);
 
@@ -155,7 +160,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL and params with readStatus filter and returns an array of books', async () => {
-      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.readStatus + orderBySql;
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.readStatus + sortOrderSql.title;
 
       const books = await calibreDb.getBooks({ readStatus: true }, 10);
 
@@ -167,7 +172,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL and params with bookPath (exact path) filter and returns an array of books', async () => {
-      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.bookPath + orderBySql;
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.bookPath + sortOrderSql.title;
 
       const books = await calibreDb.getBooks({ bookPath: 'NonFiction', exactPath: true }, 10);
 
@@ -189,7 +194,7 @@ describe('CalibreDb', () => {
         filterSql.bookPathPrefix +
         ' AND ' +
         filterSql.readStatus +
-        orderBySql;
+        sortOrderSql.title;
 
       const books = await calibreDb.getBooks(
         { author: 2345, format: 1234, bookPath: 'Fiction', readStatus: true },
@@ -224,6 +229,53 @@ describe('CalibreDb', () => {
         expect(books.length).toBe(Math.min(currentPage * 3, 10));
       },
     );
+
+    it('sorts by title when requested', async () => {
+      const expectedSql = baseBooksSql + sortOrderSql.title;
+
+      const books = await calibreDb.getBooks({ sortOrder: 'title' }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({});
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
+    it('sorts by author when requested', async () => {
+      const expectedSql = baseBooksSql + sortOrderSql.author;
+
+      const books = await calibreDb.getBooks({ sortOrder: 'author' }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({});
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
+    it('sorts by id then shuffles (with the provided seed value) when requested', async () => {
+      const expectedSql = baseBooksSql + sortOrderSql.shuffle;
+
+      const books = await calibreDb.getBooks({ sortOrder: 'shuffle', shuffleSeed: 123 }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({});
+      expect(books.books).toEqual([
+        mockManyBooks[7],
+        mockManyBooks[8],
+        mockManyBooks[5],
+        mockManyBooks[9],
+        mockManyBooks[3],
+        mockManyBooks[0],
+        mockManyBooks[2],
+        mockManyBooks[6],
+        mockManyBooks[1],
+        mockManyBooks[4],
+      ]);
+    });
   });
 
   describe('getLookupValues', () => {

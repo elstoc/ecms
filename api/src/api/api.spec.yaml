@@ -491,6 +491,23 @@ paths:
       description: Get a list of books from the database
       parameters:
         - $ref: '#/components/parameters/ComponentPath'
+        - name: sortOrder
+          description: How to sort the books
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - title
+              - author
+              - shuffle
+        - name: shuffleSeed
+          description: A random 32 bit integer to use as the shuffle seed value
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
         - name: pages
           description: The number of pages requested
           in: query

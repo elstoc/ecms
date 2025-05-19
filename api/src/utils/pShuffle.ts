@@ -1,7 +1,8 @@
+import { getRandomSeed } from './getRandomSeed';
 import { pRandom } from './pRandom';
 
 // An implementation of the Durstenfeld shuffle algorithm
-export const pShuffle = <T>(array: T[], seed: number) => {
+export const pShuffle = <T>(array: T[], seed = getRandomSeed()) => {
   const prng = pRandom(seed);
 
   for (let i = array.length - 1; i > 0; i--) {
