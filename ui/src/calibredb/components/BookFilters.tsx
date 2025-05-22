@@ -22,6 +22,12 @@ const readStatusOptions = [
   { code: 'N', description: 'N' },
 ];
 
+const sortOrderOptions = [
+  { code: 'title', description: 'Title' },
+  { code: 'author', description: 'Author' },
+  { code: 'shuffle', description: 'Shuffle' },
+];
+
 export const BookFilters = () => {
   const allPaths = useAllPaths();
   const {
@@ -44,6 +50,13 @@ export const BookFilters = () => {
         describedCodes={modeOptions}
         selectedCode={mode}
         onChange={() => dispatch({ type: 'toggleMode' })}
+      />
+      <SegmentedControlInput
+        label='Sort'
+        inline={true}
+        describedCodes={sortOrderOptions}
+        selectedCode={uiFilters.sortOrder}
+        onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value ?? 'title' })}
       />
       <SelectLookup
         label='Author'

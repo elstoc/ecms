@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useReducer, useRef } from 'react';
 
-import { KeyValueOfType } from '@/utils';
+import { KeyValueOfType, getRandomSeed } from '@/utils';
 
 export type BookFilters = {
   author?: number;
@@ -8,6 +8,8 @@ export type BookFilters = {
   bookPath?: string;
   exactPath?: boolean;
   readStatus?: boolean;
+  sortOrder: string;
+  shuffleSeed?: number;
 };
 
 type CalibreDbState = {
@@ -37,6 +39,10 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
       uiFilters: {
         ...state.uiFilters,
         [key]: value,
+        shuffleSeed:
+          key === 'sortOrder' && value === 'shuffle'
+            ? getRandomSeed()
+            : state.uiFilters.shuffleSeed,
       },
     };
   }
@@ -53,9 +59,11 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
       pages: 1,
       uiFilters: {
         exactPath: state.mode === 'browse' || undefined,
+        sortOrder: 'title',
       },
       apiFilters: {
         exactPath: state.mode === 'browse' || undefined,
+        sortOrder: 'title',
       },
     };
   }
@@ -92,8 +100,8 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
     apiPath,
     title,
     pages: 1,
-    uiFilters: { exactPath: true },
-    apiFilters: { exactPath: true },
+    uiFilters: { sortOrder: 'title', exactPath: true },
+    apiFilters: { sortOrder: 'title', exactPath: true },
     mode: 'browse',
   } as CalibreDbState;
   const [state, dispatch] = useReducer(reducer, initialState);
