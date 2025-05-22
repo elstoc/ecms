@@ -23,6 +23,7 @@ type BookDao = {
   id: number;
   title: string;
   authors: string;
+  description: string | null;
   rating: number | null;
   format: number | null;
   path: number | null;
@@ -35,10 +36,11 @@ type BookDao = {
 };
 
 export const baseBooksSql = `
-    SELECT books.id, title, authors.authors, ratings.rating, formats.format, paths.path, collections.collections,
+    SELECT books.id, title, com.text as description, authors.authors, ratings.rating, formats.format, paths.path, collections.collections,
            kobo_statuses.kobo_status, kindle_statuses.kindle_status, tablet_statuses.tablet_status,
            IFNULL(read.read, 0) AS read, IFNULL(fixed.fixed, 0) AS fixed
     FROM books
+    LEFT JOIN comments com ON books.id = com.book
     LEFT JOIN (SELECT book, ratings.rating / 2 as rating
                FROM books_ratings_link ratings_link
                JOIN ratings ON ratings_link.rating = ratings.id) ratings ON books.id = ratings.book
@@ -157,6 +159,7 @@ export class CalibreDb {
       id: book.id,
       title: book.title,
       authors: book.authors?.split('|').map(Number) || undefined,
+      description: book.description || undefined,
       rating: book.rating ?? undefined,
       format: book.format ?? undefined,
       path: book.path ?? undefined,

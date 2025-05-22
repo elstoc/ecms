@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { Card, Collapse } from '@blueprintjs/core';
+import { Card, Collapse, Divider } from '@blueprintjs/core';
 import { forwardRef, useState } from 'react';
 
 import { Book } from '@/contracts/calibredb';
@@ -36,14 +36,23 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
         <div className='format'>{format}</div>
       </div>
       <Collapse isOpen={expanded}>
-        <div>Rating (quality): {book.rating}</div>
-        <div>Path: {path}</div>
-        <div>Collections: {book.collections?.map((id) => collections[id]).join(', ')}</div>
-        <div>Kobo Status: {koboStatus}</div>
-        <div>Kindle Status: {kindleStatus}</div>
-        <div>Tablet Status: {tabletStatus}</div>
-        <div>Read: {book.read ? 'Yes' : 'No'}</div>
-        <div>Fixed: {book.fixed ? 'Yes' : 'No'}</div>
+        <div className='secondary-info'>
+          <Divider />
+          <div>Rating (quality): {book.rating}</div>
+          <div>Path: {path}</div>
+          <div>Collections: {book.collections?.map((id) => collections[id]).join(', ')}</div>
+          <div>Kobo Status: {koboStatus}</div>
+          <div>Kindle Status: {kindleStatus}</div>
+          <div>Tablet Status: {tabletStatus}</div>
+          <div>Read: {book.read ? 'Yes' : 'No'}</div>
+          <div>Fixed: {book.fixed ? 'Yes' : 'No'}</div>
+          {book.description && (
+            <>
+              <Divider />
+              <div dangerouslySetInnerHTML={{ __html: book.description }} />
+            </>
+          )}
+        </div>
       </Collapse>
     </Card>
   );
