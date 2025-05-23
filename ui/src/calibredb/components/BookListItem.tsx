@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { Card, Collapse, Divider } from '@blueprintjs/core';
+import { Card, Collapse, Divider, Tag } from '@blueprintjs/core';
 import { forwardRef, useState } from 'react';
 
 import { Book } from '@/contracts/calibredb';
@@ -36,16 +36,17 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
       </div>
       <Collapse isOpen={expanded}>
         <div className='secondary-info'>
-          <Divider />
-          <div>Read: {book.read ? 'Yes' : 'No'}</div>
-          {koboStatus && <div>Kobo: {koboStatus}</div>}
-          {kindleStatus && <div>Kindle: {kindleStatus}</div>}
-          {tabletStatus && <div>Tablet: {tabletStatus}</div>}
-          <div>Quality: {book.rating}</div>
+          <div className='tags'>
+            {koboStatus && <Tag>kobo</Tag>}
+            {kindleStatus && <Tag>kindle</Tag>}
+            {tabletStatus && <Tag>tablet</Tag>}
+            {book.read && <Tag intent='success'>read</Tag>}
+          </div>
+          {book.rating && ' * '.repeat(book.rating)}
           <div className='book-path'>{path}</div>
           {book.description && (
             <>
-              <Divider />
+              <Divider className='description-divider' />
               <div dangerouslySetInnerHTML={{ __html: book.description }} />
             </>
           )}
