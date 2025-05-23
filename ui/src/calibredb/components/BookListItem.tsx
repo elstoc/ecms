@@ -15,7 +15,6 @@ type BookListItemProps = {
 export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ book }, ref) => {
   const [expanded, setExpanded] = useState(false);
   const authors = useLookup('authors');
-  const collections = useLookup('collections');
   const format = useLookupValue('formats', book.format);
   const path = useLookupValue('paths', book.path);
   const koboStatus = useLookupValue('koboStatuses', book.koboStatus);
@@ -38,14 +37,12 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
       <Collapse isOpen={expanded}>
         <div className='secondary-info'>
           <Divider />
-          <div>Rating (quality): {book.rating}</div>
-          <div>Path: {path}</div>
-          <div>Collections: {book.collections?.map((id) => collections[id]).join(', ')}</div>
-          <div>Kobo Status: {koboStatus}</div>
-          <div>Kindle Status: {kindleStatus}</div>
-          <div>Tablet Status: {tabletStatus}</div>
+          <div>Quality: {book.rating}</div>
+          <div>{path}</div>
+          {koboStatus && <div>Kobo: {koboStatus}</div>}
+          {kindleStatus && <div>Kindle: {kindleStatus}</div>}
+          {tabletStatus && <div>Tablet: {tabletStatus}</div>}
           <div>Read: {book.read ? 'Yes' : 'No'}</div>
-          <div>Fixed: {book.fixed ? 'Yes' : 'No'}</div>
           {book.description && (
             <>
               <Divider />
