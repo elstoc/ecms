@@ -1,6 +1,6 @@
 @import '../../variables.scss';
 
-.site-nav,
+nav.site-nav,
 .sub-menu {
   display: flex;
   background-color: $appBgColor;
@@ -26,7 +26,7 @@
   }
 }
 
-.site-nav {
+nav.site-nav {
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;

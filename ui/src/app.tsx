@@ -14,21 +14,21 @@ export const App = () => {
   return (
     <div id='app-container'>
       <div id='app'>
-        <div className='app-header'>
+        <header>
           <Suspense>
             <Header />
           </Suspense>
-        </div>
-        <div className='app-component'>
+        </header>
+        <main>
           <Suspense>
             <SiteRoutes />
           </Suspense>
-        </div>
-        <div className='app-footer'>
+        </main>
+        <footer>
           <Suspense>
             <Footer />
           </Suspense>
-        </div>
+        </footer>
       </div>
     </div>
   );

@@ -16,8 +16,8 @@
     flex-direction: column;
     width: 95%;
 
-    .app-header,
-    .app-footer {
+    header,
+    footer {
       flex-grow: 0;
       flex-shrink: 0;
       min-height: 2.8rem;
@@ -25,7 +25,7 @@
       font-size: 1rem;
     }
 
-    .app-component {
+    main {
       margin: 10px 0;
       flex-grow: 1;
       flex-shrink: 1;

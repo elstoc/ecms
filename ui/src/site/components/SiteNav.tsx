@@ -13,11 +13,11 @@ export const SiteNav = ({ siteComponents }: SiteNavProps) => {
   }
 
   return (
-    <div className='site-nav'>
+    <nav className='site-nav'>
       {siteComponents.map((component) => (
         <ComponentNavItem key={component.apiPath} component={component} />
       ))}
-    </div>
+    </nav>
   );
 };
 
