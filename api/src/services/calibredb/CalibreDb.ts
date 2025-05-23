@@ -104,7 +104,7 @@ export const filterSql = {
 export const sortOrderSql: Record<string, string> = {
   author: ' ORDER BY author_sort, title',
   title: ' ORDER BY title',
-  shuffle: ' ORDER BY id',
+  shuffle: ' ORDER BY books.id',
 };
 
 export const pathSql = 'SELECT path FROM books WHERE id = $id';
