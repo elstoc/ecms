@@ -96,7 +96,7 @@ export const MultiTagInput = ({
         createNewItemRenderer={optionalCreateItemRenderer}
         onItemSelect={toggleTag}
         onRemove={toggleTag}
-        onClear={() => onChange?.([])}
+        onClear={() => onChange?.()}
         itemPredicate={filterTag}
         query={queryString}
         onQueryChange={setQueryString}
