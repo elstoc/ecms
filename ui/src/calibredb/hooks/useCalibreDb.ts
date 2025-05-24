@@ -58,11 +58,11 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
       ...state,
       pages: 1,
       uiFilters: {
-        exactPath: state.mode === 'browse' || undefined,
+        exactPath: state.mode === 'search' || undefined,
         sortOrder: 'title',
       },
       apiFilters: {
-        exactPath: state.mode === 'browse' || undefined,
+        exactPath: state.mode === 'search' || undefined,
         sortOrder: 'title',
       },
     };
@@ -100,9 +100,9 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
     apiPath,
     title,
     pages: 1,
-    uiFilters: { sortOrder: 'title', exactPath: true },
-    apiFilters: { sortOrder: 'title', exactPath: true },
-    mode: 'browse',
+    uiFilters: { sortOrder: 'title', exactPath: false },
+    apiFilters: { sortOrder: 'title', exactPath: false },
+    mode: 'search',
   } as CalibreDbState;
   const [state, dispatch] = useReducer(reducer, initialState);
 
