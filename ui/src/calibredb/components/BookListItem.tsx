@@ -3,7 +3,9 @@ import { Card, Collapse, Divider, Tag } from '@blueprintjs/core';
 import { forwardRef, useState } from 'react';
 
 import { Book } from '@/contracts/calibredb';
+import { config } from '@/utils';
 
+import { useCalibreDb } from '../hooks/useCalibreDb';
 import { useLookup, useLookupValue } from '../hooks/useCalibreDbQueries';
 
 import './BookListItem.scss';
@@ -13,6 +15,10 @@ type BookListItemProps = {
 };
 
 export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ book }, ref) => {
+  const {
+    state: { apiPath },
+  } = useCalibreDb();
+
   const [expanded, setExpanded] = useState(false);
   const authors = useLookup('authors');
   const format = useLookupValue('formats', book.format);
@@ -20,6 +26,8 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
   const koboStatus = useLookupValue('koboStatuses', book.koboStatus);
   const kindleStatus = useLookupValue('kindleStatuses', book.kindleStatus);
   const tabletStatus = useLookupValue('tabletStatuses', book.tabletStatus);
+
+  const urlParams = new URLSearchParams({ path: apiPath, id: book.id.toString() });
 
   return (
     <Card
@@ -37,19 +45,22 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
       <Collapse isOpen={expanded}>
         <div className='secondary-info'>
           <div className='tags'>
+            {book.rating && ' * '.repeat(book.rating)}
             {koboStatus && <Tag>kobo</Tag>}
             {kindleStatus && <Tag>kindle</Tag>}
             {tabletStatus && <Tag>tablet</Tag>}
             {book.read && <Tag intent='success'>read</Tag>}
           </div>
-          {book.rating && ' * '.repeat(book.rating)}
           <div className='book-path'>{path}</div>
-          {book.description && (
-            <>
-              <Divider className='description-divider' />
-              <div dangerouslySetInnerHTML={{ __html: book.description }} />
-            </>
-          )}
+          <Divider className='description-divider' />
+          <div className='cover-desc'>
+            <img
+              className='cover'
+              alt=''
+              src={`${config.apiUrl}/calibredb/cover?${urlParams.toString()}`}
+            />
+            {book.description && <div dangerouslySetInnerHTML={{ __html: book.description }} />}
+          </div>
         </div>
       </Collapse>
     </Card>
