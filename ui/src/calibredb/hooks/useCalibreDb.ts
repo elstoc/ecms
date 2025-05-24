@@ -57,12 +57,13 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
     return {
       ...state,
       pages: 1,
+      mode: 'search',
       uiFilters: {
-        exactPath: state.mode === 'search' || undefined,
+        exactPath: false,
         sortOrder: 'title',
       },
       apiFilters: {
-        exactPath: state.mode === 'search' || undefined,
+        exactPath: false,
         sortOrder: 'title',
       },
     };
