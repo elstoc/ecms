@@ -2,6 +2,7 @@ import { NextFunction, Response, Router } from 'express';
 
 import { RequestWithUser } from '@/middleware';
 import { Site } from '@/services';
+import { Devices } from '@/services/calibredb/CalibreDb';
 
 export const createCalibreDbRouter = (site: Site): Router => {
   const calibreDbHandler = async (
@@ -23,6 +24,7 @@ export const createCalibreDbRouter = (site: Site): Router => {
           readStatus: query.readStatus == null ? undefined : query.readStatus === '1',
           sortOrder: query.sortOrder || 'title',
           shuffleSeed: parseInt(query.shuffleSeed ?? '0'),
+          devices: query.devices ? (query.devices.split('|') as Devices[]) : undefined,
         };
         const books = await calibreDb.getBooks(filters, parseInt(query.pages || '1'));
         res.json(books);

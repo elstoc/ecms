@@ -10,6 +10,7 @@ export type BookFilters = {
   readStatus?: boolean;
   sortOrder: string;
   shuffleSeed?: number;
+  devices?: string[];
 };
 
 type CalibreDbState = {
@@ -27,6 +28,12 @@ type StateAction =
   | { type: 'resetFilters' }
   | { type: 'setUiFilter'; payload: KeyValueOfType<BookFilters> }
   | { type: 'toggleMode' };
+
+const initialFilters = {
+  exactPath: false,
+  sortOrder: 'title',
+  devices: ['kobo', 'tablet'],
+};
 
 const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = (state, action) => {
   if (action.type === 'setPages') {
@@ -58,14 +65,8 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
       ...state,
       pages: 1,
       mode: 'search',
-      uiFilters: {
-        exactPath: false,
-        sortOrder: 'title',
-      },
-      apiFilters: {
-        exactPath: false,
-        sortOrder: 'title',
-      },
+      uiFilters: { ...initialFilters },
+      apiFilters: { ...initialFilters },
     };
   }
   if (action.type === 'toggleMode') {
@@ -101,8 +102,8 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
     apiPath,
     title,
     pages: 1,
-    uiFilters: { sortOrder: 'title', exactPath: false },
-    apiFilters: { sortOrder: 'title', exactPath: false },
+    uiFilters: { ...initialFilters },
+    apiFilters: { ...initialFilters },
     mode: 'search',
   } as CalibreDbState;
   const [state, dispatch] = useReducer(reducer, initialState);

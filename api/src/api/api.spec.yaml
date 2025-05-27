@@ -548,6 +548,21 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/booleanInt'
+        - name: devices
+          in: query
+          description: list of devices to filter
+          required: false
+          explode: false
+          style: pipeDelimited
+          schema:
+            type: array
+            minItems: 1
+            items:
+              type: string
+              enum:
+                - kobo
+                - kindle
+                - tablet
       responses:
         '200':
           description: OK

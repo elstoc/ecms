@@ -1,6 +1,6 @@
 import { Button } from '@blueprintjs/core';
 
-import { SegmentedControlInput, Switch } from '@/shared/components/forms';
+import { MultiTagInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 import { SuggestItem } from '@/shared/components/forms/SuggestItem';
 import { toIntOrUndefined } from '@/utils';
 
@@ -98,6 +98,12 @@ export const BookFilters = () => {
         inline={true}
         value={uiFilters.bookPath}
         onChange={(value) => updateUiFilter({ key: 'bookPath', value })}
+      />
+      <MultiTagInput
+        label='Devices'
+        selectableTags={['kobo', 'tablet', 'kindle']}
+        selectedTags={uiFilters.devices}
+        onChange={(value) => updateUiFilter({ key: 'devices', value })}
       />
       <Switch
         label='Exact path'

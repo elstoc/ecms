@@ -16,6 +16,7 @@ export const getCalibreDbBooks = async (
       ...filters,
       exactPath: filters.exactPath ? '1' : '0',
       readStatus: filters.readStatus == null ? undefined : filters.readStatus ? '1' : '0',
+      devices: filters.devices?.join('|'),
     },
   });
 

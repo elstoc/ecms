@@ -9,6 +9,8 @@ import { Config, pShuffle } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
+export type Devices = 'kindle' | 'kobo' | 'tablet';
+
 type Filters = {
   author?: number;
   format?: number;
@@ -17,6 +19,7 @@ type Filters = {
   readStatus?: boolean;
   sortOrder?: string;
   shuffleSeed?: number;
+  devices?: Devices[];
 };
 
 type BookDao = {
@@ -99,6 +102,9 @@ export const filterSql = {
                       WHERE lnk.value = clm.id
                       AND clm.value = $bookPath))`,
   readStatus: '(IFNULL(read.read, 0) = $readStatus)',
+  kobo: '(kobo_statuses.kobo_status IS NOT NULL)',
+  kindle: '(kindle_statuses.kindle_status IS NOT NULL)',
+  tablet: '(tablet_statuses.tablet_status IS NOT NULL)',
 };
 
 export const sortOrderSql: Record<string, string> = {
@@ -202,7 +208,7 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author, format, bookPath, exactPath, readStatus, sortOrder } = filters;
+    const { author, format, bookPath, exactPath, readStatus, sortOrder, devices } = filters;
 
     if (author) {
       whereClauses.push(filterSql.author);
@@ -224,6 +230,10 @@ export class CalibreDb {
     if (readStatus != null) {
       whereClauses.push(filterSql.readStatus);
       params['$readStatus'] = readStatus ? 1 : 0;
+    }
+    if (devices) {
+      const deviceSql = devices.map((device) => filterSql[device]);
+      whereClauses.push('(' + deviceSql.join(' OR ') + ')');
     }
 
     let sql = baseBooksSql;
