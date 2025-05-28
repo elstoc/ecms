@@ -12,6 +12,7 @@ const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, ti
 export type Devices = 'kindle' | 'kobo' | 'tablet';
 
 type Filters = {
+  titleContains?: string;
   author?: number;
   format?: number;
   bookPath?: string;
@@ -102,6 +103,7 @@ export const filterSql = {
                       WHERE lnk.value = clm.id
                       AND clm.value = $bookPath))`,
   readStatus: '(IFNULL(read.read, 0) = $readStatus)',
+  titleContains: '(LOWER(books.title) LIKE $titleContains)',
   kobo: '(kobo_statuses.kobo_status IS NOT NULL)',
   kindle: '(kindle_statuses.kindle_status IS NOT NULL)',
   tablet: '(tablet_statuses.tablet_status IS NOT NULL)',
@@ -208,8 +210,13 @@ export class CalibreDb {
     const params: Record<string, unknown> = {};
     const whereClauses: string[] = [];
 
-    const { author, format, bookPath, exactPath, readStatus, sortOrder, devices } = filters;
+    const { author, format, bookPath, exactPath, readStatus, sortOrder, devices, titleContains } =
+      filters;
 
+    if (titleContains) {
+      whereClauses.push(filterSql.titleContains);
+      params['$titleContains'] = `%${titleContains.toLowerCase()}%`;
+    }
     if (author) {
       whereClauses.push(filterSql.author);
       params['$author'] = author;

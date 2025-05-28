@@ -3,6 +3,7 @@ import { createContext, useCallback, useContext, useReducer, useRef } from 'reac
 import { KeyValueOfType, getRandomSeed } from '@/utils';
 
 export type BookFilters = {
+  titleContains?: string;
   author?: number;
   format?: number;
   bookPath?: string;

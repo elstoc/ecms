@@ -123,6 +123,18 @@ describe('CalibreDb', () => {
       expect(books.books).toEqual(mockManyBooks);
     });
 
+    it('runs correct SQL and params with titleContains filter and returns an array of books', async () => {
+      const expectedSql = baseBooksSql + 'WHERE ' + filterSql.titleContains + sortOrderSql.title;
+
+      const books = await calibreDb.getBooks({ titleContains: 'Some-Text' }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({ $titleContains: '%some-text%' });
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
     it('runs correct SQL and params with author filter and returns an array of books', async () => {
       const expectedSql = baseBooksSql + 'WHERE ' + filterSql.author + sortOrderSql.title;
 

@@ -1,6 +1,6 @@
 import { Button } from '@blueprintjs/core';
 
-import { MultiTagInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
+import { Input, MultiTagInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 import { SuggestItem } from '@/shared/components/forms/SuggestItem';
 import { toIntOrUndefined } from '@/utils';
 
@@ -44,6 +44,12 @@ export const BookFilters = () => {
   return (
     <div className='book-filters'>
       <div className='filter-title'>Books</div>
+      <Input
+        label='Title Search'
+        inline={true}
+        value={uiFilters.titleContains}
+        onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
+      />
       <SegmentedControlInput
         label='Mode'
         inline={true}
