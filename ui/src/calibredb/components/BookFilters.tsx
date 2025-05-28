@@ -44,12 +44,6 @@ export const BookFilters = () => {
   return (
     <div className='book-filters'>
       <div className='filter-title'>Books</div>
-      <Input
-        label='Title Search'
-        inline={true}
-        value={uiFilters.titleContains}
-        onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
-      />
       <SegmentedControlInput
         label='Mode'
         inline={true}
@@ -57,12 +51,11 @@ export const BookFilters = () => {
         selectedCode={mode}
         onChange={() => dispatch({ type: 'toggleMode' })}
       />
-      <SegmentedControlInput
-        label='Sort'
+      <Input
+        label='Title Search'
         inline={true}
-        describedCodes={sortOrderOptions}
-        selectedCode={uiFilters.sortOrder}
-        onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value ?? 'title' })}
+        value={uiFilters.titleContains}
+        onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
       <SelectLookup
         label='Author'
@@ -95,6 +88,12 @@ export const BookFilters = () => {
           updateUiFilter({ key: 'readStatus', value: value ? value === 'Y' : undefined })
         }
       />
+      <MultiTagInput
+        label='Devices'
+        selectableTags={['kobo', 'tablet', 'kindle']}
+        selectedTags={uiFilters.devices}
+        onChange={(value) => updateUiFilter({ key: 'devices', value })}
+      />
       <SuggestItem
         label='Path'
         className='path'
@@ -105,12 +104,6 @@ export const BookFilters = () => {
         value={uiFilters.bookPath}
         onChange={(value) => updateUiFilter({ key: 'bookPath', value })}
       />
-      <MultiTagInput
-        label='Devices'
-        selectableTags={['kobo', 'tablet', 'kindle']}
-        selectedTags={uiFilters.devices}
-        onChange={(value) => updateUiFilter({ key: 'devices', value })}
-      />
       <Switch
         label='Exact path'
         className='exact-path'
@@ -118,6 +111,13 @@ export const BookFilters = () => {
         disabled={mode === 'browse'}
         value={!!uiFilters.exactPath}
         onChange={(value) => updateUiFilter({ key: 'exactPath', value })}
+      />
+      <SegmentedControlInput
+        label='Sort'
+        inline={true}
+        describedCodes={sortOrderOptions}
+        selectedCode={uiFilters.sortOrder}
+        onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value ?? 'title' })}
       />
       <div className='filter-action-buttons'>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
