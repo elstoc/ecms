@@ -37,6 +37,7 @@ export const SegmentedControlInput = ({
     <FormGroup label={label} inline={inline} className={`segmented-control-input ${className}`}>
       <SegmentedControl
         value={selectedCode ?? UNDEFINED_CODE}
+        aria-label={label}
         onValueChange={(selectedCode) =>
           onChange?.(selectedCode === UNDEFINED_CODE ? undefined : selectedCode)
         }
