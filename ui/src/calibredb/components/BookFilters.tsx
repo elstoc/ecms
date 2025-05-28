@@ -12,8 +12,8 @@ import { SelectLookup } from './SelectLookup';
 import './BookFilters.scss';
 
 const modeOptions = [
-  { code: 'browse', description: 'Browse' },
   { code: 'search', description: 'Search' },
+  { code: 'browse', description: 'Browse' },
 ];
 
 const readStatusOptions = [
