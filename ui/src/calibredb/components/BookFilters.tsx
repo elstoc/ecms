@@ -42,8 +42,10 @@ export const BookFilters = () => {
   }
 
   return (
-    <div className='book-filters'>
-      <div className='filter-title'>Books</div>
+    <form role='search' aria-labelledby='book-search-title' className='book-filters'>
+      <div id='book-search-title' className='filter-title'>
+        Books
+      </div>
       <SegmentedControlInput
         label='Mode'
         inline={true}
@@ -120,8 +122,10 @@ export const BookFilters = () => {
         onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value ?? 'title' })}
       />
       <div className='filter-action-buttons'>
-        <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
+        <Button role='button' onClick={() => dispatch({ type: 'resetFilters' })}>
+          Reset Filters
+        </Button>
       </div>
-    </div>
+    </form>
   );
 };
