@@ -21,7 +21,7 @@ export const PathLinks = () => {
   }
 
   const childPaths = paths.filter((path) => {
-    if (!path.startsWith(bookPath ?? '')) {
+    if (bookPath && !path.startsWith(`${bookPath}/`)) {
       return false;
     }
     if (bookPath) {
