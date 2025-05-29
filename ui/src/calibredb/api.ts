@@ -12,7 +12,7 @@ export const getCalibreDbBooks = async (
   const { data } = await axiosSecureClient.get<PaginatedBooks>(url, {
     params: {
       path,
-      pages: pages.toString(),
+      pages: (pages || 1).toString(),
       ...filters,
       exactPath: filters.exactPath ? '1' : '0',
       readStatus: filters.readStatus == null ? undefined : filters.readStatus ? '1' : '0',
