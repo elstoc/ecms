@@ -72,16 +72,23 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
   }
   if (action.type === 'toggleMode') {
     const newMode = state.mode === 'browse' ? 'search' : 'browse';
+    const { devices, bookPath, sortOrder } = state.uiFilters;
     return {
       ...state,
       mode: newMode,
       pages: 1,
       uiFilters: {
-        ...state.uiFilters,
+        ...initialFilters,
+        devices,
+        bookPath,
+        sortOrder,
         exactPath: newMode === 'browse',
       },
       apiFilters: {
-        ...state.apiFilters,
+        ...initialFilters,
+        devices,
+        bookPath,
+        sortOrder,
         exactPath: newMode === 'browse',
       },
     };

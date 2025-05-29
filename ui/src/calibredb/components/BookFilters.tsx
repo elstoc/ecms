@@ -53,43 +53,6 @@ export const BookFilters = () => {
         selectedCode={mode}
         onChange={() => dispatch({ type: 'toggleMode' })}
       />
-      <Input
-        label='Title Search'
-        inline={true}
-        value={uiFilters.titleContains}
-        onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
-      />
-      <SelectLookup
-        label='Author'
-        className='author'
-        lookupTable='authors'
-        allowUndefinedCodeSelection={true}
-        valueForUndefinedCode='All'
-        inline={true}
-        selectedCode={uiFilters.author?.toString()}
-        onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
-        filterable={true}
-      />
-      <SelectLookup
-        label='Format'
-        className='format'
-        lookupTable='formats'
-        allowUndefinedCodeSelection={true}
-        valueForUndefinedCode='All'
-        inline={true}
-        selectedCode={uiFilters.format?.toString()}
-        onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
-        filterable={true}
-      />
-      <SegmentedControlInput
-        label='Read'
-        inline={true}
-        describedCodes={readStatusOptions}
-        selectedCode={readStatusCode}
-        onChange={(value) =>
-          updateUiFilter({ key: 'readStatus', value: value ? value === 'Y' : undefined })
-        }
-      />
       <MultiTagInput
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle']}
@@ -106,14 +69,54 @@ export const BookFilters = () => {
         value={uiFilters.bookPath}
         onChange={(value) => updateUiFilter({ key: 'bookPath', value })}
       />
-      <Switch
-        label='Exact path'
-        className='exact-path'
-        inline={true}
-        disabled={mode === 'browse'}
-        value={!!uiFilters.exactPath}
-        onChange={(value) => updateUiFilter({ key: 'exactPath', value })}
-      />
+      {mode === 'search' && (
+        <>
+          <Switch
+            label='Exact path'
+            className='exact-path'
+            inline={true}
+            value={!!uiFilters.exactPath}
+            onChange={(value) => updateUiFilter({ key: 'exactPath', value })}
+          />
+          <Input
+            label='Title Search'
+            inline={true}
+            value={uiFilters.titleContains}
+            onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
+          />
+          <SelectLookup
+            label='Author'
+            className='author'
+            lookupTable='authors'
+            allowUndefinedCodeSelection={true}
+            valueForUndefinedCode='All'
+            inline={true}
+            selectedCode={uiFilters.author?.toString()}
+            onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
+            filterable={true}
+          />
+          <SelectLookup
+            label='Format'
+            className='format'
+            lookupTable='formats'
+            allowUndefinedCodeSelection={true}
+            valueForUndefinedCode='All'
+            inline={true}
+            selectedCode={uiFilters.format?.toString()}
+            onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
+            filterable={true}
+          />
+          <SegmentedControlInput
+            label='Read'
+            inline={true}
+            describedCodes={readStatusOptions}
+            selectedCode={readStatusCode}
+            onChange={(value) =>
+              updateUiFilter({ key: 'readStatus', value: value ? value === 'Y' : undefined })
+            }
+          />
+        </>
+      )}
       <SegmentedControlInput
         label='Sort'
         inline={true}
