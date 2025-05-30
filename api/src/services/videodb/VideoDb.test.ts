@@ -1216,15 +1216,15 @@ describe('VideoDb', () => {
       const expectedSql =
         baseSQL +
         ` WHERE (length_mins <= $maxLength)
-                                            AND (category IN ($category0, $category1, $category2))
-                                            AND (EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN ($tag0, $tag1, $tag2)))
-                                            AND (LOWER(title) LIKE $titleContains)
-                                            AND (watched IN ('Y', 'P'))
-                                            AND (primary_media_watched IN ('N', 'P'))
-                                            AND (primary_media_type IN ('BD4K', 'DL2160'))
-                                            AND (priority_flag > 0)
-                                            AND (progress IS NOT NULL AND progress != '')
-                                            AND (id IN ($videoId0, $videoId1, $videoId2))` +
+          AND (LOWER(title) LIKE $titleContains)
+          AND (primary_media_type IN ('BD4K', 'DL2160'))
+          AND (priority_flag > 0)
+          AND (progress IS NOT NULL AND progress != '')
+          AND (category IN ($category0, $category1, $category2))
+          AND (EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN ($tag0, $tag1, $tag2)))
+          AND (watched IN ('Y', 'P'))
+          AND (primary_media_watched IN ('N', 'P'))
+          AND (id IN ($videoId0, $videoId1, $videoId2))` +
         baseOrderBy;
       const expectedParams = {
         $titleContains: '%title%',

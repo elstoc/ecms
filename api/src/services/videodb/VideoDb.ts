@@ -92,6 +92,30 @@ const videoNullMapper = (video: Video) => ({
   media_notes: video.media_notes ?? undefined,
 });
 
+export const baseVideoSql = `SELECT v.${videoWithIdFields.join(', v.')},
+                                    vt.tags
+                             FROM   videos v
+                             LEFT OUTER JOIN (
+                                SELECT video_id, GROUP_CONCAT(tag, '|') AS tags
+                                FROM   video_tags
+                                GROUP BY video_id ) vt ON v.id =  vt.video_id`;
+
+export const orderBySql = ` ORDER BY (
+                              CASE WHEN UPPER(title) LIKE 'THE %' THEN UPPER(SUBSTR(title, 5))
+                                  WHEN UPPER(title) LIKE 'AN %' THEN UPPER(SUBSTR(title, 4))
+                                  WHEN UPPER(title) LIKE 'A %' THEN UPPER(SUBSTR(title, 3))
+                                  ELSE UPPER(title)
+                              END
+                          )`;
+
+export const filterSql = {
+  maxLength: 'length_mins <= $maxLength',
+  titleContains: 'LOWER(title) LIKE $titleContains',
+  minHdResolution: "primary_media_type IN ('BD4K', 'DL2160', 'BD', 'DL1080', 'DL720')",
+  minUhdResolution: "primary_media_type IN ('BD4K', 'DL2160')",
+  flaggedOnly: 'priority_flag > 0',
+  hasProgressNotes: "progress IS NOT NULL AND progress != ''",
+};
 export class VideoDb {
   private apiPath: string;
   private initialising = false;
@@ -278,8 +302,8 @@ export class VideoDb {
     await this.deleteVideoTags(id);
 
     const sql = `DELETE
-                     FROM   videos
-                     WHERE  id = ${id}`;
+                 FROM   videos
+                 WHERE  id = ${id}`;
     await this.database?.exec(sql);
   }
 
@@ -307,14 +331,7 @@ export class VideoDb {
   } {
     let params: { [key: string]: unknown } = {};
     const whereClauses: string[] = [];
-    let sql = `SELECT v.${videoWithIdFields.join(', v.')},
-                             vt.tags
-                      FROM   videos v
-					  LEFT OUTER JOIN (
-					    SELECT video_id, GROUP_CONCAT(tag, '|') AS tags
-                        FROM video_tags
-                        GROUP BY video_id ) vt
-					  ON v.id =  vt.video_id`;
+    let sql = baseVideoSql;
 
     const {
       maxLength,
@@ -330,9 +347,26 @@ export class VideoDb {
     } = filters || {};
 
     if (maxLength !== undefined) {
-      whereClauses.push('length_mins <= $maxLength');
+      whereClauses.push(filterSql.maxLength);
       params['$maxLength'] = maxLength;
     }
+    if (titleContains !== undefined) {
+      whereClauses.push(filterSql.titleContains);
+      params['$titleContains'] = `%${titleContains.toLowerCase()}%`;
+    }
+    if (minResolution === 'HD') {
+      whereClauses.push(filterSql.minHdResolution);
+    }
+    if (minResolution === 'UHD') {
+      whereClauses.push(filterSql.minUhdResolution);
+    }
+    if (flaggedOnly) {
+      whereClauses.push(filterSql.flaggedOnly);
+    }
+    if (hasProgressNotes) {
+      whereClauses.push(filterSql.hasProgressNotes);
+    }
+
     if (categories !== undefined) {
       const categoryParams: { [key: string]: string } = {};
       categories.forEach((category, index) => {
@@ -351,27 +385,11 @@ export class VideoDb {
       );
       params = { ...params, ...tagParams };
     }
-    if (titleContains !== undefined) {
-      whereClauses.push('LOWER(title) LIKE $titleContains');
-      params['$titleContains'] = `%${titleContains.toLowerCase()}%`;
-    }
     if (watched === 'Y' || watched === 'N') {
       whereClauses.push(`watched IN ('${watched}', 'P')`);
     }
     if (mediaWatched === 'Y' || mediaWatched === 'N') {
       whereClauses.push(`primary_media_watched IN ('${mediaWatched}', 'P')`);
-    }
-    if (minResolution === 'HD') {
-      whereClauses.push("primary_media_type IN ('BD4K', 'DL2160', 'BD', 'DL1080', 'DL720')");
-    }
-    if (minResolution === 'UHD') {
-      whereClauses.push("primary_media_type IN ('BD4K', 'DL2160')");
-    }
-    if (flaggedOnly) {
-      whereClauses.push('priority_flag > 0');
-    }
-    if (hasProgressNotes) {
-      whereClauses.push("progress IS NOT NULL AND progress != ''");
     }
     if (videoIds !== undefined) {
       const idParams: { [key: string]: number } = {};
@@ -386,13 +404,7 @@ export class VideoDb {
       sql += ` WHERE (${whereClauses.join(') AND (')})`;
     }
 
-    sql += ` ORDER BY (
-            CASE WHEN UPPER(title) LIKE 'THE %' THEN UPPER(SUBSTR(title, 5))
-                 WHEN UPPER(title) LIKE 'AN %' THEN UPPER(SUBSTR(title, 4))
-                 WHEN UPPER(title) LIKE 'A %' THEN UPPER(SUBSTR(title, 3))
-                 ELSE UPPER(title)
-            END
-        )`;
+    sql += orderBySql;
 
     return { sql, params };
   }
