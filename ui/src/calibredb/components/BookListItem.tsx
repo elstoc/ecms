@@ -49,10 +49,10 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
       <Collapse isOpen={expanded}>
         <div className='secondary-info'>
           <div className='tags'>
-            {book.rating && ' * '.repeat(book.rating)}
             {koboStatus && <Tag>kobo</Tag>}
             {kindleStatus && <Tag>kindle</Tag>}
             {tabletStatus && <Tag>tablet</Tag>}
+            {book.rating && ' * '.repeat(book.rating)}
           </div>
           <div className='book-path'>{path}</div>
           <Divider className='description-divider' />
