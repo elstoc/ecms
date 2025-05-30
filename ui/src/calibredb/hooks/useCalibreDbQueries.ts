@@ -41,8 +41,6 @@ export const useLookup = (lookupTable: string) => {
   return useCustomQuery({
     queryKey: ['videoDb', 'lookup', apiPath, lookupTable],
     queryFn: () => getCalibreDbLookup(apiPath, lookupTable),
-    staleTime: 60 * 60 * 1000,
-    refetchInterval: 60 * 60 * 1000,
   });
 };
 
