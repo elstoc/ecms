@@ -109,13 +109,14 @@ export const orderBySql = ` ORDER BY (
                           )`;
 
 export const filterSql = {
-  maxLength: 'length_mins <= $maxLength',
-  titleContains: 'LOWER(title) LIKE $titleContains',
-  minHdResolution: "primary_media_type IN ('BD4K', 'DL2160', 'BD', 'DL1080', 'DL720')",
-  minUhdResolution: "primary_media_type IN ('BD4K', 'DL2160')",
-  flaggedOnly: 'priority_flag > 0',
-  hasProgressNotes: "progress IS NOT NULL AND progress != ''",
+  maxLength: '(length_mins <= $maxLength)',
+  titleContains: '(LOWER(title) LIKE $titleContains)',
+  minHdResolution: "(primary_media_type IN ('BD4K', 'DL2160', 'BD', 'DL1080', 'DL720'))",
+  minUhdResolution: "(primary_media_type IN ('BD4K', 'DL2160'))",
+  flaggedOnly: '(priority_flag > 0)',
+  hasProgressNotes: "(progress IS NOT NULL AND progress != '')",
 };
+
 export class VideoDb {
   private apiPath: string;
   private initialising = false;
@@ -372,7 +373,7 @@ export class VideoDb {
       categories.forEach((category, index) => {
         categoryParams['$category' + index.toString()] = category;
       });
-      whereClauses.push(`category IN (${Object.keys(categoryParams).join(', ')})`);
+      whereClauses.push(`(category IN (${Object.keys(categoryParams).join(', ')}))`);
       params = { ...params, ...categoryParams };
     }
     if (tags !== undefined) {
@@ -381,27 +382,27 @@ export class VideoDb {
         tagParams['$tag' + index.toString()] = tag;
       });
       whereClauses.push(
-        `EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN (${Object.keys(tagParams).join(', ')}))`,
+        `(EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN (${Object.keys(tagParams).join(', ')})))`,
       );
       params = { ...params, ...tagParams };
     }
     if (watched === 'Y' || watched === 'N') {
-      whereClauses.push(`watched IN ('${watched}', 'P')`);
+      whereClauses.push(`(watched IN ('${watched}', 'P'))`);
     }
     if (mediaWatched === 'Y' || mediaWatched === 'N') {
-      whereClauses.push(`primary_media_watched IN ('${mediaWatched}', 'P')`);
+      whereClauses.push(`(primary_media_watched IN ('${mediaWatched}', 'P'))`);
     }
     if (videoIds !== undefined) {
       const idParams: { [key: string]: number } = {};
       videoIds.forEach((id, index) => {
         idParams['$videoId' + index.toString()] = id;
       });
-      whereClauses.push(`id IN (${Object.keys(idParams).join(', ')})`);
+      whereClauses.push(`(id IN (${Object.keys(idParams).join(', ')}))`);
       params = { ...params, ...idParams };
     }
 
     if (whereClauses.length > 0) {
-      sql += ` WHERE (${whereClauses.join(') AND (')})`;
+      sql += ` WHERE ${whereClauses.join(' AND ')}`;
     }
 
     sql += orderBySql;
