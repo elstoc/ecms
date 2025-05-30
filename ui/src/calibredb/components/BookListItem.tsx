@@ -3,6 +3,7 @@ import { Card, Collapse, Divider, Tag } from '@blueprintjs/core';
 import { forwardRef, useState } from 'react';
 
 import { Book } from '@/contracts/calibredb';
+import { Icon } from '@/shared/components/icon';
 import { config } from '@/utils';
 
 import { useCalibreDb } from '../hooks/useCalibreDb';
@@ -40,7 +41,10 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
           <div className='title'>{book.title}</div>
           <div>{book.authors?.map((id) => authors[id]).join(', ')}</div>
         </div>
-        <div className='format'>{format}</div>
+        <div className='right'>
+          <div className='format'>{format}</div>
+          {book.read && <Icon className='read-icon' name='check' />}
+        </div>
       </div>
       <Collapse isOpen={expanded}>
         <div className='secondary-info'>
@@ -49,7 +53,6 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
             {koboStatus && <Tag>kobo</Tag>}
             {kindleStatus && <Tag>kindle</Tag>}
             {tabletStatus && <Tag>tablet</Tag>}
-            {book.read && <Tag intent='success'>read</Tag>}
           </div>
           <div className='book-path'>{path}</div>
           <Divider className='description-divider' />

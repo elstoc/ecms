@@ -31,8 +31,18 @@
       margin-bottom: 3px;
     }
 
-    .format {
-      font-style: italic;
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .format {
+        font-style: italic;
+      }
+
+      .read-icon svg {
+        height: 24px;
+      }
     }
   }
 
