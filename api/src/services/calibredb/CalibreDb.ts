@@ -147,8 +147,10 @@ export type LookupValues = {
 
 export class CalibreDb {
   private apiPath: string;
+  private dbContentPath: string;
   private initialising = false;
   private database?: DatabaseAdapter;
+  private dbModifiedTime = -1;
 
   public constructor(
     apiPath: string,
@@ -157,23 +159,27 @@ export class CalibreDb {
     private storage: StorageAdapter,
   ) {
     this.apiPath = apiPath.replace(/^\//, '');
+    this.dbContentPath = path.join(this.apiPath, 'metadata.db');
   }
 
   public async initialise(): Promise<void> {
+    if (!this.storage.contentFileExists(this.dbContentPath)) {
+      throw new Error(`No database found at ${this.dbContentPath}`);
+    }
+
+    const newDbModifiedTime = this.storage.getContentFileModifiedTime(this.dbContentPath);
+
     while (this.initialising) {
       this.logger.info('waiting for database to initialise');
       await wait(50);
     }
 
-    if (!this.database) {
+    if (!this.database || newDbModifiedTime > this.dbModifiedTime) {
+      this.dbModifiedTime = newDbModifiedTime;
       this.initialising = true;
       this.logger.info(`initialising database at ${this.apiPath}`);
-      const dbContentPath = path.join(this.apiPath, 'metadata.db');
-      if (!this.storage.contentFileExists(dbContentPath)) {
-        throw new Error(`No database found at ${dbContentPath}`);
-      }
       this.database = await this.storage.getContentDb(
-        dbContentPath,
+        this.dbContentPath,
         OPEN_READONLY | OPEN_FULLMUTEX,
       );
       this.initialising = false;

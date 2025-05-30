@@ -19,6 +19,7 @@ jest.mock('@/adapters');
 const mockStorage = {
   contentFileExists: jest.fn() as jest.Mock,
   contentDirectoryExists: jest.fn() as jest.Mock,
+  getContentFileModifiedTime: jest.fn() as jest.Mock,
   getContentFile: jest.fn() as jest.Mock,
   getContentDb: jest.fn() as jest.Mock,
 };
@@ -71,11 +72,13 @@ describe('CalibreDb', () => {
 
     it('gets the database with the correct path and params', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(123);
 
       await calibreDb.initialise();
 
       expect(mockStorage.getContentDb).toHaveBeenCalledTimes(1);
       expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(1);
+      expect(mockStorage.getContentFileModifiedTime).toHaveBeenCalledTimes(1);
       expect(mockStorage.getContentDb).toHaveBeenCalledWith(
         apiDbPath,
         OPEN_READONLY | OPEN_FULLMUTEX,
@@ -84,12 +87,28 @@ describe('CalibreDb', () => {
 
     it('does not re-initialise an already-initialised database', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(123);
 
       await calibreDb.initialise();
       await calibreDb.initialise();
 
       expect(mockStorage.getContentDb).toHaveBeenCalledTimes(1);
-      expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(1);
+      expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(2);
+      expect(mockStorage.getContentFileModifiedTime).toHaveBeenCalledTimes(2);
+    });
+
+    it('does re-initialise if the database has been changed since first init', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockStorage.getContentFileModifiedTime.mockReturnValue(123);
+
+      await calibreDb.initialise();
+
+      mockStorage.getContentFileModifiedTime.mockReturnValue(124);
+      await calibreDb.initialise();
+
+      expect(mockStorage.getContentDb).toHaveBeenCalledTimes(2);
+      expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(2);
+      expect(mockStorage.getContentFileModifiedTime).toHaveBeenCalledTimes(2);
     });
   });
 
