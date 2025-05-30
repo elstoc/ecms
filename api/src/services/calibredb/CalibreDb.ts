@@ -39,6 +39,25 @@ type BookDao = {
   fixed: number;
 };
 
+export const baseBookPathSql = `
+    SELECT DISTINCT code, description
+    FROM   books
+    LEFT JOIN (SELECT book, MIN(value) AS code
+               FROM books_custom_column_39_link path_link
+               GROUP BY book) path_link ON books.id = path_link.book
+    LEFT JOIN (SELECT id, value as description
+               FROM custom_column_39) paths ON path_link.code = paths.id
+    LEFT JOIN (SELECT book, MIN(value) AS kobo_status
+               FROM books_custom_column_21_link collection_link
+               GROUP BY book) kobo_statuses ON books.id = kobo_statuses.book
+    LEFT JOIN (SELECT book, MIN(value) AS kindle_status
+               FROM books_custom_column_22_link collection_link
+               GROUP BY book) kindle_statuses ON books.id = kindle_statuses.book
+    LEFT JOIN (SELECT book, MIN(value) AS tablet_status
+               FROM books_custom_column_23_link collection_link
+               GROUP BY book) tablet_statuses ON books.id = tablet_statuses.book
+`;
+
 export const baseBooksSql = `
     SELECT books.id, title, com.text as description, authors.authors, ratings.rating, formats.format, paths.path, collections.collections,
            kobo_statuses.kobo_status, kindle_statuses.kindle_status, tablet_statuses.tablet_status,
@@ -281,6 +300,30 @@ export class CalibreDb {
       currentPage,
       totalPages,
     };
+  }
+
+  public async getPaths(devices?: Devices[]): Promise<LookupValues> {
+    let sql = baseBookPathSql;
+
+    if (devices) {
+      const deviceSql = devices.map((device) => filterSql[device]);
+      sql += ' WHERE (' + deviceSql.join(' OR ') + ')';
+    }
+
+    const paths = await this.database?.getAll<LookupRow>(sql);
+
+    if (!paths) {
+      throw new Error(`No ${path} records found`);
+    }
+
+    const returnVal: LookupValues = {};
+    paths.forEach((path) => {
+      if (path.code != null && path.description != null) {
+        returnVal[path.code] = path.description;
+      }
+    });
+
+    return returnVal;
   }
 
   public async getLookupValues(tableName: string): Promise<LookupValues> {

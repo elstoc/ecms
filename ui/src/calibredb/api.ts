@@ -23,12 +23,27 @@ export const getCalibreDbBooks = async (
   return data;
 };
 
+export const getCalibreDbBookPaths = async (
+  path: string,
+  devices?: string[],
+): Promise<Record<string, string>> => {
+  const url = 'calibredb/book-paths';
+  const { data } = await axiosSecureClient.get<Record<string, string>>(url, {
+    params: {
+      path,
+      devices: devices?.join('|'),
+    },
+  });
+
+  return data;
+};
+
 export const getCalibreDbLookup = async (
   path: string,
   lookupTable: string,
-): Promise<{ [key: string]: string }> => {
+): Promise<Record<string, string>> => {
   const url = 'calibredb/lookup';
-  const { data } = await axiosSecureClient.get<{ [key: string]: string }>(url, {
+  const { data } = await axiosSecureClient.get<Record<string, string>>(url, {
     params: { path, table: lookupTable },
   });
   return data;

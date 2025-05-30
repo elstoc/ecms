@@ -6,6 +6,7 @@ import { stripWhiteSpace } from '@/utils';
 
 import {
   CalibreDb,
+  baseBookPathSql,
   baseBooksSql,
   filterSql,
   lookupTableSql,
@@ -340,6 +341,80 @@ describe('CalibreDb', () => {
         mockManyBooks[1],
         mockManyBooks[4],
       ]);
+    });
+  });
+
+  describe('getPaths', () => {
+    const mockResultRows = [
+      { code: 1, description: 'description 1' },
+      { code: 2, description: 'description 2' },
+      { code: 3, description: 'description 3' },
+    ];
+
+    const expectedReturnVal = {
+      '1': 'description 1',
+      '2': 'description 2',
+      '3': 'description 3',
+    };
+
+    beforeEach(async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      await calibreDb.initialise();
+      mockGetAll.mockResolvedValue(mockResultRows);
+    });
+
+    it('runs correct SQL with no filters and returns an array of paths', async () => {
+      const paths = await calibreDb.getPaths();
+
+      const expectedSql = baseBookPathSql;
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const sql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(paths).toEqual(expectedReturnVal);
+    });
+
+    it('runs correct SQL with device filter (kobo) and returns an array of paths', async () => {
+      const paths = await calibreDb.getPaths(['kobo']);
+
+      const expectedSql = baseBookPathSql + ' WHERE (' + filterSql.kobo + ')';
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const sql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(paths).toEqual(expectedReturnVal);
+    });
+
+    it('runs correct SQL with device filter (tablet) and returns an array of paths', async () => {
+      const paths = await calibreDb.getPaths(['tablet']);
+
+      const expectedSql = baseBookPathSql + ' WHERE (' + filterSql.tablet + ')';
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const sql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(paths).toEqual(expectedReturnVal);
+    });
+
+    it('runs correct SQL with device filter (kindle) and returns an array of paths', async () => {
+      const paths = await calibreDb.getPaths(['kindle']);
+
+      const expectedSql = baseBookPathSql + ' WHERE (' + filterSql.kindle + ')';
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const sql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(paths).toEqual(expectedReturnVal);
+    });
+
+    it('runs correct SQL with device filter (all) and returns an array of paths', async () => {
+      const paths = await calibreDb.getPaths(['tablet', 'kobo', 'kindle']);
+
+      const expectedSql =
+        baseBookPathSql +
+        'WHERE (' +
+        [filterSql.tablet, filterSql.kobo, filterSql.kindle].join(' OR ') +
+        ')';
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const sql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(paths).toEqual(expectedReturnVal);
     });
   });
 

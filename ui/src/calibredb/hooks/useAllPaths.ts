@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { useLookup } from './useCalibreDbQueries';
+import { useBookPaths } from './useCalibreDbQueries';
 
 export const useAllPaths = () => {
-  const paths = useLookup('paths');
+  const paths = useBookPaths();
 
   const allPaths = useMemo(() => {
     const bookPaths = Object.values(paths).map((v) => v);

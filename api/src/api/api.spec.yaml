@@ -486,11 +486,34 @@ paths:
       responses:
         '200':
           description: OK
-  /calibredb/books:
+  /calibredb/book-paths:
     get:
-      description: Get a list of books from the database
+      description: Get a filtered list of book paths from the database
       parameters:
         - $ref: '#/components/parameters/ComponentPath'
+        - $ref: '#/components/parameters/BookDevicesFilter'
+      responses:
+        '200':
+          description: OK
+  /calibredb/books:
+    get:
+      description: Get a filtered, paginated list of books from the database
+      parameters:
+        - $ref: '#/components/parameters/ComponentPath'
+        - $ref: '#/components/parameters/BookDevicesFilter'
+        - name: bookPath
+          description: Path of the book
+          in: query
+          required: false
+          schema:
+            type: string
+            minimum: 1
+        - name: exactPath
+          description: Whether to filter by the exact bookPath
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/booleanInt'
         - name: sortOrder
           description: How to sort the books
           in: query
@@ -536,45 +559,33 @@ paths:
           schema:
             type: integer
             minimum: 1
-        - name: bookPath
-          description: Path of the book
-          in: query
-          required: false
-          schema:
-            type: string
-            minimum: 1
-        - name: exactPath
-          description: Whether to filter by the exact bookPath
-          in: query
-          required: false
-          schema:
-            $ref: '#/components/schemas/booleanInt'
         - name: readStatus
           description: Whether the book has been read or not
           in: query
           required: false
           schema:
             $ref: '#/components/schemas/booleanInt'
-        - name: devices
-          in: query
-          description: list of devices to filter
-          required: false
-          explode: false
-          style: pipeDelimited
-          schema:
-            type: array
-            minItems: 1
-            items:
-              type: string
-              enum:
-                - kobo
-                - kindle
-                - tablet
       responses:
         '200':
           description: OK
 components:
   parameters:
+    BookDevicesFilter:
+      name: devices
+      in: query
+      description: list of devices to filter
+      required: false
+      explode: false
+      style: pipeDelimited
+      schema:
+        type: array
+        minItems: 1
+        items:
+          type: string
+          enum:
+            - kobo
+            - kindle
+            - tablet
     ComponentPath:
       in: query
       name: path

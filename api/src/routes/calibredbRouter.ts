@@ -14,8 +14,8 @@ export const createCalibreDbRouter = (site: Site): Router => {
     try {
       const path = (req.query.path ?? req.body.path) as string;
       const calibreDb = await site.getCalibreDb(path);
+      const query = req.query as Record<string, string>;
       if (fn === 'getBooks') {
-        const query = req.query as Record<string, string>;
         const filters = {
           titleContains: query.titleContains,
           author: query.author ? parseInt(query.author) : undefined,
@@ -39,6 +39,12 @@ export const createCalibreDbRouter = (site: Site): Router => {
         const coverFileBuf = await calibreDb.getCoverImage(id);
         res.send(coverFileBuf);
       }
+      if (fn === 'getPaths') {
+        const paths = await calibreDb.getPaths(
+          query.devices ? (query.devices.split('|') as Devices[]) : undefined,
+        );
+        res.json(paths);
+      }
     } catch (err: unknown) {
       next?.(err);
     }
@@ -46,6 +52,7 @@ export const createCalibreDbRouter = (site: Site): Router => {
 
   const router = Router();
   router.get('/books', async (req, res, next) => calibreDbHandler(req, res, next, 'getBooks'));
+  router.get('/book-paths', async (req, res, next) => calibreDbHandler(req, res, next, 'getPaths'));
   router.get('/lookup', async (req, res, next) => calibreDbHandler(req, res, next, 'getLookup'));
   router.get('/cover', async (req, res, next) => calibreDbHandler(req, res, next, 'getCover'));
   return router;

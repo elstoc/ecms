@@ -1,6 +1,6 @@
 import { useCustomQuery } from '@/shared/hooks';
 
-import { getCalibreDbBooks, getCalibreDbLookup } from '../api';
+import { getCalibreDbBookPaths, getCalibreDbBooks, getCalibreDbLookup } from '../api';
 import { useCalibreDb } from '../hooks/useCalibreDb';
 
 const useApiPath = () => {
@@ -18,6 +18,20 @@ export const useBooks = () => {
   return useCustomQuery({
     queryKey: ['calibredb', 'books', apiPath, JSON.stringify(apiFilters), pages],
     queryFn: () => getCalibreDbBooks(apiPath, apiFilters, pages),
+  });
+};
+
+export const useBookPaths = () => {
+  const {
+    state: {
+      apiPath,
+      apiFilters: { devices },
+    },
+  } = useCalibreDb();
+
+  return useCustomQuery({
+    queryKey: ['calibredb', 'book-paths', apiPath, JSON.stringify(devices)],
+    queryFn: () => getCalibreDbBookPaths(apiPath, devices),
   });
 };
 
