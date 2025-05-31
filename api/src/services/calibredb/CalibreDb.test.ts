@@ -251,15 +251,30 @@ describe('CalibreDb', () => {
       expect(books.books).toEqual(mockManyBooks);
     });
 
+    it('runs correct SQL and params with device (physical) filter and returns an array of books', async () => {
+      const expectedSql = baseBooksSql + 'WHERE (' + filterSql.physical + ') ' + sortOrderSql.title;
+
+      const books = await calibreDb.getBooks({ devices: ['physical'] }, 10);
+
+      expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({});
+      expect(books.books).toEqual(mockManyBooks);
+    });
+
     it('runs correct SQL and params with device (all) filter and returns an array of books', async () => {
       const expectedSql =
         baseBooksSql +
         'WHERE (' +
-        [filterSql.tablet, filterSql.kobo, filterSql.kindle].join(' OR ') +
+        [filterSql.tablet, filterSql.kobo, filterSql.kindle, filterSql.physical].join(' OR ') +
         ') ' +
         sortOrderSql.title;
 
-      const books = await calibreDb.getBooks({ devices: ['tablet', 'kobo', 'kindle'] }, 10);
+      const books = await calibreDb.getBooks(
+        { devices: ['tablet', 'kobo', 'kindle', 'physical'] },
+        10,
+      );
 
       expect(mockGetAllWithParams).toHaveBeenCalledTimes(1);
       const [sql, params] = mockGetAllWithParams.mock.calls[0];

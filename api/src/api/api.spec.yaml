@@ -591,6 +591,7 @@ components:
             - kobo
             - kindle
             - tablet
+            - physical
     ComponentPath:
       in: query
       name: path

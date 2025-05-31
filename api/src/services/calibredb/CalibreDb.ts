@@ -9,7 +9,7 @@ import { Config, pShuffle } from '@/utils';
 
 const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
-export type Devices = 'kindle' | 'kobo' | 'tablet';
+export type Devices = 'kindle' | 'kobo' | 'tablet' | 'physical';
 
 type Filters = {
   titleContains?: string;
@@ -126,6 +126,10 @@ export const filterSql = {
   kobo: '(kobo_statuses.kobo_status IS NOT NULL)',
   kindle: '(kindle_statuses.kindle_status IS NOT NULL)',
   tablet: '(tablet_statuses.tablet_status IS NOT NULL)',
+  physical: `(EXISTS (SELECT 1 FROM books_custom_column_7_link lnk
+                      JOIN custom_column_7 col ON lnk.value = col.id
+                      WHERE book = books.id
+                      AND col.value = 'physical'))`,
 };
 
 export const sortOrderSql: Record<string, string> = {

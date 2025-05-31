@@ -55,7 +55,7 @@ export const BookFilters = () => {
       />
       <MultiTagInput
         label='Devices'
-        selectableTags={['kobo', 'tablet', 'kindle']}
+        selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
         selectedTags={uiFilters.devices}
         onChange={(value) => updateUiFilter({ key: 'devices', value })}
       />

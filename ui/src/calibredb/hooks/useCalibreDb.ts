@@ -33,7 +33,7 @@ type StateAction =
 const initialFilters = {
   exactPath: false,
   sortOrder: 'title',
-  devices: ['kobo', 'tablet'],
+  devices: ['kobo', 'tablet', 'physical'],
 };
 
 const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = (state, action) => {
