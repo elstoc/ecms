@@ -400,6 +400,11 @@ paths:
               - Y
               - N
         - in: query
+          name: primaryMediaType
+          required: false
+          schema:
+            $ref: '#/components/schemas/VideoMediaType'
+        - in: query
           name: minResolution
           required: false
           description: Minimum image resolution

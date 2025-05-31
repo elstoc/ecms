@@ -61,6 +61,7 @@ export type VideoFilters = {
   minResolution?: string;
   flaggedOnly?: boolean;
   hasProgressNotes?: boolean;
+  primaryMediaType?: string;
   // the following are not in the corresponding UI type
   videoIds?: number[];
   sortOrder?: string;
@@ -115,6 +116,7 @@ export const filterSql = {
   minUhdResolution: "(primary_media_type IN ('BD4K', 'DL2160'))",
   flaggedOnly: '(priority_flag > 0)',
   hasProgressNotes: "(progress IS NOT NULL AND progress != '')",
+  primaryMediaType: '(primary_media_type = $primaryMediaType)',
 };
 
 export class VideoDb {
@@ -345,6 +347,7 @@ export class VideoDb {
       flaggedOnly,
       hasProgressNotes,
       videoIds,
+      primaryMediaType,
     } = filters || {};
 
     if (maxLength !== undefined) {
@@ -366,6 +369,10 @@ export class VideoDb {
     }
     if (hasProgressNotes) {
       whereClauses.push(filterSql.hasProgressNotes);
+    }
+    if (primaryMediaType) {
+      whereClauses.push(filterSql.primaryMediaType);
+      params['$primaryMediaType'] = primaryMediaType;
     }
 
     if (categories !== undefined) {

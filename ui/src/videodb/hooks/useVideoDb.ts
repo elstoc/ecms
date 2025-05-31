@@ -12,6 +12,7 @@ type Filters = {
   minResolution?: string;
   flaggedOnly?: boolean;
   hasProgressNotes?: boolean;
+  primaryMediaType?: string;
 };
 
 type VideoDbState = {

@@ -90,6 +90,18 @@ export const VideoFilters = () => {
         value={uiFilters.titleContains}
         onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
       />
+      <SelectLookup
+        label='Primary Media'
+        className='primary-media'
+        lookupTable='media_types'
+        allowUndefinedCodeSelection={true}
+        valueForUndefinedCode='All'
+        inline={true}
+        disabled={showOnlyExpandedIds}
+        selectedCode={uiFilters.primaryMediaType}
+        onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value })}
+        filterable={false}
+      />
       <div className='switches'>
         <Switch
           label='In progress'

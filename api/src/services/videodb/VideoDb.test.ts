@@ -1071,6 +1071,22 @@ describe('VideoDb', () => {
       expect(videos).toEqual([mockVideoWithId]);
     });
 
+    it('runs the correct sql with filter params when primaryMediaType param is defined', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockGet.mockResolvedValueOnce({ ver: 4 });
+      await videoDb.initialise();
+      const expectedSql = baseVideoSql + ' WHERE ' + filterSql.primaryMediaType + orderBySql;
+
+      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
+      const { videos } = await videoDb.queryVideos({ primaryMediaType: 'BD4K' });
+
+      expect(mockGetAllWithParams).toHaveBeenCalled();
+      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual({ $primaryMediaType: 'BD4K' });
+      expect(videos).toEqual([mockVideoWithId]);
+    });
+
     it('runs the correct sql with filter params when categories filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
       mockGet.mockResolvedValueOnce({ ver: 4 });
@@ -1200,6 +1216,7 @@ describe('VideoDb', () => {
           AND ${filterSql.minUhdResolution}
           AND ${filterSql.flaggedOnly}
           AND ${filterSql.hasProgressNotes}
+          AND ${filterSql.primaryMediaType}
           AND (category IN ($category0, $category1, $category2))
           AND (EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN ($tag0, $tag1, $tag2)))
           AND (watched IN ('Y', 'P'))
@@ -1218,6 +1235,7 @@ describe('VideoDb', () => {
         $videoId0: 11,
         $videoId1: 22,
         $videoId2: 33,
+        $primaryMediaType: 'BD4K',
       };
 
       mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
@@ -1232,6 +1250,7 @@ describe('VideoDb', () => {
         flaggedOnly: true,
         hasProgressNotes: true,
         videoIds: [11, 22, 33],
+        primaryMediaType: 'BD4K',
       });
 
       expect(mockGetAllWithParams).toHaveBeenCalled();
