@@ -3,10 +3,10 @@
 nav.site-nav,
 .sub-menu {
   display: flex;
-  background-color: $appBgColor;
+  background-color: var(--app-bg-color);
 
   .nav-title {
-    font-family: $headingFont;
+    font-family: var(--heading-font);
   }
 
   a:visited,

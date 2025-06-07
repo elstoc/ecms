@@ -1,9 +1,7 @@
-@import '../../variables.scss';
-
 .markdown-nav {
   min-height: 100%;
   display: block;
-  font-family: $headingFont;
+  font-family: var(--heading-font);
   font-size: 1rem;
 
   ol {

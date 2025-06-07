@@ -1,11 +1,9 @@
-@import '../../variables.scss';
-
 #app .book-filters,
 #portal-container .book-filters {
   height: 100%;
   padding-bottom: 1em;
   margin-bottom: 1em;
-  font-family: $headingFont;
+  font-family: var(--heading-font);
 
   .filter-title {
     font-weight: 600;
@@ -14,7 +12,7 @@
   }
 
   .bp5-segmented-control {
-    background-color: $appBgColor;
+    background-color: var(--app-bg-color);
     padding: 0;
   }
   label {

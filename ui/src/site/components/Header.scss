@@ -24,7 +24,7 @@
       flex-shrink: 0;
       font-size: 1.3rem;
       font-weight: 600;
-      font-family: $headingFont;
+      font-family: var(--heading-font);
       cursor: default;
     }
   }

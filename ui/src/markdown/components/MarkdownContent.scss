@@ -1,9 +1,7 @@
-@import '../../variables.scss';
-
 #app .markdown-page-content {
   display: flex;
   flex-direction: column;
-  background-color: $contentBgColor;
+  background-color: var(--content-bg-color);
 
   height: 100%;
   width: 100%;

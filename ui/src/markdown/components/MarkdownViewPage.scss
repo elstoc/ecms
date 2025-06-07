@@ -3,7 +3,7 @@
 .markdown-view-page {
   padding: 0.5rem;
   height: 100%;
-  background-color: $contentBgColor;
+  background-color: var(--content-bg-color);
 
   @media screen and (min-width: $maxMobileWidth) {
     padding: 1.5rem 2.5rem;

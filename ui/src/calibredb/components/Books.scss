@@ -1,7 +1,5 @@
-@import '../../variables.scss';
-
 #app .books {
-  background-color: $contentBgColor;
+  background-color: var(--content-bg-color);
   height: 100%;
   padding: 5px;
 }
