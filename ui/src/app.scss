@@ -30,15 +30,15 @@ header,
 footer {
   flex-grow: 0;
   flex-shrink: 0;
-  width: 97%;
-  min-height: 2.8rem;
+  width: 98%;
+  min-height: 2rem;
   font-size: 1rem;
 }
 
 main {
   display: flex;
-  width: 97%;
-  margin: 10px 0;
+  width: 98%;
+  margin: 0;
   flex-grow: 1;
   flex-shrink: 1;
 }

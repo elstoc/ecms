@@ -5,8 +5,6 @@ import { ContentWithSidebar } from '@/shared/components/layout';
 
 import { BookFilters } from './BookFilters';
 
-import './CalibreDbContent.scss';
-
 export const CalibreDbContent = () => {
   const content = (
     <Suspense>
@@ -20,9 +18,5 @@ export const CalibreDbContent = () => {
     </Suspense>
   );
 
-  return (
-    <div className='calibre-content'>
-      <ContentWithSidebar content={content} sidebar={sidebar} />
-    </div>
-  );
+  return <ContentWithSidebar content={content} sidebar={sidebar} />;
 };

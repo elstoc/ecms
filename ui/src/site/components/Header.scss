@@ -9,7 +9,7 @@
   align-items: stretch;
 
   .toolbar {
-    padding-top: 10px;
+    padding-block: 10px;
     flex-grow: 1;
   }
 
@@ -19,10 +19,11 @@
     align-items: baseline;
     flex-grow: 1;
     border-bottom: 1px solid lightgrey;
+    padding-block: 5px;
 
     .site-title {
       flex-shrink: 0;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: 600;
       font-family: var(--heading-font);
       cursor: default;
@@ -36,7 +37,7 @@
     padding: 5px 0;
 
     .toolbar {
-      padding-top: 0;
+      padding-block: 0;
     }
 
     .nav-and-title {

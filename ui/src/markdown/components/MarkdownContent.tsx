@@ -1,4 +1,3 @@
-import { Card } from '@blueprintjs/core';
 import { Suspense } from 'react';
 
 import { ContentWithSidebar } from '@/shared/components/layout';
@@ -26,14 +25,14 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
   );
 
   const content = (
-    <Card className='markdown-page-content'>
+    <div className='markdown-page-content'>
       <Suspense>
         <MarkdownPage apiPath={apiPath} />
         <InjectComponentTools>
           <MarkdownToolbox apiPath={apiPath} />
         </InjectComponentTools>
       </Suspense>
-    </Card>
+    </div>
   );
 
   return (

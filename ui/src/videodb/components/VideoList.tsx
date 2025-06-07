@@ -1,4 +1,3 @@
-import { Card } from '@blueprintjs/core';
 import { startTransition, useRef } from 'react';
 
 import { useElementIsVisible } from '@/shared/hooks/useElementIsVisible';
@@ -23,7 +22,7 @@ export const VideoList = () => {
   });
 
   return (
-    <Card className='video-list'>
+    <div className='video-list'>
       {videos.map((video, index) => {
         const lastVideo = index === videos.length - 1;
         return (
@@ -36,6 +35,6 @@ export const VideoList = () => {
           />
         );
       })}
-    </Card>
+    </div>
   );
 };
