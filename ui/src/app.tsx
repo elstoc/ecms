@@ -12,7 +12,7 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 export const App = () => {
   return (
-    <>
+    <div className='app-content'>
       <header>
         <Suspense>
           <Header />
@@ -28,6 +28,6 @@ export const App = () => {
           <Footer />
         </Suspense>
       </footer>
-    </>
+    </div>
   );
 };
