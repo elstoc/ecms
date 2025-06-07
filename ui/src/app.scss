@@ -19,8 +19,8 @@
   min-height: 100vh;
 }
 
-#app header,
-#app footer {
+header,
+footer {
   flex-grow: 0;
   flex-shrink: 0;
   width: 97%;
@@ -28,7 +28,7 @@
   font-size: 1rem;
 }
 
-#app main {
+main {
   display: flex;
   width: 97%;
   margin: 10px 0;
