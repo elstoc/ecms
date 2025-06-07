@@ -1,10 +1,9 @@
 @import '../../../variables.scss';
 
 #app .cws-container {
+  width: 100%;
   display: flex;
   justify-content: center;
-
-  height: 100%;
 
   .cws {
     display: flex;

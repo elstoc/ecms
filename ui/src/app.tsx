@@ -12,24 +12,22 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 export const App = () => {
   return (
-    <div id='app-container'>
-      <div id='app'>
-        <header>
-          <Suspense>
-            <Header />
-          </Suspense>
-        </header>
-        <main>
-          <Suspense>
-            <SiteRoutes />
-          </Suspense>
-        </main>
-        <footer>
-          <Suspense>
-            <Footer />
-          </Suspense>
-        </footer>
-      </div>
-    </div>
+    <>
+      <header>
+        <Suspense>
+          <Header />
+        </Suspense>
+      </header>
+      <main>
+        <Suspense>
+          <SiteRoutes />
+        </Suspense>
+      </main>
+      <footer>
+        <Suspense>
+          <Footer />
+        </Suspense>
+      </footer>
+    </>
   );
 };

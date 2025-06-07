@@ -11,7 +11,7 @@ import { ErrorFallback } from './shared/components/fallbacks';
 const queryDefaults = { defaultOptions: { queries: { retry: 2 } } };
 
 const queryClient = new QueryClient(queryDefaults);
-const appContainer = document.getElementById('app-root')!;
+const appContainer = document.getElementById('app')!;
 const portalContainer = document.getElementById('portal-container')!;
 const root = createRoot(appContainer);
 
