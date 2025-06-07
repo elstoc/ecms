@@ -28,6 +28,7 @@ export const App = () => {
           <Footer />
         </Suspense>
       </footer>
+      <div id='portal-container'></div>
     </>
   );
 };
