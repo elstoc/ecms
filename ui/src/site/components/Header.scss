@@ -18,7 +18,7 @@
     flex-direction: column;
     align-items: baseline;
     flex-grow: 1;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid var(--border-grey);
     padding-block: 5px;
 
     .site-title {
@@ -33,7 +33,7 @@
   @media screen and (min-width: $minDualPanelWidth) {
     flex-direction: row;
     align-items: center;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid var(--border-grey);
     padding: 5px 0;
 
     .toolbar {

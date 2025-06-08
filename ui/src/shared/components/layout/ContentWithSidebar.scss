@@ -15,7 +15,6 @@
 
     &.no-sidebar {
       max-width: $maxContentWidth;
-      border-inline: 1px solid lightgrey;
     }
 
     .cws-content-and-sidebar {
@@ -27,7 +26,6 @@
       .cws-content {
         width: 100%;
         flex-grow: 1;
-        border-inline: 1px solid lightgrey;
       }
 
       .cws-sidebar {
@@ -41,9 +39,12 @@
         flex-direction: row;
         justify-content: space-between;
         gap: 30px;
+        border-inline: 1px solid var(--border-grey);
+        box-shadow:
+          10px 0 50px var(--shadow-grey),
+          -10px 0 50px var(--shadow-grey);
 
         .cws-sidebar {
-          border-left: 1px solid lightgrey;
           padding-block: 25px;
           padding-left: 25px;
           width: 28%;

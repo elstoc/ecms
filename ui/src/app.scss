@@ -4,7 +4,9 @@
 :root {
   --app-bg-color: #eeeeee;
   --light-grey: #f5f5f5;
+  --shadow-grey: #e0e0e0;
   --content-bg-color: white;
+  --border-grey: lightgrey;
   --mid-grey: #bfbfbf;
 
   --fixed-width-font: 'hack', Courier, monospace;
@@ -33,6 +35,8 @@ footer {
   width: 98%;
   min-height: 2rem;
   font-size: 1rem;
+  z-index: 1;
+  background-color: var(--app-bg-color);
 }
 
 main {
