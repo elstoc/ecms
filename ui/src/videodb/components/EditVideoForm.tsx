@@ -1,7 +1,8 @@
-import { Button, Card, Collapse, ControlGroup } from '@blueprintjs/core';
+import { Button, Collapse, ControlGroup } from '@blueprintjs/core';
 import { useState } from 'react';
 
 import { Video } from '@/contracts/videodb';
+import { Card } from '@/shared/components/card';
 import { Input, IntegerInput, Switch } from '@/shared/components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
