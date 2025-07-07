@@ -6,7 +6,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter } from 'react-router-dom';
 
 import { App } from './app';
-import { ErrorFallback } from './shared/components/fallbacks';
+import { ErrorFallback } from './site/components/ErrorFallback';
 
 const queryDefaults = { defaultOptions: { queries: { retry: 2 } } };
 
