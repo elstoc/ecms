@@ -1,0 +1,9 @@
+.ecms-card {
+  margin: 5px;
+  box-shadow: 0 0 0 1px rgba(17, 20, 24, 0.15);
+  border-radius: 2px;
+}
+
+.ecms-card.highlight {
+  box-shadow: 0 0 0 1px #333333;
+}

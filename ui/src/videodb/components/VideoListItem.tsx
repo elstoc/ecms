@@ -1,10 +1,11 @@
 /* eslint-disable react/display-name */
-import { Card, Collapse, Tag } from '@blueprintjs/core';
+import { Collapse, Tag } from '@blueprintjs/core';
 import { ReactElement, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { VideoWithId } from '@/contracts/videodb';
+import { Card } from '@/shared/components/card';
 import { Flag } from '@/shared/components/forms';
 import { Icon } from '@/shared/components/icon';
 
@@ -47,11 +48,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
       mutate({ id: video.id, priority_flag: checked ? 1 : 0 });
 
     return (
-      <Card
-        ref={ref}
-        className={`video-list-item ${expanded ? 'expanded' : ''}`}
-        onClick={toggleExpanded}
-      >
+      <Card className='video-list-item' ref={ref} onClick={toggleExpanded} highlight={expanded}>
         <div className='primary-info'>
           <div className='left'>
             <div className='video-title'>{video.title}</div>

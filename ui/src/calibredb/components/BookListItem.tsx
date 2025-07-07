@@ -1,8 +1,9 @@
 /* eslint-disable react/display-name */
-import { Card, Collapse, Divider, Tag } from '@blueprintjs/core';
+import { Collapse, Divider, Tag } from '@blueprintjs/core';
 import { forwardRef, useState } from 'react';
 
 import { Book } from '@/contracts/calibredb';
+import { Card } from '@/shared/components/card';
 import { Icon } from '@/shared/components/icon';
 import { config } from '@/utils';
 
@@ -33,7 +34,8 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
   return (
     <Card
       ref={ref}
-      className={`book-list-item ${expanded ? 'expanded' : ''}`}
+      className='book-list-item'
+      highlight={expanded}
       onClick={() => setExpanded((curr) => !curr)}
     >
       <div className='primary-info'>
