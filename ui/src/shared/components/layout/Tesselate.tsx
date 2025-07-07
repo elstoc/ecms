@@ -1,13 +1,11 @@
 import { ReactElement } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 
-import { config } from '../../../utils';
-
 import './Tesselate.scss';
 
 type TileInfo = { maxWidth: number; maxHeight: number; key: string; element: ReactElement };
 
-type TesselateProps = { tiles: TileInfo[] };
+type TesselateProps = { tiles: TileInfo[]; marginPx: number };
 
 /*
     Takes an array of React Elements (tiles) that all have the same height
@@ -17,9 +15,8 @@ type TesselateProps = { tiles: TileInfo[] };
     as this component will wrap them in a bunch of divs
 */
 
-export const Tesselate = ({ tiles }: TesselateProps) => {
+export const Tesselate = ({ tiles, marginPx }: TesselateProps) => {
   const { width: containerWidth, ref: widthRef } = useResizeDetector({ handleHeight: false });
-  const { tesselateMarginPx } = config;
 
   const tiledRows: ReactElement[] = [];
 
@@ -29,10 +26,14 @@ export const Tesselate = ({ tiles }: TesselateProps) => {
 
     tiles.forEach((tile, index) => {
       const isLastRow = index === tiles.length - 1;
-      rowContents.push(<div key={tile.key}>{tile.element}</div>);
+      rowContents.push(
+        <div key={tile.key} style={{ margin: `0 ${marginPx}px` }}>
+          {tile.element}
+        </div>,
+      );
 
       cumulativeRowWidth += tile.maxWidth;
-      const availableWidth = containerWidth - 2 * tesselateMarginPx * rowContents.length;
+      const availableWidth = containerWidth - 2 * marginPx * rowContents.length;
 
       let fillRatio = availableWidth / cumulativeRowWidth;
       if (isLastRow && fillRatio > 1) fillRatio = 1;
@@ -42,7 +43,10 @@ export const Tesselate = ({ tiles }: TesselateProps) => {
           <div
             className='row'
             key={rowContents[0].key}
-            style={{ height: `${tile.maxHeight * fillRatio}px` }}
+            style={{
+              height: `${tile.maxHeight * fillRatio}px`,
+              margin: `${marginPx}px 0`,
+            }}
           >
             {rowContents}
           </div>

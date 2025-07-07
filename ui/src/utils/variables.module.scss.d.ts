@@ -1,4 +1,4 @@
-type I_globalScss = { minDualPanelWidth: string; tesselateMarginPx: number };
+type I_globalScss = { minDualPanelWidth: string };
 
 export const variables: I_globalScss;
 
