@@ -1,7 +1,8 @@
-import { Button, Card, Dialog, DialogBody } from '@blueprintjs/core';
+import { Button, Dialog, DialogBody } from '@blueprintjs/core';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { Card } from '@/shared/components/card';
 import { Input } from '@/shared/components/forms';
 
 import { getMarkdownPage } from '../api';
