@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { Books } from '@/calibredb/components/Books';
-import { ContentWithSidebar } from '@/shared/components/layout';
+import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 
 import { BookFilters } from './BookFilters';
 

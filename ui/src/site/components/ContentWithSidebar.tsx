@@ -1,12 +1,10 @@
 import { Collapse } from '@blueprintjs/core';
 import { ReactNode, useEffect, useState } from 'react';
 
+import { Icon } from '@/shared/components/icon';
+import { Toolbox } from '@/shared/components/layout';
 import { useIsDualPanel } from '@/shared/hooks';
 import { InjectSideExpander } from '@/site/components/HeaderToolbox';
-
-import { Icon } from '../icon';
-
-import { Toolbox } from './Toolbox';
 
 import './ContentWithSidebar.scss';
 

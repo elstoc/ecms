@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router';
 
-import { ContentWithSidebar } from '@/shared/components/layout';
+import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 import { NotFoundPage } from '@/site/components/NotFoundPage';
 

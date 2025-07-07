@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { ContentWithSidebar } from '@/shared/components/layout';
+import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
 import { useMarkdown } from '../hooks/useMarkdown';
