@@ -1,4 +1,4 @@
-#app .toolbox {
+.ecms-card.toolbox {
   display: flex;
   flex-direction: row;
   column-gap: 5px;
