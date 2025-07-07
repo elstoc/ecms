@@ -1,7 +1,8 @@
-import { Button, Collapse, ControlGroup } from '@blueprintjs/core';
+import { Collapse, ControlGroup } from '@blueprintjs/core';
 import { useState } from 'react';
 
 import { Video } from '@/contracts/videodb';
+import { Button } from '@/shared/components/button';
 import { Card } from '@/shared/components/card';
 import { Input, IntegerInput, Switch } from '@/shared/components/forms';
 

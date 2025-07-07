@@ -1,4 +1,4 @@
-import { Button } from '@blueprintjs/core';
+import { Button } from '@/shared/components/button';
 
 import { useAllPaths } from '../hooks/useAllPaths';
 import { useCalibreDb } from '../hooks/useCalibreDb';

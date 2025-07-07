@@ -1,5 +1,4 @@
-import { Button } from '@blueprintjs/core';
-
+import { Button } from '@/shared/components/button';
 import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 
 import { useVideoDb } from '../hooks/useVideoDb';

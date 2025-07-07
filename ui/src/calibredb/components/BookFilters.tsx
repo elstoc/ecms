@@ -1,5 +1,4 @@
-import { Button } from '@blueprintjs/core';
-
+import { Button } from '@/shared/components/button';
 import { Input, MultiTagInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 import { SuggestItem } from '@/shared/components/forms/SuggestItem';
 import { toIntOrUndefined } from '@/utils';

@@ -1,6 +1,6 @@
-import { Button } from '@blueprintjs/core';
 import { useCallback, useState } from 'react';
 
+import { Button } from '@/shared/components/button';
 import { Card } from '@/shared/components/card';
 import { Input, PasswordInput } from '@/shared/components/forms';
 
