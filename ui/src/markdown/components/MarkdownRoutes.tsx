@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { MarkdownTree } from '@/contracts/markdown';
-import { NotFoundPage } from '@/shared/components/NotFoundPage';
+import { NotFoundPage } from '@/site/components/NotFoundPage';
 
 import { useMarkdown } from '../hooks/useMarkdown';
 import { useGetMarkdownTree } from '../hooks/useMarkdownQueries';

@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 
 import { GalleryMetadata } from '@/contracts/site';
-import { NotFoundPage } from '@/shared/components/NotFoundPage';
+import { NotFoundPage } from '@/site/components/NotFoundPage';
 
 import { GalleryContext, useGalleryReducer } from '../hooks/useGallery';
 

@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router';
 
-import { NotFoundPage } from '@/shared/components/NotFoundPage';
 import { ContentWithSidebar } from '@/shared/components/layout';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
+import { NotFoundPage } from '@/site/components/NotFoundPage';
 
 import { EditVideo } from './EditVideo';
 import { VideoFilters } from './VideoFilters';

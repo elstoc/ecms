@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
-import { NotFoundPage } from '@/shared/components/NotFoundPage';
+import { NotFoundPage } from '@/site/components/NotFoundPage';
 
 import { useSiteComponents } from '../hooks/useSiteQueries';
 
