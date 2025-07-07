@@ -7,7 +7,7 @@ import './Card.css';
 type CardProps = {
   children: ReactNode;
   highlight?: boolean;
-  onClick?: VoidFunction;
+  onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   className?: string;
 };
 
@@ -16,7 +16,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     const classes = cn('ecms-card', className, { highlight: highlight });
 
     return (
-      <div onClick={() => onClick?.()} ref={ref} className={classes}>
+      <div onClick={onClick} ref={ref} className={classes}>
         {children}
       </div>
     );
