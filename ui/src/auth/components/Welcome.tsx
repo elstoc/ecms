@@ -2,7 +2,7 @@ import { Button } from '@/shared/components/button';
 
 import { useLogout } from '../hooks/useAuthQueries';
 
-import './Welcome.scss';
+import './Welcome.css';
 
 type WelcomeProps = { user: string };
 

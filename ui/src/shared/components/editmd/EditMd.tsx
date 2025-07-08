@@ -3,7 +3,7 @@ import { languages } from '@codemirror/language-data';
 import { EditorView } from '@codemirror/view';
 import CodeMirror from '@uiw/react-codemirror';
 
-import './EditMd.scss';
+import './EditMd.css';
 
 type EditMdProps = { markdown: string; setMarkdown: (value: string) => void };
 

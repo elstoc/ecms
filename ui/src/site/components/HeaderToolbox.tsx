@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { UserInfo } from '@/auth';
 
-import './HeaderToolbox.scss';
+import './HeaderToolbox.css';
 
 type ChildrenOnly = {
   children: ReactNode;

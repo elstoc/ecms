@@ -9,7 +9,7 @@ import { splitFrontMatter } from '@/utils';
 import { useMarkdown } from '../hooks/useMarkdown';
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
 
-import './MarkdownToolbox.scss';
+import './MarkdownToolbox.css';
 
 type MarkdownToolboxProps = { apiPath: string };
 

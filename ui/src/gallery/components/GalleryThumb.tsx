@@ -2,7 +2,7 @@
 import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import './GalleryThumb.scss';
+import './GalleryThumb.css';
 
 type GalleryThumbProps = {
   fileName: string;

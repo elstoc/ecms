@@ -7,7 +7,7 @@ import { GalleryLightBox } from './GalleryLightBox';
 import { GalleryToolbox } from './GalleryToolbox';
 import { JustifiedGallery } from './JustifiedGallery';
 
-import './GalleryContent.scss';
+import './GalleryContent.css';
 
 export const GalleryContent = () => {
   const {

@@ -1,6 +1,6 @@
 import { useSiteConfig } from '../hooks/useSiteQueries';
 
-import './Footer.scss';
+import './Footer.css';
 
 export const Footer = () => {
   const siteConfig = useSiteConfig();

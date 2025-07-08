@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
 
-  .right {
-    display: flex;
-    column-gap: 25px;
-    flex-direction: row;
-  }
+.toolbox-content .right {
+  display: flex;
+  column-gap: 25px;
+  flex-direction: row;
 }

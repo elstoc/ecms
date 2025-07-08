@@ -9,7 +9,7 @@ import { MarkdownNav } from './MarkdownNav';
 import { MarkdownPage } from './MarkdownPage';
 import { MarkdownToolbox } from './MarkdownToolbox';
 
-import './MarkdownContent.scss';
+import './MarkdownContent.css';
 
 type MarkdownContentProps = { apiPath: string };
 

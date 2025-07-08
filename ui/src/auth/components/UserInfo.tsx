@@ -9,7 +9,7 @@ import { useSiteConfig } from '@/site';
 import { Login } from './Login';
 import { Welcome } from './Welcome';
 
-import './UserInfo.scss';
+import './UserInfo.css';
 
 export const UserInfo = () => {
   const [authDialogOpen, setAuthDialogOpen] = useState(false);

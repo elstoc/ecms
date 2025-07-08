@@ -1,7 +1,7 @@
 import { BookList } from './BookList';
 import { PathLinks } from './PathLinks';
 
-import './Books.scss';
+import './Books.css';
 
 export const Books = () => {
   return (

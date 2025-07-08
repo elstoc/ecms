@@ -7,7 +7,7 @@ import { useVideos } from '../hooks/useVideoDbQueries';
 
 import { VideoListItem } from './VideoListItem';
 
-import './VideoList.scss';
+import './VideoList.css';
 
 export const VideoList = () => {
   const { state, dispatch } = useVideoDb();

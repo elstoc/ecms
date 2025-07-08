@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react';
 
 import { useMarkdown } from '../hooks/useMarkdown';
 
-import './MarkdownEditPage.scss';
+import './MarkdownEditPage.css';
 
 const EditMd = lazy(() => import('@/shared/components/editmd/EditMdAsDefault'));
 

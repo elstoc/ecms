@@ -8,7 +8,7 @@ import { Toolbox } from '@/shared/components/layout';
 import { useVideoDb } from '../hooks/useVideoDb';
 import { downloadVideoCSV } from '../utils/downloadVideoCSV';
 
-import './VideoToolbox.scss';
+import './VideoToolbox.css';
 
 export const VideoToolbox = () => {
   const userIsAdmin = useUserIsAdmin();

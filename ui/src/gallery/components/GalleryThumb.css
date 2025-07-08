@@ -1,0 +1,27 @@
+.gallery-thumb {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+
+.gallery-thumb img {
+  width: auto;
+  height: 100%;
+  object-fit: fill;
+}
+
+.gallery-thumb .overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.5s ease;
+  opacity: 0;
+  color: rgb(200, 200, 200);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.gallery-thumb:hover .overlay {
+  opacity: 1;
+}

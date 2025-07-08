@@ -1,6 +1,6 @@
 import { Icon } from '../icon';
 
-import './Flag.scss';
+import './Flag.css';
 
 type FlagParams = {
   value: boolean | undefined;
