@@ -3,3 +3,6 @@ node_modules
 dist
 coverage
 public/runtime-env.js
+
+*storybook.log
+storybook-static

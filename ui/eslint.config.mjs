@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import pluginJs from '@eslint/js';
 import configPrettier from 'eslint-config-prettier/flat';
 import pluginReact from 'eslint-plugin-react';
@@ -31,4 +34,5 @@ export default [
   {
     ignores: ['node_modules/', 'dist/', 'public/', 'webpack.config.js'],
   },
+  ...storybook.configs["flat/recommended"]
 ];
