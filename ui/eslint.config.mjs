@@ -1,9 +1,8 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
 import pluginJs from '@eslint/js';
 import configPrettier from 'eslint-config-prettier/flat';
 import pluginReact from 'eslint-plugin-react';
+import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -22,6 +21,7 @@ export default [
       semi: [2, 'always'],
       'eol-last': 2,
       '@typescript-eslint/no-non-null-assertion': 'off',
+      'react/display-name': 'off',
     },
   },
   {
@@ -34,5 +34,5 @@ export default [
   {
     ignores: ['node_modules/', 'dist/', 'public/', 'webpack.config.js'],
   },
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs['flat/recommended'],
 ];

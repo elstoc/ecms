@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { Collapse, Tag } from '@blueprintjs/core';
 import { ReactElement, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';

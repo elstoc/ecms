@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import cn from 'classnames';
 import { ReactNode, forwardRef } from 'react';
 

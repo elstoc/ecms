@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { Collapse, Divider, Tag } from '@blueprintjs/core';
 import { forwardRef, useState } from 'react';
 
