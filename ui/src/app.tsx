@@ -4,7 +4,8 @@ import { Suspense } from 'react';
 
 import { Footer, Header, SiteRoutes } from './site';
 
-import './app.scss';
+import './app.css';
+import './theme.css';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/select/lib/css/blueprint-select.css';
 
