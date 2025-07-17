@@ -1,5 +1,4 @@
 // See https://react-icons.github.io/react-icons for summary of available icons
-import { IconType } from 'react-icons';
 import {
   FiCheck,
   FiChevronLeft,
@@ -24,7 +23,7 @@ import {
 
 import './Icon.scss';
 
-const icons: { [key: string]: IconType } = {
+const icons = {
   user: FiUser,
   noUser: FiUserX,
   edit: FiEdit,
@@ -46,7 +45,7 @@ const icons: { [key: string]: IconType } = {
 };
 
 type IconProps = {
-  name: string;
+  name: keyof typeof icons;
   disabled?: boolean;
   onClick?: () => void;
   className?: string;
@@ -55,8 +54,6 @@ type IconProps = {
 
 export const Icon = ({ name, onClick, disabled = false, className = '', color }: IconProps) => {
   const IconComponent = icons[name];
-
-  if (!IconComponent) return <></>;
 
   const iconOnClick = disabled ? undefined : onClick;
   const divClass = `icon-div ${className} ${disabled ? 'disabled' : ''} ${iconOnClick ? 'clickable' : ''}`;
