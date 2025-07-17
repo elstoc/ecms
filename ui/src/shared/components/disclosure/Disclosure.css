@@ -1,0 +1,51 @@
+.ecms-disclosure {
+  .ecms-heading {
+    margin-block: 0;
+  }
+
+  .ecms-button[slot='trigger'] {
+    background: none;
+    border: none;
+    box-shadow: none;
+    font-weight: 400;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+
+    &[data-hovered] {
+      cursor: pointer;
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2px;
+      rotate: 0deg;
+      transition: rotate 200ms;
+    }
+  }
+
+  .ecms-disclosure-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+
+    .grid-child {
+      overflow: hidden;
+    }
+  }
+
+  &.visuallyExpanded {
+    .ecms-disclosure-panel {
+      grid-template-rows: 1fr;
+    }
+
+    .ecms-button[slot='trigger'] svg {
+      rotate: 90deg;
+    }
+  }
+}
