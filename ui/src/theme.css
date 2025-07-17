@@ -11,4 +11,5 @@
 
   --fixed-width-font: 'hack', Courier, monospace;
   --heading-font: 'Raleway', sans-serif;
+  --transition-timing: 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
 }
