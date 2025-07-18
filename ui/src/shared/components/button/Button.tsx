@@ -1,35 +1,16 @@
-import { Button as BPButton, IconName } from '@blueprintjs/core';
-import { ReactNode } from 'react';
+import cn from 'classnames';
+import { Button as RaButton, ButtonProps as RaButtonProps } from 'react-aria-components';
 
-type ButtonProps = {
-  role?: React.AriaRole;
-  onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  children?: ReactNode;
-  className?: string;
-  icon?: IconName;
-  tabIndex?: number;
-  disabled?: boolean;
+import './Button.css';
+
+type ButtonProps = RaButtonProps & {
+  clearFormatting?: boolean;
 };
 
-export const Button = ({
-  onClick,
-  tabIndex,
-  children,
-  role,
-  className,
-  icon,
-  disabled,
-}: ButtonProps) => {
-  return (
-    <BPButton
-      disabled={disabled}
-      tabIndex={tabIndex}
-      icon={icon}
-      className={className}
-      role={role}
-      onClick={onClick}
-    >
-      {children}
-    </BPButton>
-  );
+export const Button = (props: ButtonProps) => {
+  const className = cn('ecms-button', props.className, {
+    'clear-formatting': props.clearFormatting,
+  });
+
+  return <RaButton {...props} className={className} />;
 };

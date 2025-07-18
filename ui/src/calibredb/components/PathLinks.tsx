@@ -1,4 +1,4 @@
-import { Button } from '@/shared/components/button2';
+import { Button } from '@/shared/components/button';
 
 import { useAllPaths } from '../hooks/useAllPaths';
 import { useCalibreDb } from '../hooks/useCalibreDb';

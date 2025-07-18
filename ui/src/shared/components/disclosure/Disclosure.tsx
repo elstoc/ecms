@@ -9,7 +9,7 @@ import {
   HeadingProps as RaHeadingProps,
 } from 'react-aria-components';
 
-import { Button } from '../button2';
+import { Button } from '../button';
 
 import './Disclosure.css';
 
