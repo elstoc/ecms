@@ -11,6 +11,7 @@ type InputParams = {
   autoFocus?: boolean;
   onPressEnter?: () => void;
   disabled?: boolean;
+  type?: string;
 };
 
 export const Input = ({
@@ -22,6 +23,7 @@ export const Input = ({
   autoFocus,
   onPressEnter,
   disabled,
+  type,
 }: InputParams) => {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -37,6 +39,7 @@ export const Input = ({
         autoFocus={autoFocus}
         onKeyDown={handleKeyDown}
         disabled={disabled}
+        type={type}
       />
     </FormGroup>
   );

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { Button } from '@/shared/components/button2';
 import { Card } from '@/shared/components/card';
-import { Input, PasswordInput } from '@/shared/components/forms';
+import { Input } from '@/shared/components/forms';
 
 import { useLogin } from '../hooks/useAuthQueries';
 
@@ -36,10 +36,11 @@ export const Login = () => {
           autoFocus={true}
           inline={true}
         />
-        <PasswordInput
+        <Input
           label='Password'
+          type='password'
           value={password}
-          onChange={setPassword}
+          onChange={(password) => setPassword(password ?? '')}
           onPressEnter={handleLogin}
           inline={true}
         />
