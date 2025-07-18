@@ -21,7 +21,7 @@ import {
   LuShuffle,
 } from 'react-icons/lu';
 
-import './Icon.scss';
+import './Icon.css';
 
 const icons = {
   user: FiUser,
