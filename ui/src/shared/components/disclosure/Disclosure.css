@@ -4,19 +4,10 @@
   }
 
   .ecms-button[slot='trigger'] {
-    background: none;
-    border: none;
-    box-shadow: none;
     font-weight: 400;
     font-size: 1.3rem;
-    display: flex;
-    align-items: center;
     gap: 8px;
     padding: 5px 0;
-
-    &[data-hovered] {
-      cursor: pointer;
-    }
 
     svg {
       width: 1em;

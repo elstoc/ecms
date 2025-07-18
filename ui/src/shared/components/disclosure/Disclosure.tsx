@@ -1,8 +1,6 @@
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import {
-  Button as RaButton,
-  ButtonProps as RaButtonProps,
   Disclosure as RaDisclosure,
   DisclosurePanel as RaDisclosurePanel,
   DisclosurePanelProps as RaDisclosurePanelProps,
@@ -11,11 +9,9 @@ import {
   HeadingProps as RaHeadingProps,
 } from 'react-aria-components';
 
-import './Disclosure.css';
+import { Button } from '../button2';
 
-const Button = (props: RaButtonProps) => {
-  return <RaButton {...props} className='ecms-button' />;
-};
+import './Disclosure.css';
 
 const Heading = (props: RaHeadingProps) => {
   return <RaHeading {...props} className='ecms-heading' />;
@@ -73,7 +69,7 @@ type TriggerButtonProps = { heading?: string };
 export const TriggerButton = ({ heading }: TriggerButtonProps) => {
   return (
     <Heading>
-      <Button slot='trigger'>
+      <Button slot='trigger' clearFormatting>
         {heading}
         <svg viewBox='0 0 24 24'>
           <path d='m8.25 4.5 7.5 7.5-7.5 7.5' />
