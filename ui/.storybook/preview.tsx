@@ -6,7 +6,14 @@ import '../src/theme.css';
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <div style={{ minWidth: '800px' }}>
+      <div
+        style={{
+          width: '800px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Story />
       </div>
     ),
