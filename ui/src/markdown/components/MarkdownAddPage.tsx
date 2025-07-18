@@ -2,7 +2,7 @@ import { Dialog, DialogBody } from '@blueprintjs/core';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { Button } from '@/shared/components/button';
+import { Button } from '@/shared/components/button2';
 import { Card } from '@/shared/components/card';
 import { Input } from '@/shared/components/forms';
 

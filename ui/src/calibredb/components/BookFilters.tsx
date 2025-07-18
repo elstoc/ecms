@@ -1,4 +1,4 @@
-import { Button } from '@/shared/components/button';
+import { Button } from '@/shared/components/button2';
 import { Input, MultiTagInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 import { SuggestItem } from '@/shared/components/forms/SuggestItem';
 import { toIntOrUndefined } from '@/utils';
@@ -124,7 +124,7 @@ export const BookFilters = () => {
         onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value ?? 'title' })}
       />
       <div className='filter-action-buttons'>
-        <Button role='button' onClick={() => dispatch({ type: 'resetFilters' })}>
+        <Button type='button' onClick={() => dispatch({ type: 'resetFilters' })}>
           Reset Filters
         </Button>
       </div>

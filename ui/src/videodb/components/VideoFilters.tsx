@@ -1,4 +1,4 @@
-import { Button } from '@/shared/components/button';
+import { Button } from '@/shared/components/button2';
 import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
 
 import { useVideoDb } from '../hooks/useVideoDb';
@@ -121,13 +121,13 @@ export const VideoFilters = () => {
       </div>
       <div className='filter-action-buttons'>
         <Button
-          disabled={expandedVideoIds.length === 0}
+          isDisabled={expandedVideoIds.length === 0}
           onClick={() => dispatch({ type: 'resetVideoExpanded' })}
         >
           Collapse all
         </Button>
         <Button
-          disabled={expandedVideoIds.length === 0}
+          isDisabled={expandedVideoIds.length === 0}
           onClick={() => dispatch({ type: 'toggleShowOnlyExpanded' })}
         >
           {showOnlyExpandedIds ? 'Reapply filters' : 'Show expanded'}
