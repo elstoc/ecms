@@ -64,12 +64,12 @@ export const DisclosurePanel = (props: RaDisclosurePanelProps) => {
   );
 };
 
-type TriggerButtonProps = { heading?: string };
+type TriggerButtonProps = { heading?: string; clearButtonFormatting?: boolean };
 
-export const TriggerButton = ({ heading }: TriggerButtonProps) => {
+export const TriggerButton = ({ heading, clearButtonFormatting }: TriggerButtonProps) => {
   return (
     <Heading>
-      <Button slot='trigger' clearFormatting>
+      <Button slot='trigger' clearFormatting={clearButtonFormatting}>
         {heading}
         <svg viewBox='0 0 24 24'>
           <path d='m8.25 4.5 7.5 7.5-7.5 7.5' />
