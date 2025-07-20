@@ -53,7 +53,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
             <div className='video-title'>{video.title}</div>
             <div>
               <WatchedIcon watchedStatus={video.watched} />
-              <WatchedIcon watchedStatus={video.primary_media_watched ?? undefined} />
+              <WatchedIcon watchedStatus={video.primary_media_watched} />
               <span>
                 {' '}
                 {primaryMediaType} {lengthText}
