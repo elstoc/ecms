@@ -1,27 +1,27 @@
 import { Icon } from '../icon';
 
 type FlagParams = {
-  value: boolean | undefined;
+  flagged?: boolean;
   onChange?: (value: boolean) => void;
   className?: string;
   color?: string;
 };
 
-export const Flag = ({ value, onChange, className, color = 'green' }: FlagParams) => {
+export const Flag = ({ flagged, onChange, className, color = 'green' }: FlagParams) => {
   let calculatedColor = color;
-  if (value === false) {
+  if (flagged === false) {
     calculatedColor = 'lightgrey';
-  } else if (value === undefined) {
+  } else if (flagged === undefined) {
     calculatedColor = 'orange';
   }
 
   return (
     <Icon
       icon='flag'
-      label={value ? 'unflag' : 'flag'}
+      label={flagged ? 'unflag' : 'flag'}
       className={className}
       color={calculatedColor}
-      onClick={() => onChange?.(!value)}
+      onClick={() => onChange?.(!flagged)}
     />
   );
 };
