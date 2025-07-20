@@ -1,4 +1,5 @@
 // See https://react-icons.github.io/react-icons for summary of available icons
+import cn from 'classnames';
 import {
   FiCheck,
   FiChevronLeft,
@@ -20,6 +21,8 @@ import {
   LuArrowUpNarrowWide,
   LuShuffle,
 } from 'react-icons/lu';
+
+import { Button } from '../button';
 
 import './Icon.css';
 
@@ -50,17 +53,30 @@ type IconProps = {
   onClick?: () => void;
   className?: string;
   color?: string;
+  label: string;
 };
 
-export const Icon = ({ name, onClick, disabled = false, className = '', color }: IconProps) => {
+export const Icon = ({ name, onClick, disabled, className, color, label }: IconProps) => {
   const IconComponent = icons[name];
+  const classNames = cn('ecms-icon', className);
 
-  const iconOnClick = disabled ? undefined : onClick;
-  const divClass = `icon-div ${className} ${disabled ? 'disabled' : ''} ${iconOnClick ? 'clickable' : ''}`;
+  if (onClick) {
+    return (
+      <Button
+        aria-label={label}
+        clearFormatting
+        className={classNames}
+        isDisabled={disabled}
+        onClick={onClick}
+      >
+        <IconComponent title='' className='icon' color={color} />
+      </Button>
+    );
+  }
 
   return (
-    <div className={divClass} onClick={iconOnClick}>
-      <IconComponent className='icon' color={color} />
+    <div className={cn(classNames, { disabled: disabled })}>
+      <IconComponent title={label} className='icon' color={color} />
     </div>
   );
 };

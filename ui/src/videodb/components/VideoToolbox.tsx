@@ -26,11 +26,17 @@ export const VideoToolbox = () => {
     <Toolbox>
       {userIsAdmin && (
         <>
-          <Icon name='add' onClick={() => navigate('./add')} />
-          <Icon className='download-icon' name='download' onClick={downloadCSV} />
+          <Icon label='add video' name='add' onClick={() => navigate('./add')} />
+          <Icon
+            label='download videos as CSV'
+            className='download-icon'
+            name='download'
+            onClick={downloadCSV}
+          />
         </>
       )}
       <Icon
+        label='sort ascending'
         name='sortAscAlpha'
         color={sortOrder === 'asc' ? 'black' : 'grey'}
         onClick={() =>
@@ -42,6 +48,7 @@ export const VideoToolbox = () => {
       />
       <Icon
         name='shuffle'
+        label='shuffle'
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}
         onClick={() =>
           dispatch({

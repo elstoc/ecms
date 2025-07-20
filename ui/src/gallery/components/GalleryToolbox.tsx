@@ -12,6 +12,7 @@ export const GalleryToolbox = () => {
   return (
     <Toolbox>
       <Icon
+        label={sortOrder === 'asc' ? 'click to sort descending' : 'click to sort ascending'}
         name={sortOrder === 'asc' ? 'sortAsc' : 'sortDesc'}
         color={sortOrder === 'shuffle' ? 'grey' : 'black'}
         onClick={() =>
@@ -22,6 +23,7 @@ export const GalleryToolbox = () => {
         }
       />
       <Icon
+        label={sortOrder === 'shuffle' ? 'click to re-shuffle' : 'click to shuffle'}
         name='shuffle'
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}
         onClick={() => dispatch({ type: 'setSortOrder', payload: 'shuffle' })}

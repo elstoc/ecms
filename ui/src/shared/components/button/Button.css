@@ -27,6 +27,12 @@
     background-color: var(--button-pressed-bg-color);
   }
 
+  &[data-disabled] {
+    opacity: 0.2;
+    cursor: default;
+    color: inherit;
+  }
+
   &.clear-formatting {
     background: none;
     border: none;

@@ -1,23 +1,19 @@
-.icon-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-
-  &.clickable {
-    cursor: pointer;
-  }
-
-  &.disabled {
-    opacity: 0.2;
-    cursor: default;
-  }
-
+.ecms-icon {
   .icon {
     display: block;
     padding: 3px;
     height: 30px;
     width: 30px;
+  }
+
+  &.disabled {
+    opacity: 0.2;
+  }
+
+  &.ecms-button {
+    padding: 0;
+    margin: 0;
+    min-height: unset;
+    min-width: unset;
   }
 }

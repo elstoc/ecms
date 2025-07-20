@@ -19,6 +19,13 @@ export const Default: Story = {
   },
 };
 
+export const Disabled: Story = {
+  args: {
+    ...Default.args,
+    isDisabled: true,
+  },
+};
+
 export const ClearFormatting: Story = {
   args: {
     ...Default.args,

@@ -50,6 +50,7 @@ export const ContentWithSidebar = ({
               <Toolbox>
                 <Icon
                   name='menu'
+                  label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
                   className='sidebar-button'
                   onClick={() => setSidebarDrawerVisible((visible) => !visible)}
                 />

@@ -19,6 +19,7 @@ export const Flag = ({ value, onChange, className = '', color }: FlagParams) => 
 
   return (
     <Icon
+      label={value ? 'unflag video' : 'flag video'}
       onClick={onChange && (() => onChange(!value))}
       className={`flag-component ${value === false ? '' : 'checked'} ${className}`}
       name='flag'

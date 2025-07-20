@@ -103,7 +103,9 @@ export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
               </div>
             </div>
             <div className='right' onClick={preventCardClick}>
-              {userIsAdmin && <Icon name='edit' color='black' onClick={openVideo} />}
+              {userIsAdmin && (
+                <Icon label='edit video' name='edit' color='black' onClick={openVideo} />
+              )}
             </div>
           </div>
         </Collapse>
