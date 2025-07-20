@@ -64,7 +64,6 @@ export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
             <Flag
               value={isPending ? undefined : video.priority_flag ? true : false}
               className='priority'
-              color='green'
               onChange={!userIsAdmin ? undefined : togglePriorityFlag}
             />
           </div>

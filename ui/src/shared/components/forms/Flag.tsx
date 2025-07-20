@@ -1,7 +1,5 @@
 import { Icon } from '../icon';
 
-import './Flag.css';
-
 type FlagParams = {
   value: boolean | undefined;
   onChange?: (value: boolean) => void;
@@ -9,8 +7,8 @@ type FlagParams = {
   color?: string;
 };
 
-export const Flag = ({ value, onChange, className = '', color }: FlagParams) => {
-  let calculatedColor = color || 'firebrick';
+export const Flag = ({ value, onChange, className, color = 'green' }: FlagParams) => {
+  let calculatedColor = color;
   if (value === false) {
     calculatedColor = 'lightgrey';
   } else if (value === undefined) {
@@ -19,11 +17,11 @@ export const Flag = ({ value, onChange, className = '', color }: FlagParams) => 
 
   return (
     <Icon
-      label={value ? 'unflag video' : 'flag video'}
-      onClick={onChange && (() => onChange(!value))}
-      className={`flag-component ${value === false ? '' : 'checked'} ${className}`}
       icon='flag'
+      label={value ? 'unflag' : 'flag'}
+      className={className}
       color={calculatedColor}
+      onClick={() => onChange?.(!value)}
     />
   );
 };
