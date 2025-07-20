@@ -1,5 +1,3 @@
-import { Icon } from '@blueprintjs/core';
-
 const watchedColorLookup = { Y: 'green', N: 'crimson', P: 'orange', '': 'white' } as {
   [key: string]: string;
 };
@@ -7,5 +5,9 @@ const watchedColorLookup = { Y: 'green', N: 'crimson', P: 'orange', '': 'white' 
 type WatchedIconProps = { watchedStatus?: string; medium?: string };
 
 export const WatchedIcon = ({ watchedStatus }: WatchedIconProps) => {
-  return <Icon icon='record' size={20} color={watchedColorLookup[watchedStatus || '']} />;
+  return (
+    <svg height='14' width='20' role='img'>
+      <circle r='7' cx='10' cy='7' fill={watchedColorLookup[watchedStatus || '']} />
+    </svg>
+  );
 };
