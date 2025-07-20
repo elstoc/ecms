@@ -49,7 +49,7 @@ export const ContentWithSidebar = ({
             <InjectSideExpander>
               <Toolbox>
                 <Icon
-                  name='menu'
+                  icon='menu'
                   label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
                   className='sidebar-button'
                   onClick={() => setSidebarDrawerVisible((visible) => !visible)}

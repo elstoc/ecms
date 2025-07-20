@@ -48,7 +48,7 @@ const icons = {
 };
 
 type IconProps = {
-  name: keyof typeof icons;
+  icon: keyof typeof icons;
   disabled?: boolean;
   onClick?: () => void;
   className?: string;
@@ -56,8 +56,8 @@ type IconProps = {
   label: string;
 };
 
-export const Icon = ({ name, onClick, disabled, className, color, label }: IconProps) => {
-  const IconComponent = icons[name];
+export const Icon = ({ icon, onClick, disabled, className, color, label }: IconProps) => {
+  const IconComponent = icons[icon];
   const classNames = cn('ecms-icon', className);
 
   if (onClick) {

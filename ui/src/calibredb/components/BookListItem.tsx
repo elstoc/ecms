@@ -44,7 +44,7 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
         </div>
         <div className='right'>
           <div className='format'>{format}</div>
-          {book.read && <Icon label='this book has been read' className='read-icon' name='check' />}
+          {book.read && <Icon label='this book has been read' className='read-icon' icon='check' />}
         </div>
       </div>
       <Collapse isOpen={expanded}>
