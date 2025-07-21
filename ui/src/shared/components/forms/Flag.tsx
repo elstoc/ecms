@@ -2,7 +2,7 @@ import { Icon } from '../icon';
 
 type FlagParams = {
   flagged?: boolean;
-  onChange?: (value: boolean) => void;
+  onChange?: (flagged: boolean) => void;
   className?: string;
   color?: string;
 };
