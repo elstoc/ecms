@@ -5,6 +5,7 @@
 
   /* TODO: Remove this font-size hack to get around blueprint */
   font-size: 16px;
+
   transition: var(--transition-timing);
   transition-property: box-shadow;
 
