@@ -20,16 +20,12 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
   const authors = useLookup('authors');
   const format = useLookupValue('formats', book.format);
   const path = useLookupValue('paths', book.path);
-  const koboStatus = useLookupValue('koboStatuses', book.koboStatus);
-  const kindleStatus = useLookupValue('kindleStatuses', book.kindleStatus);
-  const tabletStatus = useLookupValue('tabletStatuses', book.tabletStatus);
-
-  const urlParams = new URLSearchParams({ path: apiPath, id: book.id.toString() });
+  const coverUrlParams = new URLSearchParams({ path: apiPath, id: book.id.toString() });
 
   const devices = [];
-  if (koboStatus) devices.push('kobo');
-  if (kindleStatus) devices.push('kindle');
-  if (tabletStatus) devices.push('tablet');
+  if (book.koboStatus) devices.push('kobo');
+  if (book.kindleStatus) devices.push('kindle');
+  if (book.tabletStatus) devices.push('tablet');
 
   return (
     <BookCard
@@ -44,7 +40,7 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
       devices={devices}
       path={path}
       description={book.description}
-      coverUrl={`${config.apiUrl}/calibredb/cover?${urlParams.toString()}`}
+      coverUrl={`${config.apiUrl}/calibredb/cover?${coverUrlParams.toString()}`}
     />
   );
 });
