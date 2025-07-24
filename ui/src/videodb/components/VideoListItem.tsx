@@ -7,10 +7,9 @@ import { VideoWithId } from '@/contracts/videodb';
 import { Card } from '@/shared/components/card';
 import { Flag } from '@/shared/components/forms';
 import { Icon } from '@/shared/components/icon';
+import { WatchedIcon } from '@/shared/components/video-card/WatchedIcon';
 
 import { useLookupValue, usePatchVideo } from '../hooks/useVideoDbQueries';
-
-import { WatchedIcon } from './WatchedIcon';
 
 import './VideoListItem.scss';
 

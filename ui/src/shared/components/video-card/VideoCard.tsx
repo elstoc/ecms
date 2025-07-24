@@ -1,13 +1,13 @@
 import 'modern-normalize';
 import { forwardRef } from 'react';
 
-// TODO: Get storybook working with @/videodb imports
-import { WatchedIcon } from '../../../videodb/components/WatchedIcon';
 import { Card } from '../card';
 import { Disclosure, DisclosurePanel, TriggerButton } from '../disclosure';
 import { Flag } from '../forms/Flag';
 import { Icon } from '../icon';
 import { Tag, TagListStatic } from '../tag-list-static/TagListStatic';
+
+import { WatchedIcon } from './WatchedIcon';
 
 import './VideoCard.css';
 
