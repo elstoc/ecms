@@ -8,7 +8,7 @@ import { useCalibreDb } from '../hooks/useCalibreDb';
 
 import { SelectLookup } from './SelectLookup';
 
-import './BookFilters.scss';
+import './BookFilters.css';
 
 const modeOptions = [
   { code: 'search', description: 'Search' },

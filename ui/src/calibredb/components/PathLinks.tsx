@@ -3,7 +3,7 @@ import { Button } from '@/shared/components/button';
 import { useAllPaths } from '../hooks/useAllPaths';
 import { useCalibreDb } from '../hooks/useCalibreDb';
 
-import './PathLinks.scss';
+import './PathLinks.css';
 
 export const PathLinks = () => {
   const paths = useAllPaths();

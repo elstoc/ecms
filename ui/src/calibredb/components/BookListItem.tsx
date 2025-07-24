@@ -9,7 +9,7 @@ import { config } from '@/utils';
 import { useCalibreDb } from '../hooks/useCalibreDb';
 import { useLookup, useLookupValue } from '../hooks/useCalibreDbQueries';
 
-import './BookListItem.scss';
+import './BookListItem.css';
 
 type BookListItemProps = {
   book: Book;
