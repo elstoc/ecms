@@ -21,6 +21,7 @@ const children = (
 
 export const Default: Story = {
   args: {
+    label: 'some-label',
     children,
   },
 };
