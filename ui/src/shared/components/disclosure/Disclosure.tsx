@@ -38,7 +38,7 @@ export const Disclosure = (props: RaDisclosureProps) => {
 
     // the expansion animation always works (it's immediately visible and can then expand naturally)
     // the collapse animation needs time to finish (once it's fully hidden it can't continue to collapse)
-    const timeout = newExpansionState ? 0 : 200;
+    const timeout = newExpansionState ? 10 : 350;
     setTimeout(() => {
       setFullExpansionState((state) => !state);
     }, timeout);
