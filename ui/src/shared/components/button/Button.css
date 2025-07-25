@@ -33,6 +33,13 @@
     color: inherit;
   }
 
+  &:focus {
+    /* TODO: Remove this blueprint hack */
+    /* for some reason focus-visible isn't working */
+    outline: inherit;
+    outline-offset: inherit;
+  }
+
   &.clear-formatting {
     background: none;
     border: none;
