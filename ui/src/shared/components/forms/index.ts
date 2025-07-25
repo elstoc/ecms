@@ -4,4 +4,4 @@ export { SelectDescribedCode } from './SelectDescribedCode';
 export { MultiTagInput } from './MultiTagInput';
 export { SegmentedControlInput } from './SegmentedControlInput';
 export { Switch } from './Switch';
-export { Flag } from './Flag';
+export { Flag } from '../flag/Flag';

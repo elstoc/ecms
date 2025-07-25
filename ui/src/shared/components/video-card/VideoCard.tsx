@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 
 import { Card } from '../card';
 import { Disclosure, DisclosurePanel, TriggerButton } from '../disclosure';
-import { Flag } from '../forms/Flag';
+import { Flag } from '../flag';
 import { Icon } from '../icon';
 import { Tag, TagListStatic } from '../tag-list-static/TagListStatic';
 
