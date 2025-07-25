@@ -1,5 +1,12 @@
-#app .video-list {
+#app .videos {
   background-color: var(--content-bg-color);
   height: 100%;
   padding: 5px;
+}
+
+.video-list {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

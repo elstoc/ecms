@@ -22,7 +22,7 @@ type VideoCardProps = {
   otherMediaDesc?: string;
   tags?: string[];
   watched: string;
-  mediaWatched: string;
+  mediaWatched?: string;
   flagged?: boolean;
   onFlaggedChange?: (flagged: boolean) => void;
   onEditClick?: () => void;

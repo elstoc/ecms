@@ -33,7 +33,7 @@ type StateAction =
   | { type: 'syncFilters' }
   | { type: 'setPages'; payload: number }
   | { type: 'setSortOrder'; payload: 'asc' | 'shuffle' }
-  | { type: 'toggleVideoExpanded'; payload: number }
+  | { type: 'setVideoExpanded'; payload: { videoId: number; expanded: boolean } }
   | { type: 'resetVideoExpanded' }
   | { type: 'toggleShowOnlyExpanded' };
 
@@ -75,13 +75,17 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
       pages: 1,
     };
   }
-  if (action.type === 'toggleVideoExpanded') {
-    let expandedVideoIds = state.expandedVideoIds;
-    if (expandedVideoIds.includes(action.payload)) {
-      expandedVideoIds = expandedVideoIds.filter((videoId) => videoId !== action.payload);
-    } else {
-      expandedVideoIds.push(action.payload);
+  if (action.type === 'setVideoExpanded') {
+    const { expanded, videoId } = action.payload;
+
+    let expandedVideoIds = [...state.expandedVideoIds];
+    if (expanded && !expandedVideoIds.includes(videoId)) {
+      expandedVideoIds.push(videoId);
     }
+    if (!expanded) {
+      expandedVideoIds = expandedVideoIds.filter((id) => id !== videoId);
+    }
+
     return {
       ...state,
       expandedVideoIds,

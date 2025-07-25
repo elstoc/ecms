@@ -22,19 +22,23 @@ export const VideoList = () => {
   });
 
   return (
-    <div className='video-list'>
-      {videos.map((video, index) => {
-        const lastVideo = index === videos.length - 1;
-        return (
-          <VideoListItem
-            key={`${video.id}${lastVideo}`} // forces replacement and therefore unwatching of any previously-watched element
-            video={video}
-            ref={lastVideo ? refLastVideo : null}
-            expanded={state.expandedVideoIds.includes(video.id)}
-            toggleExpanded={() => dispatch({ type: 'toggleVideoExpanded', payload: video.id })}
-          />
-        );
-      })}
+    <div className='videos'>
+      <div className='video-list'>
+        {videos.map((video, index) => {
+          const lastVideo = index === videos.length - 1;
+          return (
+            <VideoListItem
+              key={`${video.id}${lastVideo}`} // forces replacement and therefore unwatching of any previously-watched element
+              video={video}
+              ref={lastVideo ? refLastVideo : null}
+              expanded={state.expandedVideoIds.includes(video.id)}
+              toggleExpanded={(expanded) =>
+                dispatch({ type: 'setVideoExpanded', payload: { videoId: video.id, expanded } })
+              }
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

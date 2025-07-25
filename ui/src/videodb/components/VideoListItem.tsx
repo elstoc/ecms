@@ -1,22 +1,16 @@
-import { Collapse, Tag } from '@blueprintjs/core';
 import { ReactElement, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { VideoWithId } from '@/contracts/videodb';
-import { Card } from '@/shared/components/card';
-import { Flag } from '@/shared/components/forms';
-import { Icon } from '@/shared/components/icon';
-import { WatchedIcon } from '@/shared/components/video-card/WatchedIcon';
+import { VideoCard } from '@/shared/components/video-card';
 
 import { useLookupValue, usePatchVideo } from '../hooks/useVideoDbQueries';
-
-import './VideoListItem.scss';
 
 type VideoListItemProps = {
   video: VideoWithId;
   expanded: boolean;
-  toggleExpanded: () => void;
+  toggleExpanded: (expanded: boolean) => void;
 };
 
 export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
@@ -33,79 +27,38 @@ export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
 
     let lengthText = '';
     if (video.num_episodes && video.length_mins) {
-      lengthText = `(${video.num_episodes} x ${video.length_mins} mins)`;
+      lengthText = `${video.num_episodes} x ${video.length_mins} mins`;
     } else if (video.length_mins) {
-      lengthText = `(${video.length_mins} mins)`;
+      lengthText = `${video.length_mins} mins`;
     } else if (video.num_episodes) {
-      lengthText = `(${video.num_episodes} episodes)`;
+      lengthText = `${video.num_episodes} episodes`;
     }
 
-    const preventCardClick = (e: React.MouseEvent) => e.stopPropagation();
+    const otherMediaDesc = otherMediaType ? `${otherMediaType} (${otherMediaLocation})` : undefined;
     const openVideo = () => navigate(`./update/${video.id}`);
     const togglePriorityFlag = (checked: boolean) =>
       mutate({ id: video.id, priority_flag: checked ? 1 : 0 });
 
     return (
-      <Card className='video-list-item' ref={ref} onClick={toggleExpanded} highlight={expanded}>
-        <div className='primary-info'>
-          <div className='left'>
-            <div className='video-title'>{video.title}</div>
-            <div>
-              <WatchedIcon watchedStatus={video.watched} />
-              <WatchedIcon watchedStatus={video.primary_media_watched} />
-              <span>
-                {' '}
-                {primaryMediaType} {lengthText}
-              </span>
-            </div>
-          </div>
-          <div className='right' onClick={preventCardClick}>
-            <Flag
-              flagged={isPending ? undefined : video.priority_flag ? true : false}
-              className='priority'
-              onChange={!userIsAdmin ? undefined : togglePriorityFlag}
-            />
-          </div>
-        </div>
-        <Collapse isOpen={expanded}>
-          <div className='secondary-info'>
-            <div className='left'>
-              <div className='tags'>
-                <Tag key='category'>{videoCategory}</Tag>
-                {video.tags?.map((tagName) => (
-                  <Tag key={tagName} minimal={true}>
-                    {tagName}
-                  </Tag>
-                ))}
-              </div>
-              <div className='media'>
-                <div>
-                  <strong>Location:</strong> {primaryMediaLocation}
-                </div>
-                {otherMediaType && (
-                  <div>
-                    <strong>Other Media: </strong>
-                    {otherMediaType} ({otherMediaLocation})
-                  </div>
-                )}
-                {video.media_notes && (
-                  <div>
-                    <strong>Media notes:</strong> {video.media_notes}
-                  </div>
-                )}
-                {video.progress && (
-                  <div>
-                    <strong>Progress:</strong> {video.progress}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className='right' onClick={preventCardClick}>
-              {userIsAdmin && <Icon label='edit video' icon='edit' onClick={openVideo} />}
-            </div>
-          </div>
-        </Collapse>
-      </Card>
+      <VideoCard
+        ref={ref}
+        expanded={expanded}
+        onExpandedChange={toggleExpanded}
+        title={video.title}
+        categoryDesc={videoCategory}
+        formatDesc={primaryMediaType}
+        lengthDesc={lengthText}
+        locationDesc={primaryMediaLocation}
+        otherMediaDesc={otherMediaDesc}
+        tags={video.tags}
+        watched={video.watched}
+        mediaWatched={video.primary_media_watched}
+        flagged={isPending ? undefined : video.priority_flag ? true : false}
+        onFlaggedChange={!userIsAdmin ? undefined : togglePriorityFlag}
+        onEditClick={userIsAdmin ? openVideo : undefined}
+        mediaNotes={video.media_notes}
+        progress={video.progress}
+      />
     );
   },
 );
