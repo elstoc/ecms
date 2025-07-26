@@ -69,7 +69,7 @@ const MarkdownAddPageContent = () => {
           autoFocus={true}
           inline={true}
         />
-        <Button onClick={createPage}>Create Page</Button>
+        <Button onPress={createPage}>Create Page</Button>
       </Card>
       <div className='error'>{errorText}</div>
     </div>

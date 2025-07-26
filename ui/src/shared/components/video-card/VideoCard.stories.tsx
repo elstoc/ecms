@@ -30,7 +30,7 @@ export const Default = {
     progress: 'Missed the post-credit scene',
     flagged: false,
     onFlaggedChange: () => undefined,
-    onEditClick: fn(),
+    onPressEdit: fn(),
   },
   render: (args) => {
     const [{ expanded, flagged }, updateArgs] = useArgs();

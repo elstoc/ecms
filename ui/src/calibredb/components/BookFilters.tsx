@@ -124,7 +124,7 @@ export const BookFilters = () => {
         onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value ?? 'title' })}
       />
       <div className='filter-action-buttons'>
-        <Button type='button' onClick={() => dispatch({ type: 'resetFilters' })}>
+        <Button type='button' onPress={() => dispatch({ type: 'resetFilters' })}>
           Reset Filters
         </Button>
       </div>

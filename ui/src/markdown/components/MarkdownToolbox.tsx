@@ -70,26 +70,26 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
         label={mode === 'edit' ? 'cancel page edit' : 'edit page'}
         icon={mode === 'edit' ? 'cancel' : 'edit'}
         disabled={!pageExists || !pathValid}
-        onClick={toggleEditMode}
+        onPress={toggleEditMode}
       />
       <Icon
         icon='save'
         label='save page'
         className='save-markdown'
-        onClick={savePage}
+        onPress={savePage}
         disabled={mode !== 'edit' || !canWrite || content === editedMarkdown}
       />
       <Icon
         icon='add'
         label='add page'
         disabled={singlePage || !canWrite || mode === 'edit'}
-        onClick={() => setSearchParams({ mode: 'add' })}
+        onPress={() => setSearchParams({ mode: 'add' })}
       />
       <Icon
         icon='delete'
         label='delete page'
         disabled={singlePage || !canDelete || mode === 'edit'}
-        onClick={deletePage}
+        onPress={deletePage}
       />
     </Toolbox>
   );

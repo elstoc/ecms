@@ -50,24 +50,24 @@ const icons = {
 type IconProps = {
   icon: keyof typeof icons;
   disabled?: boolean;
-  onClick?: () => void;
+  onPress?: () => void;
   className?: string;
   color?: string;
   label: string;
 };
 
-export const Icon = ({ icon, onClick, disabled, className, color, label }: IconProps) => {
+export const Icon = ({ icon, onPress, disabled, className, color, label }: IconProps) => {
   const IconComponent = icons[icon];
   const classNames = cn('ecms-icon', className);
 
-  if (onClick) {
+  if (onPress) {
     return (
       <Button
         aria-label={label}
         clearFormatting
         className={classNames}
         isDisabled={disabled}
-        onClick={onClick}
+        onPress={onPress}
       >
         <IconComponent title='' className='icon' color={color} />
       </Button>

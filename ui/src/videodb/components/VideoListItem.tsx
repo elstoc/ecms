@@ -55,7 +55,7 @@ export const VideoListItem = forwardRef<HTMLDivElement, VideoListItemProps>(
         mediaWatched={video.primary_media_watched}
         flagged={isPending ? undefined : video.priority_flag ? true : false}
         onFlaggedChange={!userIsAdmin ? undefined : togglePriorityFlag}
-        onEditClick={userIsAdmin ? openVideo : undefined}
+        onPressEdit={userIsAdmin ? openVideo : undefined}
         mediaNotes={video.media_notes}
         progress={video.progress}
       />

@@ -25,7 +25,7 @@ type VideoCardProps = {
   mediaWatched?: string;
   flagged?: boolean;
   onFlaggedChange?: (flagged: boolean) => void;
-  onEditClick?: () => void;
+  onPressEdit?: () => void;
   mediaNotes?: string;
   progress?: string;
 };
@@ -60,7 +60,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
       mediaWatched,
       flagged,
       onFlaggedChange,
-      onEditClick,
+      onPressEdit,
       mediaNotes,
       progress,
     },
@@ -98,7 +98,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
                 <TitleAndData title='Progress' data={progress} />
               </div>
               <div className='right'>
-                {onEditClick && <Icon label='edit video' icon='edit' onClick={onEditClick} />}
+                {onPressEdit && <Icon label='edit video' icon='edit' onPress={onPressEdit} />}
               </div>
             </div>
           </DisclosurePanel>

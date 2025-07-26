@@ -22,6 +22,6 @@ export const Default: Story = {
 export const AsButton: Story = {
   args: {
     ...Default.args,
-    onClick: fn(),
+    onPress: fn(),
   },
 };
