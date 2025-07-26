@@ -16,7 +16,7 @@ type TagListStaticProps = {
 
 export const TagListStatic = ({ label, className, children }: TagListStaticProps) => {
   return (
-    <ul aria-label={label} className={cn('ecms-static-tag-list', className)}>
+    <ul aria-label={label} className={cn('ecms-tag-list-static', className)}>
       {children}
     </ul>
   );
