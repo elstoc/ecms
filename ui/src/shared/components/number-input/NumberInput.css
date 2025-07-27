@@ -1,0 +1,8 @@
+.ecms-number-input {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  /* TODO: Remove blueprint hack */
+  font-size: 16px;
+}
