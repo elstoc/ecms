@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
-import { fn } from 'storybook/test';
 
 import { Card } from './Card';
 
@@ -25,12 +24,5 @@ export const Highlight: Story = {
   args: {
     ...Default.args,
     highlight: true,
-  },
-};
-
-export const AsButton: Story = {
-  args: {
-    ...Default.args,
-    onClick: fn(),
   },
 };
