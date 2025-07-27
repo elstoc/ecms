@@ -1,25 +1,12 @@
 import {
-  Input as RaInput,
-  InputProps as RaInputProps,
-  Label as RaLabel,
-  LabelProps as RaLabelProps,
   TextField as RaTextField,
   TextFieldProps as RaTextFieldProps,
 } from 'react-aria-components';
 
+import { Input } from '../input';
+import { Label } from '../label';
+
 import './TextInput.css';
-
-type LabelProps = RaLabelProps;
-
-export const Label = (props: LabelProps) => {
-  return <RaLabel className='ecms-label' {...props} />;
-};
-
-type InputProps = RaInputProps;
-
-export const Input = (props: InputProps) => {
-  return <RaInput {...props} className='ecms-input' {...props} />;
-};
 
 type TextInputProps = RaTextFieldProps & {
   value?: string;

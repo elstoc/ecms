@@ -1,0 +1,11 @@
+.ecms-input {
+  padding: 0.286rem;
+  margin: 0;
+  border: 1px solid darkslategrey;
+  border-radius: 6px;
+
+  &[data-focused] {
+    outline: 2px solid darkslategray;
+    outline-offset: -1px;
+  }
+}
