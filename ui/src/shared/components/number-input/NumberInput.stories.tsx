@@ -25,7 +25,7 @@ export const Default: Story = {
       updateArgs({ value });
     };
 
-    return <NumberInput {...args} value={value} onChange={onChange} step={1} />;
+    return <NumberInput {...args} value={value} onChange={onChange} />;
   },
 };
 
