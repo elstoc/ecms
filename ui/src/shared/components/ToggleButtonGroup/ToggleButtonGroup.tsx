@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import {
   ToggleButtonGroup as RaToggleButtonGroup,
   ToggleButtonGroupProps as RaToggleButtonGroupProps,
@@ -12,10 +13,12 @@ type ToggleButtonGroupProps = RaToggleButtonGroupProps & {
 };
 
 export const ToggleButtonGroup = ({ children, label, ...props }: ToggleButtonGroupProps) => {
+  const id = useId();
+
   return (
     <div className='ecms-toggle-button-group'>
-      <Label>{label}</Label>
-      <RaToggleButtonGroup {...props} disallowEmptySelection>
+      <Label id={id}>{label}</Label>
+      <RaToggleButtonGroup {...props} aria-labelledby={id} disallowEmptySelection>
         {children}
       </RaToggleButtonGroup>
     </div>
