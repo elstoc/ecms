@@ -31,6 +31,7 @@
 
   &[data-selected] {
     background-color: var(--button-toggled-bg-color);
+    color: var(--button-toggled-text-color);
   }
 
   &:focus {
