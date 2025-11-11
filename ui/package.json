@@ -16,7 +16,7 @@
     "prettier-fix": "prettier --write src",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"
   },
   "author": "C Elston",
