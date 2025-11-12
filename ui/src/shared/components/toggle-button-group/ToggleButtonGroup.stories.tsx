@@ -20,19 +20,20 @@ export const Default: Story = {
   args: {
     label: 'Label text',
     selectedKeys: ['first'],
+    onSelectionChange: () => undefined,
     children: 'whatever',
   },
   render: (args) => {
     const [{ selectedKeys }, updateArgs] = useArgs();
 
-    const onSelectionChange = (selectedKeys: Set<Key>) => {
-      updateArgs({ selectedKeys: Array.from(selectedKeys) });
+    const onSelectionChange = (selectedKeys: Key[]) => {
+      updateArgs({ selectedKeys: selectedKeys });
     };
 
     return (
       <ToggleButtonGroup
         {...args}
-        selectedKeys={new Set(selectedKeys)}
+        selectedKeys={selectedKeys}
         onSelectionChange={onSelectionChange}
       >
         <ToggleButton id='first'>First</ToggleButton>
