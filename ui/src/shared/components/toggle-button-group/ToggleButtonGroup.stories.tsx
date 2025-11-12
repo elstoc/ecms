@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Key } from 'react-aria-components';
 import { useArgs } from 'storybook/internal/preview-api';
 
-import { ToggleButton } from '../togglebutton';
+import { ToggleButton } from '../toggle-button';
 
 import { ToggleButtonGroup } from './ToggleButtonGroup';
 
