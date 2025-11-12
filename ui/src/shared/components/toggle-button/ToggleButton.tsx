@@ -4,12 +4,13 @@ import {
   ToggleButtonProps as RaToggleButtonProps,
 } from 'react-aria-components';
 
+import '../button/Button.css';
 import './ToggleButton.css';
 
 type ToggleButtonProps = RaToggleButtonProps;
 
 export const ToggleButton = (props: ToggleButtonProps) => {
-  const className = cn('ecms-toggle-button', props.className);
+  const className = cn('ecms-toggle-button', 'ecms-button', props.className);
 
   return (
     <RaToggleButton {...props} className={className}>
