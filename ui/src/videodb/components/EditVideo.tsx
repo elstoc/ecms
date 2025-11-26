@@ -1,8 +1,8 @@
-import { Dialog, DialogBody } from '@blueprintjs/core';
 import { Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
+import { Dialog, DialogBody } from '@/shared/legacy-components/dialog';
 
 import {
   EMPTY_VIDEO_ID,

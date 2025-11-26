@@ -1,9 +1,11 @@
-import { Button, Collapse, ControlGroup } from '@blueprintjs/core';
 import { useState } from 'react';
 
 import { Video } from '@/contracts/videodb';
 import { Card } from '@/shared/components/card';
-import { Input, IntegerInput, Switch } from '@/shared/components/forms';
+import { Button } from '@/shared/legacy-components/button';
+import { Collapse } from '@/shared/legacy-components/collapse';
+import { ControlGroup } from '@/shared/legacy-components/control-group';
+import { Input, IntegerInput, Switch } from '@/shared/legacy-components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 

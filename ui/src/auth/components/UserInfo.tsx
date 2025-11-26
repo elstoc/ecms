@@ -1,9 +1,9 @@
 import { useUserInfo } from '..';
-import { Dialog, DialogBody } from '@blueprintjs/core';
 import { Suspense, useState } from 'react';
 
 import { Icon } from '@/shared/components/icon';
 import { Toolbox } from '@/shared/components/layout';
+import { Dialog, DialogBody } from '@/shared/legacy-components/dialog';
 import { useSiteConfig } from '@/site';
 
 import { Login } from './Login';

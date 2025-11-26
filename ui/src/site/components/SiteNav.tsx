@@ -1,7 +1,7 @@
-import { Classes, Popover } from '@blueprintjs/core';
 import { NavLink } from 'react-router-dom';
 
 import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
+import { Classes, Popover } from '@/shared/legacy-components/popover';
 
 import './SiteNav.scss';
 
