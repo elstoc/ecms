@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { Button } from '@/shared/components/button';
 import { Card } from '@/shared/components/card';
-import { Input } from '@/shared/components/forms';
+import { Input } from '@/shared/legacy-components/forms';
 
 import { useLogin } from '../hooks/useAuthQueries';
 

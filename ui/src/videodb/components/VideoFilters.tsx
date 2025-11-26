@@ -1,5 +1,10 @@
 import { Button } from '@/shared/components/button';
-import { Input, IntegerInput, SegmentedControlInput, Switch } from '@/shared/components/forms';
+import {
+  Input,
+  IntegerInput,
+  SegmentedControlInput,
+  Switch,
+} from '@/shared/legacy-components/forms';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 
