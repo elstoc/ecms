@@ -32,7 +32,7 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/', 'dist/', 'public/', 'webpack.config.js'],
+    ignores: ['node_modules/', 'dist/', 'public/', 'webpack.config.js', 'storybook-static/'],
   },
   ...storybook.configs['flat/recommended'],
 ];
