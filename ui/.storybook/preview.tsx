@@ -22,6 +22,7 @@ const preview: Preview = {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
     controls: {
+      exclude: ['key', 'ref'],
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
