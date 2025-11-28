@@ -7,6 +7,7 @@ type CardProps = {
   children: ReactNode;
   /** Give the card a stronger outline */
   highlight?: boolean;
+  /** Class name for the wrapping div (in addition to `ecms-card`) */
   className?: string;
 };
 
