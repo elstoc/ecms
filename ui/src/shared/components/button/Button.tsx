@@ -3,7 +3,10 @@ import { Button as RaButton, ButtonProps as RaButtonProps } from 'react-aria-com
 
 import './Button.css';
 
-type ButtonProps = RaButtonProps & {
+type ButtonProps = Pick<RaButtonProps, 'children' | 'slot' | 'type' | 'onPress' | 'isDisabled'> & {
+  /** Class name (in addition to `ecms-button`) */
+  className?: string;
+  /** Remove background and border */
   clearFormatting?: boolean;
 };
 
