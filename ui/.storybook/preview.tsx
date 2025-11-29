@@ -19,6 +19,11 @@ const preview: Preview = {
     ),
   ],
   parameters: {
+    options: {
+      storySort: {
+        method: 'alphabetical',
+      },
+    },
     layout: 'centered',
     controls: {
       exclude: ['key', 'ref'],
