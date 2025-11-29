@@ -8,9 +8,7 @@ import { Label } from '../label';
 
 import './TextInput.css';
 
-type TextInputProps = RaTextFieldProps & {
-  value?: string;
-  onChange?: (value: string) => void;
+type TextInputProps = Pick<RaTextFieldProps, 'value' | 'onChange'> & {
   label: string;
 };
 
