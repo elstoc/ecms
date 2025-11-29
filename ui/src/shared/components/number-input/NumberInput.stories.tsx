@@ -29,7 +29,7 @@ export const Default: Story = {
   },
 };
 
-export const TruncateInteger: Story = {
+export const Integer: Story = {
   args: {
     ...Default.args,
     step: 1,
