@@ -9,10 +9,7 @@ import { Label } from '../label';
 
 import './ToggleButtonGroup.css';
 
-type ToggleButtonGroupProps = Omit<
-  RaToggleButtonGroupProps,
-  'selectedKeys' | 'onSelectionChange'
-> & {
+type ToggleButtonGroupProps = Pick<RaToggleButtonGroupProps, 'children'> & {
   label?: string;
   selectedKeys: Key[];
   onSelectionChange: (newSelection: Key[]) => void;
