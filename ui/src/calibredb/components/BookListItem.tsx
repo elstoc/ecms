@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react';
 
 import { Book } from '@/contracts/calibredb';
-import { BookCard } from '@/shared/components/book-card/BookCard';
+import { BookCard } from '@/shared/components/book-card';
 import { config } from '@/utils';
 
 import { useCalibreDb } from '../hooks/useCalibreDb';
