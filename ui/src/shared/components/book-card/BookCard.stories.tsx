@@ -16,6 +16,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default = {
+  argTypes: {
+    expanded: { table: { readonly: true } },
+  },
   args: {
     expanded: false,
     onExpandedChange: () => undefined,
