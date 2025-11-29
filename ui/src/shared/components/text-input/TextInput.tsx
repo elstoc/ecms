@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import {
   TextField as RaTextField,
   TextFieldProps as RaTextFieldProps,
@@ -8,13 +9,15 @@ import { Label } from '../label';
 
 import './TextInput.css';
 
-type TextInputProps = Pick<RaTextFieldProps, 'value' | 'onChange'> & {
+type TextInputProps = Pick<RaTextFieldProps, 'value' | 'onChange' | 'className'> & {
   label: string;
 };
 
-export const TextInput = ({ value, onChange, label, ...rest }: TextInputProps) => {
+export const TextInput = ({ onChange, value, className, label, ...rest }: TextInputProps) => {
+  const classNames = cn('ecms-text-input', className);
+
   return (
-    <RaTextField {...rest} className='ecms-text-input' value={value ?? ''} onChange={onChange}>
+    <RaTextField {...rest} className={classNames} value={value ?? ''} onChange={onChange}>
       <Label>{label}</Label>
       <Input />
     </RaTextField>
