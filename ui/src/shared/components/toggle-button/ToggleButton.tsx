@@ -7,7 +7,10 @@ import {
 import '../button/Button.css';
 import './ToggleButton.css';
 
-type ToggleButtonProps = RaToggleButtonProps;
+type ToggleButtonProps = Pick<
+  RaToggleButtonProps,
+  'children' | 'className' | 'isSelected' | 'onChange'
+>;
 
 export const ToggleButton = (props: ToggleButtonProps) => {
   const className = cn('ecms-toggle-button', 'ecms-button', props.className);
