@@ -55,10 +55,10 @@ export type IconProps = {
 
 export const Icon = ({ icon, disabled, className, color, label }: IconProps) => {
   const IconComponent = icons[icon];
-  const classNames = cn('ecms-icon', className);
+  const classNames = cn('ecms-icon', className, { disabled: disabled });
 
   return (
-    <div className={cn(classNames, { disabled: disabled })}>
+    <div className={classNames}>
       <IconComponent title={label} className='icon' color={color} />
     </div>
   );
