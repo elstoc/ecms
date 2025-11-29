@@ -4,7 +4,7 @@ import { Card } from '../card';
 import { Disclosure, DisclosurePanel, TriggerButton } from '../disclosure';
 import { Icon } from '../icon';
 import { Rating } from '../rating';
-import { Tag, TagListStatic } from '../tag-list-static/TagListStatic';
+import { Tag, TagListStatic } from '../tag-list-static';
 
 import './BookCard.css';
 

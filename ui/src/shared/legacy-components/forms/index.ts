@@ -1,6 +1,6 @@
-export { IntegerInput } from './IntegerInput';
-export { Input } from './Input';
-export { SelectDescribedCode } from './SelectDescribedCode';
-export { MultiTagInput } from './MultiTagInput';
-export { SegmentedControlInput } from './SegmentedControlInput';
-export { Switch } from './Switch';
+export * from './IntegerInput';
+export * from './Input';
+export * from './SelectDescribedCode';
+export * from './MultiTagInput';
+export * from './SegmentedControlInput';
+export * from './Switch';

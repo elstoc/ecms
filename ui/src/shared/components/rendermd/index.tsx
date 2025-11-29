@@ -1,1 +1,1 @@
-export { RenderMd } from './RenderMd';
+export * from './RenderMd';

@@ -1,2 +1,2 @@
-export { Tesselate } from './Tesselate';
-export { Toolbox } from './Toolbox';
+export * from './Tesselate';
+export * from './Toolbox';

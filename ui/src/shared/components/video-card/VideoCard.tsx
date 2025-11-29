@@ -5,7 +5,7 @@ import { Card } from '../card';
 import { Disclosure, DisclosurePanel, TriggerButton } from '../disclosure';
 import { Flag } from '../flag';
 import { IconButton } from '../icon-button';
-import { Tag, TagListStatic } from '../tag-list-static/TagListStatic';
+import { Tag, TagListStatic } from '../tag-list-static';
 
 import { WatchedIcon } from './WatchedIcon';
 

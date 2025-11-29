@@ -1,1 +1,1 @@
-export { EditMd } from './EditMd';
+export * from './EditMd';

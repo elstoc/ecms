@@ -1,1 +1,1 @@
-export { LightBox } from './LightBox';
+export * from './LightBox';
