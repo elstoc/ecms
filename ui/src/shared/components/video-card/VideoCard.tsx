@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import { Card } from '../card';
 import { Disclosure, DisclosurePanel, TriggerButton } from '../disclosure';
 import { Flag } from '../flag';
-import { Icon } from '../icon';
+import { IconButton } from '../icon-button';
 import { Tag, TagListStatic } from '../tag-list-static/TagListStatic';
 
 import { WatchedIcon } from './WatchedIcon';
@@ -98,7 +98,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
                 <TitleAndData title='Progress' data={progress} />
               </div>
               <div className='right'>
-                {onPressEdit && <Icon label='edit video' icon='edit' onPress={onPressEdit} />}
+                {onPressEdit && <IconButton label='edit video' icon='edit' onPress={onPressEdit} />}
               </div>
             </div>
           </DisclosurePanel>

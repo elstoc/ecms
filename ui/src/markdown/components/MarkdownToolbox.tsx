@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 
-import { Icon } from '@/shared/components/icon';
+import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { splitFrontMatter } from '@/utils';
 
@@ -66,26 +66,26 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
 
   return (
     <Toolbox>
-      <Icon
+      <IconButton
         label={mode === 'edit' ? 'cancel page edit' : 'edit page'}
         icon={mode === 'edit' ? 'cancel' : 'edit'}
         disabled={!pageExists || !pathValid}
         onPress={toggleEditMode}
       />
-      <Icon
+      <IconButton
         icon='save'
         label='save page'
         className='save-markdown'
         onPress={savePage}
         disabled={mode !== 'edit' || !canWrite || content === editedMarkdown}
       />
-      <Icon
+      <IconButton
         icon='add'
         label='add page'
         disabled={singlePage || !canWrite || mode === 'edit'}
         onPress={() => setSearchParams({ mode: 'add' })}
       />
-      <Icon
+      <IconButton
         icon='delete'
         label='delete page'
         disabled={singlePage || !canDelete || mode === 'edit'}

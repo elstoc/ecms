@@ -1,11 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
+import { fn } from 'storybook/test';
 
-import { Icon } from './Icon';
+import { IconButton } from './IconButton';
 
 const meta = {
-  title: 'Icon',
-  component: Icon,
-} satisfies Meta<typeof Icon>;
+  title: 'IconButton',
+  component: IconButton,
+} satisfies Meta<typeof IconButton>;
 
 export default meta;
 
@@ -15,5 +16,6 @@ export const Default: Story = {
   args: {
     icon: 'user',
     label: 'Some Title',
+    onPress: fn(),
   },
 };

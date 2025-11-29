@@ -1,7 +1,7 @@
 import { useUserInfo } from '..';
 import { Suspense, useState } from 'react';
 
-import { Icon } from '@/shared/components/icon';
+import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { Dialog, DialogBody } from '@/shared/legacy-components/dialog';
 import { useSiteConfig } from '@/site';
@@ -26,7 +26,7 @@ export const UserInfo = () => {
   return (
     <div className='user-info'>
       <Toolbox>
-        <Icon
+        <IconButton
           label={loggedIn ? 'log out' : 'log in'}
           icon={loggedIn ? 'user' : 'noUser'}
           onPress={() => setAuthDialogOpen(true)}

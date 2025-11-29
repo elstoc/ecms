@@ -2,12 +2,12 @@ import { MouseEvent, useEffect } from 'react';
 
 import { useKeyPress } from '@/shared/hooks';
 
-import { Icon } from '../icon';
+import { IconButton } from '../icon-button';
 
 import './LightBox.scss';
 
 type LightBoxProps = {
-  onClose?: () => void;
+  onClose: () => void;
   onPrev?: () => void;
   onNext?: () => void;
   caption?: string;
@@ -55,23 +55,22 @@ export const LightBox = ({
   return (
     <div className='lightbox' onClick={handleOuterClick} onMouseMove={restartFadeOut}>
       <img src={imageUrl} alt={alt} />
-      <div className='close fadeout' onClick={() => onClose?.()}>
-        <Icon label='close lightbox' icon='close' />
-      </div>
+      <IconButton label='close lightbox' className='close fadeout' icon='close' onPress={onClose} />
       <div className='preload'>
         {prevImageUrl && <img src={prevImageUrl} alt='preload' />}
         {nextImageUrl && <img src={nextImageUrl} alt='preload' />}
       </div>
 
       {onPrev && (
-        <div className='prev fadeout' onClick={() => onPrev()}>
-          <Icon label='previous image' icon='previous' />
-        </div>
+        <IconButton
+          label='previous image'
+          className='prev fadeout'
+          icon='previous'
+          onPress={onPrev}
+        />
       )}
       {onNext && (
-        <div className='next fadeout' onClick={() => onNext()}>
-          <Icon label='next image' icon='next' />
-        </div>
+        <IconButton label='next image' className='next fadeout' icon='next' onPress={onNext} />
       )}
       {caption && <div className='image-info fadeout'>{caption}</div>}
     </div>

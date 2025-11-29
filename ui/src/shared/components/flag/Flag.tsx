@@ -1,4 +1,4 @@
-import { Icon } from '../icon';
+import { IconButton } from '../icon-button';
 
 type FlagParams = {
   flagged?: boolean;
@@ -16,7 +16,7 @@ export const Flag = ({ flagged, onChange, className, color = 'green' }: FlagPara
   }
 
   return (
-    <Icon
+    <IconButton
       icon='flag'
       label={flagged ? 'unflag' : 'flag'}
       className={className}

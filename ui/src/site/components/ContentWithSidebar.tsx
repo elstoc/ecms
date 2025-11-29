@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 
-import { Icon } from '@/shared/components/icon';
+import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { useIsDualPanel } from '@/shared/hooks';
 import { Collapse } from '@/shared/legacy-components/collapse';
@@ -48,7 +48,7 @@ export const ContentWithSidebar = ({
           {!isDualPanel && sidebar && (
             <InjectSideExpander>
               <Toolbox>
-                <Icon
+                <IconButton
                   icon='menu'
                   label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
                   className='sidebar-button'

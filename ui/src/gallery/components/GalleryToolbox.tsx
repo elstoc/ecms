@@ -1,4 +1,4 @@
-import { Icon } from '@/shared/components/icon';
+import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 
 import { useGallery } from '../hooks/useGallery';
@@ -11,7 +11,7 @@ export const GalleryToolbox = () => {
 
   return (
     <Toolbox>
-      <Icon
+      <IconButton
         label={sortOrder === 'asc' ? 'click to sort descending' : 'click to sort ascending'}
         icon={sortOrder === 'asc' ? 'sortAsc' : 'sortDesc'}
         color={sortOrder === 'shuffle' ? 'grey' : 'black'}
@@ -22,7 +22,7 @@ export const GalleryToolbox = () => {
           })
         }
       />
-      <Icon
+      <IconButton
         label={sortOrder === 'shuffle' ? 'click to re-shuffle' : 'click to shuffle'}
         icon='shuffle'
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
-import { Icon } from '@/shared/components/icon';
+import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 
 import { useVideoDb } from '../hooks/useVideoDb';
@@ -26,8 +26,8 @@ export const VideoToolbox = () => {
     <Toolbox>
       {userIsAdmin && (
         <>
-          <Icon label='add video' icon='add' onPress={() => navigate('./add')} />
-          <Icon
+          <IconButton label='add video' icon='add' onPress={() => navigate('./add')} />
+          <IconButton
             label='download videos as CSV'
             className='download-icon'
             icon='download'
@@ -35,7 +35,7 @@ export const VideoToolbox = () => {
           />
         </>
       )}
-      <Icon
+      <IconButton
         label='sort ascending'
         icon='sortAscAlpha'
         color={sortOrder === 'asc' ? 'black' : 'grey'}
@@ -46,7 +46,7 @@ export const VideoToolbox = () => {
           })
         }
       />
-      <Icon
+      <IconButton
         icon='shuffle'
         label='shuffle'
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}

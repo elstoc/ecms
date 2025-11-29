@@ -22,8 +22,6 @@ import {
   LuShuffle,
 } from 'react-icons/lu';
 
-import { Button } from '../button';
-
 import './Icon.css';
 
 const icons = {
@@ -47,32 +45,17 @@ const icons = {
   sortAscAlpha: LuArrowDownAZ,
 };
 
-type IconProps = {
+export type IconProps = {
   icon: keyof typeof icons;
+  label: string;
   disabled?: boolean;
-  onPress?: () => void;
   className?: string;
   color?: string;
-  label: string;
 };
 
-export const Icon = ({ icon, onPress, disabled, className, color, label }: IconProps) => {
+export const Icon = ({ icon, disabled, className, color, label }: IconProps) => {
   const IconComponent = icons[icon];
   const classNames = cn('ecms-icon', className);
-
-  if (onPress) {
-    return (
-      <Button
-        aria-label={label}
-        clearFormatting
-        className={classNames}
-        isDisabled={disabled}
-        onPress={onPress}
-      >
-        <IconComponent title='' className='icon' color={color} />
-      </Button>
-    );
-  }
 
   return (
     <div className={cn(classNames, { disabled: disabled })}>

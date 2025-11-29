@@ -9,11 +9,4 @@
   &.disabled {
     opacity: 0.2;
   }
-
-  &.ecms-button {
-    padding: 0;
-    margin: 0;
-    min-height: unset;
-    min-width: unset;
-  }
 }
