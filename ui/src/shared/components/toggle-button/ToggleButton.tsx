@@ -9,7 +9,7 @@ import './ToggleButton.css';
 
 type ToggleButtonProps = Pick<
   RaToggleButtonProps,
-  'children' | 'className' | 'isSelected' | 'onChange'
+  'id' | 'children' | 'className' | 'isSelected' | 'onChange'
 >;
 
 export const ToggleButton = (props: ToggleButtonProps) => {
