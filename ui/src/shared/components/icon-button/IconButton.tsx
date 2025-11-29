@@ -5,15 +5,13 @@ import { Icon, IconProps } from '../icon';
 
 import './IconButton.css';
 
-type IconButtonProps = IconProps & {
-  onPress: ButtonProps['onPress'];
-};
+type IconButtonProps = IconProps & Pick<ButtonProps, 'onPress'>;
 
 export const IconButton = ({
   onPress,
   className,
   label,
-  disabled,
+  isDisabled,
   ...iconProps
 }: IconButtonProps) => {
   const classNames = cn('ecms-icon-button', className);
@@ -22,7 +20,7 @@ export const IconButton = ({
       aria-label={label}
       clearFormatting
       className={classNames}
-      isDisabled={disabled}
+      isDisabled={isDisabled}
       onPress={onPress}
     >
       <Icon label={label} {...iconProps} />

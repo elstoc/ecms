@@ -48,14 +48,14 @@ const icons = {
 export type IconProps = {
   icon: keyof typeof icons;
   label: string;
-  disabled?: boolean;
+  isDisabled?: boolean;
   className?: string;
   color?: string;
 };
 
-export const Icon = ({ icon, disabled, className, color, label }: IconProps) => {
+export const Icon = ({ icon, isDisabled, className, color, label }: IconProps) => {
   const IconComponent = icons[icon];
-  const classNames = cn('ecms-icon', className, { disabled: disabled });
+  const classNames = cn('ecms-icon', className, { disabled: isDisabled });
 
   return (
     <div className={classNames}>

@@ -69,7 +69,7 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
       <IconButton
         label={mode === 'edit' ? 'cancel page edit' : 'edit page'}
         icon={mode === 'edit' ? 'cancel' : 'edit'}
-        disabled={!pageExists || !pathValid}
+        isDisabled={!pageExists || !pathValid}
         onPress={toggleEditMode}
       />
       <IconButton
@@ -77,18 +77,18 @@ export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
         label='save page'
         className='save-markdown'
         onPress={savePage}
-        disabled={mode !== 'edit' || !canWrite || content === editedMarkdown}
+        isDisabled={mode !== 'edit' || !canWrite || content === editedMarkdown}
       />
       <IconButton
         icon='add'
         label='add page'
-        disabled={singlePage || !canWrite || mode === 'edit'}
+        isDisabled={singlePage || !canWrite || mode === 'edit'}
         onPress={() => setSearchParams({ mode: 'add' })}
       />
       <IconButton
         icon='delete'
         label='delete page'
-        disabled={singlePage || !canDelete || mode === 'edit'}
+        isDisabled={singlePage || !canDelete || mode === 'edit'}
         onPress={deletePage}
       />
     </Toolbox>
