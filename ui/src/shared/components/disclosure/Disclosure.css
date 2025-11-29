@@ -1,9 +1,9 @@
 .ecms-disclosure {
-  .ecms-heading {
+  .ecms-disclosure-heading {
     margin-block: 0;
   }
 
-  .ecms-button[slot='trigger'] {
+  .ecms-disclosure-trigger {
     font-weight: 400;
     font-size: 1.3rem;
     gap: 8px;
@@ -37,7 +37,7 @@
       grid-template-rows: 1fr;
     }
 
-    .ecms-button[slot='trigger'] svg {
+    .ecms-disclosure-trigger svg {
       rotate: 90deg;
     }
   }

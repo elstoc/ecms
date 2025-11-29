@@ -2,7 +2,7 @@ import 'modern-normalize';
 import { forwardRef } from 'react';
 
 import { Card } from '../card';
-import { Disclosure, DisclosurePanel, TriggerButton } from '../disclosure';
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from '../disclosure';
 import { Flag } from '../flag';
 import { IconButton } from '../icon-button';
 import { Tag, TagListStatic } from '../tag-list-static';
@@ -71,7 +71,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
         <Disclosure isExpanded={expanded} onExpandedChange={onExpandedChange}>
           <div className='info-panel'>
             <div className='left'>
-              <TriggerButton heading={title} clearButtonFormatting />
+              <DisclosureTrigger heading={title} clearButtonFormatting />
               <div>
                 <WatchedIcon watchedStatus={watched} />
                 <WatchedIcon watchedStatus={mediaWatched} />

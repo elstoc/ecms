@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
 import { Card } from '../card';
-import { Disclosure, DisclosurePanel, TriggerButton } from '../disclosure';
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from '../disclosure';
 import { Icon } from '../icon';
 import { Rating } from '../rating';
 import { Tag, TagListStatic } from '../tag-list-static';
@@ -44,7 +44,7 @@ export const BookCard = forwardRef<HTMLDivElement, BookCardProps>(
         <Disclosure isExpanded={expanded} onExpandedChange={onExpandedChange}>
           <div className='info-panel'>
             <div className='left'>
-              <TriggerButton heading={title} clearButtonFormatting />
+              <DisclosureTrigger heading={title} clearButtonFormatting />
               <div>{authors}</div>
             </div>
             <div className='right'>

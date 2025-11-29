@@ -2,22 +2,14 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import {
   Disclosure as RaDisclosure,
-  DisclosurePanel as RaDisclosurePanel,
-  DisclosurePanelProps as RaDisclosurePanelProps,
   DisclosureProps as RaDisclosureProps,
-  Heading as RaHeading,
-  HeadingProps as RaHeadingProps,
 } from 'react-aria-components';
-
-import { Button } from '../button';
 
 import './Disclosure.css';
 
-const Heading = (props: RaHeadingProps) => {
-  return <RaHeading {...props} className='ecms-heading' />;
-};
+type DisclosureProps = Pick<RaDisclosureProps, 'children' | 'isExpanded' | 'onExpandedChange'>;
 
-export const Disclosure = (props: RaDisclosureProps) => {
+export const Disclosure = (props: DisclosureProps) => {
   // The React-Aria Disclosure component cannot be animated in closure because it immediately switches
   //   the disclosure panel to be visually hidden when its state changes (no matter its height)
   // This component therefore reports the eventual state (after animation) to the parent and sets a class
@@ -53,28 +45,5 @@ export const Disclosure = (props: RaDisclosureProps) => {
       isExpanded={fullExpansionState}
       onExpandedChange={handleExpandedChange}
     />
-  );
-};
-
-export const DisclosurePanel = (props: RaDisclosurePanelProps) => {
-  return (
-    <RaDisclosurePanel {...props} className='ecms-disclosure-panel'>
-      <div className='grid-child'>{props.children}</div>
-    </RaDisclosurePanel>
-  );
-};
-
-type TriggerButtonProps = { heading?: string; clearButtonFormatting?: boolean };
-
-export const TriggerButton = ({ heading, clearButtonFormatting }: TriggerButtonProps) => {
-  return (
-    <Heading>
-      <Button slot='trigger' clearFormatting={clearButtonFormatting}>
-        {heading}
-        <svg viewBox='0 0 24 24'>
-          <path d='m8.25 4.5 7.5 7.5-7.5 7.5' />
-        </svg>
-      </Button>
-    </Heading>
   );
 };
