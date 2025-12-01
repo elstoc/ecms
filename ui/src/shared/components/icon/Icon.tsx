@@ -2,6 +2,7 @@
 import cn from 'classnames';
 import {
   FiCheck,
+  FiChevronDown,
   FiChevronLeft,
   FiChevronRight,
   FiDownload,
@@ -33,6 +34,7 @@ const icons = {
   save: FiSave,
   next: FiChevronRight,
   previous: FiChevronLeft,
+  down: FiChevronDown,
   close: FiX,
   flag: FiFlag,
   add: FiPlusSquare,

@@ -1,0 +1,90 @@
+.ecms-combo-box {
+  .input-and-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    /* TODO: Remove blueprint hack */
+    font-size: 16px;
+  }
+
+  .input-and-button {
+    display: flex;
+    align-items: center;
+
+    .ecms-button {
+      margin-left: -30px;
+    }
+  }
+}
+
+.ecms-combo-box-popover {
+  width: var(--trigger-width);
+  overflow-y: auto;
+
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  box-shadow: 0 8px 20px rgba(0 0 0 / 0.1);
+  background: white;
+
+  transition:
+    transform 200ms,
+    opacity 200ms;
+
+  --starting-scale: scale(1);
+
+  &[data-placement='top'] {
+    --origin: translateY(8px);
+  }
+
+  &[data-placement='bottom'] {
+    --origin: translateY(-8px);
+  }
+
+  &[data-placement='right'] {
+    --origin: translateX(-8px);
+  }
+
+  &[data-placement='left'] {
+    --origin: translateX(8px);
+  }
+
+  &[data-entering],
+  &[data-exiting] {
+    transform: var(--starting-scale) var(--origin);
+    opacity: 0;
+  }
+
+  .ecms-item {
+    margin: 2px;
+    padding: 4px 8px 4px 22px;
+    border-radius: 6px;
+    outline: none;
+    cursor: default;
+    color: var(--text-color);
+    position: relative;
+
+    &.no-results {
+      font-style: italic;
+    }
+
+    &[data-selected] {
+      font-weight: 600;
+      background: none;
+
+      &::before {
+        content: '✓';
+        content: '✓' / '';
+        alt: ' ';
+        position: absolute;
+        top: 4px;
+        left: 4px;
+      }
+    }
+
+    &[data-focused] {
+      background: darkgrey;
+      color: white;
+    }
+  }
+}
