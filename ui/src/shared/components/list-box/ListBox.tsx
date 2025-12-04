@@ -4,7 +4,7 @@ import { ListBox as RaListBox, ListBoxProps as RaListBoxProps } from 'react-aria
 import './ListBox.css';
 
 type ListBoxProps<T extends object> = Pick<RaListBoxProps<T>, 'children' | 'className'> & {
-  emptyStateMessage: string;
+  emptyStateMessage?: string;
 };
 
 export const ListBox = <T extends object>(props: ListBoxProps<T>) => {
