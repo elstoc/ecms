@@ -9,15 +9,15 @@ import { Popover } from '../popover';
 
 import './ComboBox.css';
 
-type ComboBoxProps<T extends object> = RaComboBoxProps<T> & {
+type ComboBoxProps<T extends object> = Pick<RaComboBoxProps<T>, 'children' | 'className'> & {
   label: string;
 };
 
 export const ComboBox = <T extends object>(props: ComboBoxProps<T>) => {
-  const className = cn('ecms-combo-box', props.className);
+  const classNames = cn('ecms-combo-box', props.className);
 
   return (
-    <RaComboBox allowsEmptyCollection menuTrigger='focus' {...props} className={className}>
+    <RaComboBox allowsEmptyCollection {...props} className={classNames}>
       <div className='input-and-label'>
         <Label>{props.label}</Label>
         <div className='input-and-button'>
