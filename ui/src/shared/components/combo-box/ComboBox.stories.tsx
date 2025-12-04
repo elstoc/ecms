@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
-import { ListBoxItem } from 'react-aria-components';
+
+import { ListBoxItem } from '../list-box';
 
 import { ComboBox } from './ComboBox';
 
@@ -14,17 +15,17 @@ type Story = StoryObj<typeof meta>;
 
 const children = (
   <>
-    <ListBoxItem className='ecms-item'>Zero</ListBoxItem>
-    <ListBoxItem className='ecms-item'>One</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Two</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Three</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Four</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Five</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Six</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Seven</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Eight</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Nine</ListBoxItem>
-    <ListBoxItem className='ecms-item'>Ten</ListBoxItem>
+    <ListBoxItem>Zero</ListBoxItem>
+    <ListBoxItem>One</ListBoxItem>
+    <ListBoxItem>Two</ListBoxItem>
+    <ListBoxItem>Three</ListBoxItem>
+    <ListBoxItem>Four</ListBoxItem>
+    <ListBoxItem>Five</ListBoxItem>
+    <ListBoxItem>Six</ListBoxItem>
+    <ListBoxItem>Seven</ListBoxItem>
+    <ListBoxItem>Eight</ListBoxItem>
+    <ListBoxItem>Nine</ListBoxItem>
+    <ListBoxItem>Ten</ListBoxItem>
   </>
 );
 

@@ -1,14 +1,11 @@
 import cn from 'classnames';
-import {
-  ListBox,
-  Popover,
-  ComboBox as RaComboBox,
-  ComboBoxProps as RaComboBoxProps,
-} from 'react-aria-components';
+import { ComboBox as RaComboBox, ComboBoxProps as RaComboBoxProps } from 'react-aria-components';
 
 import { IconButton } from '../icon-button';
 import { Input } from '../input';
 import { Label } from '../label';
+import { ListBox } from '../list-box';
+import { Popover } from '../popover';
 
 import './ComboBox.css';
 
@@ -28,11 +25,8 @@ export const ComboBox = <T extends object>(props: ComboBoxProps<T>) => {
           <IconButton label='' icon='down' />
         </div>
       </div>
-      <Popover maxHeight={150} className='ecms-combo-box-popover'>
-        <ListBox
-          className='ecms-combo-box-listbox'
-          renderEmptyState={() => <div className='ecms-item no-results'>No results found</div>}
-        >
+      <Popover maxHeight={150}>
+        <ListBox className='ecms-combo-box-listbox' emptyStateMessage='No results found'>
           {props.children}
         </ListBox>
       </Popover>
