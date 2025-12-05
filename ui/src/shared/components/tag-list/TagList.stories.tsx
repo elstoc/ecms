@@ -1,11 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { Tag, TagListStatic } from './TagListStatic';
+import { Tag } from './Tag';
+import { TagList } from './TagList';
 
 const meta = {
-  title: 'TagListStatic',
-  component: TagListStatic,
-} satisfies Meta<typeof TagListStatic>;
+  title: 'TagList',
+  component: TagList,
+} satisfies Meta<typeof TagList>;
 
 export default meta;
 

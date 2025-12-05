@@ -5,7 +5,7 @@ import { Card } from '../card';
 import { Disclosure, DisclosurePanel, DisclosureTrigger } from '../disclosure';
 import { Flag } from '../flag';
 import { IconButton } from '../icon-button';
-import { Tag, TagListStatic } from '../tag-list-static';
+import { Tag, TagList } from '../tag-list';
 
 import { WatchedIcon } from './WatchedIcon';
 
@@ -88,10 +88,10 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
           <DisclosurePanel>
             <div className='info-panel'>
               <div className='left'>
-                <TagListStatic label='tags'>
+                <TagList label='tags'>
                   <Tag label={categoryDesc} dark />
                   {tags?.map((tag) => <Tag key={tag} label={tag} />)}
-                </TagListStatic>
+                </TagList>
                 <TitleAndData title='Location' data={locationDesc} />
                 <TitleAndData title='Other Media' data={otherMediaDesc} />
                 <TitleAndData title='Media notes' data={mediaNotes} />

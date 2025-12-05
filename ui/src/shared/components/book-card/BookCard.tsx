@@ -4,7 +4,7 @@ import { Card } from '../card';
 import { Disclosure, DisclosurePanel, DisclosureTrigger } from '../disclosure';
 import { Icon } from '../icon';
 import { Rating } from '../rating';
-import { Tag, TagListStatic } from '../tag-list-static';
+import { Tag, TagList } from '../tag-list';
 
 import './BookCard.css';
 
@@ -56,9 +56,9 @@ export const BookCard = forwardRef<HTMLDivElement, BookCardProps>(
             <div className='info-panel'>
               <div className='devices-and-rating'>
                 {devices && (
-                  <TagListStatic label='devices'>
+                  <TagList label='devices'>
                     {devices?.map((device) => <Tag key={device} label={device} dark />)}
-                  </TagListStatic>
+                  </TagList>
                 )}
                 <Rating stars={rating} />
               </div>
