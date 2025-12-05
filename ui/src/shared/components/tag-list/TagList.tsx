@@ -10,8 +10,10 @@ type TagListProps = {
 };
 
 export const TagList = ({ label, className, children }: TagListProps) => {
+  const classNames = cn('ecms-tag-list', className);
+
   return (
-    <ul aria-label={label} className={cn('ecms-tag-list', className)}>
+    <ul aria-label={label} className={classNames}>
       {children}
     </ul>
   );
