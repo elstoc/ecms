@@ -1,5 +1,7 @@
 import cn from 'classnames';
 
+import './Tag.css';
+
 export type TagProps = {
   label: string;
   dark?: boolean;
