@@ -30,6 +30,9 @@ const children = (
 );
 
 export const Default: Story = {
+  argTypes: {
+    children: { control: { disable: true } },
+  },
   args: {
     label: 'Field label',
     children,
