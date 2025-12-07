@@ -15,6 +15,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Field label',
+    selectedCode: undefined,
     items: { i1: 'first item', i2: 'second item', i3: 'third item' },
     onSelectCode: () => undefined,
   },
