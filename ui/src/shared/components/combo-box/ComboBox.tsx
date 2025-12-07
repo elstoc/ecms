@@ -9,7 +9,10 @@ import { Popover } from '../popover';
 
 import './ComboBox.css';
 
-type ComboBoxProps<T extends object> = Pick<RaComboBoxProps<T>, 'children' | 'className'> & {
+type ComboBoxProps<T extends object> = Pick<
+  RaComboBoxProps<T>,
+  'children' | 'className' | 'items' | 'onSelectionChange' | 'selectedKey'
+> & {
   label: string;
 };
 
