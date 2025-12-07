@@ -36,7 +36,7 @@ const preview: Preview = {
   },
   tags: ['autodocs'],
   argTypes: {
-    className: { control: { type: 'text' } },
+    className: { control: { disable: true } },
   },
 };
 
