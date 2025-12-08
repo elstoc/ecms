@@ -18,4 +18,7 @@
   --button-pressed-bg-color: #e5e5e5;
   --button-toggled-bg-color: darkgrey;
   --button-toggled-text-color: #f9f9f9;
+
+  --focus-outline: 2px solid darkslategray;
+  --focus-outline-offset: -1px;
 }

@@ -4,8 +4,8 @@
   border: 1px solid darkslategrey;
   border-radius: 6px;
 
-  &[data-focused] {
-    outline: 2px solid darkslategray;
-    outline-offset: -1px;
+  &[data-focus-visible] {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
   }
 }

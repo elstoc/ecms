@@ -8,6 +8,11 @@
     font-size: 16px;
   }
 
+  &[data-open] .ecms-input {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
   .input-and-button {
     display: flex;
     align-items: center;
