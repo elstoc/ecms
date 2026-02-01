@@ -61,6 +61,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "@base-ui/react": "^1.1.0",
     "@blueprintjs/core": "^5.17.6",
     "@blueprintjs/select": "^5.3.18",
     "@codemirror/lang-markdown": "^6.2.0",
