@@ -13,9 +13,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   argTypes: {
-    allTags: { control: { disable: true } },
+    selectedTags: { control: { disable: true } },
   },
   args: {
-    allTags: new Set(['tag-the-first', 'tag-the-second', 'tag-the-third']),
+    selectedTags: new Set(['tag-the-first', 'tag-the-second', 'tag-the-third']),
   },
 };
