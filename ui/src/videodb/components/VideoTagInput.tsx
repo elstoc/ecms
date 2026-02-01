@@ -1,4 +1,4 @@
-import { MultiTagInput } from '@/shared/legacy-components/forms';
+import { MultiTagInput } from '@/shared/components-legacy/forms';
 
 import { useGetTags } from '../hooks/useVideoDbQueries';
 

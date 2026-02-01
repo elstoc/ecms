@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
 import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
-import { Classes, Popover } from '@/shared/legacy-components/popover';
+import { Classes, Popover } from '@/shared/components-legacy/popover';
 
 import './SiteNav.scss';
 

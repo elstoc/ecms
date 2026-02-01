@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { Video } from '@/contracts/videodb';
+import { Button } from '@/shared/components-legacy/button';
+import { Collapse } from '@/shared/components-legacy/collapse';
+import { ControlGroup } from '@/shared/components-legacy/control-group';
+import { Input, IntegerInput, Switch } from '@/shared/components-legacy/forms';
 import { Card } from '@/shared/components/card';
-import { Button } from '@/shared/legacy-components/button';
-import { Collapse } from '@/shared/legacy-components/collapse';
-import { ControlGroup } from '@/shared/legacy-components/control-group';
-import { Input, IntegerInput, Switch } from '@/shared/legacy-components/forms';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 

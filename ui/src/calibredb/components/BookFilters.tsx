@@ -1,11 +1,11 @@
-import { Button } from '@/shared/components/button';
 import {
   Input,
   MultiTagInput,
   SegmentedControlInput,
   Switch,
-} from '@/shared/legacy-components/forms';
-import { SuggestItem } from '@/shared/legacy-components/forms/SuggestItem';
+} from '@/shared/components-legacy/forms';
+import { SuggestItem } from '@/shared/components-legacy/forms/SuggestItem';
+import { Button } from '@/shared/components/button';
 import { toIntOrUndefined } from '@/utils';
 
 import { useAllPaths } from '../hooks/useAllPaths';

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { showToast } from '../legacy-components/toaster';
+import { showToast } from '../components-legacy/toaster';
 
 export const useMutationWithToast = <T>(params: {
   mutationFn: (data: T) => Promise<void>;

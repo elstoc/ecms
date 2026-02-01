@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from 'react';
 
+import { Collapse } from '@/shared/components-legacy/collapse';
 import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { useIsDualPanel } from '@/shared/hooks';
-import { Collapse } from '@/shared/legacy-components/collapse';
 import { InjectSideExpander } from '@/site/components/HeaderToolbox';
 
 import './ContentWithSidebar.scss';

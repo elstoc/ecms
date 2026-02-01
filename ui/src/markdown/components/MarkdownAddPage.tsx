@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { Dialog, DialogBody } from '@/shared/components-legacy/dialog';
+import { Input } from '@/shared/components-legacy/forms';
 import { Button } from '@/shared/components/button';
 import { Card } from '@/shared/components/card';
-import { Dialog, DialogBody } from '@/shared/legacy-components/dialog';
-import { Input } from '@/shared/legacy-components/forms';
 
 import { getMarkdownPage } from '../api';
 import { useMarkdown } from '../hooks/useMarkdown';

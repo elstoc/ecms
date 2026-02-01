@@ -1,4 +1,4 @@
-import { SelectDescribedCode } from '@/shared/legacy-components/forms';
+import { SelectDescribedCode } from '@/shared/components-legacy/forms';
 
 import { useLookup } from '../hooks/useVideoDbQueries';
 
