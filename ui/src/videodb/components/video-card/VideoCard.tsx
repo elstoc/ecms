@@ -1,11 +1,11 @@
 import 'modern-normalize';
 import { forwardRef } from 'react';
 
-import { Card } from '../card';
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from '../disclosure';
-import { Flag } from '../flag';
-import { IconButton } from '../icon-button';
-import { Tag, TagList } from '../tag-list';
+import { Card } from '@/shared/components/card';
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/shared/components/disclosure';
+import { Flag } from '@/shared/components/flag';
+import { IconButton } from '@/shared/components/icon-button';
+import { Tag, TagList } from '@/shared/components/tag-list';
 
 import { WatchedIcon } from './WatchedIcon';
 

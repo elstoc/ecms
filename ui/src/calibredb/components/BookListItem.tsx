@@ -1,11 +1,12 @@
 import { forwardRef, useState } from 'react';
 
 import { Book } from '@/contracts/calibredb';
-import { BookCard } from '@/shared/components/book-card';
 import { config } from '@/utils';
 
 import { useCalibreDb } from '../hooks/useCalibreDb';
 import { useLookup, useLookupValue } from '../hooks/useCalibreDbQueries';
+
+import { BookCard } from './book-card';
 
 type BookListItemProps = {
   book: Book;

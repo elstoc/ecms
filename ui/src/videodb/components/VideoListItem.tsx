@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { VideoWithId } from '@/contracts/videodb';
-import { VideoCard } from '@/shared/components/video-card';
 
 import { useLookupValue, usePatchVideo } from '../hooks/useVideoDbQueries';
+
+import { VideoCard } from './video-card';
 
 type VideoListItemProps = {
   video: VideoWithId;

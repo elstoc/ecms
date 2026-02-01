@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
 
-import { Card } from '../card';
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from '../disclosure';
-import { Icon } from '../icon';
-import { Rating } from '../rating';
-import { Tag, TagList } from '../tag-list';
+import { Card } from '@/shared/components/card';
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/shared/components/disclosure';
+import { Icon } from '@/shared/components/icon';
+import { Rating } from '@/shared/components/rating';
+import { Tag, TagList } from '@/shared/components/tag-list';
 
 import './BookCard.css';
 
