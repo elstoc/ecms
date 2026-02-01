@@ -5,13 +5,14 @@ import { Icon, IconProps } from '../icon';
 
 import './IconButton.css';
 
-type IconButtonProps = IconProps & Pick<ButtonProps, 'onPress'>;
+type IconButtonProps = IconProps & Pick<ButtonProps, 'onPress' | 'slot'>;
 
 export const IconButton = ({
   onPress,
   className,
   label,
   isDisabled,
+  slot,
   ...iconProps
 }: IconButtonProps) => {
   const classNames = cn('ecms-icon-button', className);
@@ -22,6 +23,7 @@ export const IconButton = ({
       className={classNames}
       isDisabled={isDisabled}
       onPress={onPress}
+      slot={slot}
     >
       <Icon label={label} {...iconProps} />
     </Button>
