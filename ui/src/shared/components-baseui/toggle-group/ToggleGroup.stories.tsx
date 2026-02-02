@@ -19,6 +19,7 @@ export const Default: Story = {
   args: {
     value: ['first'],
     onValueChange: () => undefined,
+    label: 'Toggle group label',
     children: 'whatever',
   },
   render: (args) => {
@@ -30,9 +31,9 @@ export const Default: Story = {
 
     return (
       <ToggleGroup {...args} value={value} onValueChange={onValueChange}>
-        <Toggle value='first'>First</Toggle>
-        <Toggle value='second'>Second</Toggle>
-        <Toggle value='third'>Third</Toggle>
+        <Toggle value='01'>First</Toggle>
+        <Toggle value='02'>Second</Toggle>
+        <Toggle value='03'>Third</Toggle>
       </ToggleGroup>
     );
   },
