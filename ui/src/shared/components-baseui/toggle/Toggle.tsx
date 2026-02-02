@@ -6,7 +6,7 @@ import './Toggle.css';
 
 type ToggleProps = Pick<
   BaseToggleProps,
-  'id' | 'children' | 'className' | 'pressed' | 'onPressedChange'
+  'value' | 'children' | 'className' | 'pressed' | 'onPressedChange'
 >;
 
 export const Toggle = (props: ToggleProps) => {
