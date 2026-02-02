@@ -1,0 +1,53 @@
+.ec-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  vertical-align: middle;
+  border: none;
+  border-radius: 2px;
+  padding: 5px 10px;
+  min-height: 30px;
+  min-width: 30px;
+  background-color: var(--button-bg-color);
+  box-shadow:
+    inset 0 0 0 1px rgba(17, 20, 24, 0.2),
+    0 1px 2px rgba(17, 20, 24, 0.1);
+
+  &:hover {
+    cursor: pointer;
+    background-clip: padding-box;
+    background-color: var(--button-hovered-bg-color);
+    box-shadow:
+      inset 0 0 0 1px rgba(17, 20, 24, 0.2),
+      0 1px 2px rgba(17, 20, 24, 0.2);
+  }
+
+  &:active {
+    background-color: var(--button-pressed-bg-color);
+  }
+
+  &[data-disabled] {
+    opacity: 0.2;
+    cursor: default;
+    color: inherit;
+  }
+
+  &:focus {
+    /* TODO: Remove this blueprint hack */
+    /* for some reason focus-visible isn't working */
+    outline: inherit;
+    outline-offset: inherit;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  &.clear-formatting {
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+}
