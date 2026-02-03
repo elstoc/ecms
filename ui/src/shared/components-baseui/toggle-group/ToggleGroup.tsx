@@ -1,5 +1,6 @@
 import { Field } from '@base-ui/react/field';
 import { ToggleGroup as BaseToggleGroup } from '@base-ui/react/toggle-group';
+import cn from 'classnames';
 import { ReactNode } from 'react';
 
 import './ToggleGroup.css';
@@ -17,31 +18,32 @@ type ValueCannotEmpty<T> = {
 type ToggleButtonGroupProps<T> = {
   children: ReactNode;
   className?: string;
-  onChange: (value: T[]) => void;
   label: string;
+  onChange: (value: T[]) => void;
   allowMultiple?: boolean;
 } & (ValueCanEmpty<T> | ValueCannotEmpty<T>);
 
 export const ToggleGroup = <T,>({
-  label,
   children,
+  className,
+  label,
+  value,
+  onChange,
   allowEmpty,
   allowMultiple,
-  onChange,
-  ...props
 }: ToggleButtonGroupProps<T>) => {
   const onValueChange = (value: T[]) => {
     if (allowEmpty || value.length > 0) {
-      console.log(value);
       onChange(value);
     }
   };
 
+  const classes = cn(className, 'ec-toggle-group');
   return (
-    <Field.Root>
+    <Field.Root className={classes}>
       <Field.Label aria-hidden>{label}</Field.Label>
       <BaseToggleGroup
-        {...props}
+        value={value}
         onValueChange={onValueChange}
         multiple={allowMultiple}
         aria-label={label}

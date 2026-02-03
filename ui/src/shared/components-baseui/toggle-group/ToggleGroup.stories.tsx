@@ -52,6 +52,7 @@ export const AllowMultiple: Story = {
   ...Default,
   args: {
     ...Default.args,
+    value: ['01', '02'],
     allowMultiple: true,
   },
 };
