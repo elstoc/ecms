@@ -17,24 +17,41 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    value: ['first'],
-    onValueChange: () => undefined,
+    value: ['01'],
+    onChange: () => undefined,
     label: 'Toggle group label',
     children: 'whatever',
   },
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
 
-    const onValueChange = (newValue: string[]) => {
+    const onChange = (newValue: string[]) => {
       updateArgs({ value: newValue });
     };
 
     return (
-      <ToggleGroup {...args} value={value} onValueChange={onValueChange}>
+      <ToggleGroup {...args} value={value} onChange={onChange}>
         <Toggle value='01'>First</Toggle>
         <Toggle value='02'>Second</Toggle>
         <Toggle value='03'>Third</Toggle>
       </ToggleGroup>
     );
+  },
+};
+
+export const AllowEmpty: Story = {
+  ...Default,
+  args: {
+    ...Default.args,
+    value: [],
+    allowEmpty: true,
+  },
+};
+
+export const AllowMultiple: Story = {
+  ...Default,
+  args: {
+    ...Default.args,
+    allowMultiple: true,
   },
 };
