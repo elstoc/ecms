@@ -15,6 +15,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: 'Toggle text',
+    pressed: false,
   },
   render: (args) => {
     const [{ pressed }, updateArgs] = useArgs();
