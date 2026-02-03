@@ -10,10 +10,10 @@ export type ButtonProps = Pick<BaseButtonProps, 'children' | 'onClick' | 'disabl
   clearFormatting?: boolean;
 };
 
-export const Button = (props: ButtonProps) => {
-  const className = cn('ec-button', props.className, {
-    'clear-formatting': props.clearFormatting,
+export const Button = ({ clearFormatting, className, ...props }: ButtonProps) => {
+  const classes = cn('ec-button', className, {
+    'clear-formatting': clearFormatting,
   });
 
-  return <BaseButton {...props} className={className} />;
+  return <BaseButton {...props} className={classes} />;
 };
