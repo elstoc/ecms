@@ -1,0 +1,45 @@
+.ec-disclosure {
+  .ecms-disclosure-heading {
+    margin-block: 0;
+  }
+
+  .ec-disclosure-trigger {
+    font-weight: 400;
+    font-size: 1.3rem;
+    gap: 8px;
+    padding: 5px 0;
+
+    svg {
+      width: 1em;
+      height: 1em;
+      fill: none;
+      stroke: grey;
+      stroke-width: 1px;
+      rotate: 0deg;
+      transition: var(--transition-timing);
+      transition-property: rotate;
+    }
+  }
+
+  .ec-disclosure-panel {
+    transition: var(--transition-timing);
+    transition-property: all;
+    height: var(--collapsible-panel-height);
+    overflow: hidden;
+
+    &[hidden]:not([hidden='until-found']) {
+      display: none;
+    }
+
+    &[data-starting-style],
+    &[data-ending-style] {
+      height: 0;
+    }
+  }
+
+  &[data-open] {
+    .ec-disclosure-trigger svg {
+      rotate: 90deg;
+    }
+  }
+}
