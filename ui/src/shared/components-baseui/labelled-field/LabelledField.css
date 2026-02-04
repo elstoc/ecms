@@ -1,0 +1,9 @@
+.ec-labelled-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .ec-field-label {
+    font-size: 0.9rem;
+  }
+}

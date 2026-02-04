@@ -1,7 +1,7 @@
-import { Field } from '@base-ui/react/field';
 import { ToggleGroup as BaseToggleGroup } from '@base-ui/react/toggle-group';
-import cn from 'classnames';
 import { ReactNode } from 'react';
+
+import { LabelledField } from '../labelled-field';
 
 import './ToggleGroup.css';
 
@@ -38,11 +38,10 @@ export const ToggleGroup = <T,>({
     }
   };
 
-  const classes = cn(className, 'ec-toggle-group');
   return (
-    <Field.Root className={classes}>
-      <Field.Label aria-hidden>{label}</Field.Label>
+    <LabelledField label={label} ariaHideLabel>
       <BaseToggleGroup
+        className={className}
         value={value}
         onValueChange={onValueChange}
         multiple={allowMultiple}
@@ -50,6 +49,6 @@ export const ToggleGroup = <T,>({
       >
         {children}
       </BaseToggleGroup>
-    </Field.Root>
+    </LabelledField>
   );
 };
