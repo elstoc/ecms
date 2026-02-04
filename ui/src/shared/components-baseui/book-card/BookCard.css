@@ -1,0 +1,69 @@
+.book-card.ecms-card {
+  width: 100%;
+  margin: 0;
+  padding: 5px;
+
+  /* TODO: Remove this font-size hack to get around blueprint */
+  font-size: 16px;
+
+  transition: var(--transition-timing);
+  transition-property: box-shadow;
+
+  .info-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      .format {
+        font-style: italic;
+      }
+    }
+  }
+
+  .ec-disclosure-panel {
+    .info-panel {
+      padding-top: 10px;
+      flex-direction: column;
+      gap: 10px;
+
+      .book-path {
+        font-style: italic;
+      }
+
+      .devices-and-rating {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .cover-and-desc {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        .description :first-child {
+          margin-top: 0;
+          padding-top: 0;
+        }
+
+        .cover {
+          width: 200px;
+          height: 200px;
+          object-fit: contain;
+          object-position: top;
+        }
+      }
+    }
+  }
+}
