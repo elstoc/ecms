@@ -1,0 +1,113 @@
+import 'modern-normalize';
+import { forwardRef } from 'react';
+
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from '@/shared/components-baseui/disclosure';
+import { Card } from '@/shared/components/card';
+import { Flag } from '@/shared/components/flag';
+import { IconButton } from '@/shared/components/icon-button';
+import { Tag, TagList } from '@/shared/components/tag-list';
+
+import { WatchedIcon } from './WatchedIcon';
+
+import './VideoCard.css';
+
+type VideoCardProps = {
+  expanded: boolean;
+  onExpandedChange: (expanded: boolean) => void;
+  title: string;
+  categoryDesc: string;
+  formatDesc: string;
+  lengthDesc: string;
+  locationDesc?: string;
+  otherMediaDesc?: string;
+  tags?: string[];
+  watched: string;
+  mediaWatched?: string;
+  flagged?: boolean;
+  onFlaggedChange?: (flagged: boolean) => void;
+  onPressEdit?: () => void;
+  mediaNotes?: string;
+  progress?: string;
+};
+
+type TitleAndDataProps = {
+  title: string;
+  data?: string;
+};
+
+export const TitleAndData = ({ title, data }: TitleAndDataProps) => {
+  if (!data) return <></>;
+  return (
+    <div>
+      <strong>{title}:</strong> {data}{' '}
+    </div>
+  );
+};
+
+export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
+  (
+    {
+      expanded,
+      onExpandedChange,
+      title,
+      categoryDesc,
+      formatDesc,
+      lengthDesc,
+      locationDesc,
+      otherMediaDesc,
+      tags,
+      watched,
+      mediaWatched,
+      flagged,
+      onFlaggedChange,
+      onPressEdit,
+      mediaNotes,
+      progress,
+    },
+    ref,
+  ) => {
+    return (
+      <Card className='video-card' highlight={expanded} ref={ref}>
+        <Disclosure open={expanded} onOpenChange={onExpandedChange}>
+          <div className='info-panel'>
+            <div className='left'>
+              <DisclosureTrigger heading={title} clearButtonFormatting />
+              <div>
+                <WatchedIcon watchedStatus={watched} />
+                <WatchedIcon watchedStatus={mediaWatched} />
+                <span>
+                  {' '}
+                  {formatDesc} ({lengthDesc})
+                </span>
+              </div>
+            </div>
+            <div className='right'>
+              <Flag flagged={flagged} className='priority' onChange={onFlaggedChange} />
+            </div>
+          </div>
+          <DisclosurePanel>
+            <div className='info-panel'>
+              <div className='left'>
+                <TagList label='tags'>
+                  <Tag label={categoryDesc} dark />
+                  {tags?.map((tag) => <Tag key={tag} label={tag} />)}
+                </TagList>
+                <TitleAndData title='Location' data={locationDesc} />
+                <TitleAndData title='Other Media' data={otherMediaDesc} />
+                <TitleAndData title='Media notes' data={mediaNotes} />
+                <TitleAndData title='Progress' data={progress} />
+              </div>
+              <div className='right'>
+                {onPressEdit && <IconButton label='edit video' icon='edit' onPress={onPressEdit} />}
+              </div>
+            </div>
+          </DisclosurePanel>
+        </Disclosure>
+      </Card>
+    );
+  },
+);
