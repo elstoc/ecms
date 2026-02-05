@@ -10,14 +10,16 @@
   gap: 0.75rem;
   font-size: 1rem;
   min-width: 10rem;
+  user-select: none;
+  background-color: canvas;
 
   padding: var(--input-padding);
   margin: var(--input-margin);
   border: var(--input-border);
   border-radius: var(--input-border-radius);
-  background-color: white;
 
-  user-select: none;
+  padding-left: 0.875rem;
+  padding-right: 0.75rem;
 
   &:focus-visible {
     outline: var(--focus-outline);
