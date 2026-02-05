@@ -1,8 +1,8 @@
 .ecms-input {
-  padding: 0.286rem;
-  margin: 0;
-  border: 1px solid darkslategrey;
-  border-radius: 6px;
+  padding: var(--input-padding);
+  margin: var(--input-margin);
+  border: var(--input-border);
+  border-radius: var(--input-border-radius);
 
   &:focus-visible {
     outline: none;
