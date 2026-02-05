@@ -28,9 +28,7 @@ export const Select = <T,>({ label, items, children }: SelectProps<T>) => {
         <BaseSelect.Portal>
           <BaseSelect.Positioner className='ec-select-positioner'>
             <BaseSelect.Popup className='ec-select-popup'>
-              <BaseSelect.ScrollUpArrow className='ec-select-scroll-arrow' />
               <BaseSelect.List className='ec-select-list'>{children}</BaseSelect.List>
-              <BaseSelect.ScrollDownArrow className='ec-select-scroll-arrow' />
             </BaseSelect.Popup>
           </BaseSelect.Positioner>
         </BaseSelect.Portal>
