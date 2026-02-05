@@ -26,7 +26,11 @@ export const Select = <T,>({ label, items, children }: SelectProps<T>) => {
         </BaseSelect.Trigger>
 
         <BaseSelect.Portal>
-          <BaseSelect.Positioner className='ec-select-positioner'>
+          <BaseSelect.Positioner
+            className='ec-select-positioner'
+            alignItemWithTrigger={false}
+            sideOffset={5}
+          >
             <BaseSelect.Popup className='ec-select-popup'>
               <BaseSelect.List className='ec-select-list'>{children}</BaseSelect.List>
             </BaseSelect.Popup>
