@@ -24,6 +24,6 @@
 
   --input-border: 1px solid darkslategray;
   --input-border-radius: 6px;
-  --input-padding: 0.286rem;
+  --input-padding: 0.25rem 0.5rem;
   --input-margin: 0;
 }
