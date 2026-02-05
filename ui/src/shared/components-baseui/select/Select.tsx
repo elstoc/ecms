@@ -7,7 +7,6 @@ import './Select.css';
 
 type SelectProps<T> = {
   label: string;
-  placeholder?: string;
   children: ReactNode;
   items: ReadonlyArray<{
     label: React.ReactNode;
@@ -15,12 +14,12 @@ type SelectProps<T> = {
   }>;
 };
 
-export const Select = <T,>({ label, placeholder, items, children }: SelectProps<T>) => {
+export const Select = <T,>({ label, items, children }: SelectProps<T>) => {
   return (
     <LabelledField label={label}>
       <BaseSelect.Root items={items}>
         <BaseSelect.Trigger className='ec-select-trigger'>
-          <BaseSelect.Value className='ec-select-value' placeholder={placeholder} />
+          <BaseSelect.Value className='ec-select-value' placeholder='-' />
           <BaseSelect.Icon className='ec-select-icon'>
             <ChevronUpDownIcon />
           </BaseSelect.Icon>

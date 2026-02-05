@@ -19,7 +19,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Item',
-    placeholder: 'Choose something',
     items: items,
     children: 'something',
   },
