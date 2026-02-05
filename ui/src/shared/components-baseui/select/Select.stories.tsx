@@ -3,13 +3,9 @@ import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Select } from './Select';
 import { SelectItem } from './SelectItem';
 
-const apples = [
-  { label: 'Gala', value: 'gala' },
-  { label: 'Fuji', value: 'fuji' },
-  { label: 'Honeycrisp', value: 'honeycrisp' },
-  { label: 'Granny Smith', value: 'granny-smith' },
-  { label: 'Pink Lady', value: 'pink-lady' },
-];
+const twentyNumbers = [...Array(20).keys()];
+
+const items = twentyNumbers.map((number) => ({ label: `Item #${number}`, value: `item${number}` }));
 
 const meta = {
   title: 'BaseUI/Select',
@@ -22,15 +18,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: 'Apple',
-    placeholder: 'Select Apple',
-    items: apples,
+    label: 'Item',
+    placeholder: 'Choose something',
+    items: items,
     children: 'something',
   },
   render: (args) => {
     return (
       <Select {...args}>
-        {apples.map(({ label, value }) => (
+        {items.map(({ label, value }) => (
           <SelectItem key={value} label={label} value={value} />
         ))}
       </Select>
