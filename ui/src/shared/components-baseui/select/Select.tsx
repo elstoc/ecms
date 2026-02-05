@@ -1,0 +1,58 @@
+import { Select as BaseSelect } from '@base-ui/react/select';
+import { ReactNode } from 'react';
+
+import { LabelledField } from '../labelled-field';
+
+import './Select.css';
+
+type SelectProps<T> = {
+  label: string;
+  placeholder?: string;
+  children: ReactNode;
+  items: ReadonlyArray<{
+    label: React.ReactNode;
+    value: T;
+  }>;
+};
+
+export const Select = <T,>({ label, placeholder, items, children }: SelectProps<T>) => {
+  return (
+    <LabelledField label={label}>
+      <BaseSelect.Root items={items}>
+        <BaseSelect.Trigger className='ec-select-trigger'>
+          <BaseSelect.Value className='ec-select-value' placeholder={placeholder} />
+          <BaseSelect.Icon className='ec-select-icon'>
+            <ChevronUpDownIcon />
+          </BaseSelect.Icon>
+        </BaseSelect.Trigger>
+
+        <BaseSelect.Portal>
+          <BaseSelect.Positioner className='ec-select-positioner' sideOffset={8}>
+            <BaseSelect.Popup className='ec-select-popup'>
+              <BaseSelect.ScrollUpArrow className='ec-select-scroll-arrow' />
+              <BaseSelect.List className='ec-select-list'>{children}</BaseSelect.List>
+              <BaseSelect.ScrollDownArrow className='ec-select-scroll-arrow' />
+            </BaseSelect.Popup>
+          </BaseSelect.Positioner>
+        </BaseSelect.Portal>
+      </BaseSelect.Root>
+    </LabelledField>
+  );
+};
+
+const ChevronUpDownIcon = (props: React.ComponentProps<'svg'>) => {
+  return (
+    <svg
+      width='8'
+      height='12'
+      viewBox='0 0 8 12'
+      fill='none'
+      stroke='currentcolor'
+      strokeWidth='1.5'
+      {...props}
+    >
+      <path d='M0.5 4.5L4 1.5L7.5 4.5' />
+      <path d='M0.5 7.5L4 10.5L7.5 7.5' />
+    </svg>
+  );
+};
