@@ -21,4 +21,9 @@
 
   --focus-outline: 2px solid darkslategray;
   --focus-outline-offset: -1px;
+
+  --input-border: 1px solid darkslategray;
+  --input-border-radius: 6px;
+  --input-padding: 0.286rem;
+  --input-margin: 0;
 }
