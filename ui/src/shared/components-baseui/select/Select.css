@@ -73,7 +73,7 @@
 .ec-select-item {
   outline: 0;
   line-height: 1rem;
-  padding-block: 0.5rem;
+  padding-block: 0.45rem;
   padding-left: 0.625rem;
   padding-right: 1rem;
   display: grid;
