@@ -8,16 +8,18 @@ import './Select.css';
 type SelectProps<T> = {
   label: string;
   children: ReactNode;
+  value: T | null;
+  onChange: (newValue: T | null) => void;
   items: ReadonlyArray<{
     label: React.ReactNode;
     value: T;
   }>;
 };
 
-export const Select = <T,>({ label, items, children }: SelectProps<T>) => {
+export const Select = <T,>({ value, label, items, children, onChange }: SelectProps<T>) => {
   return (
     <LabelledField label={label}>
-      <BaseSelect.Root items={items}>
+      <BaseSelect.Root items={items} value={value} onValueChange={(value) => onChange(value)}>
         <BaseSelect.Trigger className='ec-select-trigger'>
           <BaseSelect.Value className='ec-select-value' placeholder='-' />
           <BaseSelect.Icon className='ec-select-icon'>
