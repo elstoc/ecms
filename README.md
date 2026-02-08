@@ -14,7 +14,7 @@ Clone the repository.
 
 Take a copy of the `.env-template` file and rename it to `.env`. Set the following variables appropriately. Some default values are provided but all variables must contain valid values in order for docker to start the services:
 
--   `DOCKER_COMPOSE_PROJECT_NAME`: An identifier unique on the current host (since it's used in the container names). For example, I use this repository for my home website and also run a development version, so each of these have different identifiers ("ecms-prod" and "ecms-dev" respectively). This enables the images to be built independently of one another and to be easily identified when running `docker ps`.
+-   `COMPOSE_PROJECT_NAME`: An identifier unique on the current host (since it's used in the container names). For example, I use this repository for my home website and also run a development version, so each of these have different identifiers ("ecms-prod" and "ecms-dev" respectively). This enables the images to be built independently of one another and to be easily identified when running `docker ps`.
 -   `DOCKER_PORT`: The port that is exposed to the host machine by docker. N.B. The nginx image on which this is based also exposes, but does not use, port 80.
 -   `UI_URL`: The full url that is used to access the ui. For example, if you just want to use the application locally, you might use the default http://localhost:3000. However, if you are exposing this to the internet (and forwarding requests to the docker container with a reverse proxy) you will need to provide the fully qualified domain name used by external requests.
 -   `UI_QUERY_REFETCH_INTERVAL`: The interval after which the ui considers data from the api to be stale and refetches it (in ms).
