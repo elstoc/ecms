@@ -1,6 +1,8 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
+import loaderUtils, { InterpolateOption, LoaderInterpolateOption } from 'loader-utils';
 import { fileURLToPath } from 'node:url';
 import path, { dirname } from 'path';
+import { LoaderContext } from 'webpack';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,7 +26,31 @@ const config: StorybookConfig = {
                 options: {
                   modules: {
                     auto: true,
-                    localIdentName: '[local]--[hash:base64:5]',
+                    getLocalIdent: (
+                      context: LoaderContext<LoaderInterpolateOption>,
+                      _: string,
+                      localName: string,
+                      options: InterpolateOption,
+                    ) => {
+                      // Create a hash based on a the file location and class name. Will be unique across a project, and close to globally unique.
+                      const hash = loaderUtils.getHashDigest(
+                        Buffer.from(
+                          path.posix.relative(context.rootContext, context.resourcePath) +
+                            localName,
+                        ),
+                        'md5',
+                        'base64',
+                        5,
+                      );
+                      // Use loaderUtils to find the file or folder name
+                      const className = loaderUtils.interpolateName(
+                        context,
+                        '[name]__' + localName + '__' + hash,
+                        options,
+                      );
+                      // Remove the .module that appears in every classname when based on the file and replace all "." with "_".
+                      return className.replace('.module_', '_').replace(/\./g, '_');
+                    },
                   },
                 },
               },
