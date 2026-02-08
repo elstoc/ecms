@@ -1,27 +1,27 @@
 services:
-  ui:
-    env_file: .env
-    build: ./ui
-    image: ecms-ui-${DOCKER_IDENTIFIER}
-    container_name: ecms-ui-${DOCKER_IDENTIFIER}
-    restart: unless-stopped
-    environment:
-      - API_URL=${UI_URL}/api
-      - DOCKER_NGINX_PORT=3000
-      - DOCKER_NGINX_API_URL=http://api:3100
-      - QUERY_REFETCH_INTERVAL=${UI_QUERY_REFETCH_INTERVAL}
-    ports:
-      - ${DOCKER_PORT}:3000
-  api:
-    env_file: .env
-    image: ecms-api-${DOCKER_IDENTIFIER}
-    container_name: ecms-api-${DOCKER_IDENTIFIER}
-    build: ./api
-    restart: unless-stopped
-    environment:
-      - API_PORT=3100
-      - API_URL=${UI_URL}/api
-      - LOG_LEVEL=info
-      - DATA_DIR=/data
-    volumes:
-      - ${API_DATA_DIR}:/data
+    ui:
+        env_file: .env
+        build: ./ui
+        image: ${COMPOSE_PROJECT_NAME}-ui
+        container_name: ${COMPOSE_PROJECT_NAME}-ui
+        restart: unless-stopped
+        environment:
+            - API_URL=${UI_URL}/api
+            - DOCKER_NGINX_PORT=3000
+            - DOCKER_NGINX_API_URL=http://api:3100
+            - QUERY_REFETCH_INTERVAL=${UI_QUERY_REFETCH_INTERVAL}
+        ports:
+            - ${DOCKER_PORT}:3000
+    api:
+        env_file: .env
+        image: ${COMPOSE_PROJECT_NAME}-api
+        container_name: ${COMPOSE_PROJECT_NAME}-api
+        build: ./api
+        restart: unless-stopped
+        environment:
+            - API_PORT=3100
+            - API_URL=${UI_URL}/api
+            - LOG_LEVEL=info
+            - DATA_DIR=/data
+        volumes:
+            - ${API_DATA_DIR}:/data
