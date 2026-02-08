@@ -7,7 +7,33 @@ const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: ['@storybook/addon-webpack5-compiler-swc', '@storybook/addon-docs'],
+  addons: [
+    '@storybook/addon-webpack5-compiler-swc',
+    '@storybook/addon-docs',
+    {
+      name: '@storybook/addon-styling-webpack',
+      options: {
+        rules: [
+          // Replaces existing CSS rules to support CSS Modules
+          {
+            test: /\.css$/,
+            use: [
+              'style-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: {
+                    auto: true,
+                    localIdentName: '[local]--[hash:base64:5]',
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
   framework: {
     name: '@storybook/react-webpack5',
     options: {},

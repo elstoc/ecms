@@ -40,7 +40,12 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/,
         use: [
           prod ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: { auto: true, localIdentName: '[local]--[hash:base64:5]' },
+            },
+          },
           'postcss-loader',
           'sass-loader',
         ],
