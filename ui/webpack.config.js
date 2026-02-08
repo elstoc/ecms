@@ -44,6 +44,7 @@ module.exports = {
           prod ? MiniCssExtractPlugin.loader : 'style-loader',
           {
             loader: 'css-loader',
+            // Note: these options are duplicated in ./storybook/main.ts
             options: {
               modules: {
                 auto: true,

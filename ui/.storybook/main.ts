@@ -25,6 +25,7 @@ const config: StorybookConfig = {
                 loader: 'css-loader',
                 options: {
                   modules: {
+                    // Note: These options are duplicated in webpack.config.js
                     auto: true,
                     getLocalIdent: (
                       context: LoaderContext<LoaderInterpolateOption>,
