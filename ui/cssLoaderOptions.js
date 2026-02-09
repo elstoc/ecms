@@ -5,7 +5,6 @@ export const cssLoaderOptions = {
   loader: 'css-loader',
   options: {
     modules: {
-      // Note: These options are duplicated in webpack.config.js
       auto: true,
       getLocalIdent: (context, _, localName, options) => {
         // Create a hash based on a the file location and class name. Will be unique across a project, and close to globally unique.
