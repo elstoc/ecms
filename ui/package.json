@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "UI for ecms",
   "main": "dist/index.ts",
+  "type": "module",
   "scripts": {
     "dev": "chmod +x ./configure-runtime-env.sh && ./configure-runtime-env.sh && mv ./runtime-env.js public && webpack serve --port 3000",
     "build": "rm -rf ./dist && mkdir ./dist && touch dist/runtime-env.js && NODE_ENV=production webpack",

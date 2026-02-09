@@ -1,14 +1,18 @@
+import Dotenv from 'dotenv-webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+
+import { cssLoaderOptions } from './cssLoaderOptions.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const prod = process.env.NODE_ENV === 'production';
 
-const loaderUtils = require('loader-utils');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Dotenv = require('dotenv-webpack');
-const TerserPlugin = require('terser-webpack-plugin');
-const { cssLoaderOptions } = require('./cssLoaderOptions.js');
-
-module.exports = {
+export default {
   mode: prod ? 'production' : 'development',
   entry: './src/index.tsx',
   devServer: {
