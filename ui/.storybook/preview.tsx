@@ -8,7 +8,7 @@ const preview: Preview = {
     (Story) => (
       <div
         style={{
-          maxWidth: '800px',
+          width: 'min(800px, 80vw)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
