@@ -23,6 +23,7 @@ type ComboboxProps = {
 export const Combobox = ({ label, items, emptyMessage, value, onChange }: ComboboxProps) => {
   const id = useId();
   const itemForValue = items.find((item) => item.value === value) ?? null;
+
   return (
     <BaseCombobox.Root
       items={items}

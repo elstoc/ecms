@@ -4,7 +4,7 @@ import cn from 'classnames';
 import styles from './Button.module.css';
 
 export type ButtonProps = Pick<BaseButtonProps, 'children' | 'onClick' | 'disabled'> & {
-  /** Class name (in addition to `ecms-button`) */
+  /** Additional class name */
   className?: string;
   /** Remove background and border */
   clearFormatting?: boolean;
