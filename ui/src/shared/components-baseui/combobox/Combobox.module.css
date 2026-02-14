@@ -98,6 +98,8 @@
   box-shadow:
     0 10px 15px -3px var(--mid-grey),
     0 4px 6px -4px var(--mid-grey);
+
+  max-height: 15rem;
 }
 
 .List:not(:empty) {
