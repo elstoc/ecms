@@ -2,7 +2,7 @@ import { Toggle as BaseToggle, ToggleProps as BaseToggleProps } from '@base-ui/r
 import cn from 'classnames';
 
 import buttonStyles from '../button/Button.module.css';
-import './Toggle.css';
+import styles from './Toggle.module.css';
 
 type ToggleProps = Pick<
   BaseToggleProps<string>,
@@ -10,7 +10,7 @@ type ToggleProps = Pick<
 >;
 
 export const Toggle = (props: ToggleProps) => {
-  const className = cn('ec-toggle', buttonStyles.Root, props.className);
+  const className = cn(styles.Root, buttonStyles.Root, props.className);
 
   return (
     <BaseToggle {...props} className={className}>

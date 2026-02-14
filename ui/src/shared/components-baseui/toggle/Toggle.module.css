@@ -1,4 +1,4 @@
-.ec-toggle {
+.Root {
   &[data-pressed] {
     background-color: var(--button-toggled-bg-color);
     color: var(--button-toggled-text-color);
