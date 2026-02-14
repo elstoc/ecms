@@ -32,6 +32,7 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
       <LabelledField label={label} htmlFor={id}>
         <div className={styles.InputWrapper}>
           <BaseCombobox.Input id={id} className={styles.Input} />
+
           <div className={styles.ActionButtons}>
             <ClearButton />
             <TriggerButton />
@@ -43,6 +44,7 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
         <BaseCombobox.Positioner className={styles.Positioner} sideOffset={4}>
           <BaseCombobox.Popup className={styles.Popup}>
             <BaseCombobox.Empty className={styles.Empty}>{emptyMessage}</BaseCombobox.Empty>
+
             <BaseCombobox.List className={styles.List}>
               {(item) => <ComboboxItem key={item.value} item={item} />}
             </BaseCombobox.List>
