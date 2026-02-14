@@ -1,12 +1,12 @@
 import { Collapsible } from '@base-ui/react/collapsible';
 import cn from 'classnames';
 
-import '../button/Button.css';
+import buttonStyles from '../button/Button.module.css';
 
 type DisclosureTriggerProps = { heading?: string; clearButtonFormatting?: boolean };
 
 export const DisclosureTrigger = ({ heading, clearButtonFormatting }: DisclosureTriggerProps) => {
-  const classes = cn('ec-button', 'ec-disclosure-trigger', {
+  const classes = cn(buttonStyles.Root, 'ec-disclosure-trigger', {
     'clear-formatting': clearButtonFormatting,
   });
 

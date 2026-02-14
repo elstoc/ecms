@@ -1,7 +1,7 @@
 import { Button as BaseButton, ButtonProps as BaseButtonProps } from '@base-ui/react/button';
 import cn from 'classnames';
 
-import './Button.css';
+import styles from './Button.module.css';
 
 export type ButtonProps = Pick<BaseButtonProps, 'children' | 'onClick' | 'disabled'> & {
   /** Class name (in addition to `ecms-button`) */
@@ -11,8 +11,8 @@ export type ButtonProps = Pick<BaseButtonProps, 'children' | 'onClick' | 'disabl
 };
 
 export const Button = ({ clearFormatting, className, ...props }: ButtonProps) => {
-  const classes = cn('ec-button', className, {
-    'clear-formatting': clearFormatting,
+  const classes = cn(styles.Root, className, {
+    [styles.ClearFormatting]: clearFormatting,
   });
 
   return <BaseButton {...props} className={classes} />;
