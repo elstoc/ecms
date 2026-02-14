@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 
-import { Combobox, Item } from './Combobox';
+import { Combobox } from './Combobox';
 
 const fruits = [
   { label: 'Apple', value: 'apple' },
@@ -52,7 +52,7 @@ export const Default: Story = {
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
 
-    const onChange = (newValue: Item | null) => {
+    const onChange = (newValue: string | null) => {
       updateArgs({ value: newValue });
     };
 

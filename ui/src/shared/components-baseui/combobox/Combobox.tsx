@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { useId } from 'react';
+import { ReactNode, useId } from 'react';
 
 import { LabelledField } from '../labelled-field';
 
@@ -9,21 +9,26 @@ import styles from './Combobox.module.css';
 
 export type Item = {
   value: string;
-  label: string;
+  label: ReactNode;
 };
 
 type ComboboxProps = {
   label: string;
   items: Item[];
   emptyMessage: string;
-  value: Item | null;
-  onChange: (newValue: Item | null) => void;
+  value: string | null;
+  onChange: (newValue: string | null) => void;
 };
 
 export const Combobox = ({ label, items, emptyMessage, value, onChange }: ComboboxProps) => {
   const id = useId();
+  const itemForValue = items.find((item) => item.value === value) ?? null;
   return (
-    <BaseCombobox.Root items={items} value={value} onValueChange={onChange}>
+    <BaseCombobox.Root
+      items={items}
+      value={itemForValue}
+      onValueChange={(item) => onChange(item?.value ?? null)}
+    >
       <LabelledField label={label} htmlFor={id}>
         <div className={styles.InputWrapper}>
           <BaseCombobox.Input id={id} className={styles.Input} />
