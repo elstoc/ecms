@@ -1,5 +1,7 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import * as React from 'react';
+import { useId } from 'react';
+
+import { LabelledField } from '../labelled-field';
 
 import { ComboboxItem } from './ComboboxItem';
 
@@ -17,11 +19,10 @@ type ComboboxProps = {
 };
 
 export const Combobox = ({ label, items, emptyMessage }: ComboboxProps) => {
-  const id = React.useId();
+  const id = useId();
   return (
     <BaseCombobox.Root items={items}>
-      <div className={styles.Label}>
-        <label htmlFor={id}>{label}</label>
+      <LabelledField label={label} htmlFor={id}>
         <div className={styles.InputWrapper}>
           <BaseCombobox.Input id={id} className={styles.Input} />
           <div className={styles.ActionButtons}>
@@ -33,7 +34,7 @@ export const Combobox = ({ label, items, emptyMessage }: ComboboxProps) => {
             </BaseCombobox.Trigger>
           </div>
         </div>
-      </div>
+      </LabelledField>
 
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner className={styles.Positioner} sideOffset={4}>
