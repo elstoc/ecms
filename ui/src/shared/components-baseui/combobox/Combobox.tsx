@@ -13,16 +13,17 @@ export type Item = {
 type ComboboxProps = {
   label: string;
   items: Item[];
+  emptyMessage: string;
 };
 
-export const Combobox = ({ label, items }: ComboboxProps) => {
+export const Combobox = ({ label, items, emptyMessage }: ComboboxProps) => {
   const id = React.useId();
   return (
     <BaseCombobox.Root items={items}>
       <div className={styles.Label}>
         <label htmlFor={id}>{label}</label>
         <div className={styles.InputWrapper}>
-          <BaseCombobox.Input placeholder='e.g. Apple' id={id} className={styles.Input} />
+          <BaseCombobox.Input id={id} className={styles.Input} />
           <div className={styles.ActionButtons}>
             <BaseCombobox.Clear className={styles.Clear} aria-label='Clear selection'>
               <ClearIcon className={styles.ClearIcon} />
@@ -37,7 +38,7 @@ export const Combobox = ({ label, items }: ComboboxProps) => {
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner className={styles.Positioner} sideOffset={4}>
           <BaseCombobox.Popup className={styles.Popup}>
-            <BaseCombobox.Empty className={styles.Empty}>No fruits found.</BaseCombobox.Empty>
+            <BaseCombobox.Empty className={styles.Empty}>{emptyMessage}</BaseCombobox.Empty>
             <BaseCombobox.List className={styles.List}>
               {(item) => <ComboboxItem key={item.value} item={item} />}
             </BaseCombobox.List>

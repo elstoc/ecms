@@ -44,6 +44,7 @@ export const Default: Story = {
   args: {
     label: 'Choose a fruit',
     items: fruits,
+    emptyMessage: 'No fruits found',
   },
   render: (args) => {
     return <Combobox {...args} />;
