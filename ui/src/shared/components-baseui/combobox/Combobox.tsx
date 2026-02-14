@@ -33,12 +33,8 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
         <div className={styles.InputWrapper}>
           <BaseCombobox.Input id={id} className={styles.Input} />
           <div className={styles.ActionButtons}>
-            <BaseCombobox.Clear className={styles.Clear} aria-label='Clear selection'>
-              <ClearIcon className={styles.ClearIcon} />
-            </BaseCombobox.Clear>
-            <BaseCombobox.Trigger className={styles.Trigger} aria-label='Open popup'>
-              <ChevronDownIcon className={styles.TriggerIcon} />
-            </BaseCombobox.Trigger>
+            <ClearButton />
+            <TriggerButton />
           </div>
         </div>
       </LabelledField>
@@ -57,8 +53,8 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
   );
 };
 
-function ClearIcon(props: React.ComponentProps<'svg'>) {
-  return (
+const ClearButton = () => (
+  <BaseCombobox.Clear className={styles.Clear} aria-label='Clear selection'>
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
@@ -67,16 +63,16 @@ function ClearIcon(props: React.ComponentProps<'svg'>) {
       strokeWidth='2'
       strokeLinecap='round'
       strokeLinejoin='round'
-      {...props}
+      className={styles.ClearIcon}
     >
       <path d='M18 6L6 18' />
       <path d='M6 6l12 12' />
     </svg>
-  );
-}
+  </BaseCombobox.Clear>
+);
 
-function ChevronDownIcon(props: React.ComponentProps<'svg'>) {
-  return (
+const TriggerButton = () => (
+  <BaseCombobox.Trigger className={styles.Trigger} aria-label='Open popup'>
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
@@ -85,9 +81,9 @@ function ChevronDownIcon(props: React.ComponentProps<'svg'>) {
       strokeWidth='2'
       strokeLinecap='round'
       strokeLinejoin='round'
-      {...props}
+      className={styles.TriggerIcon}
     >
       <path d='M6 9l6 6 6-6' />
     </svg>
-  );
-}
+  </BaseCombobox.Trigger>
+);
