@@ -1,7 +1,7 @@
 import { Field } from '@base-ui/react/field';
 import { ReactNode } from 'react';
 
-import './LabelledField.css';
+import styles from './LabelledField.module.css';
 
 type LabelledFieldProps = {
   label: string;
@@ -12,8 +12,8 @@ type LabelledFieldProps = {
 
 export const LabelledField = ({ label, ariaHideLabel, children, htmlFor }: LabelledFieldProps) => {
   return (
-    <Field.Root className='ec-labelled-field'>
-      <Field.Label className='ec-field-label' aria-hidden={ariaHideLabel} htmlFor={htmlFor}>
+    <Field.Root className={styles.Root}>
+      <Field.Label className={styles.Label} aria-hidden={ariaHideLabel} htmlFor={htmlFor}>
         {label}
       </Field.Label>
       {children}
