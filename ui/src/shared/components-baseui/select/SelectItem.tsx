@@ -10,7 +10,7 @@ type SelectItemProps = {
 
 export const SelectItem = ({ item }: SelectItemProps) => {
   return (
-    <BaseSelect.Item value={item} className={styles.Item}>
+    <BaseSelect.Item value={item.value} className={styles.Item}>
       <BaseSelect.ItemIndicator className={styles.ItemIndicator}>
         <CheckIcon className={styles.CheckIcon} />
       </BaseSelect.ItemIndicator>

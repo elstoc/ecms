@@ -14,8 +14,8 @@ export type Item = {
 
 type SelectProps = {
   label: string;
-  value: Item | null;
-  onChange: (newValue: Item | null) => void;
+  value: string | null;
+  onChange: (newValue: string | null) => void;
   items: Item[];
 };
 
