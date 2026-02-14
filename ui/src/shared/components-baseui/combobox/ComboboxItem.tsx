@@ -1,9 +1,11 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 
+import { Item } from './Combobox';
+
 import styles from './Combobox.module.css';
 
 type ComboboxItemProps = {
-  item: { label: string; value: string };
+  item: Item;
 };
 
 export const ComboboxItem = ({ item }: ComboboxItemProps) => {
