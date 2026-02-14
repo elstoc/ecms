@@ -23,12 +23,7 @@ export const Select = ({ value, label, items, onChange }: SelectProps) => {
   const id = useId();
   return (
     <LabelledField label={label} htmlFor={id}>
-      <BaseSelect.Root
-        id={id}
-        items={items}
-        value={value}
-        onValueChange={(value) => onChange(value)}
-      >
+      <BaseSelect.Root id={id} items={items} value={value} onValueChange={onChange}>
         <BaseSelect.Trigger className='ec-select-trigger'>
           <BaseSelect.Value className='ec-select-value' placeholder='-' />
           <BaseSelect.Icon className='ec-select-icon'>
