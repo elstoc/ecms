@@ -7,7 +7,7 @@ type DisclosureTriggerProps = { heading?: string; clearButtonFormatting?: boolea
 
 export const DisclosureTrigger = ({ heading, clearButtonFormatting }: DisclosureTriggerProps) => {
   const classes = cn(buttonStyles.Root, 'ec-disclosure-trigger', {
-    'clear-formatting': clearButtonFormatting,
+    [buttonStyles.ClearFormatting]: clearButtonFormatting,
   });
 
   return (
