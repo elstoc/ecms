@@ -1,22 +1,25 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
-import { ReactNode, useId } from 'react';
+import { useId } from 'react';
 
 import { LabelledField } from '../labelled-field';
 
+import { SelectItem } from './SelectItem';
+
 import './Select.css';
 
-type SelectProps<T> = {
+export type Item = {
+  value: string;
   label: string;
-  children: ReactNode;
-  value: T | null;
-  onChange: (newValue: T | null) => void;
-  items: ReadonlyArray<{
-    label: React.ReactNode;
-    value: T;
-  }>;
 };
 
-export const Select = <T,>({ value, label, items, children, onChange }: SelectProps<T>) => {
+type SelectProps = {
+  label: string;
+  value: Item | null;
+  onChange: (newValue: Item | null) => void;
+  items: Item[];
+};
+
+export const Select = ({ value, label, items, onChange }: SelectProps) => {
   const id = useId();
   return (
     <LabelledField label={label} htmlFor={id}>
@@ -40,7 +43,11 @@ export const Select = <T,>({ value, label, items, children, onChange }: SelectPr
             sideOffset={5}
           >
             <BaseSelect.Popup className='ec-select-popup'>
-              <BaseSelect.List className='ec-select-list'>{children}</BaseSelect.List>
+              <BaseSelect.List className='ec-select-list'>
+                {items.map((item) => (
+                  <SelectItem key={item.value} item={item} />
+                ))}
+              </BaseSelect.List>
             </BaseSelect.Popup>
           </BaseSelect.Positioner>
         </BaseSelect.Portal>

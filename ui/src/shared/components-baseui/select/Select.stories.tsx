@@ -1,8 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 
-import { Select } from './Select';
-import { SelectItem } from './SelectItem';
+import { Item, Select } from './Select';
 
 const twentyNumbers = [...Array(20).keys()];
 
@@ -20,29 +19,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  argTypes: {
-    value: { type: 'string' },
-  },
   args: {
     label: 'Item',
     value: null,
     items: items,
-    children: 'something',
     onChange: () => undefined,
   },
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
 
-    const onChange = (newValue: string | null) => {
+    const onChange = (newValue: Item | null) => {
       updateArgs({ value: newValue });
     };
 
     return (
-      <Select label={args.label} items={args.items as Items} value={value} onChange={onChange}>
-        {items.map(({ label, value: itemValue }) => (
-          <SelectItem key={itemValue} label={label} value={itemValue} />
-        ))}
-      </Select>
+      <Select label={args.label} items={args.items as Items} value={value} onChange={onChange} />
     );
   },
 };
