@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
+import { useArgs } from 'storybook/internal/preview-api';
 
-import { Combobox } from './Combobox';
+import { Combobox, Item } from './Combobox';
 
 const fruits = [
   { label: 'Apple', value: 'apple' },
@@ -43,10 +44,26 @@ export const Default: Story = {
   argTypes: {},
   args: {
     label: 'Choose a fruit',
-    items: fruits,
     emptyMessage: 'No fruits found',
+    value: null,
+    items: fruits,
+    onChange: () => undefined,
   },
   render: (args) => {
-    return <Combobox {...args} />;
+    const [{ value }, updateArgs] = useArgs();
+
+    const onChange = (newValue: Item | null) => {
+      updateArgs({ value: newValue });
+    };
+
+    return (
+      <Combobox
+        label={args.label}
+        items={args.items}
+        emptyMessage={args.emptyMessage}
+        value={value}
+        onChange={onChange}
+      />
+    );
   },
 };

@@ -16,12 +16,14 @@ type ComboboxProps = {
   label: string;
   items: Item[];
   emptyMessage: string;
+  value: Item | null;
+  onChange: (newValue: Item | null) => void;
 };
 
-export const Combobox = ({ label, items, emptyMessage }: ComboboxProps) => {
+export const Combobox = ({ label, items, emptyMessage, value, onChange }: ComboboxProps) => {
   const id = useId();
   return (
-    <BaseCombobox.Root items={items}>
+    <BaseCombobox.Root items={items} value={value} onValueChange={onChange}>
       <LabelledField label={label} htmlFor={id}>
         <div className={styles.InputWrapper}>
           <BaseCombobox.Input id={id} className={styles.Input} />
