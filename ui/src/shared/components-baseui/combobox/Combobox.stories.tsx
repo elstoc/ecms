@@ -56,14 +56,6 @@ export const Default: Story = {
       updateArgs({ value: newValue });
     };
 
-    return (
-      <Combobox
-        label={args.label}
-        items={args.items}
-        emptyMessage={args.emptyMessage}
-        value={value}
-        onChange={onChange}
-      />
-    );
+    return <Combobox {...args} value={value} onChange={onChange} />;
   },
 };
