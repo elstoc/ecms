@@ -1,8 +1,8 @@
-.ec-select-value[data-placeholder] {
+.Value[data-placeholder] {
   opacity: 0.6;
 }
 
-.ec-select-trigger {
+.Trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,17 +22,17 @@
   }
 }
 
-.ec-select-icon {
+.SelectIcon {
   display: flex;
 }
 
-.ec-select-positioner {
+.Positioner {
   outline: none;
   z-index: 1;
   user-select: none;
 }
 
-.ec-select-popup {
+.Popup {
   background-color: canvas;
   background-clip: padding-box;
   min-width: var(--anchor-width);
@@ -59,7 +59,7 @@
     0 4px 6px -4px var(--mid-grey);
 }
 
-.ec-select-list {
+.List {
   position: relative;
   padding-block: 0.25rem;
   overflow-y: auto;
@@ -70,7 +70,7 @@
   outline: 1px solid var(--mid-grey);
 }
 
-.ec-select-item {
+.Item {
   outline: 0;
   line-height: 1rem;
   padding-block: 0.45rem;
@@ -109,16 +109,16 @@
   }
 }
 
-.ec-select-item-indicator {
+.ItemIndicator {
   grid-column-start: 1;
 }
 
-.ec-select-item-checkicon {
+.CheckIcon {
   display: block;
   width: 0.75rem;
   height: 0.75rem;
 }
 
-.ec-select-item-text {
+.ItemText {
   grid-column-start: 2;
 }

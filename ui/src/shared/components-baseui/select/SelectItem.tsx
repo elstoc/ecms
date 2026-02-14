@@ -2,18 +2,20 @@ import { Select as BaseSelect } from '@base-ui/react/select';
 
 import { Item } from './Select';
 
+import styles from './Select.module.css';
+
 type SelectItemProps = {
   item: Item;
 };
 
 export const SelectItem = ({ item }: SelectItemProps) => {
   return (
-    <BaseSelect.Item value={item} className='ec-select-item'>
-      <BaseSelect.ItemIndicator className='ec-select-item-indicator'>
-        <CheckIcon className='ec-select-item-checkicon' />
+    <BaseSelect.Item value={item} className={styles.Item}>
+      <BaseSelect.ItemIndicator className={styles.ItemIndicator}>
+        <CheckIcon className={styles.CheckIcon} />
       </BaseSelect.ItemIndicator>
 
-      <BaseSelect.ItemText className='ec-select-item-text'>{item.label}</BaseSelect.ItemText>
+      <BaseSelect.ItemText className={styles.ItemText}>{item.label}</BaseSelect.ItemText>
     </BaseSelect.Item>
   );
 };

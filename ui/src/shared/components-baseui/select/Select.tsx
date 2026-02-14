@@ -5,7 +5,7 @@ import { LabelledField } from '../labelled-field';
 
 import { SelectItem } from './SelectItem';
 
-import './Select.css';
+import styles from './Select.module.css';
 
 export type Item = {
   value: string;
@@ -24,21 +24,21 @@ export const Select = ({ value, label, items, onChange }: SelectProps) => {
   return (
     <LabelledField label={label} htmlFor={id}>
       <BaseSelect.Root id={id} items={items} value={value} onValueChange={onChange}>
-        <BaseSelect.Trigger className='ec-select-trigger'>
-          <BaseSelect.Value className='ec-select-value' placeholder='-' />
-          <BaseSelect.Icon className='ec-select-icon'>
+        <BaseSelect.Trigger className={styles.Trigger}>
+          <BaseSelect.Value className={styles.Value} placeholder='-' />
+          <BaseSelect.Icon className={styles.SelectIcon}>
             <ChevronUpDownIcon />
           </BaseSelect.Icon>
         </BaseSelect.Trigger>
 
         <BaseSelect.Portal>
           <BaseSelect.Positioner
-            className='ec-select-positioner'
+            className={styles.Positioner}
             alignItemWithTrigger={false}
             sideOffset={5}
           >
-            <BaseSelect.Popup className='ec-select-popup'>
-              <BaseSelect.List className='ec-select-list'>
+            <BaseSelect.Popup className={styles.Popup}>
+              <BaseSelect.List className={styles.List}>
                 {items.map((item) => (
                   <SelectItem key={item.value} item={item} />
                 ))}
