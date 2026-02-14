@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { ReactNode, useId } from 'react';
+import { useId } from 'react';
 
 import { LabelledField } from '../labelled-field';
 
@@ -9,7 +9,7 @@ import styles from './Combobox.module.css';
 
 export type Item = {
   value: string;
-  label: ReactNode;
+  label: string;
 };
 
 type ComboboxProps = {
