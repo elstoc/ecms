@@ -1,5 +1,5 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
-import { ReactNode } from 'react';
+import { ReactNode, useId } from 'react';
 
 import { LabelledField } from '../labelled-field';
 
@@ -17,9 +17,15 @@ type SelectProps<T> = {
 };
 
 export const Select = <T,>({ value, label, items, children, onChange }: SelectProps<T>) => {
+  const id = useId();
   return (
-    <LabelledField label={label}>
-      <BaseSelect.Root items={items} value={value} onValueChange={(value) => onChange(value)}>
+    <LabelledField label={label} htmlFor={id}>
+      <BaseSelect.Root
+        id={id}
+        items={items}
+        value={value}
+        onValueChange={(value) => onChange(value)}
+      >
         <BaseSelect.Trigger className='ec-select-trigger'>
           <BaseSelect.Value className='ec-select-value' placeholder='-' />
           <BaseSelect.Icon className='ec-select-icon'>
