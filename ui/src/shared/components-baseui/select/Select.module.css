@@ -2,6 +2,7 @@
   opacity: 0.6;
 }
 
+/* a button that also includes the select icon */
 .Trigger {
   display: flex;
   align-items: center;
@@ -22,10 +23,12 @@
   }
 }
 
+/* the icon to indicate that clicking opens the popup */
 .SelectIcon {
   display: flex;
 }
 
+/* positioning the popup */
 .Positioner {
   outline: none;
   z-index: 1;
@@ -70,6 +73,7 @@
   outline: 1px solid var(--mid-grey);
 }
 
+/* also wraps the check-mark selection indicator */
 .Item {
   outline: 0;
   line-height: 1rem;

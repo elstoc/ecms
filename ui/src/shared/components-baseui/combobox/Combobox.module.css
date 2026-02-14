@@ -1,3 +1,13 @@
+/* wraps the input and action buttons */
+.InputWrapper {
+  position: relative;
+
+  &:has(.Clear) .Input {
+    padding-right: calc(0.5rem + 1.5rem * 2);
+  }
+}
+
+/* first item in the wrapper */
 .Input {
   box-sizing: border-box;
   padding-left: 0.875rem;
@@ -18,14 +28,7 @@
   }
 }
 
-.InputWrapper {
-  position: relative;
-
-  &:has(.Clear) .Input {
-    padding-right: calc(0.5rem + 1.5rem * 2);
-  }
-}
-
+/* second item in the wrapper */
 .ActionButtons {
   box-sizing: border-box;
   position: absolute;
@@ -41,6 +44,7 @@
   padding: 0;
 }
 
+/* within the action buttons */
 .Trigger,
 .Clear {
   box-sizing: border-box;
