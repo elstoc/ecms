@@ -59,6 +59,8 @@
     min-width: calc(var(--anchor-width) + 1rem);
   }
 
+  border-radius: var(--input-border-radius);
+
   box-shadow:
     0 10px 15px -3px var(--mid-grey),
     0 4px 6px -4px var(--mid-grey);

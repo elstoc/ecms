@@ -1,6 +1,6 @@
 /*
  * wraps the input and action buttons
- * this uses relative/absolute positioning to place buttons _inside_ the input
+ * uses relative/absolute positioning to place buttons _inside_ the input
  */
 .InputWrapper {
   position: relative;
@@ -12,8 +12,6 @@
 
 /* first item in the wrapper */
 .Input {
-  box-sizing: border-box;
-
   width: 14rem;
   user-select: none;
   background-color: canvas;
@@ -34,7 +32,6 @@
 
 /* second item in the wrapper */
 .ActionButtons {
-  box-sizing: border-box;
   position: absolute;
   display: flex;
   align-items: center;
@@ -43,20 +40,18 @@
   height: var(--input-height);
   right: 0.5rem;
   border: none;
-  color: var(--color-gray-600);
+  color: var(--dark-grey);
   padding: 0;
 }
 
-/* within the action buttons */
+/* within the action buttons div */
 .Trigger,
 .Clear {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 1.5rem;
   height: var(--input-height);
-  color: var(--color-gray-600);
   border: none;
   padding: 0;
   border-radius: 0.25rem;
@@ -69,74 +64,80 @@
   height: 1rem;
 }
 
+/* positioning the popup */
 .Positioner {
-  outline: 0;
+  outline: none;
+  z-index: 1;
+  user-select: none;
 }
 
 .Popup {
-  box-sizing: border-box;
-  border-radius: 0.375rem;
   background-color: canvas;
-  color: var(--color-gray-900);
-  width: var(--anchor-width);
-  max-height: 23rem;
-  max-width: var(--available-width);
-  transition:
-    opacity 0.1s,
-    transform 0.1s;
+  background-clip: padding-box;
+  min-width: var(--anchor-width);
   transform-origin: var(--transform-origin);
+  transition:
+    transform 150ms,
+    opacity 150ms;
 
   &[data-starting-style],
   &[data-ending-style] {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.9);
   }
 
-  @media (prefers-color-scheme: light) {
-    outline: 1px solid var(--color-gray-200);
-    box-shadow:
-      0 10px 15px -3px var(--color-gray-200),
-      0 4px 6px -4px var(--color-gray-200);
+  &[data-side='none'] {
+    transition: none;
+    transform: none;
+    opacity: 1;
+    min-width: calc(var(--anchor-width) + 1rem);
   }
 
-  @media (prefers-color-scheme: dark) {
-    outline: 1px solid var(--color-gray-300);
-    outline-offset: -1px;
-  }
+  border-radius: var(--input-border-radius);
+
+  box-shadow:
+    0 10px 15px -3px var(--mid-grey),
+    0 4px 6px -4px var(--mid-grey);
 }
 
-.List {
-  box-sizing: border-box;
+.List:not(:empty) {
+  position: relative;
+  padding-block: 0.25rem;
   overflow-y: auto;
-  overscroll-behavior: contain;
-  padding-block: 0.5rem;
-  scroll-padding-block: 0.5rem;
-  outline: 0;
-  max-height: min(23rem, var(--available-height));
-  &[data-empty] {
-    padding: 0;
-  }
+  max-height: min(15rem, var(--available-height));
+  scroll-padding-block: 1.5rem;
+
+  border-radius: var(--input-border-radius);
+  outline: 1px solid var(--mid-grey);
 }
 
+/* also wraps the check-mark selection indicator */
 .Item {
-  box-sizing: border-box;
   outline: 0;
-  cursor: default;
-  user-select: none;
-  padding-block: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 2rem;
+  line-height: 1rem;
+  padding-block: 0.45rem;
+  padding-left: 0.625rem;
+  padding-right: 1rem;
   display: grid;
   gap: 0.5rem;
   align-items: center;
   grid-template-columns: 0.75rem 1fr;
-  font-size: 1rem;
-  line-height: 1rem;
+  cursor: default;
+  user-select: none;
+
+  @media (pointer: coarse) {
+    padding-block: 0.625rem;
+    font-size: 0.925rem;
+  }
+
+  [data-side='none'] & {
+    font-size: 1rem;
+    padding-right: 3rem;
+  }
 
   &[data-highlighted] {
     z-index: 0;
     position: relative;
-    color: var(--color-gray-50);
   }
 
   &[data-highlighted]::before {
@@ -144,9 +145,9 @@
     z-index: -1;
     position: absolute;
     inset-block: 0;
-    inset-inline: 0.5rem;
-    border-radius: 0.25rem;
-    background-color: var(--color-gray-900);
+    inset-inline: 0.25rem;
+    border-radius: var(--input-border-radius);
+    background-color: var(--mid-grey);
   }
 }
 
@@ -165,42 +166,5 @@
 }
 
 .Empty:not(:empty) {
-  font-size: 0.925rem;
-  line-height: 1rem;
-  color: var(--color-gray-600);
-  padding: 1rem;
-}
-
-:root {
-  --color-blue: oklch(45% 50% 264deg);
-  --color-red: oklch(50% 55% 31deg);
-
-  --color-gray-50: oklch(98% 0.25% 264deg);
-  --color-gray-100: oklch(12% 9.5% 264deg / 5%);
-  --color-gray-200: oklch(12% 9% 264deg / 7%);
-  --color-gray-300: oklch(12% 8.5% 264deg / 17%);
-  --color-gray-400: oklch(12% 8% 264deg / 38%);
-  --color-gray-500: oklch(12% 7.5% 264deg / 50%);
-  --color-gray-600: oklch(12% 7% 264deg / 67%);
-  --color-gray-700: oklch(12% 6% 264deg / 77%);
-  --color-gray-800: oklch(12% 5% 264deg / 85%);
-  --color-gray-900: oklch(12% 5% 264deg / 90%);
-  --color-gray-950: oklch(12% 5% 264deg / 95%);
-
-  @media (prefers-color-scheme: dark) {
-    --color-blue: oklch(69% 50% 264deg);
-    --color-red: oklch(80% 55% 31deg);
-
-    --color-gray-50: oklch(17% 0.25% 264deg);
-    --color-gray-100: oklch(28% 0.75% 264deg / 65%);
-    --color-gray-200: oklch(29% 0.75% 264deg / 80%);
-    --color-gray-300: oklch(35% 0.75% 264deg / 80%);
-    --color-gray-400: oklch(47% 0.875% 264deg / 80%);
-    --color-gray-500: oklch(64% 1% 264deg / 80%);
-    --color-gray-600: oklch(82% 1% 264deg / 80%);
-    --color-gray-700: oklch(92% 1.125% 264deg / 80%);
-    --color-gray-800: oklch(93% 0.875% 264deg / 85%);
-    --color-gray-900: oklch(95% 0.5% 264deg / 90%);
-    --color-gray-950: oklch(94% 0.375% 264deg / 95%);
-  }
+  color: var(--dark-grey);
 }

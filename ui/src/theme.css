@@ -4,10 +4,11 @@
 :root {
   --app-bg-color: #eeeeee;
   --light-grey: #f5f5f5;
+  --mid-grey: #bfbfbf;
+  --dark-grey: #777777;
   --shadow-grey: #e0e0e0;
   --content-bg-color: white;
   --border-grey: lightgrey;
-  --mid-grey: #bfbfbf;
 
   --fixed-width-font: 'hack', Courier, monospace;
   --heading-font: 'Raleway', sans-serif;

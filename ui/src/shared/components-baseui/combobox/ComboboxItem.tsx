@@ -1,4 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
+import cn from 'classnames';
 
 import { Item } from './Combobox';
 
@@ -26,3 +27,17 @@ function CheckIcon(props: React.ComponentProps<'svg'>) {
     </svg>
   );
 }
+
+type EmptyComboboxItemProps = {
+  emptyMessage: string;
+};
+
+export const EmptyComboboxItem = ({ emptyMessage }: EmptyComboboxItemProps) => (
+  /* style it just like a list item within a list, but without the functionality */
+  <BaseCombobox.Empty className={cn(styles.Empty, styles.List)}>
+    <div className={styles.Item}>
+      <div className={styles.ItemIndicator}></div>
+      <div className={styles.ItemText}>{emptyMessage}</div>
+    </div>
+  </BaseCombobox.Empty>
+);

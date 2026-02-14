@@ -3,7 +3,7 @@ import { useId } from 'react';
 
 import { LabelledField } from '../labelled-field';
 
-import { ComboboxItem } from './ComboboxItem';
+import { ComboboxItem, EmptyComboboxItem } from './ComboboxItem';
 
 import styles from './Combobox.module.css';
 
@@ -42,9 +42,9 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
       </LabelledField>
 
       <BaseCombobox.Portal>
-        <BaseCombobox.Positioner className={styles.Positioner} sideOffset={4}>
+        <BaseCombobox.Positioner className={styles.Positioner} sideOffset={5}>
           <BaseCombobox.Popup className={styles.Popup}>
-            <BaseCombobox.Empty className={styles.Empty}>{emptyMessage}</BaseCombobox.Empty>
+            <EmptyComboboxItem emptyMessage={emptyMessage} />
 
             <BaseCombobox.List className={styles.List}>
               {(item) => <ComboboxItem key={item.value} item={item} />}
