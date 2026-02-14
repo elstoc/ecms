@@ -1,14 +1,17 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 
-import { Toggle } from '../toggle';
-
 import { ToggleGroup } from './ToggleGroup';
+
+const items = [
+  { value: '01', label: 'First' },
+  { value: '02', label: 'Second' },
+  { value: '03', label: 'Third' },
+];
 
 const meta = {
   title: 'BaseUI/ToggleGroup',
   component: ToggleGroup,
-  argTypes: { children: { control: { disable: true } } },
 } satisfies Meta<typeof ToggleGroup>;
 
 export default meta;
@@ -20,7 +23,7 @@ export const Default: Story = {
     value: ['01'],
     onChange: () => undefined,
     label: 'Toggle group label',
-    children: 'whatever',
+    items,
   },
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
@@ -29,13 +32,7 @@ export const Default: Story = {
       updateArgs({ value: newValue });
     };
 
-    return (
-      <ToggleGroup {...args} value={value} onChange={onChange}>
-        <Toggle value='01'>First</Toggle>
-        <Toggle value='02'>Second</Toggle>
-        <Toggle value='03'>Third</Toggle>
-      </ToggleGroup>
-    );
+    return <ToggleGroup {...args} value={value} onChange={onChange} />;
   },
 };
 
