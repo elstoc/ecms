@@ -26,9 +26,8 @@ export const Select = ({ value, label, items, onChange }: SelectProps) => {
       <BaseSelect.Root id={id} items={items} value={value} onValueChange={onChange}>
         <BaseSelect.Trigger className={styles.Trigger}>
           <BaseSelect.Value className={styles.Value} placeholder='-' />
-          <BaseSelect.Icon className={styles.SelectIcon}>
-            <ChevronUpDownIcon />
-          </BaseSelect.Icon>
+
+          <SelectIcon />
         </BaseSelect.Trigger>
 
         <BaseSelect.Portal>
@@ -51,8 +50,8 @@ export const Select = ({ value, label, items, onChange }: SelectProps) => {
   );
 };
 
-const ChevronUpDownIcon = (props: React.ComponentProps<'svg'>) => {
-  return (
+const SelectIcon = () => (
+  <BaseSelect.Icon className={styles.SelectIcon}>
     <svg
       width='8'
       height='12'
@@ -60,10 +59,10 @@ const ChevronUpDownIcon = (props: React.ComponentProps<'svg'>) => {
       fill='none'
       stroke='currentcolor'
       strokeWidth='1.5'
-      {...props}
+      className={styles.SelectIcon}
     >
       <path d='M0.5 4.5L4 1.5L7.5 4.5' />
       <path d='M0.5 7.5L4 10.5L7.5 7.5' />
     </svg>
-  );
-};
+  </BaseSelect.Icon>
+);
