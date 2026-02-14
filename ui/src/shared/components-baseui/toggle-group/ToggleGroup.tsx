@@ -5,25 +5,25 @@ import { LabelledField } from '../labelled-field';
 
 import './ToggleGroup.css';
 
-type ValueCanEmpty<T> = {
+type ValueCanEmpty = {
   allowEmpty: true;
-  value: T[];
+  value: string[];
 };
 
-type ValueCannotEmpty<T> = {
+type ValueCannotEmpty = {
   allowEmpty?: false;
-  value: [T, ...T[]];
+  value: [string, ...string[]];
 };
 
-type ToggleButtonGroupProps<T> = {
+type ToggleButtonGroupProps = {
   children: ReactNode;
   className?: string;
   label: string;
-  onChange: (value: T[]) => void;
+  onChange: (value: string[]) => void;
   allowMultiple?: boolean;
-} & (ValueCanEmpty<T> | ValueCannotEmpty<T>);
+} & (ValueCanEmpty | ValueCannotEmpty);
 
-export const ToggleGroup = <T,>({
+export const ToggleGroup = ({
   children,
   className,
   label,
@@ -31,8 +31,8 @@ export const ToggleGroup = <T,>({
   onChange,
   allowEmpty,
   allowMultiple,
-}: ToggleButtonGroupProps<T>) => {
-  const onValueChange = (value: T[]) => {
+}: ToggleButtonGroupProps) => {
+  const onValueChange = (value: string[]) => {
     if (allowEmpty || value.length > 0) {
       onChange(value);
     }
