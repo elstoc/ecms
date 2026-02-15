@@ -1,4 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
+import cn from 'classnames';
 import { useId } from 'react';
 
 import { LabelledField } from '../labelled-field';
@@ -7,7 +8,7 @@ import { ComboboxItem, EmptyComboboxItem } from './ComboboxItem';
 
 import styles from './Combobox.module.css';
 
-const { Root, Input, Portal, Positioner, Popup, List, Clear, Trigger } = BaseCombobox;
+const { Root, Input, Portal, Positioner, Popup, List, Clear, Trigger, Empty } = BaseCombobox;
 
 export type Item = {
   value: string;
@@ -46,7 +47,9 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
       <Portal>
         <Positioner className={styles.Positioner} sideOffset={5}>
           <Popup className={styles.Popup}>
-            <EmptyComboboxItem emptyMessage={emptyMessage} />
+            <Empty className={cn(styles.Empty, styles.List)}>
+              <EmptyComboboxItem emptyMessage={emptyMessage} />
+            </Empty>
 
             <List className={styles.List}>
               {(item) => <ComboboxItem key={item.value} item={item} />}

@@ -1,11 +1,10 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import cn from 'classnames';
 
 import { Item } from './Combobox';
 
 import styles from './Combobox.module.css';
 
-const { Item: BaseItem, ItemIndicator, Empty } = BaseCombobox;
+const { Item: BaseItem, ItemIndicator } = BaseCombobox;
 
 type ComboboxItemProps = {
   item: Item;
@@ -35,11 +34,9 @@ type EmptyComboboxItemProps = {
 };
 
 export const EmptyComboboxItem = ({ emptyMessage }: EmptyComboboxItemProps) => (
-  /* style it just like a list item within a list, but without the functionality */
-  <Empty className={cn(styles.Empty, styles.List)}>
-    <div className={styles.Item}>
-      <div className={styles.ItemIndicator}></div>
-      <div className={styles.ItemText}>{emptyMessage}</div>
-    </div>
-  </Empty>
+  /* style it just like a combobox item, but without the functionality */
+  <div className={styles.Item}>
+    <div className={styles.ItemIndicator}></div>
+    <div className={styles.ItemText}>{emptyMessage}</div>
+  </div>
 );
