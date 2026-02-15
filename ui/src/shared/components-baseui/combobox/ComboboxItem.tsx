@@ -5,18 +5,20 @@ import { Item } from './Combobox';
 
 import styles from './Combobox.module.css';
 
+const { Item: BaseItem, ItemIndicator, Empty } = BaseCombobox;
+
 type ComboboxItemProps = {
   item: Item;
 };
 
 export const ComboboxItem = ({ item }: ComboboxItemProps) => {
   return (
-    <BaseCombobox.Item value={item} className={styles.Item}>
-      <BaseCombobox.ItemIndicator className={styles.ItemIndicator}>
+    <BaseItem value={item} className={styles.Item}>
+      <ItemIndicator className={styles.ItemIndicator}>
         <CheckIcon className={styles.ItemIndicatorIcon} />
-      </BaseCombobox.ItemIndicator>
+      </ItemIndicator>
       <div className={styles.ItemText}>{item.label}</div>
-    </BaseCombobox.Item>
+    </BaseItem>
   );
 };
 
@@ -34,10 +36,10 @@ type EmptyComboboxItemProps = {
 
 export const EmptyComboboxItem = ({ emptyMessage }: EmptyComboboxItemProps) => (
   /* style it just like a list item within a list, but without the functionality */
-  <BaseCombobox.Empty className={cn(styles.Empty, styles.List)}>
+  <Empty className={cn(styles.Empty, styles.List)}>
     <div className={styles.Item}>
       <div className={styles.ItemIndicator}></div>
       <div className={styles.ItemText}>{emptyMessage}</div>
     </div>
-  </BaseCombobox.Empty>
+  </Empty>
 );
