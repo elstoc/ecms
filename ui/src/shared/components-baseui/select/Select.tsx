@@ -7,6 +7,8 @@ import { SelectItem } from './SelectItem';
 
 import styles from './Select.module.css';
 
+const { Root, Trigger, Value, Portal, Positioner, Popup, List, Icon } = BaseSelect;
+
 export type Item = {
   value: string;
   label: string;
@@ -21,37 +23,34 @@ type SelectProps = {
 
 export const Select = ({ value, label, items, onChange }: SelectProps) => {
   const id = useId();
+
   return (
     <LabelledField label={label} htmlFor={id}>
-      <BaseSelect.Root id={id} items={items} value={value} onValueChange={onChange}>
-        <BaseSelect.Trigger className={styles.Trigger}>
-          <BaseSelect.Value className={styles.Value} />
+      <Root id={id} items={items} value={value} onValueChange={onChange}>
+        <Trigger className={styles.Trigger}>
+          <Value className={styles.Value} />
 
           <SelectIcon />
-        </BaseSelect.Trigger>
+        </Trigger>
 
-        <BaseSelect.Portal>
-          <BaseSelect.Positioner
-            className={styles.Positioner}
-            alignItemWithTrigger={false}
-            sideOffset={5}
-          >
-            <BaseSelect.Popup className={styles.Popup}>
-              <BaseSelect.List className={styles.List}>
+        <Portal>
+          <Positioner className={styles.Positioner} alignItemWithTrigger={false} sideOffset={5}>
+            <Popup className={styles.Popup}>
+              <List className={styles.List}>
                 {items.map((item) => (
                   <SelectItem key={item.value} item={item} />
                 ))}
-              </BaseSelect.List>
-            </BaseSelect.Popup>
-          </BaseSelect.Positioner>
-        </BaseSelect.Portal>
-      </BaseSelect.Root>
+              </List>
+            </Popup>
+          </Positioner>
+        </Portal>
+      </Root>
     </LabelledField>
   );
 };
 
 const SelectIcon = () => (
-  <BaseSelect.Icon className={styles.SelectIcon}>
+  <Icon className={styles.SelectIcon}>
     <svg
       width='8'
       height='12'
@@ -64,5 +63,5 @@ const SelectIcon = () => (
       <path d='M0.5 4.5L4 1.5L7.5 4.5' />
       <path d='M0.5 7.5L4 10.5L7.5 7.5' />
     </svg>
-  </BaseSelect.Icon>
+  </Icon>
 );
