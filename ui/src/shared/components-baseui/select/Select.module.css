@@ -15,7 +15,9 @@
   border-radius: var(--input-border-radius);
   height: var(--input-height);
 
-  &:focus-visible {
+  &:focus,
+  &[data-popup-open],
+  &[data-focused] {
     outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
   }
