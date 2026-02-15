@@ -17,8 +17,8 @@
   width: 2.5rem;
   height: 1.5rem;
   border-radius: 1.5rem;
-  outline: 1px solid;
-  outline-offset: -1px;
+  outline: 2px solid;
+  outline-offset: -2px;
   background-color: transparent;
   background-image: linear-gradient(to right, var(--dark-grey) 35%, var(--light-grey) 65%);
   background-size: 6.5rem 100%;
@@ -59,8 +59,12 @@
   border-radius: 100%;
   background-color: white;
   transition: translate 150ms ease;
+  border: 1px solid var(--grey-80);
+  outline: 1px solid var(--grey-80);
 
   &[data-checked] {
     translate: 1rem 0;
+    outline-color: var(--grey-40);
+    border-color: var(--grey-40);
   }
 }
