@@ -25,7 +25,7 @@ export const Select = ({ value, label, items, onChange }: SelectProps) => {
     <LabelledField label={label} htmlFor={id}>
       <BaseSelect.Root id={id} items={items} value={value} onValueChange={onChange}>
         <BaseSelect.Trigger className={styles.Trigger}>
-          <BaseSelect.Value className={styles.Value} placeholder='-' />
+          <BaseSelect.Value className={styles.Value} />
 
           <SelectIcon />
         </BaseSelect.Trigger>
