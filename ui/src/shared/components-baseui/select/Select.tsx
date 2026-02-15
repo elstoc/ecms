@@ -28,7 +28,7 @@ export const Select = ({ value, label, items, onChange }: SelectProps) => {
     <LabelledField label={label} htmlFor={id}>
       <Root id={id} items={items} value={value} onValueChange={onChange}>
         <Trigger className={styles.Trigger}>
-          <Value className={styles.Value} />
+          <Value />
 
           <SelectIcon />
         </Trigger>
@@ -50,18 +50,18 @@ export const Select = ({ value, label, items, onChange }: SelectProps) => {
 };
 
 const SelectIcon = () => (
-  <Icon className={styles.SelectIcon}>
+  <Icon className={styles.SelectIconContainer}>
     <svg
-      width='8'
-      height='12'
-      viewBox='0 0 8 12'
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
       fill='none'
-      stroke='currentcolor'
-      strokeWidth='1.5'
+      stroke='currentColor'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
       className={styles.SelectIcon}
     >
-      <path d='M0.5 4.5L4 1.5L7.5 4.5' />
-      <path d='M0.5 7.5L4 10.5L7.5 7.5' />
+      <path d='M6 9l6 6 6-6' />
     </svg>
   </Icon>
 );
