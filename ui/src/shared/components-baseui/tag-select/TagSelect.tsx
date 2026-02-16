@@ -1,11 +1,9 @@
 import { Combobox } from '@base-ui/react/combobox';
-import cn from 'classnames';
 import * as React from 'react';
 
-import { ComboboxItem, EmptyComboboxItem } from '../combobox/ComboboxItem';
+import { ComboboxPortal } from '../combobox/ComboboxPortal';
 import { LabelledField } from '../labelled-field';
 
-import comboStyles from '../combobox/Combobox.module.css';
 import styles from './TagSelect.module.css';
 
 export type Item = {
@@ -47,23 +45,7 @@ export const TagSelect = ({ items, label, emptyMessage }: TagSelectProps) => {
         </div>
       </LabelledField>
 
-      <Combobox.Portal>
-        <Combobox.Positioner
-          className={comboStyles.Positioner}
-          sideOffset={5}
-          anchor={containerRef}
-        >
-          <Combobox.Popup className={comboStyles.Popup}>
-            <Combobox.Empty className={cn(comboStyles.Empty, comboStyles.List)}>
-              <EmptyComboboxItem emptyMessage={emptyMessage} />
-            </Combobox.Empty>
-
-            <Combobox.List className={comboStyles.List}>
-              {(item) => <ComboboxItem key={item.value} item={item} />}
-            </Combobox.List>
-          </Combobox.Popup>
-        </Combobox.Positioner>
-      </Combobox.Portal>
+      <ComboboxPortal emptyMessage={emptyMessage} positionerAnchor={containerRef} />
     </Combobox.Root>
   );
 };
