@@ -15,15 +15,11 @@
   border: 1px solid var(--color-gray-200);
   border-radius: 0.375rem;
   padding: 0.25rem 0.375rem;
-  width: 16rem;
+  width: 20rem;
 
   &:focus-within {
-    outline: 2px solid var(--color-blue);
-    outline-offset: -1px;
-  }
-
-  @media (min-width: 500px) {
-    width: 22rem;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
   }
 }
 
