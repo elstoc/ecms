@@ -26,8 +26,11 @@ export const TagSelect = ({ items, label, emptyMessage, value, onChange }: TagSe
   const id = useId();
 
   const itemsForValue = items.filter((item) => value.includes(item.value));
-  const onValueChange = (newItems: Item[]) => {
-    onChange(newItems.map((item) => item.value));
+  const onValueChange = (newItems: Item[], eventDetails: BaseCombobox.Root.ChangeEventDetails) => {
+    // prevent deletion of all items with the escape key
+    if (eventDetails.reason !== 'escape-key') {
+      onChange(newItems.map((item) => item.value));
+    }
   };
 
   return (
