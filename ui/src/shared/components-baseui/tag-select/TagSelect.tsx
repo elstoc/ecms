@@ -31,7 +31,18 @@ export const TagSelect = ({ items, label, emptyMessage, value, onChange }: TagSe
   };
 
   return (
-    <Root items={items} multiple value={itemsForValue} onValueChange={onValueChange}>
+    <Root
+      items={items}
+      multiple
+      value={itemsForValue}
+      onValueChange={onValueChange}
+      onOpenChange={(nextOpen, eventDetails) => {
+        /* Prevent closure on select when filtering */
+        if (!nextOpen && eventDetails.reason === 'item-press') {
+          eventDetails.cancel();
+        }
+      }}
+    >
       <LabelledField label={label} htmlFor={id}>
         <div className={styles.InputContainer}>
           <Chips className={styles.Chips} ref={containerRef}>
