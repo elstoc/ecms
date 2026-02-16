@@ -58,7 +58,7 @@ export const TagSelect = ({ items, label, emptyMessage, value, onChange }: TagSe
   );
 };
 
-const ChipRemoveButton = (props: React.ComponentProps<'svg'>) => (
+const ChipRemoveButton = () => (
   <ChipRemove className={styles.ChipRemove} aria-label='Remove'>
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -71,7 +71,6 @@ const ChipRemoveButton = (props: React.ComponentProps<'svg'>) => (
       strokeLinecap='round'
       strokeLinejoin='round'
       aria-hidden
-      {...props}
     >
       <path d='M18 6 6 18' />
       <path d='m6 6 12 12' />
