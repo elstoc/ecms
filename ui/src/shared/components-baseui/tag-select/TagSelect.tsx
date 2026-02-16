@@ -1,7 +1,7 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { useId, useRef } from 'react';
 
-import { ComboboxPortal } from '../combobox/ComboboxPortal';
+import { ComboboxPortal } from '../combobox';
 import { LabelledField } from '../labelled-field';
 
 import styles from './TagSelect.module.css';
