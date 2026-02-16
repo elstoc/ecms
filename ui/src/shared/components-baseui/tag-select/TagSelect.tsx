@@ -1,6 +1,8 @@
 import { Combobox } from '@base-ui/react/combobox';
 import * as React from 'react';
 
+import { LabelledField } from '../labelled-field';
+
 import styles from './TagSelect.module.css';
 
 export type Item = {
@@ -10,36 +12,36 @@ export type Item = {
 
 type TagSelectProps = {
   items: Item[];
+  label: string;
 };
 
-export const TagSelect = ({ items }: TagSelectProps) => {
+export const TagSelect = ({ items, label }: TagSelectProps) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const id = React.useId();
 
   return (
     <Combobox.Root items={items} multiple>
-      <div className={styles.Container}>
-        <label className={styles.Label} htmlFor={id}>
-          Programming languages
-        </label>
-        <Combobox.Chips className={styles.Chips} ref={containerRef}>
-          <Combobox.Value>
-            {(items: Item[]) => (
-              <>
-                {items.map((item) => (
-                  <Combobox.Chip key={item.value} className={styles.Chip} aria-label={item.label}>
-                    {item.label}
-                    <Combobox.ChipRemove className={styles.ChipRemove} aria-label='Remove'>
-                      <XIcon />
-                    </Combobox.ChipRemove>
-                  </Combobox.Chip>
-                ))}
-                <Combobox.Input id={id} className={styles.Input} />
-              </>
-            )}
-          </Combobox.Value>
-        </Combobox.Chips>
-      </div>
+      <LabelledField label={label} htmlFor={id}>
+        <div className={styles.Container}>
+          <Combobox.Chips className={styles.Chips} ref={containerRef}>
+            <Combobox.Value>
+              {(items: Item[]) => (
+                <>
+                  {items.map((item) => (
+                    <Combobox.Chip key={item.value} className={styles.Chip} aria-label={item.label}>
+                      {item.label}
+                      <Combobox.ChipRemove className={styles.ChipRemove} aria-label='Remove'>
+                        <XIcon />
+                      </Combobox.ChipRemove>
+                    </Combobox.Chip>
+                  ))}
+                  <Combobox.Input id={id} className={styles.Input} />
+                </>
+              )}
+            </Combobox.Value>
+          </Combobox.Chips>
+        </div>
+      </LabelledField>
 
       <Combobox.Portal>
         <Combobox.Positioner className={styles.Positioner} sideOffset={4} anchor={containerRef}>
