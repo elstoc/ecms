@@ -3,7 +3,16 @@ import * as React from 'react';
 
 import styles from './TagSelect.module.css';
 
-export const TagSelect = () => {
+export type Item = {
+  value: string;
+  label: string;
+};
+
+type TagSelectProps = {
+  items: Item[];
+};
+
+export const TagSelect = ({ items }: TagSelectProps) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const id = React.useId();
 
@@ -16,7 +25,7 @@ export const TagSelect = () => {
         <Combobox.Chips className={styles.Chips} ref={containerRef}>
           <Combobox.Value>
             {(items: Item[]) => (
-              <React.Fragment>
+              <>
                 {items.map((item) => (
                   <Combobox.Chip key={item.value} className={styles.Chip} aria-label={item.label}>
                     {item.label}
@@ -26,7 +35,7 @@ export const TagSelect = () => {
                   </Combobox.Chip>
                 ))}
                 <Combobox.Input id={id} className={styles.Input} />
-              </React.Fragment>
+              </>
             )}
           </Combobox.Value>
         </Combobox.Chips>
@@ -81,22 +90,3 @@ function XIcon(props: React.ComponentProps<'svg'>) {
     </svg>
   );
 }
-
-interface Item {
-  value: string;
-  label: string;
-}
-
-const items: Item[] = [
-  { value: 'js', label: 'JavaScript' },
-  { value: 'ts', label: 'TypeScript' },
-  { value: 'py', label: 'Python' },
-  { value: 'java', label: 'Java' },
-  { value: 'cpp', label: 'C++' },
-  { value: 'cs', label: 'C#' },
-  { value: 'php', label: 'PHP' },
-  { value: 'ruby', label: 'Ruby' },
-  { value: 'go', label: 'Go' },
-  { value: 'rust', label: 'Rust' },
-  { value: 'swift', label: 'Swift' },
-];
