@@ -8,32 +8,24 @@ export const TagSelect = () => {
   const id = React.useId();
 
   return (
-    <Combobox.Root items={langs} multiple>
+    <Combobox.Root items={items} multiple>
       <div className={styles.Container}>
         <label className={styles.Label} htmlFor={id}>
           Programming languages
         </label>
         <Combobox.Chips className={styles.Chips} ref={containerRef}>
           <Combobox.Value>
-            {(value: ProgrammingLanguage[]) => (
+            {(items: Item[]) => (
               <React.Fragment>
-                {value.map((language) => (
-                  <Combobox.Chip
-                    key={language.id}
-                    className={styles.Chip}
-                    aria-label={language.value}
-                  >
-                    {language.value}
+                {items.map((item) => (
+                  <Combobox.Chip key={item.value} className={styles.Chip} aria-label={item.label}>
+                    {item.label}
                     <Combobox.ChipRemove className={styles.ChipRemove} aria-label='Remove'>
                       <XIcon />
                     </Combobox.ChipRemove>
                   </Combobox.Chip>
                 ))}
-                <Combobox.Input
-                  id={id}
-                  placeholder={value.length > 0 ? '' : 'e.g. TypeScript'}
-                  className={styles.Input}
-                />
+                <Combobox.Input id={id} className={styles.Input} />
               </React.Fragment>
             )}
           </Combobox.Value>
@@ -45,12 +37,12 @@ export const TagSelect = () => {
           <Combobox.Popup className={styles.Popup}>
             <Combobox.Empty className={styles.Empty}>No languages found.</Combobox.Empty>
             <Combobox.List>
-              {(language: ProgrammingLanguage) => (
-                <Combobox.Item key={language.id} className={styles.Item} value={language}>
+              {(item: Item) => (
+                <Combobox.Item key={item.value} className={styles.Item} value={item}>
                   <Combobox.ItemIndicator className={styles.ItemIndicator}>
                     <CheckIcon className={styles.ItemIndicatorIcon} />
                   </Combobox.ItemIndicator>
-                  <div className={styles.ItemText}>{language.value}</div>
+                  <div className={styles.ItemText}>{item.label}</div>
                 </Combobox.Item>
               )}
             </Combobox.List>
@@ -90,21 +82,21 @@ function XIcon(props: React.ComponentProps<'svg'>) {
   );
 }
 
-interface ProgrammingLanguage {
-  id: string;
+interface Item {
   value: string;
+  label: string;
 }
 
-const langs: ProgrammingLanguage[] = [
-  { id: 'js', value: 'JavaScript' },
-  { id: 'ts', value: 'TypeScript' },
-  { id: 'py', value: 'Python' },
-  { id: 'java', value: 'Java' },
-  { id: 'cpp', value: 'C++' },
-  { id: 'cs', value: 'C#' },
-  { id: 'php', value: 'PHP' },
-  { id: 'ruby', value: 'Ruby' },
-  { id: 'go', value: 'Go' },
-  { id: 'rust', value: 'Rust' },
-  { id: 'swift', value: 'Swift' },
+const items: Item[] = [
+  { value: 'js', label: 'JavaScript' },
+  { value: 'ts', label: 'TypeScript' },
+  { value: 'py', label: 'Python' },
+  { value: 'java', label: 'Java' },
+  { value: 'cpp', label: 'C++' },
+  { value: 'cs', label: 'C#' },
+  { value: 'php', label: 'PHP' },
+  { value: 'ruby', label: 'Ruby' },
+  { value: 'go', label: 'Go' },
+  { value: 'rust', label: 'Rust' },
+  { value: 'swift', label: 'Swift' },
 ];
