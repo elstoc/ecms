@@ -26,7 +26,7 @@ export const TagSelect = ({ items, label, emptyMessage }: TagSelectProps) => {
   return (
     <Root items={items} multiple>
       <LabelledField label={label} htmlFor={id}>
-        <div className={styles.Container}>
+        <div className={styles.InputContainer}>
           <Chips className={styles.Chips} ref={containerRef}>
             <Value>
               {(items: Item[]) => (

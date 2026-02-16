@@ -1,5 +1,5 @@
 /* required for vertical wrapping when the chips fill the container */
-.Container {
+.InputContainer {
   max-width: 28rem;
   display: flex;
   flex-direction: column;
