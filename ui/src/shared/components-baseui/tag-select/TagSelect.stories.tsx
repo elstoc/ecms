@@ -29,6 +29,7 @@ export const Default: Story = {
   args: {
     items,
     label: 'Select a language',
+    emptyMessage: 'Nothing to see here',
   },
   render: (args) => {
     return <TagSelect {...args} />;

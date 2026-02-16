@@ -16,9 +16,10 @@ export type Item = {
 type TagSelectProps = {
   items: Item[];
   label: string;
+  emptyMessage: string;
 };
 
-export const TagSelect = ({ items, label }: TagSelectProps) => {
+export const TagSelect = ({ items, label, emptyMessage }: TagSelectProps) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const id = React.useId();
 
@@ -54,7 +55,7 @@ export const TagSelect = ({ items, label }: TagSelectProps) => {
         >
           <Combobox.Popup className={comboStyles.Popup}>
             <Combobox.Empty className={cn(comboStyles.Empty, comboStyles.List)}>
-              <EmptyComboboxItem emptyMessage='Nothing here' />
+              <EmptyComboboxItem emptyMessage={emptyMessage} />
             </Combobox.Empty>
 
             <Combobox.List className={comboStyles.List}>
