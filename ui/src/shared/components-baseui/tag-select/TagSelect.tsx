@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import * as React from 'react';
+import { useId, useRef } from 'react';
 
 import { ComboboxPortal } from '../combobox/ComboboxPortal';
 import { LabelledField } from '../labelled-field';
@@ -22,8 +22,8 @@ type TagSelectProps = {
 };
 
 export const TagSelect = ({ items, label, emptyMessage, value, onChange }: TagSelectProps) => {
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-  const id = React.useId();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const id = useId();
 
   const itemsForValue = items.filter((item) => value.includes(item.value));
   const onValueChange = (newItems: Item[]) => {
