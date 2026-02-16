@@ -26,12 +26,18 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
   const id = useId();
   const itemForValue = items.find((item) => item.value === value) ?? null;
 
+  const onValueChange = (
+    newItem: Item | null,
+    eventDetails: BaseCombobox.Root.ChangeEventDetails,
+  ) => {
+    /* prevent deselection of item with the escape key */
+    if (eventDetails.reason !== 'escape-key') {
+      onChange(newItem?.value ?? null);
+    }
+  };
+
   return (
-    <Root
-      items={items}
-      value={itemForValue}
-      onValueChange={(item) => onChange(item?.value ?? null)}
-    >
+    <Root items={items} value={itemForValue} onValueChange={onValueChange}>
       <LabelledField label={label} htmlFor={id}>
         <div className={styles.InputWrapper}>
           <Input id={id} className={styles.Input} />
