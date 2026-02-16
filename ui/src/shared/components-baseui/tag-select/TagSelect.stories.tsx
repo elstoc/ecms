@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
+import { useArgs } from 'storybook/internal/preview-api';
 
 import { Item, TagSelect } from './TagSelect';
 
@@ -27,11 +28,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    items,
     label: 'Select a language',
     emptyMessage: 'Nothing to see here',
+    value: [],
+    items,
+    onChange: () => undefined,
   },
   render: (args) => {
-    return <TagSelect {...args} />;
+    const [{ value }, updateArgs] = useArgs();
+
+    const onChange = (newValues: string[]) => {
+      updateArgs({ value: newValues });
+    };
+
+    return <TagSelect {...args} value={value} onChange={onChange} />;
   },
 };

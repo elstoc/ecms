@@ -16,15 +16,22 @@ export type Item = {
 type TagSelectProps = {
   items: Item[];
   label: string;
+  value: string[];
+  onChange: (newValue: string[]) => void;
   emptyMessage: string;
 };
 
-export const TagSelect = ({ items, label, emptyMessage }: TagSelectProps) => {
+export const TagSelect = ({ items, label, emptyMessage, value, onChange }: TagSelectProps) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const id = React.useId();
 
+  const itemsForValue = items.filter((item) => value.includes(item.value));
+  const onValueChange = (newItems: Item[]) => {
+    onChange(newItems.map((item) => item.value));
+  };
+
   return (
-    <Root items={items} multiple>
+    <Root items={items} multiple value={itemsForValue} onValueChange={onValueChange}>
       <LabelledField label={label} htmlFor={id}>
         <div className={styles.InputContainer}>
           <Chips className={styles.Chips} ref={containerRef}>
