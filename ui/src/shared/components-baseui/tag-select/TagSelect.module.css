@@ -1,3 +1,4 @@
+/* required for vertical wrapping when the chips fill the container */
 .Container {
   max-width: 28rem;
   display: flex;
