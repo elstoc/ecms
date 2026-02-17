@@ -36,7 +36,7 @@ export const PathLinks = () => {
     <div className='path-links'>
       {bookPath && (
         <Button
-          onPress={() => {
+          onClick={() => {
             const newPath = bookPath.includes('/')
               ? bookPath.substring(0, bookPath.lastIndexOf('/'))
               : undefined;
@@ -52,7 +52,7 @@ export const PathLinks = () => {
       {childPaths.map((childPath) => (
         <Button
           key={childPath}
-          onPress={() =>
+          onClick={() =>
             updateUiFilter({
               key: 'bookPath',
               value: childPath,

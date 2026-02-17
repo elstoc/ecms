@@ -55,7 +55,7 @@ export const LightBox = ({
   return (
     <div className='lightbox' onClick={handleOuterClick} onMouseMove={restartFadeOut}>
       <img src={imageUrl} alt={alt} />
-      <IconButton label='close lightbox' className='close fadeout' icon='close' onPress={onClose} />
+      <IconButton label='close lightbox' className='close fadeout' icon='close' onClick={onClose} />
       <div className='preload'>
         {prevImageUrl && <img src={prevImageUrl} alt='preload' />}
         {nextImageUrl && <img src={nextImageUrl} alt='preload' />}
@@ -66,11 +66,11 @@ export const LightBox = ({
           label='previous image'
           className='prev fadeout'
           icon='previous'
-          onPress={onPrev}
+          onClick={onPrev}
         />
       )}
       {onNext && (
-        <IconButton label='next image' className='next fadeout' icon='next' onPress={onNext} />
+        <IconButton label='next image' className='next fadeout' icon='next' onClick={onNext} />
       )}
       {caption && <div className='image-info fadeout'>{caption}</div>}
     </div>

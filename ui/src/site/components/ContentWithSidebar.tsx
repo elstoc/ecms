@@ -52,7 +52,7 @@ export const ContentWithSidebar = ({
                   icon='menu'
                   label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
                   className='sidebar-button'
-                  onPress={() => setSidebarDrawerVisible((visible) => !visible)}
+                  onClick={() => setSidebarDrawerVisible((visible) => !visible)}
                 />
               </Toolbox>
             </InjectSideExpander>

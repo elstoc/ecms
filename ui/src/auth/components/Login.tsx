@@ -44,7 +44,7 @@ export const Login = () => {
           onPressEnter={handleLogin}
           inline={true}
         />
-        <Button onPress={handleLogin}>Log In</Button>
+        <Button onClick={handleLogin}>Log In</Button>
       </Card>
       <div className='error'>{loginFailed && 'Invalid UserId or password'}</div>
     </div>

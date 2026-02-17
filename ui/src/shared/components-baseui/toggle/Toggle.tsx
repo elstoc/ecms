@@ -1,7 +1,7 @@
 import { Toggle as BaseToggle, ToggleProps as BaseToggleProps } from '@base-ui/react/toggle';
 import cn from 'classnames';
 
-import buttonStyles from '../button/Button.module.css';
+import buttonStyles from '../../components/button/Button.module.css';
 import styles from './Toggle.module.css';
 
 type ToggleProps = Pick<

@@ -21,7 +21,7 @@ export const Flag = ({ flagged, onChange, className, color = 'green' }: FlagPara
       label={flagged ? 'unflag' : 'flag'}
       className={className}
       color={calculatedColor}
-      onPress={() => onChange?.(!flagged)}
+      onClick={() => onChange?.(!flagged)}
     />
   );
 };

@@ -29,7 +29,7 @@ export const UserInfo = () => {
         <IconButton
           label={loggedIn ? 'log out' : 'log in'}
           icon={loggedIn ? 'user' : 'noUser'}
-          onPress={() => setAuthDialogOpen(true)}
+          onClick={() => setAuthDialogOpen(true)}
         />
       </Toolbox>
       <Dialog

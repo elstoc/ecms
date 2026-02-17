@@ -15,7 +15,7 @@ export const GalleryToolbox = () => {
         label={sortOrder === 'asc' ? 'click to sort descending' : 'click to sort ascending'}
         icon={sortOrder === 'asc' ? 'sortAsc' : 'sortDesc'}
         color={sortOrder === 'shuffle' ? 'grey' : 'black'}
-        onPress={() =>
+        onClick={() =>
           dispatch({
             type: 'setSortOrder',
             payload: sortOrder === 'desc' ? 'asc' : 'desc',
@@ -26,7 +26,7 @@ export const GalleryToolbox = () => {
         label={sortOrder === 'shuffle' ? 'click to re-shuffle' : 'click to shuffle'}
         icon='shuffle'
         color={sortOrder === 'shuffle' ? 'black' : 'grey'}
-        onPress={() => dispatch({ type: 'setSortOrder', payload: 'shuffle' })}
+        onClick={() => dispatch({ type: 'setSortOrder', payload: 'shuffle' })}
       />
     </Toolbox>
   );

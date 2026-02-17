@@ -16,6 +16,13 @@ export const Default: Story = {
   args: {
     icon: 'user',
     label: 'Some Title',
-    onPress: fn(),
+    onClick: fn(),
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    ...Default.args,
+    disabled: true,
   },
 };

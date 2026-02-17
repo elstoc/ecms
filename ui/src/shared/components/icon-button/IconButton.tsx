@@ -1,29 +1,28 @@
 import cn from 'classnames';
 
+import { Icon, IconProps } from '@/shared/components/icon';
+
 import { Button, ButtonProps } from '../button';
-import { Icon, IconProps } from '../icon';
 
-import './IconButton.css';
+import styles from './IconButton.module.css';
 
-type IconButtonProps = IconProps & Pick<ButtonProps, 'onPress' | 'slot'>;
+type IconButtonProps = IconProps & Pick<ButtonProps, 'disabled' | 'onClick'>;
 
 export const IconButton = ({
-  onPress,
+  onClick,
   className,
   label,
-  isDisabled,
-  slot,
+  disabled,
   ...iconProps
 }: IconButtonProps) => {
-  const classNames = cn('ecms-icon-button', className);
+  const classNames = cn(styles.Root, className);
   return (
     <Button
       aria-label={label}
       clearFormatting
       className={classNames}
-      isDisabled={isDisabled}
-      onPress={onPress}
-      slot={slot}
+      disabled={disabled}
+      onClick={onClick}
     >
       <Icon label={label} {...iconProps} />
     </Button>

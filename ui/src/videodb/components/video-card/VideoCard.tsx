@@ -102,7 +102,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
                 <TitleAndData title='Progress' data={progress} />
               </div>
               <div className='right'>
-                {onPressEdit && <IconButton label='edit video' icon='edit' onPress={onPressEdit} />}
+                {onPressEdit && <IconButton label='edit video' icon='edit' onClick={onPressEdit} />}
               </div>
             </div>
           </DisclosurePanel>

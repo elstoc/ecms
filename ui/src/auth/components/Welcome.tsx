@@ -12,7 +12,7 @@ export const Welcome = ({ user }: WelcomeProps) => {
   return (
     <div className='welcome-user'>
       <div>You are currently logged in as {user}</div>
-      <Button onPress={() => mutate()}>Log Out</Button>
+      <Button onClick={() => mutate()}>Log Out</Button>
     </div>
   );
 };

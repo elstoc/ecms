@@ -15,11 +15,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   argTypes: {
     children: { control: { type: 'text' } },
-    slot: { control: { type: 'text' } },
   },
   args: {
     children: 'Button text',
-    onPress: fn(),
+    onClick: fn(),
   },
 };
 
@@ -27,7 +26,7 @@ export const Disabled: Story = {
   ...Default,
   args: {
     ...Default.args,
-    isDisabled: true,
+    disabled: true,
   },
 };
 

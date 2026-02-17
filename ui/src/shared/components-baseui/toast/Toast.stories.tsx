@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useState } from 'react';
 
-import { Button } from '../button';
+import { Button } from '../../components/button';
 
 import { ToastProvider } from './ToastProvider';
 import { useToastManager } from './useToastManager';
