@@ -4,7 +4,7 @@ import { useArgs } from 'storybook/internal/preview-api';
 import { Switch } from './Switch';
 
 const meta = {
-  title: 'BaseUI/Switch',
+  title: 'Switch',
   component: Switch,
 } satisfies Meta<typeof Switch>;
 

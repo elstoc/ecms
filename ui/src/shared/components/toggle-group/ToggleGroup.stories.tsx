@@ -10,7 +10,7 @@ const items = [
 ];
 
 const meta = {
-  title: 'BaseUI/ToggleGroup',
+  title: 'ToggleGroup',
   component: ToggleGroup,
 } satisfies Meta<typeof ToggleGroup>;
 

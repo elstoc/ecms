@@ -32,7 +32,7 @@ const fruits = [
 ];
 
 const meta = {
-  title: 'BaseUI/Combobox',
+  title: 'Combobox',
   component: Combobox,
 } satisfies Meta<typeof Combobox>;
 

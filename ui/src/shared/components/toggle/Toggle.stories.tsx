@@ -4,7 +4,7 @@ import { useArgs } from 'storybook/internal/preview-api';
 import { Toggle } from './Toggle';
 
 const meta = {
-  title: 'BaseUI/Toggle',
+  title: 'Toggle',
   component: Toggle,
 } satisfies Meta<typeof Toggle>;
 

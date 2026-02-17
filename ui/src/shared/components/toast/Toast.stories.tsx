@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useState } from 'react';
 
-import { Button } from '../../components/button';
+import { Button } from '../button';
 
 import { ToastProvider } from './ToastProvider';
 import { useToastManager } from './useToastManager';
@@ -22,7 +22,7 @@ const ExampleToast = () => {
 };
 
 const meta = {
-  title: 'BaseUI/Toast',
+  title: 'Toast',
   component: ExampleToast,
 } satisfies Meta<typeof ExampleToast>;
 

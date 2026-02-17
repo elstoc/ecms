@@ -1,11 +1,7 @@
 import { forwardRef } from 'react';
 
-import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from '@/shared/components-baseui/disclosure';
 import { Card } from '@/shared/components/card';
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/shared/components/disclosure';
 import { Icon } from '@/shared/components/icon';
 import { Rating } from '@/shared/components/rating';
 import { Tag, TagList } from '@/shared/components/tag-list';

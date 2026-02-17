@@ -18,7 +18,7 @@ const selectableTags = [
 ];
 
 const meta = {
-  title: 'BaseUI/TagSelect',
+  title: 'TagSelect',
   component: TagSelect,
 } satisfies Meta<typeof TagSelect>;
 

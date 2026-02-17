@@ -8,7 +8,7 @@ const twentyNumbers = [...Array(20).keys()];
 const items = twentyNumbers.map((number) => ({ label: `Item #${number}`, value: `item${number}` }));
 
 const meta = {
-  title: 'BaseUI/Select',
+  title: 'Select',
   component: Select,
 } satisfies Meta<typeof Select>;
 
