@@ -1,8 +1,12 @@
 import 'modern-normalize';
 import { forwardRef } from 'react';
 
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from '@/shared/components-baseui/disclosure';
 import { Card } from '@/shared/components/card';
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/shared/components/disclosure';
 import { Flag } from '@/shared/components/flag';
 import { IconButton } from '@/shared/components/icon-button';
 import { Tag, TagList } from '@/shared/components/tag-list';
@@ -68,7 +72,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
   ) => {
     return (
       <Card className='video-card' highlight={expanded} ref={ref}>
-        <Disclosure isExpanded={expanded} onExpandedChange={onExpandedChange}>
+        <Disclosure open={expanded} onOpenChange={onExpandedChange}>
           <div className='info-panel'>
             <div className='left'>
               <DisclosureTrigger heading={title} clearButtonFormatting />
