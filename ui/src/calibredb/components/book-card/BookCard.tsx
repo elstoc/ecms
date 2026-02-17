@@ -1,7 +1,11 @@
 import { forwardRef } from 'react';
 
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from '@/shared/components-baseui/disclosure';
 import { Card } from '@/shared/components/card';
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/shared/components/disclosure';
 import { Icon } from '@/shared/components/icon';
 import { Rating } from '@/shared/components/rating';
 import { Tag, TagList } from '@/shared/components/tag-list';
@@ -41,7 +45,7 @@ export const BookCard = forwardRef<HTMLDivElement, BookCardProps>(
   ) => {
     return (
       <Card className='book-card' highlight={expanded} ref={ref}>
-        <Disclosure isExpanded={expanded} onExpandedChange={onExpandedChange}>
+        <Disclosure open={expanded} onOpenChange={onExpandedChange}>
           <div className='info-panel'>
             <div className='left'>
               <DisclosureTrigger heading={title} clearButtonFormatting />
