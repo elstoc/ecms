@@ -28,24 +28,27 @@ export const TagSelect = ({
   selectedTags,
   onChange,
 }: TagSelectProps) => {
-  const items: Item[] = selectableTags.map((tag) => ({ value: tag, label: tag }));
+  const allTagItems: Item[] = selectableTags.map((tag) => ({ value: tag, label: tag }));
+  const selectedTagItems = allTagItems.filter((item) => selectedTags.includes(item.value));
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const id = useId();
 
-  const itemsForValue = items.filter((item) => selectedTags.includes(item.value));
-  const onValueChange = (newItems: Item[], eventDetails: BaseCombobox.Root.ChangeEventDetails) => {
+  const onValueChange = (
+    newSelectedTagItems: Item[],
+    eventDetails: BaseCombobox.Root.ChangeEventDetails,
+  ) => {
     /* prevent deletion of all selected tags with the escape key */
     if (eventDetails.reason !== 'escape-key') {
-      onChange(newItems.map((item) => item.value));
+      onChange(newSelectedTagItems.map((item) => item.value));
     }
   };
 
   return (
     <Root
-      items={items}
+      items={allTagItems}
       multiple
-      value={itemsForValue}
+      value={selectedTagItems}
       onValueChange={onValueChange}
       onOpenChange={(nextOpen, eventDetails) => {
         /* Prevent closure on select when filtering */
