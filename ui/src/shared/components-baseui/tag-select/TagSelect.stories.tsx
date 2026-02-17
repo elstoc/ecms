@@ -44,3 +44,11 @@ export const Default: Story = {
     return <TagSelect {...args} selectedTags={selectedTags} onChange={onChange} />;
   },
 };
+
+export const AllowCreation: Story = {
+  ...Default,
+  args: {
+    ...Default.args,
+    allowCreation: true,
+  },
+};

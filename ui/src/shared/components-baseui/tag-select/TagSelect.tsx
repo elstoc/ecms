@@ -19,6 +19,7 @@ type TagSelectProps = {
   selectableTags: string[];
   onChange: (newValue: string[]) => void;
   emptyMessage: string;
+  allowCreation?: boolean;
 };
 
 export const TagSelect = ({
@@ -27,9 +28,26 @@ export const TagSelect = ({
   emptyMessage,
   selectedTags,
   onChange,
+  allowCreation,
 }: TagSelectProps) => {
   const [query, setQuery] = useState('');
-  const allTagItems: Item[] = selectableTags.map((tag) => ({ value: tag, label: tag }));
+
+  let allTags = [...selectableTags];
+
+  if (allowCreation) {
+    const combinedTags = new Set([...allTags, ...selectedTags]);
+
+    allTags = Array.from(combinedTags);
+  }
+
+  const sortedTags = allTags.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+  const allTagItems: Item[] = sortedTags.map((tag) => ({ value: tag, label: tag }));
+
+  if (allowCreation && query && !sortedTags.includes(query)) {
+    allTagItems.unshift({ value: query, label: ` + ${query}` });
+  }
+
   const selectedTagItems = allTagItems.filter((item) => selectedTags.includes(item.value));
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -39,9 +57,20 @@ export const TagSelect = ({
     newSelectedTagItems: Item[],
     eventDetails: BaseCombobox.Root.ChangeEventDetails,
   ) => {
-    /* prevent deletion of all selected tags with the escape key */
     if (eventDetails.reason !== 'escape-key') {
+      /* prevent deletion of all selected tags with the escape key */
       onChange(newSelectedTagItems.map((item) => item.value));
+    }
+
+    if (query && allowCreation) {
+      /* clear query if new item has been added */
+      const isSelectedItemSameAsQuery = Boolean(
+        newSelectedTagItems.find((item) => item.value === query),
+      );
+
+      if (isSelectedItemSameAsQuery) {
+        setQuery('');
+      }
     }
   };
 
