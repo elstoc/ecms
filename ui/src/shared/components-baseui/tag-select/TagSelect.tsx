@@ -14,20 +14,28 @@ export type Item = {
 };
 
 type TagSelectProps = {
-  items: Item[];
   label: string;
-  value: string[];
+  selectedTags: string[];
+  selectableTags: string[];
   onChange: (newValue: string[]) => void;
   emptyMessage: string;
 };
 
-export const TagSelect = ({ items, label, emptyMessage, value, onChange }: TagSelectProps) => {
+export const TagSelect = ({
+  selectableTags,
+  label,
+  emptyMessage,
+  selectedTags,
+  onChange,
+}: TagSelectProps) => {
+  const items: Item[] = selectableTags.map((tag) => ({ value: tag, label: tag }));
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const id = useId();
 
-  const itemsForValue = items.filter((item) => value.includes(item.value));
+  const itemsForValue = items.filter((item) => selectedTags.includes(item.value));
   const onValueChange = (newItems: Item[], eventDetails: BaseCombobox.Root.ChangeEventDetails) => {
-    /* prevent deletion of all items with the escape key */
+    /* prevent deletion of all selected tags with the escape key */
     if (eventDetails.reason !== 'escape-key') {
       onChange(newItems.map((item) => item.value));
     }
