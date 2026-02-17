@@ -1,0 +1,20 @@
+.Root {
+  height: var(--input-height);
+  margin: var(--input-margin);
+  padding: var(--input-padding);
+  border: var(--input-border);
+  border-radius: var(--input-border-radius);
+
+  &:focus-within {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.Input {
+  border: none;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
