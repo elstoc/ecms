@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { useId, useRef } from 'react';
+import { useId, useRef, useState } from 'react';
 
 import { ComboboxPortal } from '../combobox';
 import { LabelledField } from '../labelled-field';
@@ -28,6 +28,7 @@ export const TagSelect = ({
   selectedTags,
   onChange,
 }: TagSelectProps) => {
+  const [query, setQuery] = useState('');
   const allTagItems: Item[] = selectableTags.map((tag) => ({ value: tag, label: tag }));
   const selectedTagItems = allTagItems.filter((item) => selectedTags.includes(item.value));
 
@@ -50,6 +51,8 @@ export const TagSelect = ({
       multiple
       value={selectedTagItems}
       onValueChange={onValueChange}
+      inputValue={query}
+      onInputValueChange={setQuery}
       onOpenChange={(nextOpen, eventDetails) => {
         /* Prevent closure on select when filtering */
         if (!nextOpen && eventDetails.reason === 'item-press') {
