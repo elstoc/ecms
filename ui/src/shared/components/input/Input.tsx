@@ -8,12 +8,20 @@ type InputProps = {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  autoFocus?: boolean;
+  type?: 'text' | 'password';
 };
 
-export const Input = ({ label, value, onChange }: InputProps) => {
+export const Input = ({ label, value, onChange, autoFocus, type }: InputProps) => {
   return (
     <LabelledField label={label}>
-      <BaseInput className={styles.Root} value={value} onValueChange={onChange} />
+      <BaseInput
+        className={styles.Root}
+        value={value}
+        onValueChange={onChange}
+        autoFocus={autoFocus}
+        type={type}
+      />
     </LabelledField>
   );
 };
