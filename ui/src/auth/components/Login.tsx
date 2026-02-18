@@ -6,7 +6,7 @@ import { Card } from '@/shared/components/card';
 
 import { useLogin } from '../hooks/useAuthQueries';
 
-import './Login.scss';
+import './Login.css';
 
 export const Login = () => {
   const [loginFailed, setLoginFailed] = useState(false);
