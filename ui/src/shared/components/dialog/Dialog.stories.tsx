@@ -1,4 +1,3 @@
-import { DialogBody } from '@blueprintjs/core';
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 
@@ -32,7 +31,7 @@ export const Default: Story = {
       <>
         <Button onClick={() => setOpen(true)}>Open dialog</Button>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogBody>Some stuff here</DialogBody>
+          Some stuff here
         </Dialog>
       </>
     );

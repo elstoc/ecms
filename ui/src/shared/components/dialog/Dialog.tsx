@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import buttonStyles from '../button/Button.module.css';
 import styles from './Dialog.module.css';
 
-const { Root, Portal, Backdrop, Popup, Title, Close } = BaseDialog;
+const { Root, Portal, Backdrop, Popup, Title, Close, Description } = BaseDialog;
 
 type DialogProps = {
   open: boolean;
@@ -19,7 +19,7 @@ export const Dialog = ({ open, onOpenChange, children }: DialogProps) => {
         <Backdrop className={styles.Backdrop} />
         <Popup className={styles.Popup}>
           <Title className={styles.Title}>Notifications</Title>
-          {children}
+          <Description>{children}</Description>
           <div className={styles.Actions}>
             <Close className={buttonStyles.Root}>Close</Close>
           </div>
