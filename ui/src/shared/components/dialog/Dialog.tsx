@@ -10,15 +10,16 @@ type DialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
+  title: string;
 };
 
-export const Dialog = ({ open, onOpenChange, children }: DialogProps) => {
+export const Dialog = ({ open, onOpenChange, children, title }: DialogProps) => {
   return (
     <Root open={open} onOpenChange={onOpenChange}>
       <Portal>
         <Backdrop className={styles.Backdrop} />
         <Popup className={styles.Popup}>
-          <Title className={styles.Title}>Notifications</Title>
+          <Title className={styles.Title}>{title}</Title>
           <Description>{children}</Description>
           <div className={styles.Actions}>
             <Close className={buttonStyles.Root}>Close</Close>

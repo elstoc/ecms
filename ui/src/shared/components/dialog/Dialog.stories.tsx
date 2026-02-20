@@ -18,9 +18,10 @@ export const Default: Story = {
   args: {
     open: false,
     onOpenChange: () => undefined,
+    title: 'Some title',
     children: 'anything',
   },
-  render: () => {
+  render: (args) => {
     const [{ open }, updateArgs] = useArgs();
 
     const setOpen = (open: boolean) => {
@@ -30,7 +31,7 @@ export const Default: Story = {
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open dialog</Button>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog {...args} open={open} onOpenChange={setOpen}>
           Some stuff here
         </Dialog>
       </>
