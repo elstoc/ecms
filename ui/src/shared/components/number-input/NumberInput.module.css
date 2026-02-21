@@ -1,8 +1,8 @@
 .Root {
-  height: var(--input-height);
-  margin: var(--input-margin);
-  padding: var(--input-padding);
-  border: var(--input-border);
+  height: 2.125rem;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 0.0625rem solid var(--grey-30);
   border-radius: var(--input-border-radius);
 
   &:focus-within {
