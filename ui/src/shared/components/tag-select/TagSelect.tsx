@@ -98,7 +98,7 @@ export const TagSelect = ({
                 <>
                   {items.map((item) => (
                     <Chip key={item.value} className={styles.Chip} aria-label={item.label}>
-                      {item.label}
+                      <div className={styles.ChipText}>{item.label}</div>
 
                       <ChipRemoveButton />
                     </Chip>
