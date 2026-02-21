@@ -9,11 +9,11 @@
   user-select: none;
   background-color: canvas;
 
-  padding: var(--input-padding);
-  margin: var(--input-margin);
-  border: var(--input-border);
+  height: 2.125rem;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 0.0625rem solid var(--grey-30);
   border-radius: var(--input-border-radius);
-  height: var(--input-height);
 
   &:focus,
   &[data-popup-open],
