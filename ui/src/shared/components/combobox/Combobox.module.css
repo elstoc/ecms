@@ -3,6 +3,7 @@
  * uses relative/absolute positioning to place buttons _inside_ the input
  */
 .InputWrapper {
+  width: 100%;
   position: relative;
 
   &:has(.Clear) .Input {

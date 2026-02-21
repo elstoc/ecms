@@ -41,11 +41,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  argTypes: {},
   args: {
     label: 'Choose a fruit',
     emptyMessage: 'No fruits found',
     value: null,
+    width: undefined,
     items: fruits,
     onChange: () => undefined,
   },
@@ -56,14 +56,6 @@ export const Default: Story = {
       updateArgs({ value: newValue });
     };
 
-    return (
-      <Combobox
-        label={args.label}
-        emptyMessage={args.emptyMessage}
-        items={args.items}
-        value={value}
-        onChange={onChange}
-      />
-    );
+    return <Combobox {...args} value={value} onChange={onChange} />;
   },
 };

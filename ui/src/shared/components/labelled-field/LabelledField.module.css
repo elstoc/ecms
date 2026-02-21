@@ -2,7 +2,26 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  width: 20rem;
+
+  &.WidthSm {
+    width: 7rem;
+  }
+
+  &.WidthMd {
+    width: 14rem;
+  }
+
+  &.WidthLg {
+    width: 21rem;
+  }
+
+  &.WidthAuto {
+    width: auto;
+  }
+
+  &.WidthFull {
+    width: 100%;
+  }
 }
 
 .Label {

@@ -1,8 +1,8 @@
 /* required for vertical wrapping when the chips fill the container */
 .InputContainer {
-  max-width: 28rem;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .Chips {
@@ -15,8 +15,6 @@
   border: 0.0625rem solid var(--grey-30);
   padding: 0.25rem;
   border-radius: var(--input-border-radius);
-
-  width: 20rem;
 
   &:focus-within {
     outline: var(--focus-outline);

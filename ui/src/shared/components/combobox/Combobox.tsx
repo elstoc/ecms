@@ -1,7 +1,7 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { useId } from 'react';
 
-import { LabelledField } from '../labelled-field';
+import { InputWidth, LabelledField } from '../labelled-field';
 
 import { ComboboxPortal } from './ComboboxPortal';
 
@@ -20,9 +20,17 @@ type ComboboxProps = {
   emptyMessage: string;
   value: string | null;
   onChange: (newValue: string | null) => void;
+  width?: InputWidth;
 };
 
-export const Combobox = ({ label, items, emptyMessage, value, onChange }: ComboboxProps) => {
+export const Combobox = ({
+  label,
+  items,
+  emptyMessage,
+  value,
+  onChange,
+  width = 'md',
+}: ComboboxProps) => {
   const id = useId();
   const itemForValue = items.find((item) => item.value === value) ?? null;
 
@@ -38,7 +46,7 @@ export const Combobox = ({ label, items, emptyMessage, value, onChange }: Combob
 
   return (
     <Root items={items} value={itemForValue} onValueChange={onValueChange}>
-      <LabelledField label={label} htmlFor={id}>
+      <LabelledField label={label} htmlFor={id} width={width}>
         <div className={styles.InputWrapper}>
           <Input id={id} className={styles.Input} />
 

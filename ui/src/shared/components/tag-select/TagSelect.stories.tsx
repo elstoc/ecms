@@ -31,6 +31,7 @@ export const Default: Story = {
     label: 'Select a language',
     emptyMessage: 'Nothing to see here',
     selectedTags: [],
+    width: undefined,
     selectableTags,
     onChange: () => undefined,
   },

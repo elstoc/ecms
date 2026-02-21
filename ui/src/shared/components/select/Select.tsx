@@ -1,7 +1,7 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
 import { useId } from 'react';
 
-import { LabelledField } from '../labelled-field';
+import { InputWidth, LabelledField } from '../labelled-field';
 
 import { SelectItem } from './SelectItem';
 
@@ -19,13 +19,14 @@ type SelectProps = {
   value: string | null;
   onChange: (newValue: string | null) => void;
   items: Item[];
+  width?: InputWidth;
 };
 
-export const Select = ({ value, label, items, onChange }: SelectProps) => {
+export const Select = ({ value, label, items, onChange, width = 'md' }: SelectProps) => {
   const id = useId();
 
   return (
-    <LabelledField label={label} htmlFor={id}>
+    <LabelledField label={label} htmlFor={id} width={width}>
       <Root id={id} items={items} value={value} onValueChange={onChange}>
         <Trigger className={styles.Trigger}>
           <Value />

@@ -16,6 +16,7 @@ export const Default: Story = {
   args: {
     label: 'Enter a number',
     value: null,
+    width: undefined,
     onChange: () => undefined,
   },
   render: (args) => {

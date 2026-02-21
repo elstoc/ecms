@@ -2,7 +2,7 @@ import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { useId, useRef, useState } from 'react';
 
 import { ComboboxPortal } from '../combobox';
-import { LabelledField } from '../labelled-field';
+import { InputWidth, LabelledField } from '../labelled-field';
 
 import styles from './TagSelect.module.css';
 
@@ -26,6 +26,7 @@ type TagSelectProps = {
   onChange: (newValue: string[]) => void;
   emptyMessage: string;
   allowCreation?: boolean;
+  width?: InputWidth;
 };
 
 export const TagSelect = ({
@@ -35,6 +36,7 @@ export const TagSelect = ({
   selectedTags,
   onChange,
   allowCreation,
+  width = 'md',
 }: TagSelectProps) => {
   const id = useId();
   const [query, setQuery] = useState('');
@@ -95,7 +97,7 @@ export const TagSelect = ({
         }
       }}
     >
-      <LabelledField label={label} htmlFor={id}>
+      <LabelledField label={label} htmlFor={id} width={width}>
         <div className={styles.InputContainer}>
           <Chips className={styles.Chips} ref={containerRef}>
             <Value>

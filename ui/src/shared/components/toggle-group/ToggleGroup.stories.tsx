@@ -21,9 +21,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     value: ['01'],
-    onChange: () => undefined,
     label: 'Toggle group label',
     items,
+    onChange: () => undefined,
   },
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();

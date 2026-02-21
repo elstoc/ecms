@@ -20,6 +20,7 @@ export const Default: Story = {
   args: {
     label: 'Choose an item',
     value: null,
+    width: undefined,
     items: items,
     onChange: () => undefined,
   },
@@ -30,6 +31,6 @@ export const Default: Story = {
       updateArgs({ value: newValue });
     };
 
-    return <Select label={args.label} items={args.items} value={value} onChange={onChange} />;
+    return <Select {...args} value={value} onChange={onChange} />;
   },
 };

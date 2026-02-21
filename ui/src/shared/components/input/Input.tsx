@@ -1,6 +1,6 @@
 import { Input as BaseInput } from '@base-ui/react/input';
 
-import { LabelledField } from '../labelled-field';
+import { InputWidth, LabelledField } from '../labelled-field';
 
 import styles from './Input.module.css';
 
@@ -10,11 +10,12 @@ type InputProps = {
   onChange: (value: string) => void;
   autoFocus?: boolean;
   type?: 'text' | 'password';
+  width?: InputWidth;
 };
 
-export const Input = ({ label, value, onChange, autoFocus, type }: InputProps) => {
+export const Input = ({ label, value, onChange, autoFocus, type, width = 'md' }: InputProps) => {
   return (
-    <LabelledField label={label}>
+    <LabelledField label={label} width={width}>
       <BaseInput
         className={styles.Root}
         value={value}
