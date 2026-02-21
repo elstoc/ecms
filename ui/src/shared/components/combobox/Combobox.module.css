@@ -22,7 +22,7 @@
   border: 0.0625rem solid var(--grey-30);
   border-radius: var(--input-border-radius);
 
-  padding-right: calc(0.5rem + 1.5rem);
+  padding-right: 2rem;
 
   &:focus-visible {
     outline: var(--focus-outline);
