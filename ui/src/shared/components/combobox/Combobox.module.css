@@ -36,12 +36,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  height: 2.125rem;
   bottom: 0;
-  height: var(--input-height);
+  padding: 0;
   right: 0.5rem;
+
   border: none;
   color: var(--dark-grey);
-  padding: 0;
 }
 
 /* within the action buttons div */
