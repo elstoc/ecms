@@ -13,6 +13,12 @@ export type Item = {
   label: string;
 };
 
+const tagsToItems = (tags: string[]): Item[] =>
+  tags.map((tag) => ({
+    value: tag,
+    label: tag,
+  }));
+
 type TagSelectProps = {
   label: string;
   selectedTags: string[];
@@ -30,28 +36,23 @@ export const TagSelect = ({
   onChange,
   allowCreation,
 }: TagSelectProps) => {
-  const [query, setQuery] = useState('');
-
-  let allTags = [...selectableTags];
-
-  if (allowCreation) {
-    const combinedTags = new Set([...allTags, ...selectedTags]);
-
-    allTags = Array.from(combinedTags);
-  }
-
-  const sortedTags = allTags.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
-  const allTagItems: Item[] = sortedTags.map((tag) => ({ value: tag, label: tag }));
-
-  if (allowCreation && query && !sortedTags.includes(query)) {
-    allTagItems.unshift({ value: query, label: ` + ${query}` });
-  }
-
-  const selectedTagItems = allTagItems.filter((item) => selectedTags.includes(item.value));
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const id = useId();
+  const [query, setQuery] = useState('');
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const unselectedTags = selectableTags.filter((tag) => !selectedTags.includes(tag));
+
+  const selectedTagItems = tagsToItems(selectedTags);
+  const unselectedTagItems = tagsToItems(unselectedTags);
+  const allTagItems = [...selectedTagItems, ...unselectedTagItems];
+
+  const sortedTagItems = allTagItems.toSorted((itemA, itemB) =>
+    itemA.value.toLowerCase().localeCompare(itemB.value.toLowerCase()),
+  );
+
+  if (allowCreation && query && !sortedTagItems.find((item) => item.value === query)) {
+    sortedTagItems.unshift({ value: query, label: ` + ${query}` });
+  }
 
   const onValueChange = (
     newSelectedTagItems: Item[],
@@ -76,7 +77,7 @@ export const TagSelect = ({
 
   return (
     <Root
-      items={allTagItems}
+      items={sortedTagItems}
       multiple
       value={selectedTagItems}
       onValueChange={onValueChange}
