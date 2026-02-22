@@ -40,8 +40,8 @@
 
   &:focus-visible {
     position: relative;
-    outline: 2px solid var(--color-blue);
-    outline-offset: -1px;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
   }
 }
 
@@ -197,8 +197,8 @@
 
   &:focus-visible {
     position: relative;
-    outline: 2px solid var(--color-blue);
-    outline-offset: -1px;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
   }
 }
 
