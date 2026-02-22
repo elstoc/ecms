@@ -1,11 +1,11 @@
 import { NavigationMenu } from '@base-ui/react/navigation-menu';
 import cn from 'classnames';
 import { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { Link as ReactDomLink } from 'react-router-dom';
 
 import styles from './NavItem.module.css';
 
-const { Item, Trigger, Content, Link: NavigationLink, Icon } = NavigationMenu;
+const { Item, Trigger, Content, Link, Icon } = NavigationMenu;
 
 type DescribedLink = {
   title: string;
@@ -64,9 +64,9 @@ type NavMenuLinkProps = {
 };
 
 const NavMenuLink = ({ href, className, children }: NavMenuLinkProps) => (
-  <NavigationLink render={<Link to={href} />} className={className}>
+  <Link render={<ReactDomLink to={href} />} className={className}>
     {children}
-  </NavigationLink>
+  </Link>
 );
 
 const ExpandSubmenuIcon = () => (
