@@ -41,7 +41,9 @@ export const ComboboxMulti = ({
   const inputValueStateOrProp = inputValue ?? localQueryState;
   const updateInputValueStateOrProp = onInputValueChange ?? setLocalQueryState;
 
-  const selectedItems = items.filter((item) => value.includes(item.value));
+  const selectedItems: Item[] = value
+    .map((selectedValue) => items.find((item) => item.value === selectedValue))
+    .filter((item) => item !== undefined);
 
   const onValueChange = (
     newSelectedTagItems: Item[],
