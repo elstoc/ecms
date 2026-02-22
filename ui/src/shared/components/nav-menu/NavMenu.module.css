@@ -48,16 +48,42 @@
   }
 }
 
-.Active {
-  font-weight: 500;
-}
-
 .ExpandSubmenuIcon {
   transition: transform 0.2s ease;
 
   &[data-popup-open] {
     transform: rotate(180deg);
   }
+}
+
+.LinkCard {
+  display: block;
+
+  padding: 0.5rem;
+
+  border-radius: 0.375rem;
+
+  text-decoration: none;
+  color: inherit;
+  border: none;
+  background-color: transparent;
+
+  &:focus-visible {
+    position: relative;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.LinkTitle {
+  margin: 0 0 4px;
+
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
+.Active {
+  font-weight: 500;
 }
 
 /* The popup / portal contents */
@@ -187,32 +213,6 @@
   padding: 0;
   margin: 0;
   list-style: none;
-}
-
-.LinkCard {
-  display: block;
-
-  padding: 0.5rem;
-
-  border-radius: 0.375rem;
-
-  text-decoration: none;
-  color: inherit;
-  border: none;
-  background-color: transparent;
-
-  &:focus-visible {
-    position: relative;
-    outline: var(--focus-outline);
-    outline-offset: var(--focus-outline-offset);
-  }
-}
-
-.LinkTitle {
-  margin: 0 0 4px;
-
-  font-size: 1rem;
-  line-height: 1.25rem;
 }
 
 .PopupTopArrow {
