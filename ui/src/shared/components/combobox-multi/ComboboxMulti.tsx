@@ -20,6 +20,8 @@ type ComboboxMultiProps = {
   onChange: (newValue: string[]) => void;
   emptyMessage: string;
   width?: InputWidth;
+  inputValue?: string;
+  onInputValueChange?: (inputValue: string) => void;
 };
 
 export const ComboboxMulti = ({
@@ -29,10 +31,15 @@ export const ComboboxMulti = ({
   value,
   onChange,
   width = 'md',
+  inputValue,
+  onInputValueChange,
 }: ComboboxMultiProps) => {
   const id = useId();
-  const [query, setQuery] = useState('');
+  const [localQueryState, setLocalQueryState] = useState('');
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const inputValueStateOrProp = inputValue ?? localQueryState;
+  const updateInputValueStateOrProp = onInputValueChange ?? setLocalQueryState;
 
   const selectedItems = items.filter((item) => value.includes(item.value));
 
@@ -45,14 +52,14 @@ export const ComboboxMulti = ({
       onChange(newSelectedTagItems.map((item) => item.value));
     }
 
-    if (query) {
+    if (inputValueStateOrProp) {
       /* clear query if new item has been added */
       const isSelectedItemSameAsQuery = Boolean(
-        newSelectedTagItems.find((item) => item.label === query),
+        newSelectedTagItems.find((item) => item.label === inputValueStateOrProp),
       );
 
       if (isSelectedItemSameAsQuery) {
-        setQuery('');
+        updateInputValueStateOrProp('');
       }
     }
   };
@@ -63,8 +70,8 @@ export const ComboboxMulti = ({
       eventDetails.cancel();
     }
     /* escape key should clear query before closing popup */
-    if (!nextOpen && eventDetails.reason === 'escape-key' && query) {
-      setQuery('');
+    if (!nextOpen && eventDetails.reason === 'escape-key' && localQueryState) {
+      updateInputValueStateOrProp('');
       eventDetails.cancel();
     }
   };
@@ -75,8 +82,8 @@ export const ComboboxMulti = ({
       multiple
       value={selectedItems}
       onValueChange={onValueChange}
-      inputValue={query}
-      onInputValueChange={setQuery}
+      inputValue={inputValueStateOrProp}
+      onInputValueChange={updateInputValueStateOrProp}
       onOpenChange={onOpenChange}
     >
       <LabelledField label={label} htmlFor={id} width={width}>
