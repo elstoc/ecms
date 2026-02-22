@@ -1,0 +1,115 @@
+.Trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+
+  height: 2rem;
+  padding: 0 0.875rem;
+  margin: 0;
+  outline: 0;
+  border: none;
+
+  border-radius: 0.375rem;
+  font-family: inherit;
+  font-size: 1rem;
+  text-decoration: none;
+  line-height: 1.5rem;
+
+  user-select: none;
+  background-color: inherit;
+
+  &:visited,
+  &:hover,
+  &:active,
+  &:link {
+    color: black;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    position: relative;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.LinkCard {
+  display: block;
+
+  padding: 0.5rem;
+
+  border-radius: 0.375rem;
+
+  text-decoration: none;
+  color: inherit;
+  border: none;
+  background-color: transparent;
+
+  &:focus-visible {
+    position: relative;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.LinkTitle {
+  margin: 0 0 4px;
+
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
+.ActiveLink {
+  font-weight: 500;
+}
+
+.ExpandSubmenuIcon {
+  transition: transform 0.2s ease;
+
+  &[data-popup-open] {
+    transform: rotate(180deg);
+  }
+}
+
+.SubMenuContent {
+  transition:
+    opacity calc(var(--duration) * 0.5) ease,
+    transform var(--duration) var(--easing);
+
+  height: 100%;
+  padding: 0.5rem 1rem;
+
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+  }
+
+  &[data-starting-style] {
+    &[data-activation-direction='left'] {
+      transform: translateX(-50%);
+    }
+    &[data-activation-direction='right'] {
+      transform: translateX(50%);
+    }
+  }
+
+  &[data-ending-style] {
+    &[data-activation-direction='left'] {
+      transform: translateX(50%);
+    }
+    &[data-activation-direction='right'] {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.SubMenuItemList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}

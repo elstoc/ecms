@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './NavMenu.module.css';
+import styles from './NavItem.module.css';
 
 const { Item, Trigger, Content, Link: NavigationLink, Icon } = NavigationMenu;
 
@@ -18,7 +18,7 @@ export type NavItemProps = DescribedLink & {
 };
 
 export const NavItem = ({ title, href, active = false, subItems }: NavItemProps) => {
-  const styleIfActive = active ? styles.Active : undefined;
+  const styleIfActive = active ? styles.ActiveLink : undefined;
 
   if (!subItems && href) {
     return (
@@ -38,12 +38,12 @@ export const NavItem = ({ title, href, active = false, subItems }: NavItemProps)
 
           <ExpandSubmenuIcon />
         </Trigger>
-        <Content className={styles.Content}>
+        <Content className={styles.SubMenuContent}>
           <ul className={styles.SubMenuItemList}>
             {subItems.map((item) => (
               <li key={item.href}>
                 <NavMenuLink
-                  className={cn(styles.LinkCard, { [styles.Active]: item.active })}
+                  className={cn(styles.LinkCard, { [styles.ActiveLink]: item.active })}
                   href={item.href ?? ''}
                 >
                   <span className={styles.LinkTitle}>{item.title}</span>
