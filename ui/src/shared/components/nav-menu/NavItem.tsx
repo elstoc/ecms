@@ -1,27 +1,29 @@
 import { NavigationMenu } from '@base-ui/react/navigation-menu';
+import cn from 'classnames';
 import { ReactNode } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styles from './NavMenu.module.css';
 
 type DescribedLink = {
   title: string;
+  active?: boolean;
   href?: string;
 };
 
-export type NavItemProps = {
-  title: string;
-  href?: string;
+export type NavItemProps = DescribedLink & {
   subItems?: DescribedLink[];
 };
 
-export const NavItem = ({ title, href, subItems }: NavItemProps) => {
+export const NavItem = ({ title, href, active = false, subItems }: NavItemProps) => {
+  const activeStyle = active ? styles.Active : undefined;
+
   if (!subItems && href) {
     return (
       <NavigationMenu.Item>
-        <Link className={styles.Trigger} href={href}>
+        <MenuLink className={cn(styles.Trigger, activeStyle)} href={href}>
           {title}
-        </Link>
+        </MenuLink>
       </NavigationMenu.Item>
     );
   }
@@ -29,7 +31,7 @@ export const NavItem = ({ title, href, subItems }: NavItemProps) => {
   if (subItems) {
     return (
       <NavigationMenu.Item>
-        <NavigationMenu.Trigger className={styles.Trigger}>
+        <NavigationMenu.Trigger className={cn(styles.Trigger, activeStyle)}>
           {title}
           <NavigationMenu.Icon className={styles.Icon}>
             <ChevronDownIcon />
@@ -39,9 +41,12 @@ export const NavItem = ({ title, href, subItems }: NavItemProps) => {
           <ul className={styles.FlexLinkList}>
             {subItems.map((item) => (
               <li key={item.href}>
-                <Link className={styles.LinkCard} href={item.href ?? ''}>
-                  <h3 className={styles.LinkTitle}>{item.title}</h3>
-                </Link>
+                <MenuLink
+                  className={cn(styles.LinkCard, { [styles.Active]: item.active })}
+                  href={item.href ?? ''}
+                >
+                  <span className={styles.LinkTitle}>{item.title}</span>
+                </MenuLink>
               </li>
             ))}
           </ul>
@@ -57,8 +62,8 @@ type LinkProps = {
   children: ReactNode;
 };
 
-const Link = ({ href, className, children }: LinkProps) => (
-  <NavigationMenu.Link render={<NavLink to={href} />} className={className}>
+const MenuLink = ({ href, className, children }: LinkProps) => (
+  <NavigationMenu.Link render={<Link to={href} />} className={className}>
     {children}
   </NavigationMenu.Link>
 );

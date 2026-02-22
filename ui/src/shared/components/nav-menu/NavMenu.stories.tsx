@@ -6,10 +6,12 @@ import { NavMenu } from './NavMenu';
 const items: NavItemProps[] = [
   {
     title: 'Overview',
+    active: true,
     subItems: [
       {
         href: '/react/overview/quick-start',
         title: 'Quick Start',
+        active: true,
       },
       {
         href: '/react/overview/accessibility',
