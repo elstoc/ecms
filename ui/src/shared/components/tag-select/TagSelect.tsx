@@ -65,10 +65,10 @@ export const TagSelect = ({
       onChange(newSelectedTagItems.map((item) => item.value));
     }
 
-    if (query && allowCreation) {
+    if (query) {
       /* clear query if new item has been added */
       const isSelectedItemSameAsQuery = Boolean(
-        newSelectedTagItems.find((item) => item.value === query),
+        newSelectedTagItems.find((item) => item.label === query),
       );
 
       if (isSelectedItemSameAsQuery) {
