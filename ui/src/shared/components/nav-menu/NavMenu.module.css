@@ -3,7 +3,7 @@
   padding: 0.25rem;
 }
 
-.List {
+.ItemList {
   display: flex;
   position: relative;
   list-style: none;
@@ -45,13 +45,15 @@
   }
 }
 
-.Icon {
+.ExpandMenuIcon {
   transition: transform 0.2s ease;
 
   &[data-popup-open] {
     transform: rotate(180deg);
   }
 }
+
+/* The popup / portal contents */
 
 .Positioner {
   --easing: cubic-bezier(0.22, 1, 0.36, 1);

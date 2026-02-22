@@ -33,9 +33,7 @@ export const NavItem = ({ title, href, active = false, subItems }: NavItemProps)
       <NavigationMenu.Item>
         <NavigationMenu.Trigger className={cn(styles.Trigger, activeStyle)}>
           {title}
-          <NavigationMenu.Icon className={styles.Icon}>
-            <ChevronDownIcon />
-          </NavigationMenu.Icon>
+          <ExpandMenuIcon />
         </NavigationMenu.Trigger>
         <NavigationMenu.Content className={styles.Content}>
           <ul className={styles.FlexLinkList}>
@@ -68,8 +66,10 @@ const MenuLink = ({ href, className, children }: LinkProps) => (
   </NavigationMenu.Link>
 );
 
-const ChevronDownIcon = () => (
-  <svg width='10' height='10' viewBox='0 0 10 10' fill='none'>
-    <path d='M1 3.5L5 7.5L9 3.5' stroke='currentcolor' strokeWidth='1.5' />
-  </svg>
+const ExpandMenuIcon = () => (
+  <NavigationMenu.Icon className={styles.ExpandMenuIcon}>
+    <svg width='10' height='10' viewBox='0 0 10 10' fill='none'>
+      <path d='M1 3.5L5 7.5L9 3.5' stroke='currentcolor' strokeWidth='1.5' />
+    </svg>
+  </NavigationMenu.Icon>
 );

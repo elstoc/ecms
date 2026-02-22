@@ -11,7 +11,7 @@ type NavMenuProps = {
 export const NavMenu = ({ items }: NavMenuProps) => {
   return (
     <NavigationMenu.Root className={styles.Root}>
-      <NavigationMenu.List className={styles.List}>
+      <NavigationMenu.List className={styles.ItemList}>
         {items.map((item) => (
           <NavItem key={item.title} {...item} />
         ))}
