@@ -18,14 +18,14 @@ export type NavItemProps = DescribedLink & {
 };
 
 export const NavItem = ({ title, href, active = false, subItems }: NavItemProps) => {
-  const activeStyle = active ? styles.Active : undefined;
+  const styleIfActive = active ? styles.Active : undefined;
 
   if (!subItems && href) {
     return (
       <Item>
-        <MenuLink className={cn(styles.Trigger, activeStyle)} href={href}>
+        <NavMenuLink className={cn(styles.Trigger, styleIfActive)} href={href}>
           {title}
-        </MenuLink>
+        </NavMenuLink>
       </Item>
     );
   }
@@ -33,20 +33,21 @@ export const NavItem = ({ title, href, active = false, subItems }: NavItemProps)
   if (subItems) {
     return (
       <Item>
-        <Trigger className={cn(styles.Trigger, activeStyle)}>
+        <Trigger className={cn(styles.Trigger, styleIfActive)}>
           {title}
+
           <ExpandSubmenuIcon />
         </Trigger>
         <Content className={styles.Content}>
           <ul className={styles.SubMenuItemList}>
             {subItems.map((item) => (
               <li key={item.href}>
-                <MenuLink
+                <NavMenuLink
                   className={cn(styles.LinkCard, { [styles.Active]: item.active })}
                   href={item.href ?? ''}
                 >
                   <span className={styles.LinkTitle}>{item.title}</span>
-                </MenuLink>
+                </NavMenuLink>
               </li>
             ))}
           </ul>
@@ -56,13 +57,13 @@ export const NavItem = ({ title, href, active = false, subItems }: NavItemProps)
   }
 };
 
-type LinkProps = {
+type NavMenuLinkProps = {
   href: string;
   className: string;
   children: ReactNode;
 };
 
-const MenuLink = ({ href, className, children }: LinkProps) => (
+const NavMenuLink = ({ href, className, children }: NavMenuLinkProps) => (
   <NavigationLink render={<Link to={href} />} className={className}>
     {children}
   </NavigationLink>
