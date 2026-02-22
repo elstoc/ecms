@@ -3,7 +3,7 @@
   padding: 0.25rem;
 }
 
-.ItemList {
+.MainItemList {
   display: flex;
   position: relative;
   list-style: none;
@@ -45,7 +45,11 @@
   }
 }
 
-.ExpandMenuIcon {
+.Active {
+  font-weight: 500;
+}
+
+.ExpandSubmenuIcon {
   transition: transform 0.2s ease;
 
   &[data-popup-open] {
@@ -168,15 +172,7 @@
   height: 100%;
 }
 
-.GridLinkList {
-  display: grid;
-  grid-template-columns: 12rem 12rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.FlexLinkList {
+.SubMenuItemList {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -208,13 +204,6 @@
   line-height: 1.25rem;
 }
 
-.LinkDescription {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  color: var(--color-gray-500);
-}
-
 .PopupTopArrow {
   display: flex;
   transition: left calc(var(--duration)) var(--easing);
@@ -240,24 +229,20 @@
   }
 }
 
-.ArrowFill {
+.TopArrowFill {
   fill: canvas;
 }
 
-.ArrowOuterStroke {
+.TopArrowOuterStroke {
   @media (prefers-color-scheme: light) {
     fill: var(--color-gray-200);
   }
 }
 
-.ArrowInnerStroke {
+.TopArrowInnerStroke {
   @media (prefers-color-scheme: dark) {
     fill: var(--color-gray-300);
   }
-}
-
-.Active {
-  font-weight: 500;
 }
 
 :root {

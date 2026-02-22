@@ -35,10 +35,10 @@ export const NavItem = ({ title, href, active = false, subItems }: NavItemProps)
       <Item>
         <Trigger className={cn(styles.Trigger, activeStyle)}>
           {title}
-          <ExpandMenuIcon />
+          <ExpandSubmenuIcon />
         </Trigger>
         <Content className={styles.Content}>
-          <ul className={styles.FlexLinkList}>
+          <ul className={styles.SubMenuItemList}>
             {subItems.map((item) => (
               <li key={item.href}>
                 <MenuLink
@@ -68,8 +68,8 @@ const MenuLink = ({ href, className, children }: LinkProps) => (
   </NavigationLink>
 );
 
-const ExpandMenuIcon = () => (
-  <Icon className={styles.ExpandMenuIcon}>
+const ExpandSubmenuIcon = () => (
+  <Icon className={styles.ExpandSubmenuIcon}>
     <svg width='10' height='10' viewBox='0 0 10 10' fill='none'>
       <path d='M1 3.5L5 7.5L9 3.5' stroke='currentcolor' strokeWidth='1.5' />
     </svg>
