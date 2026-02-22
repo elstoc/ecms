@@ -77,6 +77,18 @@ export const TagSelect = ({
     }
   };
 
+  const onOpenChange = (nextOpen: boolean, eventDetails: BaseCombobox.Root.ChangeEventDetails) => {
+    /* Prevent closure on select when filtering */
+    if (!nextOpen && eventDetails.reason === 'item-press') {
+      eventDetails.cancel();
+    }
+    /* escape key should clear query before closing popup */
+    if (!nextOpen && eventDetails.reason === 'escape-key' && query) {
+      setQuery('');
+      eventDetails.cancel();
+    }
+  };
+
   return (
     <Root
       items={sortedTagItems}
@@ -85,17 +97,7 @@ export const TagSelect = ({
       onValueChange={onValueChange}
       inputValue={query}
       onInputValueChange={setQuery}
-      onOpenChange={(nextOpen, eventDetails) => {
-        /* Prevent closure on select when filtering */
-        if (!nextOpen && eventDetails.reason === 'item-press') {
-          eventDetails.cancel();
-        }
-        /* escape key should clear query before closing popup */
-        if (!nextOpen && eventDetails.reason === 'escape-key' && query) {
-          setQuery('');
-          eventDetails.cancel();
-        }
-      }}
+      onOpenChange={onOpenChange}
     >
       <LabelledField label={label} htmlFor={id} width={width}>
         <div className={styles.InputContainer}>
