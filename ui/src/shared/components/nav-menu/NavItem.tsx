@@ -7,7 +7,7 @@ type DescribedLink = {
   href?: string;
 };
 
-type NavItemProps = {
+export type NavItemProps = {
   title: string;
   href?: string;
   subItems?: DescribedLink[];

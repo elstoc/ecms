@@ -1,16 +1,20 @@
 import { NavigationMenu } from '@base-ui/react/navigation-menu';
 
-import { NavItem } from './NavItem';
+import { NavItem, NavItemProps } from './NavItem';
 
 import styles from './NavMenu.module.css';
 
-export const NavMenu = () => {
+type NavMenuProps = {
+  items: NavItemProps[];
+};
+
+export const NavMenu = ({ items }: NavMenuProps) => {
   return (
     <NavigationMenu.Root className={styles.Root}>
       <NavigationMenu.List className={styles.List}>
-        <NavItem title='Overview' subItems={overviewItems} />
-        <NavItem title='Handbook' subItems={handbookItems} />
-        <NavItem title='Github' href='https://github.com/mui/base-ui' />
+        {items.map((item) => (
+          <NavItem key={item.title} {...item} />
+        ))}
       </NavigationMenu.List>
 
       <NavigationMenu.Portal>
@@ -48,37 +52,3 @@ const ArrowSvg = () => (
     />
   </svg>
 );
-
-const overviewItems = [
-  {
-    href: '/react/overview/quick-start',
-    title: 'Quick Start',
-  },
-  {
-    href: '/react/overview/accessibility',
-    title: 'Accessibility',
-  },
-  {
-    href: '/react/overview/releases',
-    title: 'Releases',
-  },
-  {
-    href: '/react/overview/about',
-    title: 'About',
-  },
-];
-
-const handbookItems = [
-  {
-    href: '/react/handbook/styling',
-    title: 'Styling',
-  },
-  {
-    href: '/react/handbook/animation',
-    title: 'Animation',
-  },
-  {
-    href: '/react/handbook/composition',
-    title: 'Composition',
-  },
-];
