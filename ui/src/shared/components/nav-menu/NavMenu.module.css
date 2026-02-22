@@ -215,7 +215,7 @@
   color: var(--color-gray-500);
 }
 
-.Arrow {
+.PopupTopArrow {
   display: flex;
   transition: left calc(var(--duration)) var(--easing);
 

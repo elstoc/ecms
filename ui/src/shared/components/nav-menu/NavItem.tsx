@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import styles from './NavMenu.module.css';
 
+const { Item, Trigger, Content, Link: NavigationLink, Icon } = NavigationMenu;
+
 type DescribedLink = {
   title: string;
   active?: boolean;
@@ -20,22 +22,22 @@ export const NavItem = ({ title, href, active = false, subItems }: NavItemProps)
 
   if (!subItems && href) {
     return (
-      <NavigationMenu.Item>
+      <Item>
         <MenuLink className={cn(styles.Trigger, activeStyle)} href={href}>
           {title}
         </MenuLink>
-      </NavigationMenu.Item>
+      </Item>
     );
   }
 
   if (subItems) {
     return (
-      <NavigationMenu.Item>
-        <NavigationMenu.Trigger className={cn(styles.Trigger, activeStyle)}>
+      <Item>
+        <Trigger className={cn(styles.Trigger, activeStyle)}>
           {title}
           <ExpandMenuIcon />
-        </NavigationMenu.Trigger>
-        <NavigationMenu.Content className={styles.Content}>
+        </Trigger>
+        <Content className={styles.Content}>
           <ul className={styles.FlexLinkList}>
             {subItems.map((item) => (
               <li key={item.href}>
@@ -48,8 +50,8 @@ export const NavItem = ({ title, href, active = false, subItems }: NavItemProps)
               </li>
             ))}
           </ul>
-        </NavigationMenu.Content>
-      </NavigationMenu.Item>
+        </Content>
+      </Item>
     );
   }
 };
@@ -61,15 +63,15 @@ type LinkProps = {
 };
 
 const MenuLink = ({ href, className, children }: LinkProps) => (
-  <NavigationMenu.Link render={<Link to={href} />} className={className}>
+  <NavigationLink render={<Link to={href} />} className={className}>
     {children}
-  </NavigationMenu.Link>
+  </NavigationLink>
 );
 
 const ExpandMenuIcon = () => (
-  <NavigationMenu.Icon className={styles.ExpandMenuIcon}>
+  <Icon className={styles.ExpandMenuIcon}>
     <svg width='10' height='10' viewBox='0 0 10 10' fill='none'>
       <path d='M1 3.5L5 7.5L9 3.5' stroke='currentcolor' strokeWidth='1.5' />
     </svg>
-  </NavigationMenu.Icon>
+  </Icon>
 );
