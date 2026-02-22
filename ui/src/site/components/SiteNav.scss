@@ -7,6 +7,11 @@ nav.site-nav,
 
   .nav-title {
     font-family: var(--heading-font);
+    cursor: pointer;
+
+    &.active {
+      text-shadow: 0px 0px 1px black;
+    }
   }
 
   a:visited,
@@ -15,10 +20,6 @@ nav.site-nav,
   a:link {
     color: black;
     text-decoration: none;
-  }
-
-  a.active {
-    text-shadow: 0px 0px 1px black;
   }
 
   a:focus {

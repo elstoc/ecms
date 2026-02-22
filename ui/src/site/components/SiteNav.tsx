@@ -1,7 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import cn from 'classnames';
+import { Link, useLocation } from 'react-router-dom';
 
 import { ComponentMetadata, ComponentTypes } from '@/contracts/site';
 import { Classes, Popover } from '@/shared/components-legacy/popover';
+
+import { isNavActive } from '../utils/isNavActive';
 
 import './SiteNav.scss';
 
@@ -24,11 +27,15 @@ export const SiteNav = ({ siteComponents }: SiteNavProps) => {
 type ComponentNavItemProps = { component: ComponentMetadata };
 
 const ComponentNavItem = ({ component }: ComponentNavItemProps) => {
+  const { pathname } = useLocation();
+
+  const navTitleClasses = cn('nav-title', { active: isNavActive(pathname, component.uiPath) });
+
   if (component.type !== ComponentTypes.componentgroup) {
     return (
-      <NavLink to={component.uiPath}>
-        <div className='nav-title'>{component.title}</div>
-      </NavLink>
+      <Link to={component.uiPath}>
+        <div className={navTitleClasses}>{component.title}</div>
+      </Link>
     );
   }
 
@@ -41,22 +48,15 @@ const ComponentNavItem = ({ component }: ComponentNavItemProps) => {
   );
 
   return (
-    <NavLink to={component.apiPath}>
-      <Popover
-        content={subMenuElement}
-        placement='bottom-start'
-        popoverClassName={Classes.POPOVER_DISMISS}
-        interactionKind='click'
-        minimal={true}
-        modifiers={{ offset: { enabled: true, options: { offset: [0, 6] } } }}
-      >
-        <div
-          className='nav-title'
-          onClick={(e) => e.preventDefault()} // NavLink styling without functionality
-        >
-          {component.title}
-        </div>
-      </Popover>
-    </NavLink>
+    <Popover
+      content={subMenuElement}
+      placement='bottom-start'
+      popoverClassName={Classes.POPOVER_DISMISS}
+      interactionKind='click'
+      minimal={true}
+      modifiers={{ offset: { enabled: true, options: { offset: [0, 6] } } }}
+    >
+      <div className={navTitleClasses}>{component.title}</div>
+    </Popover>
   );
 };
