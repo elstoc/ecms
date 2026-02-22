@@ -1,22 +1,30 @@
 import type { Preview } from '@storybook/react-webpack5';
 import 'modern-normalize';
+import { BrowserRouter } from 'react-router-dom';
 
 import '../src/theme.css';
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <div
-        style={{
-          width: 'min(800px, 80vw)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          isolation: 'isolate',
+      <BrowserRouter
+        future={{
+          v7_relativeSplatPath: true,
+          v7_startTransition: true,
         }}
       >
-        <Story />
-      </div>
+        <div
+          style={{
+            width: 'min(800px, 80vw)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            isolation: 'isolate',
+          }}
+        >
+          <Story />
+        </div>
+      </BrowserRouter>
     ),
   ],
   parameters: {
