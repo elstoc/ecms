@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { useId, useMemo, useState } from 'react';
+import { useCallback, useId, useState } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
@@ -50,19 +50,23 @@ export const Combobox = ({
 }: ComboboxProps) => {
   const id = useId();
   const selectedItem = items.find((item) => item.value === value) ?? null;
-  const [inputValue, setInputValue] = useState('');
+  const [query, setQuery] = useState('');
+  const [displayedItems, setDisplayedItems] = useState(
+    maxListItems ? items.slice(0, maxListItems) : items,
+  );
 
-  const displayedItems: Item[] = useMemo(() => {
-    if (maxListItems && items.length > maxListItems) {
-      if (!inputValue) {
-        return items.slice(0, maxListItems);
+  const updateDisplayedItems = useCallback(
+    (searchTerm: string) => {
+      if (maxListItems && items.length > maxListItems) {
+        if (!searchTerm) {
+          setDisplayedItems(items.slice(0, maxListItems));
+        }
+
+        setDisplayedItems([...limitedItemFilter(items, maxListItems, searchTerm)]);
       }
-
-      return [...limitedItemFilter(items, maxListItems, inputValue)];
-    }
-
-    return items;
-  }, [items, inputValue, maxListItems]);
+    },
+    [items, maxListItems],
+  );
 
   const onValueChange = (
     newItem: Item | null,
@@ -78,9 +82,21 @@ export const Combobox = ({
     <Root
       items={displayedItems}
       value={selectedItem}
+      inputValue={query}
       onValueChange={onValueChange}
-      inputValue={inputValue}
-      onInputValueChange={setInputValue}
+      onOpenChangeComplete={(open) => {
+        if (!open && selectedItem) {
+          updateDisplayedItems(selectedItem.label);
+        }
+      }}
+      onInputValueChange={(nextInputValue, { reason }) => {
+        if (reason !== 'item-press') {
+          updateDisplayedItems(nextInputValue);
+        }
+        if (reason !== 'escape-key') {
+          setQuery(nextInputValue);
+        }
+      }}
     >
       <LabelledField label={label} htmlFor={id} width={width}>
         <div className={styles.InputWrapper}>
