@@ -10,7 +10,7 @@ import styles from './Select.module.css';
 const { Root, Trigger, Value, Portal, Positioner, Popup, List, Icon } = BaseSelect;
 
 export type Item = {
-  value: string;
+  value: string | null;
   label: string;
 };
 

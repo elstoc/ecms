@@ -3,9 +3,34 @@ import { useArgs } from 'storybook/internal/preview-api';
 
 import { Select } from './Select';
 
-const twentyNumbers = [...Array(20).keys()];
-
-const items = twentyNumbers.map((number) => ({ label: `Item #${number}`, value: `item${number}` }));
+const fruits = [
+  { label: '—', value: null },
+  { label: 'Apple', value: 'apple' },
+  { label: 'Banana', value: 'banana' },
+  { label: 'Orange', value: 'orange' },
+  { label: 'Pineapple', value: 'pineapple' },
+  { label: 'Grape', value: 'grape' },
+  { label: 'Mango', value: 'mango' },
+  { label: 'Strawberry', value: 'strawberry' },
+  { label: 'Blueberry', value: 'blueberry' },
+  { label: 'Raspberry', value: 'raspberry' },
+  { label: 'Blackberry', value: 'blackberry' },
+  { label: 'Cherry', value: 'cherry' },
+  { label: 'Peach', value: 'peach' },
+  { label: 'Pear', value: 'pear' },
+  { label: 'Plum', value: 'plum' },
+  { label: 'Kiwi', value: 'kiwi' },
+  { label: 'Watermelon', value: 'watermelon' },
+  { label: 'Cantaloupe', value: 'cantaloupe' },
+  { label: 'Honeydew', value: 'honeydew' },
+  { label: 'Papaya', value: 'papaya' },
+  { label: 'Guava', value: 'guava' },
+  { label: 'Lychee', value: 'lychee' },
+  { label: 'Pomegranate', value: 'pomegranate' },
+  { label: 'Apricot', value: 'apricot' },
+  { label: 'Grapefruit', value: 'grapefruit' },
+  { label: 'Passionfruit', value: 'passionfruit' },
+];
 
 const meta = {
   title: 'Select',
@@ -18,10 +43,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: 'Choose an item',
+    label: 'Choose a fruit',
     value: null,
     width: undefined,
-    items: items,
+    items: fruits,
     onChange: () => undefined,
   },
   render: (args) => {
