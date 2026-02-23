@@ -24,6 +24,21 @@ type ComboboxProps = {
   maxListItems?: number;
 };
 
+/* this generator function should be more efficient than an array filter
+   for short search terms because it stops filtering after reaching maxLength */
+function* limitedItemFilter(items: Item[], maxLength: number, searchTerm: string) {
+  let count = 0;
+  let i = 0;
+  while (count < maxLength && i < items.length) {
+    if (items[i].label.toLowerCase().includes(searchTerm.toLowerCase())) {
+      yield items[i];
+      count++;
+    }
+
+    i++;
+  }
+}
+
 export const Combobox = ({
   label,
   items,
@@ -43,11 +58,7 @@ export const Combobox = ({
         return items.slice(0, maxListItems);
       }
 
-      const limitedItems = items
-        .filter((item) => item.label.toLowerCase().includes(inputValue.toLowerCase()))
-        .slice(0, maxListItems);
-
-      return limitedItems;
+      return [...limitedItemFilter(items, maxListItems, inputValue)];
     }
 
     return items;

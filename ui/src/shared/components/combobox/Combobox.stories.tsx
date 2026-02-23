@@ -60,9 +60,9 @@ export const Default: Story = {
   },
 };
 
-const fiveThousandNumbers = [...Array(5000).keys()];
+const threeThousandNumbers = [...Array(3000).keys()];
 
-const fiveThousandItems = fiveThousandNumbers.map((number) => ({
+const threeThousandItems = threeThousandNumbers.map((number) => ({
   label: `Item #${number}`,
   value: `item${number}`,
 }));
@@ -71,9 +71,9 @@ export const LimitItems: Story = {
   ...Default,
   args: {
     ...Default.args,
-    label: 'choose from 5,000 items',
+    label: 'choose from 3,000 items',
     emptyMessage: 'no items found',
-    items: fiveThousandItems,
+    items: threeThousandItems,
     maxListItems: 100,
   },
 };
