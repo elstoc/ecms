@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
@@ -33,6 +33,7 @@ export const Combobox = ({
 }: ComboboxProps) => {
   const id = useId();
   const selectedItem = items.find((item) => item.value === value) ?? null;
+  const [inputValue, setInputValue] = useState('');
 
   const onValueChange = (
     newItem: Item | null,
@@ -45,7 +46,13 @@ export const Combobox = ({
   };
 
   return (
-    <Root items={items} value={selectedItem} onValueChange={onValueChange}>
+    <Root
+      items={items}
+      value={selectedItem}
+      onValueChange={onValueChange}
+      inputValue={inputValue}
+      onInputValueChange={setInputValue}
+    >
       <LabelledField label={label} htmlFor={id} width={width}>
         <div className={styles.InputWrapper}>
           <Input id={id} className={styles.Input} />
