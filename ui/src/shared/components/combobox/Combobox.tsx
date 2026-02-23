@@ -32,7 +32,7 @@ export const Combobox = ({
   width = 'md',
 }: ComboboxProps) => {
   const id = useId();
-  const itemForValue = items.find((item) => item.value === value) ?? null;
+  const selectedItem = items.find((item) => item.value === value) ?? null;
 
   const onValueChange = (
     newItem: Item | null,
@@ -45,7 +45,7 @@ export const Combobox = ({
   };
 
   return (
-    <Root items={items} value={itemForValue} onValueChange={onValueChange}>
+    <Root items={items} value={selectedItem} onValueChange={onValueChange}>
       <LabelledField label={label} htmlFor={id} width={width}>
         <div className={styles.InputWrapper}>
           <Input id={id} className={styles.Input} />
