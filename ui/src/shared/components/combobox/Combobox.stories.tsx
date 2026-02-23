@@ -59,3 +59,21 @@ export const Default: Story = {
     return <Combobox {...args} value={value} onChange={onChange} />;
   },
 };
+
+const fiveThousandNumbers = [...Array(5000).keys()];
+
+const fiveThousandItems = fiveThousandNumbers.map((number) => ({
+  label: `Item #${number}`,
+  value: `item${number}`,
+}));
+
+export const LimitItems: Story = {
+  ...Default,
+  args: {
+    ...Default.args,
+    label: 'choose from 5,000 items',
+    emptyMessage: 'no items found',
+    items: fiveThousandItems,
+    maxListItems: 100,
+  },
+};

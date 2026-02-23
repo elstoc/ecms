@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { useId, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
@@ -21,6 +21,7 @@ type ComboboxProps = {
   value: string | null;
   onChange: (newValue: string | null) => void;
   width?: InputWidth;
+  maxListItems?: number;
 };
 
 export const Combobox = ({
@@ -30,10 +31,27 @@ export const Combobox = ({
   value,
   onChange,
   width = 'md',
+  maxListItems,
 }: ComboboxProps) => {
   const id = useId();
   const selectedItem = items.find((item) => item.value === value) ?? null;
   const [inputValue, setInputValue] = useState('');
+
+  const displayedItems: Item[] = useMemo(() => {
+    if (maxListItems && items.length > maxListItems) {
+      if (!inputValue) {
+        return items.slice(0, maxListItems);
+      }
+
+      const limitedItems = items
+        .filter((item) => item.label.toLowerCase().includes(inputValue.toLowerCase()))
+        .slice(0, maxListItems);
+
+      return limitedItems;
+    }
+
+    return items;
+  }, [items, inputValue, maxListItems]);
 
   const onValueChange = (
     newItem: Item | null,
@@ -47,7 +65,7 @@ export const Combobox = ({
 
   return (
     <Root
-      items={items}
+      items={displayedItems}
       value={selectedItem}
       onValueChange={onValueChange}
       inputValue={inputValue}
