@@ -10,11 +10,18 @@ type DialogProps = {
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
   title: string;
+  disablePointerDismissal?: boolean;
 };
 
-export const Dialog = ({ open, onOpenChange, children, title }: DialogProps) => {
+export const Dialog = ({
+  open,
+  onOpenChange,
+  children,
+  title,
+  disablePointerDismissal,
+}: DialogProps) => {
   return (
-    <Root open={open} onOpenChange={onOpenChange}>
+    <Root open={open} onOpenChange={onOpenChange} disablePointerDismissal={disablePointerDismissal}>
       <Portal>
         <Backdrop className={styles.Backdrop} />
         <Popup className={styles.Popup}>
