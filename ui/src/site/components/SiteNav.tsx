@@ -54,7 +54,6 @@ const ComponentNavItem = ({ component }: ComponentNavItemProps) => {
       popoverClassName={Classes.POPOVER_DISMISS}
       interactionKind='click'
       minimal={true}
-      modifiers={{ offset: { enabled: true, options: { offset: [0, 6] } } }}
     >
       <div className={navTitleClasses}>{component.title}</div>
     </Popover>

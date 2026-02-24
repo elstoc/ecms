@@ -1,6 +1,4 @@
 :root {
-  /* always leave a gap for scrollbars */
-  margin-left: calc(100vw - 100%);
   scrollbar-gutter: stable;
   overflow-y: auto;
 
