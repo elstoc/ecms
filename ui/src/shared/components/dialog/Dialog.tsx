@@ -24,11 +24,14 @@ export const Dialog = ({
     <Root open={open} onOpenChange={onOpenChange} disablePointerDismissal={disablePointerDismissal}>
       <Portal>
         <Backdrop className={styles.Backdrop} />
+
         <Popup className={styles.Popup}>
           <div className={styles.Header}>
             <Title className={styles.Title}>{title}</Title>
+
             <CloseButton />
           </div>
+
           <Content className={styles.Content}>{children}</Content>
         </Popup>
       </Portal>
