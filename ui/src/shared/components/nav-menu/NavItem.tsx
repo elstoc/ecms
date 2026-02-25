@@ -64,7 +64,7 @@ type NavMenuLinkProps = {
 };
 
 const NavMenuLink = ({ href, className, children }: NavMenuLinkProps) => (
-  <Link render={<ReactDomLink to={href} />} className={className}>
+  <Link render={<ReactDomLink to={href} />} className={className} closeOnClick>
     {children}
   </Link>
 );
