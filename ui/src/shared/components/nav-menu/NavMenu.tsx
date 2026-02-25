@@ -4,7 +4,7 @@ import { NavItem, NavItemProps } from './NavItem';
 
 import styles from './NavMenu.module.scss';
 
-const { Root, List, Portal, Positioner, Popup, Viewport, Arrow } = NavigationMenu;
+const { Root, List, Portal, Positioner, Popup, Viewport } = NavigationMenu;
 
 type NavMenuProps = {
   items: NavItemProps[];
@@ -22,13 +22,11 @@ export const NavMenu = ({ items }: NavMenuProps) => {
       <Portal>
         <Positioner
           className={styles.Positioner}
-          sideOffset={10}
+          sideOffset={5}
           collisionPadding={{ top: 5, bottom: 5, left: 20, right: 20 }}
           collisionAvoidance={{ side: 'none' }}
         >
           <Popup className={styles.Popup}>
-            <PopupTopArrow />
-
             <Viewport className={styles.Viewport} />
           </Popup>
         </Positioner>
@@ -36,6 +34,8 @@ export const NavMenu = ({ items }: NavMenuProps) => {
     </Root>
   );
 };
+
+/* removed for now, but this component can be placed above the Viewport to reinstate the top arrow on the popup
 
 const PopupTopArrow = () => (
   <Arrow className={styles.PopupTopArrow}>
@@ -52,3 +52,4 @@ const PopupTopArrow = () => (
     </svg>
   </Arrow>
 );
+*/

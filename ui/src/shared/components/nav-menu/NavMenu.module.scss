@@ -102,6 +102,7 @@
     0 4px 6px -4px var(--grey-85);
 }
 
+/* removed along with the top arrow for now
 .PopupTopArrow {
   display: flex;
   transition: left calc(var(--duration)) var(--easing);
@@ -134,6 +135,7 @@
 .TopArrowOuterStroke {
   fill: var(--grey-85);
 }
+*/
 
 .Viewport {
   position: relative;
