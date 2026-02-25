@@ -4,5 +4,5 @@ export const isNavActive = (locationPath: string, navPath: string) => {
   const navMatchesPath = currentPath === navPath;
   const navMatchesParent = navPath && currentPath.startsWith(navPath);
 
-  return navMatchesPath || navMatchesParent;
+  return Boolean(navMatchesPath || navMatchesParent);
 };
