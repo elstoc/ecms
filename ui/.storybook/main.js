@@ -18,7 +18,7 @@ const config = {
         rules: [
           // Replaces existing CSS rules to support CSS Modules
           {
-            test: /\.css$/,
+            test: /\.(sa|sc|c)ss$/,
             use: ['style-loader', cssLoaderOptions],
           },
         ],
