@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .Root {
   border-radius: 0.5rem;
   padding: 0.25rem;
@@ -8,8 +10,17 @@
   position: relative;
   list-style: none;
 
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+
   padding: 0;
   margin: 0;
+
+  @media screen and (min-width: $maxMobileWidth) {
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
 
 /* The popup / portal to contain any submenu items */

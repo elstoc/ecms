@@ -2,7 +2,7 @@ import { NavigationMenu } from '@base-ui/react/navigation-menu';
 
 import { NavItem, NavItemProps } from './NavItem';
 
-import styles from './NavMenu.module.css';
+import styles from './NavMenu.module.scss';
 
 const { Root, List, Portal, Positioner, Popup, Viewport, Arrow } = NavigationMenu;
 
