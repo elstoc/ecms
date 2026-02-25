@@ -19,7 +19,6 @@
     align-items: baseline;
     flex-grow: 1;
     border-bottom: 1px solid var(--border-grey);
-    padding-block: 5px;
 
     .site-title {
       flex-shrink: 0;
@@ -34,7 +33,6 @@
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid var(--border-grey);
-    padding: 5px 0;
 
     .toolbar {
       padding-block: 0;
