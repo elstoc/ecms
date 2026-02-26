@@ -64,7 +64,9 @@ export const BookCard = forwardRef<HTMLDivElement, BookCardProps>(
               </div>
               {path && <div className='book-path'>{path}</div>}
               <div className='cover-and-desc'>
-                <img className='cover' alt='' src={coverUrl} />
+                <div>
+                  <img className='cover' alt='' src={coverUrl} />
+                </div>
                 {description && (
                   <div className='description' dangerouslySetInnerHTML={{ __html: description }} />
                 )}
