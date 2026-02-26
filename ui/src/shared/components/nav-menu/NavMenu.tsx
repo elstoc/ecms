@@ -23,7 +23,7 @@ export const NavMenu = ({ items }: NavMenuProps) => {
         <Positioner
           className={styles.Positioner}
           sideOffset={6}
-          collisionPadding={{ top: 5, bottom: 5, left: 20, right: 20 }}
+          collisionPadding={{ top: 5, bottom: 5, left: 5, right: 5 }}
           collisionAvoidance={{ side: 'none' }}
         >
           <Popup className={styles.Popup}>
