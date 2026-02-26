@@ -1,7 +1,6 @@
 @import '../../../variables.scss';
 
 .Root {
-  border-radius: 0.5rem;
   padding: 0.25rem;
 }
 
@@ -75,7 +74,7 @@
 
 .Popup {
   position: relative;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   background-color: canvas;
   transform-origin: var(--transform-origin);
 
@@ -98,7 +97,7 @@
     transition-duration: 0.15s;
   }
 
-  outline: 1px solid var(--grey-85);
+  outline: 1px solid var(--grey-95);
   box-shadow:
     0 10px 15px -3px var(--grey-85),
     0 4px 6px -4px var(--grey-85);
