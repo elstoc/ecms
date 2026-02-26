@@ -1,7 +1,7 @@
 import { useUserInfo } from '..';
 import { Suspense, useState } from 'react';
 
-import { Dialog, DialogBody } from '@/shared/components-legacy/dialog';
+import { Dialog } from '@/shared/components/dialog';
 import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { useSiteConfig } from '@/site';
@@ -34,16 +34,13 @@ export const UserInfo = () => {
       </Toolbox>
       <Dialog
         title={loggedIn ? 'Welcome' : 'Log in'}
-        isOpen={authDialogOpen}
-        onClose={() => setAuthDialogOpen(false)}
-        className='auth-dialog'
+        open={authDialogOpen}
+        onOpenChange={() => setAuthDialogOpen(false)}
       >
-        <DialogBody>
-          <Suspense>
-            {loggedIn && <Welcome user={userName} />}
-            {!loggedIn && <Login />}
-          </Suspense>
-        </DialogBody>
+        <Suspense>
+          {loggedIn && <Welcome user={userName} />}
+          {!loggedIn && <Login />}
+        </Suspense>
       </Dialog>
     </div>
   );

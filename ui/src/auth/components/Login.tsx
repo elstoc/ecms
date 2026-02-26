@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { Input } from '@/shared/components-legacy/forms';
 import { Button } from '@/shared/components/button';
-import { Card } from '@/shared/components/card';
+import { Input } from '@/shared/components/input';
 
 import { useLogin } from '../hooks/useAuthQueries';
 
@@ -28,13 +27,13 @@ export const Login = () => {
 
   return (
     <div className='login'>
-      <Card className='login-form'>
+      <div className='login-form'>
         <Input
           label='User ID'
           value={userId}
           onChange={(value) => setUserId(value ?? '')}
           autoFocus={true}
-          inline={true}
+          width='full'
         />
         <Input
           label='Password'
@@ -42,11 +41,11 @@ export const Login = () => {
           value={password}
           onChange={(password) => setPassword(password ?? '')}
           onPressEnter={handleLogin}
-          inline={true}
+          width='full'
         />
         <Button onClick={handleLogin}>Log In</Button>
-      </Card>
-      <div className='error'>{loginFailed && 'Invalid UserId or password'}</div>
+      </div>
+      {loginFailed && <div className='error'>Invalid UserId or password</div>}
     </div>
   );
 };

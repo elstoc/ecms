@@ -11,9 +11,24 @@ type InputProps = {
   autoFocus?: boolean;
   type?: 'text' | 'password';
   width?: InputWidth;
+  onPressEnter?: () => void;
 };
 
-export const Input = ({ label, value, onChange, autoFocus, type, width = 'md' }: InputProps) => {
+export const Input = ({
+  label,
+  value,
+  onChange,
+  autoFocus,
+  type,
+  width = 'md',
+  onPressEnter,
+}: InputProps) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      onPressEnter?.();
+    }
+  };
+
   return (
     <LabelledField label={label} width={width}>
       <BaseInput
@@ -22,6 +37,7 @@ export const Input = ({ label, value, onChange, autoFocus, type, width = 'md' }:
         onValueChange={onChange}
         autoFocus={autoFocus}
         type={type}
+        onKeyDown={handleKeyDown}
       />
     </LabelledField>
   );
