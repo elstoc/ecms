@@ -5,6 +5,9 @@ import { Button } from '../button';
 
 import { Dialog } from './Dialog';
 
+const loremIpsum =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
 const meta = {
   title: 'Dialog',
   component: Dialog,
@@ -32,7 +35,7 @@ export const Default: Story = {
       <>
         <Button onClick={() => setOpen(true)}>Open dialog</Button>
         <Dialog {...args} open={open} onOpenChange={setOpen}>
-          Some stuff here
+          {loremIpsum}
         </Dialog>
       </>
     );
