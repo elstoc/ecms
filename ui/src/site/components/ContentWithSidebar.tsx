@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 
-import { Collapse } from '@/shared/components-legacy/collapse';
+import { Disclosure, DisclosurePanel } from '@/shared/components/disclosure';
 import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { useIsDualPanel } from '@/shared/hooks';
@@ -30,14 +30,16 @@ export const ContentWithSidebar = ({
 
   if (!isDualPanel && sidebar) {
     sidebarElement = (
-      <Collapse isOpen={sidebarDrawerVisible} keepChildrenMounted={true}>
-        <div
-          className='cws-sidebar'
-          onClick={() => closeSidebarOnClick && setSidebarDrawerVisible(false)}
-        >
-          {sidebar}
-        </div>
-      </Collapse>
+      <Disclosure open={sidebarDrawerVisible}>
+        <DisclosurePanel>
+          <div
+            className='cws-sidebar'
+            onClick={() => closeSidebarOnClick && setSidebarDrawerVisible(false)}
+          >
+            {sidebar}
+          </div>
+        </DisclosurePanel>
+      </Disclosure>
     );
   }
 

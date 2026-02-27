@@ -1,7 +1,6 @@
 #app .book-filters,
 #portal-container .book-filters {
   height: 100%;
-  padding-bottom: 1em;
   margin-bottom: 1em;
   font-family: var(--heading-font);
 
