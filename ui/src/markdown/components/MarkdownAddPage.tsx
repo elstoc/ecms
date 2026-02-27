@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { Dialog, DialogBody } from '@/shared/components-legacy/dialog';
-import { Input } from '@/shared/components-legacy/forms';
 import { Button } from '@/shared/components/button';
-import { Card } from '@/shared/components/card';
+import { Dialog } from '@/shared/components/dialog';
+import { Input } from '@/shared/components/input';
 
 import { getMarkdownPage } from '../api';
 import { useMarkdown } from '../hooks/useMarkdown';
@@ -17,13 +16,8 @@ export const MarkdownAddPage = () => {
   const mode = searchParams.get('mode');
 
   return (
-    <Dialog
-      title='Add new child page'
-      isOpen={mode === 'add'}
-      onClose={() => setSearchParams()}
-      canEscapeKeyClose={false}
-    >
-      <DialogBody>{mode === 'add' && <MarkdownAddPageContent />}</DialogBody>
+    <Dialog title='Add new child page' open={mode === 'add'} onOpenChange={() => setSearchParams()}>
+      {mode === 'add' && <MarkdownAddPageContent />}
     </Dialog>
   );
 };
@@ -58,7 +52,7 @@ const MarkdownAddPageContent = () => {
 
   return (
     <div className='markdown-add-page'>
-      <Card className='add-page-form'>
+      <div className='add-page-form'>
         <Input
           label='Path'
           value={newPagePath}
@@ -67,11 +61,11 @@ const MarkdownAddPageContent = () => {
           }
           onPressEnter={createPage}
           autoFocus={true}
-          inline={true}
+          width='full'
         />
         <Button onClick={createPage}>Create Page</Button>
-      </Card>
-      <div className='error'>{errorText}</div>
+      </div>
+      {errorText && <div className='error'>{errorText}</div>}
     </div>
   );
 };
