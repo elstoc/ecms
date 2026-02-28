@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { showToast } from '../components-legacy/toaster';
+import { useToastManager } from '../components/toast';
 
 export const useMutationWithToast = <T>(params: {
   mutationFn: (data: T) => Promise<void>;
@@ -9,6 +9,7 @@ export const useMutationWithToast = <T>(params: {
 }) => {
   const queryClient = useQueryClient();
   const { mutationFn, invalidateKeys, successMessage } = params;
+  const toaster = useToastManager();
 
   return useMutation({
     mutationFn,
@@ -22,8 +23,8 @@ export const useMutationWithToast = <T>(params: {
           ),
         );
       }
-      showToast(successMessage, 1000);
+      toaster.add({ description: successMessage, timeout: 2000 });
     },
-    onError: (err) => showToast(`error: ${err.message}`, 5000),
+    onError: (err) => toaster.add({ description: `error: ${err.message}`, timeout: 5000 }),
   });
 };

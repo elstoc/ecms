@@ -6,6 +6,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter } from 'react-router-dom';
 
 import { App } from './app';
+import { ToastProvider } from './shared/components/toast';
 import { ErrorFallback } from './site/components/ErrorFallback';
 
 const queryDefaults = { defaultOptions: { queries: { retry: 2 } } };
@@ -24,11 +25,13 @@ root.render(
       }}
     >
       <BlueprintProvider portalContainer={portalContainer}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback='Loading...'>
-            <App />
-          </Suspense>
-        </ErrorBoundary>
+        <ToastProvider>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback='Loading...'>
+              <App />
+            </Suspense>
+          </ErrorBoundary>
+        </ToastProvider>
       </BlueprintProvider>
     </BrowserRouter>
   </QueryClientProvider>,
