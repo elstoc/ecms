@@ -20,6 +20,8 @@ const preview: Preview = {
             justifyContent: 'center',
             alignItems: 'center',
             isolation: 'isolate',
+            backgroundColor: 'var(--app-bg-color)',
+            padding: '2rem',
           }}
         >
           <Story />
