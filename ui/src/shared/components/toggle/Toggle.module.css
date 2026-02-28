@@ -13,6 +13,7 @@
   }
 
   &[data-pressed] {
+    border-color: var(--grey-50);
     border-radius: 0.25rem;
     background-color: var(--button-toggled-bg-color);
   }
