@@ -11,6 +11,7 @@ type DialogProps = {
   children: ReactNode;
   title: string;
   disablePointerDismissal?: boolean;
+  disableEscapeKeyDismissal?: boolean;
 };
 
 export const Dialog = ({
@@ -19,9 +20,20 @@ export const Dialog = ({
   children,
   title,
   disablePointerDismissal,
+  disableEscapeKeyDismissal,
 }: DialogProps) => {
+  const handleOpenChange = (open: boolean, eventDetails: BaseDialog.Root.ChangeEventDetails) => {
+    if (!disableEscapeKeyDismissal || eventDetails.reason !== 'escape-key') {
+      onOpenChange(open);
+    }
+  };
+
   return (
-    <Root open={open} onOpenChange={onOpenChange} disablePointerDismissal={disablePointerDismissal}>
+    <Root
+      open={open}
+      onOpenChange={handleOpenChange}
+      disablePointerDismissal={disablePointerDismissal}
+    >
       <Portal>
         <Backdrop className={styles.Backdrop} />
 
