@@ -36,12 +36,12 @@
   --heading-font: 'Raleway', sans-serif;
   --transition-timing: 300ms cubic-bezier(0.4, 1, 0.75, 0.9);
 
-  --button-bg-color: var(--grey-95);
+  --button-bg-color: var(--grey-100);
   --button-hovered-bg-color: var(--grey-90);
   --button-pressed-bg-color: var(--grey-85);
 
-  --button-toggled-bg-color: var(--grey-85);
-  --toggle-button-hovered-bg-color: var(--grey-95);
+  --button-toggled-bg-color: var(--grey-100);
+  --toggle-button-hovered-bg-color: var(--grey-100);
 
   --focus-outline: 2px solid var(--grey-30);
   --focus-outline-offset: -1px;
