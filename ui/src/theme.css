@@ -39,8 +39,9 @@
   --button-bg-color: var(--grey-95);
   --button-hovered-bg-color: var(--grey-90);
   --button-pressed-bg-color: var(--grey-85);
-  --button-toggled-bg-color: var(--grey-60);
-  --button-toggled-text-color: var(--grey-95);
+
+  --button-toggled-bg-color: var(--grey-85);
+  --toggle-button-hovered-bg-color: var(--grey-95);
 
   --focus-outline: 2px solid var(--grey-30);
   --focus-outline-offset: -1px;
