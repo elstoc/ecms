@@ -12,6 +12,7 @@ type SelectLookupBUIProps = {
   value: string | null;
   onChange: (newValue: string | null) => void;
   width?: InputWidth;
+  disabled?: boolean;
 };
 
 export const SelectLookupBUI = (props: SelectLookupBUIProps) => {
