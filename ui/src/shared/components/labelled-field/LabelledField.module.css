@@ -1,7 +1,14 @@
 .Root {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
+
+  &.Horizontal {
+    flex-direction: row-reverse;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+  }
 
   &.WidthSm {
     width: 7rem;

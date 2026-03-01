@@ -13,6 +13,7 @@ type LabelledFieldProps = {
   htmlFor?: string;
   width: InputWidth;
   disabled?: boolean;
+  horizontal?: boolean;
 };
 
 export const LabelledField = ({
@@ -22,6 +23,7 @@ export const LabelledField = ({
   htmlFor,
   width,
   disabled,
+  horizontal,
 }: LabelledFieldProps) => {
   const rootClasses = cn(
     styles.Root,
@@ -30,6 +32,7 @@ export const LabelledField = ({
     { [styles.WidthLg]: width === 'lg' },
     { [styles.WidthAuto]: width === 'auto' },
     { [styles.WidthFull]: width === 'full' },
+    { [styles.Horizontal]: horizontal },
   );
 
   return (
