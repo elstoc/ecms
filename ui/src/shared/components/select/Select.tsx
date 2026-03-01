@@ -20,13 +20,14 @@ type SelectProps = {
   onChange: (newValue: string | null) => void;
   items: Item[];
   width?: InputWidth;
+  disabled?: boolean;
 };
 
-export const Select = ({ value, label, items, onChange, width = 'md' }: SelectProps) => {
+export const Select = ({ value, label, items, onChange, width = 'md', disabled }: SelectProps) => {
   const id = useId();
 
   return (
-    <LabelledField label={label} htmlFor={id} width={width}>
+    <LabelledField label={label} htmlFor={id} width={width} disabled={disabled}>
       <Root id={id} items={items} value={value} onValueChange={onChange}>
         <Trigger className={styles.Trigger}>
           <Value />

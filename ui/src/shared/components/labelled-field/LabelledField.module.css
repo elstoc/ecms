@@ -22,6 +22,10 @@
   &.WidthFull {
     width: 100%;
   }
+
+  &[data-disabled] {
+    opacity: var(--disabled-opacity);
+  }
 }
 
 .Label {

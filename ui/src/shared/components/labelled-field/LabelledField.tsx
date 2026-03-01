@@ -12,6 +12,7 @@ type LabelledFieldProps = {
   children: ReactNode;
   htmlFor?: string;
   width: InputWidth;
+  disabled?: boolean;
 };
 
 export const LabelledField = ({
@@ -20,6 +21,7 @@ export const LabelledField = ({
   children,
   htmlFor,
   width,
+  disabled,
 }: LabelledFieldProps) => {
   const rootClasses = cn(
     styles.Root,
@@ -31,7 +33,7 @@ export const LabelledField = ({
   );
 
   return (
-    <Field.Root className={rootClasses}>
+    <Field.Root className={rootClasses} disabled={disabled}>
       <Field.Label className={styles.Label} aria-hidden={ariaHideLabel} htmlFor={htmlFor}>
         {label}
       </Field.Label>

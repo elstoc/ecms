@@ -27,6 +27,7 @@ type ToggleButtonGroupProps = {
   onChange: (value: string[]) => void;
   allowMultiple?: boolean;
   items: Item[];
+  disabled?: boolean;
 } & (ValueCanEmpty | ValueCannotEmpty);
 
 export const ToggleGroup = ({
@@ -37,6 +38,7 @@ export const ToggleGroup = ({
   allowEmpty,
   allowMultiple,
   items,
+  disabled,
 }: ToggleButtonGroupProps) => {
   const classes = cn(styles.Root, className);
 
@@ -47,13 +49,14 @@ export const ToggleGroup = ({
   };
 
   return (
-    <LabelledField label={label} ariaHideLabel width='auto'>
+    <LabelledField label={label} ariaHideLabel width='auto' disabled={disabled}>
       <BaseToggleGroup
         className={classes}
         value={value}
         onValueChange={onValueChange}
         multiple={allowMultiple}
         aria-label={label}
+        disabled={disabled}
       >
         {items.map((item) => (
           <Toggle key={item.value} value={item.value}>

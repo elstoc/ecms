@@ -13,6 +13,7 @@ type InputProps = {
   onChange: (value: number | null) => void;
   maximumFractionDigits?: number;
   width?: InputWidth;
+  disabled?: boolean;
 };
 
 export const NumberInput = ({
@@ -21,11 +22,12 @@ export const NumberInput = ({
   onChange,
   maximumFractionDigits,
   width = 'md',
+  disabled,
 }: InputProps) => {
   const id = useId();
 
   return (
-    <LabelledField label={label} htmlFor={id} width={width}>
+    <LabelledField label={label} htmlFor={id} width={width} disabled={disabled}>
       <Root value={value} onValueChange={onChange} format={{ maximumFractionDigits }}>
         <Input className={styles.Input} />
       </Root>

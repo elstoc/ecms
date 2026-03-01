@@ -22,6 +22,7 @@ type ComboboxMultiProps = {
   width?: InputWidth;
   inputValue?: string;
   onInputValueChange?: (inputValue: string) => void;
+  disabled?: boolean;
 };
 
 export const ComboboxMulti = ({
@@ -33,6 +34,7 @@ export const ComboboxMulti = ({
   width = 'md',
   inputValue,
   onInputValueChange,
+  disabled,
 }: ComboboxMultiProps) => {
   const id = useId();
   const [localQueryState, setLocalQueryState] = useState('');
@@ -88,7 +90,7 @@ export const ComboboxMulti = ({
       onInputValueChange={updateInputValueStateOrProp}
       onOpenChange={onOpenChange}
     >
-      <LabelledField label={label} htmlFor={id} width={width}>
+      <LabelledField label={label} htmlFor={id} width={width} disabled={disabled}>
         <div className={styles.InputContainer}>
           <Chips className={styles.Chips} ref={containerRef}>
             <Value>

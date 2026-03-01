@@ -54,4 +54,6 @@
   --input-padding: 0.3rem 0.5rem;
   --input-margin: 0;
   --input-height: 2rem;
+
+  --disabled-opacity: 0.4;
 }

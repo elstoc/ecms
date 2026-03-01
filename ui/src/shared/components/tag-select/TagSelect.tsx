@@ -22,6 +22,7 @@ type TagSelectProps = {
   emptyMessage: string;
   allowCreation?: boolean;
   width?: InputWidth;
+  disabled?: boolean;
 };
 
 export const TagSelect = ({
@@ -32,6 +33,7 @@ export const TagSelect = ({
   onChange,
   allowCreation,
   width = 'md',
+  disabled,
 }: TagSelectProps) => {
   const [query, setQuery] = useState('');
 
@@ -59,6 +61,7 @@ export const TagSelect = ({
       inputValue={query}
       onInputValueChange={setQuery}
       width={width}
+      disabled={disabled}
     />
   );
 };

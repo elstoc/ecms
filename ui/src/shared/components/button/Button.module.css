@@ -28,7 +28,7 @@
   }
 
   &[data-disabled] {
-    opacity: 0.2;
+    opacity: var(--disabled-opacity);
     cursor: default;
     color: inherit;
   }

@@ -12,6 +12,7 @@ type InputProps = {
   type?: 'text' | 'password';
   width?: InputWidth;
   onPressEnter?: () => void;
+  disabled?: boolean;
 };
 
 export const Input = ({
@@ -22,6 +23,7 @@ export const Input = ({
   type,
   width = 'md',
   onPressEnter,
+  disabled,
 }: InputProps) => {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -30,7 +32,7 @@ export const Input = ({
   };
 
   return (
-    <LabelledField label={label} width={width}>
+    <LabelledField label={label} width={width} disabled={disabled}>
       <BaseInput
         className={styles.Root}
         value={value}

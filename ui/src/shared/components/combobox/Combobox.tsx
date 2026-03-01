@@ -22,6 +22,7 @@ type ComboboxProps = {
   onChange: (newValue: string | null) => void;
   width?: InputWidth;
   maxListItems?: number;
+  disabled?: boolean;
 };
 
 /* this generator function should be more efficient than an array filter
@@ -47,6 +48,7 @@ export const Combobox = ({
   onChange,
   width = 'md',
   maxListItems,
+  disabled,
 }: ComboboxProps) => {
   const id = useId();
   const selectedItem = items.find((item) => item.value === value) ?? null;
@@ -98,7 +100,7 @@ export const Combobox = ({
         }
       }}
     >
-      <LabelledField label={label} htmlFor={id} width={width}>
+      <LabelledField label={label} htmlFor={id} width={width} disabled={disabled}>
         <div className={styles.InputWrapper}>
           <Input id={id} className={styles.Input} />
 
