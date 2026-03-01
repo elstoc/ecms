@@ -1,11 +1,8 @@
-import { useState } from 'react';
-
 import { Video } from '@/contracts/videodb';
 import { Button } from '@/shared/components-legacy/button';
 import { ControlGroup } from '@/shared/components-legacy/control-group';
 import { Input, IntegerInput, Switch } from '@/shared/components-legacy/forms';
 import { Card } from '@/shared/components/card';
-import { Disclosure, DisclosurePanel } from '@/shared/components/disclosure';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
@@ -22,7 +19,6 @@ type EditVideoFormProps = {
 
 export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormProps) => {
   const [video, dispatch] = useEditVideoReducer(initialVideo);
-  const [disclosurePanelOpen, setDisclosurePanelOpen] = useState(false);
 
   return (
     <div className='edit-video-form'>
@@ -135,34 +131,6 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         value={video.progress ?? undefined}
         onChange={(value) => dispatch({ key: 'progress', value })}
       />
-      <Button
-        className='collapser'
-        onClick={() => setDisclosurePanelOpen((open) => !open)}
-        icon={disclosurePanelOpen ? 'caret-up' : 'caret-down'}
-      />
-      <Disclosure open={disclosurePanelOpen}>
-        <DisclosurePanel>
-          <Input
-            label='Director'
-            className='director'
-            inline={true}
-            value={video.director ?? undefined}
-            onChange={(value) => dispatch({ key: 'director', value })}
-          />
-          <Input
-            label='Actors'
-            inline={true}
-            value={video.actors ?? undefined}
-            onChange={(value) => dispatch({ key: 'actors', value })}
-          />
-          <Input
-            label='Plot'
-            inline={true}
-            value={video.plot ?? undefined}
-            onChange={(value) => dispatch({ key: 'plot', value })}
-          />
-        </DisclosurePanel>
-      </Disclosure>
       <div className='form-buttons'>
         {onDelete && (
           <Button tabIndex={-1} className='delete-button' onClick={() => onDelete?.()}>
