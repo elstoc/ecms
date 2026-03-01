@@ -28,8 +28,8 @@ export const Select = ({ value, label, items, onChange, width = 'md', disabled }
 
   return (
     <LabelledField label={label} htmlFor={id} width={width} disabled={disabled}>
-      <Root id={id} items={items} value={value} onValueChange={onChange}>
-        <Trigger className={styles.Trigger}>
+      <Root items={items} value={value} onValueChange={onChange}>
+        <Trigger id={id} className={styles.Trigger}>
           <Value />
 
           <SelectIcon />

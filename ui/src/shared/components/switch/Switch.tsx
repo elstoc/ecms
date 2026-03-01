@@ -22,6 +22,7 @@ export const Switch = ({ label, checked, onChange, disabled, width = 'md' }: Swi
   return (
     <LabelledField label={label} htmlFor={id} width={width} disabled={disabled} horizontal>
       <Root
+        id={id}
         className={styles.Switch}
         checked={checked}
         onCheckedChange={onChange}

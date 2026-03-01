@@ -1,4 +1,5 @@
 import { Input as BaseInput } from '@base-ui/react/input';
+import { useId } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
@@ -25,6 +26,8 @@ export const Input = ({
   onPressEnter,
   disabled,
 }: InputProps) => {
+  const id = useId();
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       onPressEnter?.();
@@ -32,8 +35,9 @@ export const Input = ({
   };
 
   return (
-    <LabelledField label={label} width={width} disabled={disabled}>
+    <LabelledField label={label} width={width} disabled={disabled} htmlFor={id}>
       <BaseInput
+        id={id}
         className={styles.Root}
         value={value}
         onValueChange={onChange}
