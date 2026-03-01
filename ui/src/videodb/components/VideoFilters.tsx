@@ -1,28 +1,26 @@
-import {
-  Input,
-  IntegerInput,
-  SegmentedControlInput,
-  Switch,
-} from '@/shared/components-legacy/forms';
 import { Button } from '@/shared/components/button';
+import { Input } from '@/shared/components/input';
+import { NumberInput } from '@/shared/components/number-input';
+import { Switch } from '@/shared/components/switch';
+import { ToggleGroup } from '@/shared/components/toggle-group';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 
-import { SelectLookup } from './SelectLookup';
-import { VideoTagInput } from './VideoTagInput';
+import { SelectLookupBUI } from './SelectLookupBUI';
+import { VideoTagInputBUI } from './VideoTagInputBUI';
 
 import './VideoFilters.scss';
 
-const minResolutionOptions = [
-  { code: undefined, description: 'SD' },
-  { code: 'HD', description: 'HD' },
-  { code: 'UHD', description: 'UHD' },
+const minResolutionItems = [
+  { value: 'SD', label: 'SD' },
+  { value: 'HD', label: 'HD' },
+  { value: 'UHD', label: 'UHD' },
 ];
 
-const watchedStatusOptions = [
-  { code: undefined, description: 'All' },
-  { code: 'Y', description: 'Y' },
-  { code: 'N', description: 'N' },
+const watchedStatusItems = [
+  { value: 'All', label: 'All' },
+  { value: 'Y', label: 'Y' },
+  { value: 'N', label: 'N' },
 ];
 
 export const VideoFilters = () => {
@@ -34,93 +32,84 @@ export const VideoFilters = () => {
 
   return (
     <div className='video-filters'>
-      <div className='filter-title'>Videos</div>
-      <SelectLookup
+      <SelectLookupBUI
         label='Category'
-        className='category'
         lookupTable='categories'
-        allowUndefinedCodeSelection={true}
-        valueForUndefinedCode='All'
-        inline={true}
+        valueForNullCode='All'
         disabled={showOnlyExpandedIds}
-        selectedCode={uiFilters.categories}
-        onChange={(value) => updateUiFilter({ key: 'categories', value })}
-        filterable={false}
+        value={uiFilters.categories ?? null}
+        onChange={(value) => updateUiFilter({ key: 'categories', value: value ?? undefined })}
       />
-      <SegmentedControlInput
+      <ToggleGroup
         label='Min Resolution'
-        inline={true}
         disabled={showOnlyExpandedIds}
-        describedCodes={minResolutionOptions}
-        selectedCode={uiFilters.minResolution}
-        onChange={(value) => updateUiFilter({ key: 'minResolution', value })}
+        items={minResolutionItems}
+        value={[uiFilters.minResolution ?? 'SD']}
+        onChange={(value) =>
+          updateUiFilter({ key: 'minResolution', value: value[0] === 'SD' ? undefined : value[0] })
+        }
       />
-      <SegmentedControlInput
+      <ToggleGroup
         label='Watched'
-        inline={true}
         disabled={showOnlyExpandedIds}
-        describedCodes={watchedStatusOptions}
-        selectedCode={uiFilters.watched}
-        onChange={(value) => updateUiFilter({ key: 'watched', value })}
+        items={watchedStatusItems}
+        value={[uiFilters.watched ?? 'All']}
+        onChange={(value) =>
+          updateUiFilter({ key: 'watched', value: value[0] === 'All' ? undefined : value[0] })
+        }
       />
-      <SegmentedControlInput
+      <ToggleGroup
         label='Media Watched'
-        inline={true}
         disabled={showOnlyExpandedIds}
-        describedCodes={watchedStatusOptions}
-        selectedCode={uiFilters.mediaWatched}
-        onChange={(value) => updateUiFilter({ key: 'mediaWatched', value })}
+        items={watchedStatusItems}
+        value={[uiFilters.mediaWatched ?? 'All']}
+        onChange={(value) =>
+          updateUiFilter({ key: 'mediaWatched', value: value[0] === 'All' ? undefined : value[0] })
+        }
       />
-      <IntegerInput
+      <NumberInput
         label='Max Length'
-        className='max-length'
-        inline={true}
+        value={uiFilters.maxLength ?? null}
+        onChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)}
+        maximumFractionDigits={0}
         disabled={showOnlyExpandedIds}
-        value={uiFilters.maxLength}
-        onChange={(value) => updateUiFilter({ key: 'maxLength', value }, 1000)}
       />
-      <VideoTagInput
+      <VideoTagInputBUI
         label='Tags'
-        className='tags'
         selectedTags={uiFilters.tags}
         allowCreation={false}
         disabled={showOnlyExpandedIds}
-        onChange={(value) => updateUiFilter({ key: 'tags', value })}
+        onChange={(value) =>
+          updateUiFilter({ key: 'tags', value: value?.length ? value : undefined })
+        }
       />
       <Input
         label='Title Search'
-        inline={true}
         disabled={showOnlyExpandedIds}
-        value={uiFilters.titleContains}
-        onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
+        value={uiFilters.titleContains ?? ''}
+        onChange={(value) =>
+          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
+        }
       />
-      <SelectLookup
+      <SelectLookupBUI
         label='Primary Media'
-        className='primary-media'
         lookupTable='media_types'
-        allowUndefinedCodeSelection={true}
-        valueForUndefinedCode='All'
-        inline={true}
+        valueForNullCode='All'
         disabled={showOnlyExpandedIds}
-        selectedCode={uiFilters.primaryMediaType}
-        onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value })}
-        filterable={false}
+        value={uiFilters.primaryMediaType ?? null}
+        onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
       />
       <div className='switches'>
         <Switch
           label='In progress'
-          className='has-progress-notes'
-          inline={true}
           disabled={showOnlyExpandedIds}
-          value={!!uiFilters.hasProgressNotes}
+          checked={!!uiFilters.hasProgressNotes}
           onChange={(value) => updateUiFilter({ key: 'hasProgressNotes', value })}
         />
         <Switch
           label='Flagged'
-          className='flagged'
-          inline={true}
           disabled={showOnlyExpandedIds}
-          value={!!uiFilters.flaggedOnly}
+          checked={!!uiFilters.flaggedOnly}
           onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
         />
       </div>

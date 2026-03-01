@@ -1,62 +1,19 @@
-#app .video-filters,
-#portal-container .video-filters {
+.video-filters {
   height: 100%;
-  margin-bottom: 1em;
-  font-family: var(--heading-font);
-
-  .filter-title {
-    font-weight: 600;
-    font-size: 1.4rem;
-    margin-bottom: 1.3rem;
-  }
-
-  .bp5-segmented-control {
-    background-color: var(--app-bg-color);
-    padding: 0;
-  }
-
-  label {
-    width: 12rem;
-    font-size: 1.05rem;
-    font-weight: 400;
-  }
-
-  .bp5-form-content,
-  .bp5-form-content .bp5-input-group {
-    width: 100%;
-  }
-
-  .max-length .bp5-input-group {
-    width: 4em;
-  }
-
-  .category,
-  .primary-media {
-    button {
-      width: 100%;
-      background-color: white;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   .switches {
     display: flex;
     justify-content: flex-end;
     column-gap: 2em;
-    margin-top: 2rem;
-
-    label {
-      width: 6rem;
-    }
-    .bp5-form-content {
-      width: auto;
-    }
   }
 
   .filter-action-buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 1rem;
 
     button {
       margin-top: 0;
