@@ -25,6 +25,6 @@ export const Default: Story = {
       updateArgs({ checked: newValue });
     };
 
-    return <Switch label={args.label} checked={checked} onChange={onChange} />;
+    return <Switch {...args} checked={checked} onChange={onChange} />;
   },
 };

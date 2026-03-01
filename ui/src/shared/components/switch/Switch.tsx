@@ -1,4 +1,7 @@
 import { Switch as BaseSwitch } from '@base-ui/react/switch';
+import { useId } from 'react';
+
+import { InputWidth, LabelledField } from '../labelled-field';
 
 import styles from './Switch.module.css';
 
@@ -8,13 +11,24 @@ type SwitchProps = {
   label: string;
   checked: boolean;
   onChange: (isChecked: boolean) => void;
+  disabled?: boolean;
+  width?: InputWidth;
 };
 
-export const Switch = ({ label, checked, onChange }: SwitchProps) => (
-  <label className={styles.Label}>
-    <Root className={styles.Switch} checked={checked} onCheckedChange={onChange}>
-      <Thumb className={styles.Thumb} />
-    </Root>
-    {label}
-  </label>
-);
+export const Switch = ({ label, checked, onChange, disabled, width = 'md' }: SwitchProps) => {
+  const id = useId();
+
+  console.log(disabled);
+  return (
+    <LabelledField label={label} htmlFor={id} width={width} disabled={disabled} horizontal>
+      <Root
+        className={styles.Switch}
+        checked={checked}
+        onCheckedChange={onChange}
+        disabled={disabled}
+      >
+        <Thumb className={styles.Thumb} />
+      </Root>
+    </LabelledField>
+  );
+};
