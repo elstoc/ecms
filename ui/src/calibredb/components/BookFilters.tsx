@@ -1,39 +1,52 @@
-import {
-  Input,
-  MultiTagInput,
-  SegmentedControlInput,
-  Switch,
-} from '@/shared/components-legacy/forms';
-import { SuggestItem } from '@/shared/components-legacy/forms/SuggestItem';
+import { useMemo } from 'react';
+
 import { Button } from '@/shared/components/button';
+import { Combobox } from '@/shared/components/combobox';
+import { Input } from '@/shared/components/input';
+import { Switch } from '@/shared/components/switch/Switch';
+import { TagSelect } from '@/shared/components/tag-select';
+import { ToggleGroup } from '@/shared/components/toggle-group';
 import { toIntOrUndefined } from '@/utils';
 
 import { useAllPaths } from '../hooks/useAllPaths';
 import { useCalibreDb } from '../hooks/useCalibreDb';
+import { useLookup } from '../hooks/useCalibreDbQueries';
 
-import { SelectLookup } from './SelectLookup';
+import { SelectLookupBUI } from './SelectLookupBUI';
 
 import './BookFilters.css';
 
-const modeOptions = [
-  { code: 'search', description: 'Search' },
-  { code: 'browse', description: 'Browse' },
+const modeOptionItems = [
+  { value: 'search', label: 'Search' },
+  { value: 'browse', label: 'Browse' },
 ];
 
-const readStatusOptions = [
-  { code: undefined, description: 'All' },
-  { code: 'Y', description: 'Y' },
-  { code: 'N', description: 'N' },
+const readStatusOptionItems = [
+  { value: 'All', label: 'All' },
+  { value: 'Y', label: 'Y' },
+  { value: 'N', label: 'N' },
 ];
 
-const sortOrderOptions = [
-  { code: 'title', description: 'Title' },
-  { code: 'author', description: 'Author' },
-  { code: 'shuffle', description: 'Shuffle' },
+const sortOrderOptionItems = [
+  { value: 'title', label: 'Title' },
+  { value: 'author', label: 'Author' },
+  { value: 'shuffle', label: 'Shuffle' },
 ];
 
 export const BookFilters = () => {
   const allPaths = useAllPaths();
+  const allAuthorsLookup = useLookup('authors');
+
+  const allPathItems = useMemo(
+    () => allPaths.map((path) => ({ value: path, label: path })),
+    [allPaths],
+  );
+
+  const allAuthorItems = useMemo(
+    () => Object.entries(allAuthorsLookup).map(([value, label]) => ({ value, label })),
+    [allAuthorsLookup],
+  );
+
   const {
     state: { uiFilters, mode },
     updateUiFilter,
@@ -47,86 +60,78 @@ export const BookFilters = () => {
 
   return (
     <form role='search' aria-labelledby='book-search-title' className='book-filters'>
-      <div id='book-search-title' className='filter-title'>
-        Books
-      </div>
-      <SegmentedControlInput
+      <ToggleGroup
         label='Mode'
-        inline={true}
-        describedCodes={modeOptions}
-        selectedCode={mode}
+        items={modeOptionItems}
+        value={[mode]}
         onChange={() => dispatch({ type: 'toggleMode' })}
       />
-      <MultiTagInput
+      <TagSelect
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
-        selectedTags={uiFilters.devices}
-        onChange={(value) => updateUiFilter({ key: 'devices', value })}
+        selectedTags={uiFilters.devices ?? []}
+        onChange={(value) =>
+          updateUiFilter({ key: 'devices', value: value.length ? value : undefined })
+        }
+        emptyMessage='No devices found'
+        width='full'
       />
-      <SuggestItem
+      <Combobox
         label='Path'
-        className='path'
-        items={allPaths}
-        allowUndefined={true}
-        displayUndefinedAs='All'
-        inline={true}
-        value={uiFilters.bookPath}
-        onChange={(value) => updateUiFilter({ key: 'bookPath', value })}
+        items={allPathItems}
+        emptyMessage='No paths found'
+        value={uiFilters.bookPath ?? null}
+        onChange={(value) => updateUiFilter({ key: 'bookPath', value: value ?? undefined })}
+        maxListItems={100}
+        width='full'
       />
       {mode === 'search' && (
         <>
           <Switch
             label='Exact path'
-            className='exact-path'
-            inline={true}
-            value={!!uiFilters.exactPath}
+            checked={!!uiFilters.exactPath}
             onChange={(value) => updateUiFilter({ key: 'exactPath', value })}
           />
           <Input
             label='Title Search'
-            inline={true}
-            value={uiFilters.titleContains}
-            onChange={(value) => updateUiFilter({ key: 'titleContains', value }, 1000)}
-          />
-          <SelectLookup
-            label='Author'
-            className='author'
-            lookupTable='authors'
-            allowUndefinedCodeSelection={true}
-            valueForUndefinedCode='All'
-            inline={true}
-            selectedCode={uiFilters.author?.toString()}
-            onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
-            filterable={true}
-          />
-          <SelectLookup
-            label='Format'
-            className='format'
-            lookupTable='formats'
-            allowUndefinedCodeSelection={true}
-            valueForUndefinedCode='All'
-            inline={true}
-            selectedCode={uiFilters.format?.toString()}
-            onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
-            filterable={true}
-          />
-          <SegmentedControlInput
-            label='Read'
-            inline={true}
-            describedCodes={readStatusOptions}
-            selectedCode={readStatusCode}
+            value={uiFilters.titleContains ?? ''}
             onChange={(value) =>
-              updateUiFilter({ key: 'readStatus', value: value ? value === 'Y' : undefined })
+              updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
+            }
+          />
+          <Combobox
+            label='Author'
+            items={allAuthorItems}
+            value={uiFilters.author?.toString() ?? null}
+            onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
+            emptyMessage='No authors found'
+            maxListItems={100}
+          />
+          <SelectLookupBUI
+            label='Format'
+            lookupTable='formats'
+            valueForNullCode='All'
+            value={uiFilters.format?.toString() ?? null}
+            onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
+          />
+          <ToggleGroup
+            label='Read'
+            items={readStatusOptionItems}
+            value={[readStatusCode ?? 'All']}
+            onChange={(value) =>
+              updateUiFilter({
+                key: 'readStatus',
+                value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
+              })
             }
           />
         </>
       )}
-      <SegmentedControlInput
+      <ToggleGroup
         label='Sort'
-        inline={true}
-        describedCodes={sortOrderOptions}
-        selectedCode={uiFilters.sortOrder}
-        onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value ?? 'title' })}
+        items={sortOrderOptionItems}
+        value={[uiFilters.sortOrder]}
+        onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value[0] ?? 'title' })}
       />
       <div className='filter-action-buttons'>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
