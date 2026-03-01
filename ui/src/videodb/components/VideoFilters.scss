@@ -7,17 +7,12 @@
   .switches {
     display: flex;
     justify-content: flex-end;
-    column-gap: 2em;
+    margin: 1rem 0;
   }
 
   .filter-action-buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    button {
-      margin-top: 0;
-      font-size: 1rem;
-    }
   }
 }
