@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import { Button } from '@/shared/components/button';
 import { Combobox } from '@/shared/components/combobox';
 import { Input } from '@/shared/components/input';
-import { Switch } from '@/shared/components/switch/Switch';
 import { TagSelect } from '@/shared/components/tag-select';
 import { ToggleGroup } from '@/shared/components/toggle-group';
 import { toIntOrUndefined } from '@/utils';
@@ -66,6 +65,14 @@ export const BookFilters = () => {
         value={[mode]}
         onChange={() => dispatch({ type: 'toggleMode' })}
       />
+      <Input
+        label='Title Search'
+        value={uiFilters.titleContains ?? ''}
+        onChange={(value) =>
+          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
+        }
+        width='full'
+      />
       <TagSelect
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
@@ -87,18 +94,6 @@ export const BookFilters = () => {
       />
       {mode === 'search' && (
         <>
-          <Switch
-            label='Exact path'
-            checked={!!uiFilters.exactPath}
-            onChange={(value) => updateUiFilter({ key: 'exactPath', value })}
-          />
-          <Input
-            label='Title Search'
-            value={uiFilters.titleContains ?? ''}
-            onChange={(value) =>
-              updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
-            }
-          />
           <Combobox
             label='Author'
             items={allAuthorItems}
@@ -106,6 +101,7 @@ export const BookFilters = () => {
             onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
             emptyMessage='No authors found'
             maxListItems={100}
+            width='full'
           />
           <SelectLookup
             label='Format'
