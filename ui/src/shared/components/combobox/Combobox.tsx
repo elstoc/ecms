@@ -81,6 +81,7 @@ export const Combobox = ({
   };
 
   useEffect(() => {
+    /* in case selectedItem is changed externally, keep everything up-to-date */
     const newQuery = selectedItem?.label ?? '';
     setQuery(newQuery);
     updateDisplayedItems(newQuery);
