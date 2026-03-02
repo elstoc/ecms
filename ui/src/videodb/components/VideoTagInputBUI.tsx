@@ -1,3 +1,4 @@
+import { InputWidth } from '@/shared/components/labelled-field';
 import { TagSelect } from '@/shared/components/tag-select';
 
 import { useGetTags } from '../hooks/useVideoDbQueries';
@@ -9,6 +10,7 @@ type VideoTagInputProps = {
   className?: string;
   allowCreation?: boolean;
   disabled?: boolean;
+  width?: InputWidth;
 };
 
 export const VideoTagInputBUI = (props: VideoTagInputProps) => {
@@ -22,6 +24,7 @@ export const VideoTagInputBUI = (props: VideoTagInputProps) => {
       onChange={(selectedTags) => props.onChange?.(selectedTags)}
       emptyMessage='No tags found'
       disabled={props.disabled}
+      width={props.width}
     />
   );
 };

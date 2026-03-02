@@ -1,13 +1,14 @@
 import { Video } from '@/contracts/videodb';
-import { Button } from '@/shared/components-legacy/button';
-import { ControlGroup } from '@/shared/components-legacy/control-group';
-import { Input, IntegerInput, Switch } from '@/shared/components-legacy/forms';
+import { Button } from '@/shared/components/button';
 import { Card } from '@/shared/components/card';
+import { Input } from '@/shared/components/input';
+import { NumberInput } from '@/shared/components/number-input';
+import { Switch } from '@/shared/components/switch';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
-import { SelectLookup } from './SelectLookup';
-import { VideoTagInput } from './VideoTagInput';
+import { SelectLookupBUI } from './SelectLookupBUI';
+import { VideoTagInputBUI } from './VideoTagInputBUI';
 
 import './EditVideoForm.scss';
 
@@ -23,113 +24,113 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
   return (
     <div className='edit-video-form'>
       <Input
-        label=''
-        className='title'
-        inline={true}
+        label='Title'
         value={video.title}
         onChange={(value) => dispatch({ key: 'title', value: value ?? '' })}
         autoFocus={true}
+        width='full'
       />
-      <ControlGroup className='first-group'>
-        <SelectLookup
+      <div className='watched-and-category'>
+        <SelectLookupBUI
           label='Watched'
-          className='watched-status'
-          selectedCode={video.watched}
+          value={video.watched}
           lookupTable='watched_status'
           onChange={(value) => dispatch({ key: 'watched', value: value || '' })}
+          width='sm'
         />
-        <SelectLookup
+        <SelectLookupBUI
           label='Category'
-          className='category'
           lookupTable='categories'
-          selectedCode={video.category}
+          value={video.category}
           onChange={(value) => dispatch({ key: 'category', value: value || '' })}
         />
-      </ControlGroup>
-      <ControlGroup className='second-group'>
-        <IntegerInput
+      </div>
+      <div className='episodes-and-length'>
+        <NumberInput
           label='Episodes'
-          className='num-episodes'
-          value={video.num_episodes ?? undefined}
-          onChange={(value) => dispatch({ key: 'num_episodes', value })}
+          value={video.num_episodes ?? null}
+          onChange={(value) => dispatch({ key: 'num_episodes', value: value ?? undefined })}
+          maximumFractionDigits={0}
+          width='sm'
         />
-        <IntegerInput
+        <NumberInput
           label='Length'
-          className='length'
-          value={video.length_mins ?? undefined}
-          onChange={(value) => dispatch({ key: 'length_mins', value })}
+          value={video.length_mins ?? null}
+          onChange={(value) => dispatch({ key: 'length_mins', value: value ?? undefined })}
+          maximumFractionDigits={0}
+          width='sm'
         />
-      </ControlGroup>
+      </div>
       <Card className='media'>
-        <ControlGroup>
-          <SelectLookup
+        <div className='media-block'>
+          <SelectLookupBUI
             label='Media'
-            className='media-type'
             lookupTable='media_types'
-            allowUndefinedCodeSelection={true}
-            selectedCode={video.primary_media_type ?? undefined}
-            onChange={(value) => dispatch({ key: 'primary_media_type', value })}
+            value={video.primary_media_type ?? null}
+            onChange={(value) => dispatch({ key: 'primary_media_type', value: value ?? undefined })}
+            valueForNullCode='—'
           />
-          <SelectLookup
+          <SelectLookupBUI
             label='Location'
-            className='media-location'
             lookupTable='media_locations'
-            allowUndefinedCodeSelection={true}
-            selectedCode={video.primary_media_location ?? undefined}
-            onChange={(value) => dispatch({ key: 'primary_media_location', value })}
+            value={video.primary_media_location ?? null}
+            onChange={(value) =>
+              dispatch({ key: 'primary_media_location', value: value ?? undefined })
+            }
+            valueForNullCode='—'
           />
-          <SelectLookup
+          <SelectLookupBUI
             label='Watched'
-            className='watched-status'
             lookupTable='watched_status'
-            allowUndefinedCodeSelection={true}
-            selectedCode={video.primary_media_watched ?? undefined}
-            onChange={(value) => dispatch({ key: 'primary_media_watched', value })}
+            value={video.primary_media_watched ?? null}
+            onChange={(value) =>
+              dispatch({ key: 'primary_media_watched', value: value ?? undefined })
+            }
+            valueForNullCode='—'
+            width='sm'
           />
-        </ControlGroup>
-        <ControlGroup>
-          <SelectLookup
-            label=''
-            className='media-type'
+        </div>
+        <div className='media-block'>
+          <SelectLookupBUI
+            label='Second Media'
             lookupTable='media_types'
-            allowUndefinedCodeSelection={true}
-            selectedCode={video.other_media_type ?? undefined}
-            onChange={(value) => dispatch({ key: 'other_media_type', value })}
+            value={video.other_media_type ?? null}
+            onChange={(value) => dispatch({ key: 'other_media_type', value: value ?? undefined })}
+            valueForNullCode='—'
           />
-          <SelectLookup
-            label=''
-            className='media-location'
+          <SelectLookupBUI
+            label='Second Location'
             lookupTable='media_locations'
-            allowUndefinedCodeSelection={true}
-            selectedCode={video.other_media_location ?? undefined}
-            onChange={(value) => dispatch({ key: 'other_media_location', value })}
+            value={video.other_media_location ?? null}
+            onChange={(value) =>
+              dispatch({ key: 'other_media_location', value: value ?? undefined })
+            }
+            valueForNullCode='—'
           />
-        </ControlGroup>
+        </div>
         <Input
           label='Notes'
-          className='notes'
-          value={video.media_notes ?? undefined}
-          onChange={(value) => dispatch({ key: 'media_notes', value })}
+          value={video.media_notes ?? ''}
+          onChange={(value) => dispatch({ key: 'media_notes', value: value || undefined })}
+          width='full'
         />
       </Card>
       <Switch
         label='Flag'
-        className='priority-flag'
-        inline={true}
-        value={(video.priority_flag ?? 0) > 0}
+        checked={(video.priority_flag ?? 0) > 0}
         onChange={(value) => dispatch({ key: 'priority_flag', value: value ? 1 : 0 })}
       />
-      <VideoTagInput
+      <VideoTagInputBUI
         label='Tags'
         selectedTags={video.tags ?? undefined}
         onChange={(value) => dispatch({ key: 'tags', value })}
+        width='full'
       />
       <Input
         label='Progress'
-        className='progress'
-        inline={true}
-        value={video.progress ?? undefined}
-        onChange={(value) => dispatch({ key: 'progress', value })}
+        value={video.progress ?? ''}
+        onChange={(value) => dispatch({ key: 'progress', value: value || undefined })}
+        width='full'
       />
       <div className='form-buttons'>
         {onDelete && (
