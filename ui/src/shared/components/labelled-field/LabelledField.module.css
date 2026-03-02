@@ -22,12 +22,12 @@
     width: 21rem;
   }
 
-  &.WidthAuto {
-    width: auto;
-  }
-
   &.WidthFull {
     width: 100%;
+  }
+
+  &.WidthFit {
+    width: fit-content;
   }
 
   &[data-disabled] {

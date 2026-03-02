@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 import styles from './LabelledField.module.css';
 
-export type InputWidth = 'sm' | 'md' | 'lg' | 'auto' | 'full';
+export type InputWidth = 'sm' | 'md' | 'lg' | 'full' | 'fitContent';
 
 type LabelledFieldProps = {
   label: string;
@@ -30,7 +30,7 @@ export const LabelledField = ({
     { [styles.WidthSm]: width === 'sm' },
     { [styles.WidthMd]: width === 'md' },
     { [styles.WidthLg]: width === 'lg' },
-    { [styles.WidthAuto]: width === 'auto' },
+    { [styles.WidthFit]: width === 'fitContent' },
     { [styles.WidthFull]: width === 'full' },
     { [styles.Horizontal]: horizontal },
   );

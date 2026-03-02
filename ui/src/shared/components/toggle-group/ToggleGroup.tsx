@@ -49,7 +49,7 @@ export const ToggleGroup = ({
   };
 
   return (
-    <LabelledField label={label} ariaHideLabel width='auto' disabled={disabled}>
+    <LabelledField label={label} ariaHideLabel width='fitContent' disabled={disabled}>
       <BaseToggleGroup
         className={classes}
         value={value}
