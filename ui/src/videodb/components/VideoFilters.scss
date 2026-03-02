@@ -10,6 +10,13 @@
     margin: 1rem 0;
   }
 
+  .watched-group,
+  .resolution-and-length {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+
   .filter-action-buttons {
     display: flex;
     flex-direction: row;
