@@ -1,4 +1,3 @@
-import { BlueprintProvider } from '@blueprintjs/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -13,7 +12,6 @@ const queryDefaults = { defaultOptions: { queries: { retry: 2 } } };
 
 const queryClient = new QueryClient(queryDefaults);
 const appContainer = document.getElementById('app')!;
-const portalContainer = document.getElementById('portal-container')!;
 const root = createRoot(appContainer);
 
 root.render(
@@ -24,15 +22,13 @@ root.render(
         v7_startTransition: true,
       }}
     >
-      <BlueprintProvider portalContainer={portalContainer}>
-        <ToastProvider>
-          <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <Suspense fallback='Loading...'>
-              <App />
-            </Suspense>
-          </ErrorBoundary>
-        </ToastProvider>
-      </BlueprintProvider>
+      <ToastProvider>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Suspense fallback='Loading...'>
+            <App />
+          </Suspense>
+        </ErrorBoundary>
+      </ToastProvider>
     </BrowserRouter>
   </QueryClientProvider>,
 );
