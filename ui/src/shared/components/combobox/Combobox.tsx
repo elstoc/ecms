@@ -1,5 +1,5 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { useCallback, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
@@ -79,6 +79,12 @@ export const Combobox = ({
       onChange(newItem?.value ?? null);
     }
   };
+
+  useEffect(() => {
+    const newQuery = selectedItem?.label ?? '';
+    setQuery(newQuery);
+    updateDisplayedItems(newQuery);
+  }, [selectedItem, updateDisplayedItems]);
 
   return (
     <Root
