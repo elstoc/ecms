@@ -18,7 +18,6 @@ type SwitchProps = {
 export const Switch = ({ label, checked, onChange, disabled, width = 'md' }: SwitchProps) => {
   const id = useId();
 
-  console.log(disabled);
   return (
     <LabelledField label={label} htmlFor={id} width={width} disabled={disabled} horizontal>
       <Root
