@@ -13,7 +13,7 @@ type VideoTagInputProps = {
   width?: InputWidth;
 };
 
-export const VideoTagInputBUI = (props: VideoTagInputProps) => {
+export const VideoTagInput = (props: VideoTagInputProps) => {
   const tagLookup = useGetTags();
 
   return (

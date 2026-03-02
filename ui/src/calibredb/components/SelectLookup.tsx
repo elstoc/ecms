@@ -3,9 +3,9 @@ import { useMemo } from 'react';
 import { InputWidth } from '@/shared/components/labelled-field';
 import { Item, Select } from '@/shared/components/select';
 
-import { useLookup } from '../hooks/useVideoDbQueries';
+import { useLookup } from '../hooks/useCalibreDbQueries';
 
-type SelectLookupBUIProps = {
+type SelectLookupProps = {
   lookupTable: string;
   valueForNullCode?: string;
   label: string;
@@ -15,7 +15,7 @@ type SelectLookupBUIProps = {
   disabled?: boolean;
 };
 
-export const SelectLookupBUI = (props: SelectLookupBUIProps) => {
+export const SelectLookup = (props: SelectLookupProps) => {
   const { lookupTable, valueForNullCode, ...rest } = props;
   const lookupValues = useLookup(lookupTable);
 

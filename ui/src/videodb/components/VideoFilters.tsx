@@ -6,8 +6,8 @@ import { ToggleGroup } from '@/shared/components/toggle-group';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 
-import { SelectLookupBUI } from './SelectLookupBUI';
-import { VideoTagInputBUI } from './VideoTagInputBUI';
+import { SelectLookup } from './SelectLookup';
+import { VideoTagInput } from './VideoTagInput';
 
 import './VideoFilters.scss';
 
@@ -32,7 +32,7 @@ export const VideoFilters = () => {
 
   return (
     <div className='video-filters'>
-      <SelectLookupBUI
+      <SelectLookup
         label='Category'
         lookupTable='categories'
         valueForNullCode='All'
@@ -74,7 +74,7 @@ export const VideoFilters = () => {
         maximumFractionDigits={0}
         disabled={showOnlyExpandedIds}
       />
-      <VideoTagInputBUI
+      <VideoTagInput
         label='Tags'
         selectedTags={uiFilters.tags}
         allowCreation={false}
@@ -91,7 +91,7 @@ export const VideoFilters = () => {
           updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
         }
       />
-      <SelectLookupBUI
+      <SelectLookup
         label='Primary Media'
         lookupTable='media_types'
         valueForNullCode='All'

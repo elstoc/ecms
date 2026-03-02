@@ -7,8 +7,8 @@ import { Switch } from '@/shared/components/switch';
 
 import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
 
-import { SelectLookupBUI } from './SelectLookupBUI';
-import { VideoTagInputBUI } from './VideoTagInputBUI';
+import { SelectLookup } from './SelectLookup';
+import { VideoTagInput } from './VideoTagInput';
 
 import './EditVideoForm.scss';
 
@@ -31,14 +31,14 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         width='full'
       />
       <div className='watched-and-category'>
-        <SelectLookupBUI
+        <SelectLookup
           label='Watched'
           value={video.watched}
           lookupTable='watched_status'
           onChange={(value) => dispatch({ key: 'watched', value: value || '' })}
           width='sm'
         />
-        <SelectLookupBUI
+        <SelectLookup
           label='Category'
           lookupTable='categories'
           value={video.category}
@@ -63,14 +63,14 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
       </div>
       <Card className='media'>
         <div className='media-block'>
-          <SelectLookupBUI
+          <SelectLookup
             label='Media'
             lookupTable='media_types'
             value={video.primary_media_type ?? null}
             onChange={(value) => dispatch({ key: 'primary_media_type', value: value ?? undefined })}
             valueForNullCode='—'
           />
-          <SelectLookupBUI
+          <SelectLookup
             label='Location'
             lookupTable='media_locations'
             value={video.primary_media_location ?? null}
@@ -79,7 +79,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             }
             valueForNullCode='—'
           />
-          <SelectLookupBUI
+          <SelectLookup
             label='Watched'
             lookupTable='watched_status'
             value={video.primary_media_watched ?? null}
@@ -91,14 +91,14 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           />
         </div>
         <div className='media-block'>
-          <SelectLookupBUI
+          <SelectLookup
             label='Second Media'
             lookupTable='media_types'
             value={video.other_media_type ?? null}
             onChange={(value) => dispatch({ key: 'other_media_type', value: value ?? undefined })}
             valueForNullCode='—'
           />
-          <SelectLookupBUI
+          <SelectLookup
             label='Second Location'
             lookupTable='media_locations'
             value={video.other_media_location ?? null}
@@ -120,7 +120,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         checked={(video.priority_flag ?? 0) > 0}
         onChange={(value) => dispatch({ key: 'priority_flag', value: value ? 1 : 0 })}
       />
-      <VideoTagInputBUI
+      <VideoTagInput
         label='Tags'
         selectedTags={video.tags ?? undefined}
         onChange={(value) => dispatch({ key: 'tags', value })}

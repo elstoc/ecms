@@ -12,7 +12,7 @@ import { useAllPaths } from '../hooks/useAllPaths';
 import { useCalibreDb } from '../hooks/useCalibreDb';
 import { useLookup } from '../hooks/useCalibreDbQueries';
 
-import { SelectLookupBUI } from './SelectLookupBUI';
+import { SelectLookup } from './SelectLookup';
 
 import './BookFilters.css';
 
@@ -107,7 +107,7 @@ export const BookFilters = () => {
             emptyMessage='No authors found'
             maxListItems={100}
           />
-          <SelectLookupBUI
+          <SelectLookup
             label='Format'
             lookupTable='formats'
             valueForNullCode='All'
