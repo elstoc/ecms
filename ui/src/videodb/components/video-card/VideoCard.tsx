@@ -85,7 +85,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
               <Flag flagged={flagged} className='priority' onChange={onFlaggedChange} />
             </div>
           </div>
-          <DisclosurePanel>
+          <DisclosurePanel keepMounted>
             <div className='info-panel'>
               <div className='left'>
                 <TagList label='tags'>

@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 
 type DisclosurePanelProps = {
   children: ReactNode;
+  keepMounted?: boolean;
 };
 
 export const DisclosurePanel = (props: DisclosurePanelProps) => {
