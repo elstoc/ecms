@@ -3,7 +3,10 @@ import cn from 'classnames';
 
 import styles from './Button.module.css';
 
-export type ButtonProps = Pick<BaseButtonProps, 'children' | 'onClick' | 'disabled' | 'type'> & {
+export type ButtonProps = Pick<
+  BaseButtonProps,
+  'children' | 'onClick' | 'disabled' | 'type' | 'tabIndex'
+> & {
   /** Additional class name */
   className?: string;
   /** Remove background and border */
