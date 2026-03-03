@@ -99,7 +99,7 @@ describe('Component', () => {
         });
 
         await expect(component.getMetadata()).rejects.toThrow(
-          new NotFoundError('Component weight must be numeric'),
+          new Error('Component weight must be numeric'),
         );
       });
     });
