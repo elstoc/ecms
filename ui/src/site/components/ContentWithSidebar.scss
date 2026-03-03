@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@use '../../variables.scss' as variables;
 
 #app .cws-container {
   width: 100%;
@@ -11,10 +11,10 @@
     gap: 5px;
 
     width: 100%;
-    max-width: $maxContentPlusSidebarWidth;
+    max-width: variables.$maxContentPlusSidebarWidth;
 
     &.no-sidebar {
-      max-width: $maxContentWidth;
+      max-width: variables.$maxContentWidth;
     }
 
     .cws-content-and-sidebar {
@@ -34,7 +34,7 @@
       }
     }
 
-    @media screen and (min-width: $minDualPanelWidth) {
+    @media screen and (min-width: variables.$minDualPanelWidth) {
       .cws-content-and-sidebar {
         flex-direction: row;
         justify-content: space-between;
@@ -48,12 +48,12 @@
           padding-block: 25px;
           padding-left: 25px;
           width: 28%;
-          max-width: $maxSidebarWidth;
+          max-width: variables.$maxSidebarWidth;
         }
 
         .cws-content {
           width: 64%;
-          max-width: $maxContentWidth;
+          max-width: variables.$maxContentWidth;
         }
       }
 

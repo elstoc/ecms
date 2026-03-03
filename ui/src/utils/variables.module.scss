@@ -1,5 +1,5 @@
-@import '../variables.scss';
+@use '../variables.scss' as variables;
 
 :export {
-  minDualPanelWidth: $minDualPanelWidth;
+  minDualPanelWidth: variables.$minDualPanelWidth;
 }

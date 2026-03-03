@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@use '../../variables.scss' as variables;
 
 .header {
   height: 100%;
@@ -29,7 +29,7 @@
     }
   }
 
-  @media screen and (min-width: $minDualPanelWidth) {
+  @media screen and (min-width: variables.$minDualPanelWidth) {
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid var(--border-grey);

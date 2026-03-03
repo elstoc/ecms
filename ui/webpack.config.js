@@ -49,7 +49,7 @@ export default {
           prod ? MiniCssExtractPlugin.loader : 'style-loader',
           cssLoaderOptions,
           'postcss-loader',
-          'sass-loader',
+          { loader: 'sass-loader', options: { api: 'modern' } },
         ],
       },
     ],
