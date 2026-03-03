@@ -43,8 +43,7 @@
   --button-hovered-bg-color: var(--grey-90);
   --button-pressed-bg-color: var(--grey-85);
 
-  --toggle-button-toggled-bg-color: var(--grey-875);
-  --toggle-button-hovered-bg-color: var(--grey-925);
+  --toggle-button-hovered-bg-color: var(--grey-90);
 
   --focus-outline: 2px solid #0047ab;
   --focus-outline-offset: -1px;

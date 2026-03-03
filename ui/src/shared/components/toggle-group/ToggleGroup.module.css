@@ -3,9 +3,4 @@
   display: flex;
   flex-direction: row;
   gap: 0.25rem;
-  background-color: canvas;
-
-  padding: 0.25rem;
-  border-radius: var(--input-border-radius);
-  border: var(--input-border);
 }
