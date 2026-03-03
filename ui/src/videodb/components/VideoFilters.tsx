@@ -61,14 +61,6 @@ export const VideoFilters = () => {
           })
         }
       />
-      <NumberInput
-        label='Max Length'
-        value={uiFilters.maxLength ?? null}
-        onChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)}
-        maximumFractionDigits={0}
-        disabled={showOnlyExpandedIds}
-        width='sm'
-      />
       <div className='watched-group'>
         <ToggleGroup
           label='Watched'
@@ -109,6 +101,14 @@ export const VideoFilters = () => {
         disabled={showOnlyExpandedIds}
         value={uiFilters.primaryMediaType ?? null}
         onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
+      />
+      <NumberInput
+        label='Max Length'
+        value={uiFilters.maxLength ?? null}
+        onChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)}
+        maximumFractionDigits={0}
+        disabled={showOnlyExpandedIds}
+        width='sm'
       />
       <div className='switches'>
         <Switch
