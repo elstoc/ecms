@@ -1,4 +1,4 @@
-FROM node:iron-alpine3.21 AS builder
+FROM node:krypton-alpine3.23 AS builder
 ENV NODE_ENV=development
 
 RUN ["mkdir", "-p", "/app"]

@@ -1,5 +1,7 @@
-FROM node:iron-alpine3.21 AS builder
+FROM node:krypton-alpine3.23 AS builder
 ENV NODE_ENV=development
+
+RUN apk add --no-cache python3 py3-setuptools make gcc g++
 
 RUN mkdir -p /app
 
@@ -13,7 +15,7 @@ RUN npm ci --omit=dev
 
 #################
 
-FROM node:iron-alpine3.21
+FROM node:krypton-alpine3.23
 ENV NODE_ENV=production
 
 RUN mkdir -p /app/data
