@@ -32,7 +32,7 @@ export class Gallery {
     const { galleryPageSize } = this.config;
     const allFileNames = await this.getJpegFileNames();
 
-    let sortedFileNames: string[] = [];
+    let sortedFileNames: string[];
 
     if (sortOrder === 'shuffle' && randomSeed) {
       sortedFileNames = pShuffle(allFileNames, randomSeed);

@@ -135,7 +135,7 @@ export class EndpointValidator {
 
     const { minItems, itemSchema, pipeDelimitedString } = validationSchema;
 
-    let arrayToValidate: unknown[] = [];
+    let arrayToValidate: unknown[];
     if (pipeDelimitedString) {
       if (typeof value !== 'string') {
         this.pushError(
