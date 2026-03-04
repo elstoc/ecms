@@ -90,7 +90,9 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
               <div className='left'>
                 <TagList label='tags'>
                   <Tag label={categoryDesc} dark />
-                  {tags?.map((tag) => <Tag key={tag} label={tag} />)}
+                  {tags?.map((tag) => (
+                    <Tag key={tag} label={tag} />
+                  ))}
                 </TagList>
                 <TitleAndData title='Location' data={locationDesc} />
                 <TitleAndData title='Other Media' data={otherMediaDesc} />

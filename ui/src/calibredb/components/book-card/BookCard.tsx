@@ -57,7 +57,9 @@ export const BookCard = forwardRef<HTMLDivElement, BookCardProps>(
               <div className='devices-and-rating'>
                 {devices && (
                   <TagList label='devices'>
-                    {devices?.map((device) => <Tag key={device} label={device} dark />)}
+                    {devices?.map((device) => (
+                      <Tag key={device} label={device} dark />
+                    ))}
                   </TagList>
                 )}
                 <Rating stars={rating} />
