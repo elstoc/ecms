@@ -16,12 +16,7 @@ const root = createRoot(appContainer);
 
 root.render(
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter
-      future={{
-        v7_relativeSplatPath: true,
-        v7_startTransition: true,
-      }}
-    >
+    <BrowserRouter>
       <ToastProvider>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense fallback='Loading...'>
