@@ -2,7 +2,7 @@ import { Select as BaseSelect } from '@base-ui/react/select';
 
 import { Item } from './Select';
 
-import styles from './Select.module.css';
+import * as styles from './Select.module.css';
 
 const { Item: BaseItem, ItemIndicator, ItemText } = BaseSelect;
 

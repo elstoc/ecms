@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { ReactNode } from 'react';
 import { Link as ReactDomLink } from 'react-router-dom';
 
-import styles from './NavItem.module.css';
+import * as styles from './NavItem.module.css';
 
 const { Item, Trigger, Content, Link, Icon } = NavigationMenu;
 

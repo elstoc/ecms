@@ -3,7 +3,7 @@ import { useId } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
-import styles from './Switch.module.css';
+import * as styles from './Switch.module.css';
 
 const { Root, Thumb } = BaseSwitch;
 

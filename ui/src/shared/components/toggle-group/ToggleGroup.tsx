@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { LabelledField } from '../labelled-field';
 import { Toggle } from '../toggle';
 
-import styles from './ToggleGroup.module.css';
+import * as styles from './ToggleGroup.module.css';
 
 type Item = {
   value: string;

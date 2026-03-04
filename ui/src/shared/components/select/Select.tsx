@@ -5,7 +5,7 @@ import { InputWidth, LabelledField } from '../labelled-field';
 
 import { SelectItem } from './SelectItem';
 
-import styles from './Select.module.css';
+import * as styles from './Select.module.css';
 
 const { Root, Trigger, Value, Portal, Positioner, Popup, List, Icon } = BaseSelect;
 

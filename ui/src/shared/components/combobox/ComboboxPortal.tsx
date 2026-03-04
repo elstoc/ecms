@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { ComboboxItem, EmptyComboboxItem } from './ComboboxItem';
 
-import styles from './Combobox.module.css';
+import * as styles from './Combobox.module.css';
 
 const { Portal, Positioner, Popup, List, Empty } = BaseCombobox;
 

@@ -1,7 +1,7 @@
 import { Button as BaseButton, ButtonProps as BaseButtonProps } from '@base-ui/react/button';
 import cn from 'classnames';
 
-import styles from './Button.module.css';
+import * as styles from './Button.module.css';
 
 export type ButtonProps = Pick<
   BaseButtonProps,

@@ -1,6 +1,6 @@
 import { Toast, ToastProviderProps } from '@base-ui/react/toast';
 
-import styles from './ToastProvider.module.css';
+import * as styles from './ToastProvider.module.css';
 
 export const ToastProvider = ({ children, ...props }: ToastProviderProps) => (
   <Toast.Provider {...props}>

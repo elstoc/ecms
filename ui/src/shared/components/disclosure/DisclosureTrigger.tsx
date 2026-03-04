@@ -1,7 +1,7 @@
 import { Collapsible } from '@base-ui/react/collapsible';
 import cn from 'classnames';
 
-import buttonStyles from '../../components/button/Button.module.css';
+import * as buttonStyles from '../../components/button/Button.module.css';
 
 type DisclosureTriggerProps = { heading?: string; clearButtonFormatting?: boolean };
 

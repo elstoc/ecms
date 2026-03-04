@@ -4,7 +4,7 @@ import { useId, useRef, useState } from 'react';
 import { ComboboxPortal } from '../combobox';
 import { InputWidth, LabelledField } from '../labelled-field';
 
-import styles from './ComboboxMulti.module.css';
+import * as styles from './ComboboxMulti.module.css';
 
 const { Root, Chips, Value, Chip, Input, ChipRemove } = BaseCombobox;
 

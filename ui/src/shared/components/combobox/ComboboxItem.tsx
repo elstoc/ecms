@@ -2,7 +2,7 @@ import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 
 import { Item } from './Combobox';
 
-import styles from './Combobox.module.css';
+import * as styles from './Combobox.module.css';
 
 const { Item: BaseItem, ItemIndicator } = BaseCombobox;
 

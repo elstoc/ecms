@@ -2,7 +2,7 @@ import { Field } from '@base-ui/react/field';
 import cn from 'classnames';
 import { ReactNode } from 'react';
 
-import styles from './LabelledField.module.css';
+import * as styles from './LabelledField.module.css';
 
 export type InputWidth = 'sm' | 'md' | 'lg' | 'full' | 'fitContent';
 

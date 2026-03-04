@@ -3,7 +3,7 @@ import { useId } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
-import styles from './Input.module.css';
+import * as styles from './Input.module.css';
 
 type InputProps = {
   label: string;

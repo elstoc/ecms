@@ -3,7 +3,7 @@ import { useId } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
 
-import styles from './NumberInput.module.css';
+import * as styles from './NumberInput.module.css';
 
 const { Root, Input } = BaseNumberField;
 

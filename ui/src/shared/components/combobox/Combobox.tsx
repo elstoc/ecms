@@ -5,7 +5,7 @@ import { InputWidth, LabelledField } from '../labelled-field';
 
 import { ComboboxPortal } from './ComboboxPortal';
 
-import styles from './Combobox.module.css';
+import * as styles from './Combobox.module.css';
 
 const { Root, Input, Clear, Trigger } = BaseCombobox;
 

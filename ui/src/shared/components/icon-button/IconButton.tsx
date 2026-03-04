@@ -4,7 +4,7 @@ import { Icon, IconProps } from '@/shared/components/icon';
 
 import { Button, ButtonProps } from '../button';
 
-import styles from './IconButton.module.css';
+import * as styles from './IconButton.module.css';
 
 type IconButtonProps = IconProps & Pick<ButtonProps, 'disabled' | 'onClick'>;
 

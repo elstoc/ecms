@@ -1,7 +1,7 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { ReactNode } from 'react';
 
-import styles from './Dialog.module.css';
+import * as styles from './Dialog.module.css';
 
 const { Root, Portal, Backdrop, Popup, Title, Close, Description: Content } = BaseDialog;
 
