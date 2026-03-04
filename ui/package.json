@@ -28,7 +28,7 @@
     "@storybook/addon-styling-webpack": "^3.0.0",
     "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
     "@storybook/react-webpack5": "^10.2.8",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/codemirror": "^5.60.9",
     "@types/jest": "^29.2.0",
     "@types/loader-utils": "^3.0.0",
