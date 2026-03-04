@@ -24,7 +24,7 @@ export const MarkdownViewPage = () => {
   const pageTitle = YAML.parse(yaml)?.title || basename(pageApiPath) || 'Home';
   useTitle(pageTitle);
 
-  const renderLink = (href: string, children: ReactNode & ReactNode[]) => {
+  const renderLink = (href: string, children: ReactNode) => {
     return (
       <Link to={href.replace(/\/$/, '')} relative='path'>
         {children}

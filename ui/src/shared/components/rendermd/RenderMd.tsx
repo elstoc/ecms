@@ -12,7 +12,7 @@ import './RenderMdCode.scss';
 export type RenderMdProps = {
   markdown: string;
   pageTitle: string;
-  renderLink: (href: string, children: ReactNode & ReactNode[]) => ReactElement;
+  renderLink: (href: string, children: ReactNode) => ReactElement;
 };
 
 export const RenderMd = ({ pageTitle, markdown, renderLink }: RenderMdProps) => {
