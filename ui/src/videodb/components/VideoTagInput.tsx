@@ -19,7 +19,7 @@ export const VideoTagInput = (props: VideoTagInputProps) => {
   return (
     <TagSelect
       label={props.label}
-      selectableTags={tagLookup}
+      selectableTags={tagLookup ?? []}
       selectedTags={props.selectedTags ?? []}
       onChange={(selectedTags) => props.onChange?.(selectedTags)}
       emptyMessage='No tags found'

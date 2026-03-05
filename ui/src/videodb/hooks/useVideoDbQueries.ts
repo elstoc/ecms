@@ -42,7 +42,7 @@ export const useLookupValue = (lookupTable: string, value?: string) => {
 export const useGetTags = () => {
   const apiPath = useApiPath();
 
-  return useCustomSuspenseQuery({
+  return useCustomQuery({
     queryKey: ['videoDb', 'tags', apiPath],
     queryFn: () => getVideoDbTags(apiPath),
   });
