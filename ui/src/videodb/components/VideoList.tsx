@@ -14,7 +14,7 @@ export const VideoList = () => {
   const { state, dispatch } = useVideoDb();
   useElementIsVisible(refLastVideo, () => {
     startTransition(() => {
-      dispatch({ type: 'setPages', payload: Math.min(totalPages, currentPage + 1) });
+      dispatch({ type: 'setPages', payload: Math.max(Math.min(totalPages, currentPage + 1), 1) });
     });
   });
 
