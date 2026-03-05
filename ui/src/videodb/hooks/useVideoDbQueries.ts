@@ -1,6 +1,5 @@
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
-import { useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
-import { useCustomQuery } from '@/shared/hooks/useCustomQuery';
+import { useCustomQuery, useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
 
 import {
   deleteVideoDbVideo,
