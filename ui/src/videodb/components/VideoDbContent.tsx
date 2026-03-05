@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { useParams } from 'react-router';
 
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
@@ -20,24 +19,12 @@ export const VideoDbContent = () => {
     return <NotFoundPage />;
   }
 
-  const content = (
-    <Suspense>
-      <VideoList />
-    </Suspense>
-  );
-
-  const sidebar = (
-    <Suspense>
-      <VideoFilters />
-    </Suspense>
-  );
-
   return (
     <>
       <InjectComponentTools>
         <VideoToolbox />
       </InjectComponentTools>
-      <ContentWithSidebar content={content} sidebar={sidebar} />
+      <ContentWithSidebar content={<VideoList />} sidebar={<VideoFilters />} />
       <EditVideo />
     </>
   );

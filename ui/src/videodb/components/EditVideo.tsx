@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
@@ -42,23 +41,19 @@ export const EditVideo = () => {
       disablePointerDismissal
       disableEscapeKeyDismissal
     >
-      <Suspense>
-        {mode === 'add' && (
-          <EditVideoForm
-            key='add'
-            initialVideo={video ?? EMPTY_VIDEO}
-            onSave={async (newVideo) => postMutate(newVideo, { onSuccess })}
-          />
-        )}
-        {mode === 'update' && (
-          <EditVideoForm
-            key='update'
-            initialVideo={video ?? EMPTY_VIDEO}
-            onSave={async (updatedVideo) => putMutate({ id, ...updatedVideo }, { onSuccess })}
-            onDelete={async () => deleteMutate(id, { onSuccess })}
-          />
-        )}
-      </Suspense>
+      {mode === 'add' && (
+        <EditVideoForm
+          initialVideo={video ?? EMPTY_VIDEO}
+          onSave={async (newVideo) => postMutate(newVideo, { onSuccess })}
+        />
+      )}
+      {mode === 'update' && (
+        <EditVideoForm
+          initialVideo={video ?? EMPTY_VIDEO}
+          onSave={async (updatedVideo) => putMutate({ id, ...updatedVideo }, { onSuccess })}
+          onDelete={async () => deleteMutate(id, { onSuccess })}
+        />
+      )}
     </Dialog>
   );
 };
