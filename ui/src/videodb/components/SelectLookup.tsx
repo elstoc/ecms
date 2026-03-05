@@ -20,7 +20,7 @@ export const SelectLookup = (props: SelectLookupProps) => {
   const lookupValues = useLookup(lookupTable);
 
   const items: Item[] = useMemo(() => {
-    const returnItems: Item[] = Object.entries(lookupValues).map(([code, description]) => ({
+    const returnItems: Item[] = Object.entries(lookupValues ?? []).map(([code, description]) => ({
       value: code,
       label: description,
     }));

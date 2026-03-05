@@ -27,7 +27,7 @@ const useApiPath = () => {
 export const useLookup = (lookupTable: string) => {
   const apiPath = useApiPath();
 
-  return useCustomSuspenseQuery({
+  return useCustomQuery({
     queryKey: ['videoDb', 'lookup', apiPath, lookupTable],
     queryFn: () => getVideoDbLookup(apiPath, lookupTable),
     staleTime: 60 * 60 * 1000,
@@ -36,7 +36,7 @@ export const useLookup = (lookupTable: string) => {
 };
 
 export const useLookupValue = (lookupTable: string, value?: string) => {
-  const lookup = useLookup(lookupTable);
+  const lookup = useLookup(lookupTable) ?? {};
   return lookup[value ?? ''];
 };
 
