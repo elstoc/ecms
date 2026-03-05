@@ -5,7 +5,7 @@ import { Input } from '@/shared/components/input';
 import { NumberInput } from '@/shared/components/number-input';
 import { Switch } from '@/shared/components/switch';
 
-import { useEditVideoReducer } from '../hooks/useEditVideoReducer';
+import { useEditVideo } from '../hooks/useEditVideo';
 
 import { SelectLookup } from './SelectLookup';
 import { VideoTagInput } from './VideoTagInput';
@@ -19,14 +19,14 @@ type EditVideoFormProps = {
 };
 
 export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormProps) => {
-  const [video, dispatch] = useEditVideoReducer(initialVideo);
+  const { state: video, updateField } = useEditVideo(initialVideo);
 
   return (
     <div className='edit-video-form'>
       <Input
         label='Title'
         value={video.title}
-        onChange={(value) => dispatch({ key: 'title', value: value ?? '' })}
+        onChange={(value) => updateField({ key: 'title', value: value ?? '' })}
         autoFocus={true}
         width='full'
       />
@@ -35,28 +35,28 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           label='Watched'
           value={video.watched}
           lookupTable='watched_status'
-          onChange={(value) => dispatch({ key: 'watched', value: value || '' })}
+          onChange={(value) => updateField({ key: 'watched', value: value || '' })}
           width='sm'
         />
         <SelectLookup
           label='Category'
           lookupTable='categories'
           value={video.category}
-          onChange={(value) => dispatch({ key: 'category', value: value || '' })}
+          onChange={(value) => updateField({ key: 'category', value: value || '' })}
         />
       </div>
       <div className='episodes-and-length'>
         <NumberInput
           label='Episodes'
           value={video.num_episodes ?? null}
-          onChange={(value) => dispatch({ key: 'num_episodes', value: value ?? undefined })}
+          onChange={(value) => updateField({ key: 'num_episodes', value: value ?? undefined })}
           maximumFractionDigits={0}
           width='sm'
         />
         <NumberInput
           label='Length'
           value={video.length_mins ?? null}
-          onChange={(value) => dispatch({ key: 'length_mins', value: value ?? undefined })}
+          onChange={(value) => updateField({ key: 'length_mins', value: value ?? undefined })}
           maximumFractionDigits={0}
           width='sm'
         />
@@ -67,7 +67,9 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             label='Media'
             lookupTable='media_types'
             value={video.primary_media_type ?? null}
-            onChange={(value) => dispatch({ key: 'primary_media_type', value: value ?? undefined })}
+            onChange={(value) =>
+              updateField({ key: 'primary_media_type', value: value ?? undefined })
+            }
             valueForNullCode='—'
           />
           <SelectLookup
@@ -75,7 +77,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='media_locations'
             value={video.primary_media_location ?? null}
             onChange={(value) =>
-              dispatch({ key: 'primary_media_location', value: value ?? undefined })
+              updateField({ key: 'primary_media_location', value: value ?? undefined })
             }
             valueForNullCode='—'
           />
@@ -84,7 +86,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='watched_status'
             value={video.primary_media_watched ?? null}
             onChange={(value) =>
-              dispatch({ key: 'primary_media_watched', value: value ?? undefined })
+              updateField({ key: 'primary_media_watched', value: value ?? undefined })
             }
             valueForNullCode='—'
             width='sm'
@@ -95,7 +97,9 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             label='Second Media'
             lookupTable='media_types'
             value={video.other_media_type ?? null}
-            onChange={(value) => dispatch({ key: 'other_media_type', value: value ?? undefined })}
+            onChange={(value) =>
+              updateField({ key: 'other_media_type', value: value ?? undefined })
+            }
             valueForNullCode='—'
           />
           <SelectLookup
@@ -103,7 +107,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             lookupTable='media_locations'
             value={video.other_media_location ?? null}
             onChange={(value) =>
-              dispatch({ key: 'other_media_location', value: value ?? undefined })
+              updateField({ key: 'other_media_location', value: value ?? undefined })
             }
             valueForNullCode='—'
           />
@@ -111,25 +115,25 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         <Input
           label='Notes'
           value={video.media_notes ?? ''}
-          onChange={(value) => dispatch({ key: 'media_notes', value: value || undefined })}
+          onChange={(value) => updateField({ key: 'media_notes', value: value || undefined })}
           width='full'
         />
       </Card>
       <Switch
         label='Flag'
         checked={(video.priority_flag ?? 0) > 0}
-        onChange={(value) => dispatch({ key: 'priority_flag', value: value ? 1 : 0 })}
+        onChange={(value) => updateField({ key: 'priority_flag', value: value ? 1 : 0 })}
       />
       <VideoTagInput
         label='Tags'
         selectedTags={video.tags ?? undefined}
-        onChange={(value) => dispatch({ key: 'tags', value })}
+        onChange={(value) => updateField({ key: 'tags', value })}
         width='full'
       />
       <Input
         label='Progress'
         value={video.progress ?? ''}
-        onChange={(value) => dispatch({ key: 'progress', value: value || undefined })}
+        onChange={(value) => updateField({ key: 'progress', value: value || undefined })}
         width='full'
       />
       <div className='form-buttons'>
