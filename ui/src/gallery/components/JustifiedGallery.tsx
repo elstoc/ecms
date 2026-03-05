@@ -22,7 +22,7 @@ export const JustifiedGallery = () => {
           payload: Math.min(totalPages, currentPage + 1),
         });
       }),
-    [currentPage, totalPages],
+    [currentPage, dispatch, totalPages],
   );
 
   const refPenultimateImage = createRef<HTMLAnchorElement>();
@@ -54,7 +54,7 @@ export const JustifiedGallery = () => {
           maxWidth: image.thumbDimensions.width,
         };
       }),
-    [images, refActiveImage, refPenultimateImage],
+    [images, refActiveImage, refPenultimateImage, searchParams],
   );
 
   return <Tesselate tiles={imageTiles} marginPx={3} />;

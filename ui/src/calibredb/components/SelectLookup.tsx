@@ -30,7 +30,7 @@ export const SelectLookup = (props: SelectLookupProps) => {
     }
 
     return returnItems;
-  }, [lookupValues, props.valueForNullCode]);
+  }, [lookupValues, valueForNullCode]);
 
   return <Select items={items} {...rest} />;
 };

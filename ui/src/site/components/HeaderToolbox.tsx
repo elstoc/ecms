@@ -28,6 +28,8 @@ export const HeaderToolbox = () => {
 export const InjectComponentTools = ({ children }: ChildrenOnly) => {
   const [toolsTarget, setToolsTarget] = useState<HTMLElement | null>(null);
 
+  // TODO: This will be better solved with a layout component
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setToolsTarget(document.getElementById('component-tools-target'));
   });
@@ -42,6 +44,8 @@ export const InjectComponentTools = ({ children }: ChildrenOnly) => {
 export const InjectSideExpander = ({ children }: ChildrenOnly) => {
   const [expanderTarget, setExpanderTarget] = useState<HTMLElement | null>(null);
 
+  // TODO: This will be better solved with a layout component
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setExpanderTarget(document.getElementById('sidebar-expander-target'));
   });

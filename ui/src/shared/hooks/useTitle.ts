@@ -6,8 +6,10 @@ export const useTitle = (title: string) => {
   useEffect(() => {
     document.title = title;
 
+    const originalValue = originalTitle.current;
+
     return () => {
-      document.title = originalTitle.current;
+      document.title = originalValue;
     };
   }, [title]);
 };

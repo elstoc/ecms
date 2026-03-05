@@ -2,6 +2,7 @@
 import pluginJs from '@eslint/js';
 import configPrettier from 'eslint-config-prettier/flat';
 import pluginReact from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -14,6 +15,7 @@ export default [
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   pluginReact.configs.flat['jsx-runtime'],
+  reactHooks.configs.flat['recommended'],
   configPrettier,
   {
     rules: {
@@ -22,6 +24,7 @@ export default [
       'eol-last': 2,
       '@typescript-eslint/no-non-null-assertion': 'off',
       'react/display-name': 'off',
+      'react-hooks/set-state-in-effect': 'off',
     },
   },
   {

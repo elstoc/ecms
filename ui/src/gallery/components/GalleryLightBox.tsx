@@ -22,7 +22,7 @@ export const GalleryLightBox = () => {
       // requested LightBox image does not exist
       setSearchParams({}, { replace: true });
     }
-  }, [images, imageName, imageIndex]);
+  }, [images, imageName, imageIndex, setSearchParams]);
 
   useTitle(imageName ? `${title} - ${imageName}` : title);
 
