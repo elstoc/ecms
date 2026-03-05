@@ -24,7 +24,7 @@ const videoReducer: (state: Video, action: VideoReducerActions) => Video = (stat
 const useEditVideoReducer = (initialState: Video) => useReducer(videoReducer, initialState);
 
 export const useEditVideo = (initialState: Video) => {
-  const [state, dispatch] = useEditVideoReducer(initialState);
+  const [videoState, dispatch] = useEditVideoReducer(initialState);
 
   const updateField = (keyValue: KeyValueOfType<Video>) =>
     dispatch({ type: 'updateField', payload: keyValue });
@@ -32,7 +32,7 @@ export const useEditVideo = (initialState: Video) => {
   const resetVideo = (video: Video) => dispatch({ type: 'reset', payload: video });
 
   return {
-    state,
+    videoState,
     updateField,
     resetVideo,
   };

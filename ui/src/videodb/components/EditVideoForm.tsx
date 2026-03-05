@@ -19,13 +19,13 @@ type EditVideoFormProps = {
 };
 
 export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormProps) => {
-  const { state: video, updateField } = useEditVideo(initialVideo);
+  const { videoState, updateField } = useEditVideo(initialVideo);
 
   return (
     <div className='edit-video-form'>
       <Input
         label='Title'
-        value={video.title}
+        value={videoState.title}
         onChange={(value) => updateField({ key: 'title', value: value ?? '' })}
         autoFocus={true}
         width='full'
@@ -33,7 +33,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
       <div className='watched-and-category'>
         <SelectLookup
           label='Watched'
-          value={video.watched}
+          value={videoState.watched}
           lookupTable='watched_status'
           onChange={(value) => updateField({ key: 'watched', value: value || '' })}
           width='sm'
@@ -41,21 +41,21 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         <SelectLookup
           label='Category'
           lookupTable='categories'
-          value={video.category}
+          value={videoState.category}
           onChange={(value) => updateField({ key: 'category', value: value || '' })}
         />
       </div>
       <div className='episodes-and-length'>
         <NumberInput
           label='Episodes'
-          value={video.num_episodes ?? null}
+          value={videoState.num_episodes ?? null}
           onChange={(value) => updateField({ key: 'num_episodes', value: value ?? undefined })}
           maximumFractionDigits={0}
           width='sm'
         />
         <NumberInput
           label='Length'
-          value={video.length_mins ?? null}
+          value={videoState.length_mins ?? null}
           onChange={(value) => updateField({ key: 'length_mins', value: value ?? undefined })}
           maximumFractionDigits={0}
           width='sm'
@@ -66,7 +66,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           <SelectLookup
             label='Media'
             lookupTable='media_types'
-            value={video.primary_media_type ?? null}
+            value={videoState.primary_media_type ?? null}
             onChange={(value) =>
               updateField({ key: 'primary_media_type', value: value ?? undefined })
             }
@@ -75,7 +75,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           <SelectLookup
             label='Location'
             lookupTable='media_locations'
-            value={video.primary_media_location ?? null}
+            value={videoState.primary_media_location ?? null}
             onChange={(value) =>
               updateField({ key: 'primary_media_location', value: value ?? undefined })
             }
@@ -84,7 +84,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           <SelectLookup
             label='Watched'
             lookupTable='watched_status'
-            value={video.primary_media_watched ?? null}
+            value={videoState.primary_media_watched ?? null}
             onChange={(value) =>
               updateField({ key: 'primary_media_watched', value: value ?? undefined })
             }
@@ -96,7 +96,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           <SelectLookup
             label='Second Media'
             lookupTable='media_types'
-            value={video.other_media_type ?? null}
+            value={videoState.other_media_type ?? null}
             onChange={(value) =>
               updateField({ key: 'other_media_type', value: value ?? undefined })
             }
@@ -105,7 +105,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           <SelectLookup
             label='Second Location'
             lookupTable='media_locations'
-            value={video.other_media_location ?? null}
+            value={videoState.other_media_location ?? null}
             onChange={(value) =>
               updateField({ key: 'other_media_location', value: value ?? undefined })
             }
@@ -114,25 +114,25 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         </div>
         <Input
           label='Notes'
-          value={video.media_notes ?? ''}
+          value={videoState.media_notes ?? ''}
           onChange={(value) => updateField({ key: 'media_notes', value: value || undefined })}
           width='full'
         />
       </Card>
       <Switch
         label='Flag'
-        checked={(video.priority_flag ?? 0) > 0}
+        checked={(videoState.priority_flag ?? 0) > 0}
         onChange={(value) => updateField({ key: 'priority_flag', value: value ? 1 : 0 })}
       />
       <VideoTagInput
         label='Tags'
-        selectedTags={video.tags ?? undefined}
+        selectedTags={videoState.tags ?? undefined}
         onChange={(value) => updateField({ key: 'tags', value })}
         width='full'
       />
       <Input
         label='Progress'
-        value={video.progress ?? ''}
+        value={videoState.progress ?? ''}
         onChange={(value) => updateField({ key: 'progress', value: value || undefined })}
         width='full'
       />
@@ -143,7 +143,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           </Button>
         )}
         {onSave && (
-          <Button className='save-button' onClick={() => onSave?.(video)}>
+          <Button className='save-button' onClick={() => onSave?.(videoState)}>
             Save Changes
           </Button>
         )}
