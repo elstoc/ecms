@@ -1,5 +1,6 @@
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
 import { useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
+import { useCustomQuery } from '@/shared/hooks/useCustomQuery';
 
 import {
   deleteVideoDbVideo,
@@ -71,7 +72,7 @@ export const useVideos = () => {
         hasProgressNotes: apiFilters.hasProgressNotes ? '1' : undefined,
       };
 
-  return useCustomSuspenseQuery({
+  return useCustomQuery({
     queryKey: [
       'videoDb',
       'videos',

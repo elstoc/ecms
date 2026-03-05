@@ -10,16 +10,19 @@ import { VideoListItem } from './VideoListItem';
 import './VideoList.css';
 
 export const VideoList = () => {
-  const { state, dispatch } = useVideoDb();
-
-  const { videos, currentPage, totalPages } = useVideos();
   const refLastVideo = useRef<HTMLDivElement>(null);
-
+  const { state, dispatch } = useVideoDb();
   useElementIsVisible(refLastVideo, () => {
     startTransition(() => {
       dispatch({ type: 'setPages', payload: Math.min(totalPages, currentPage + 1) });
     });
   });
+
+  const videoData = useVideos();
+
+  if (!videoData) return null;
+
+  const { videos, currentPage, totalPages } = videoData;
 
   return (
     <div className='videos'>
