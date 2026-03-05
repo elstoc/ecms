@@ -7,24 +7,45 @@ type VideoReducerActions =
   | { type: 'updateField'; payload: KeyValueOfType<Video> }
   | { type: 'reset'; payload: Video };
 
-const videoReducer: (state: Video, action: VideoReducerActions) => Video = (state, action) => {
+type VideoAndInitialTitle = {
+  video: Video;
+  initialTitle: string;
+};
+
+const videoReducer: (
+  state: VideoAndInitialTitle,
+  action: VideoReducerActions,
+) => VideoAndInitialTitle = (state, action) => {
   if (action.type === 'updateField') {
     if (action.payload.key === 'primary_media_watched' && action.payload.value === 'Y') {
       return {
         ...state,
-        primary_media_watched: 'Y',
-        watched: 'Y',
+        video: {
+          ...state.video,
+          primary_media_watched: 'Y',
+          watched: 'Y',
+        },
       };
     }
-    return { ...state, [action.payload.key]: action.payload.value };
+    return { ...state, video: { ...state.video, [action.payload.key]: action.payload.value } };
+  }
+  if (action.type === 'reset') {
+    return {
+      initialTitle: action.payload.title,
+      video: action.payload,
+    };
   }
   return state;
 };
 
-const useEditVideoReducer = (initialState: Video) => useReducer(videoReducer, initialState);
+const useEditVideoReducer = (initialState: VideoAndInitialTitle) =>
+  useReducer(videoReducer, initialState);
 
 export const useEditVideo = (initialState: Video) => {
-  const [videoState, dispatch] = useEditVideoReducer(initialState);
+  const [editVideoState, dispatch] = useEditVideoReducer({
+    video: initialState,
+    initialTitle: initialState.title,
+  });
 
   const updateField = (keyValue: KeyValueOfType<Video>) =>
     dispatch({ type: 'updateField', payload: keyValue });
@@ -32,7 +53,7 @@ export const useEditVideo = (initialState: Video) => {
   const resetVideo = (video: Video) => dispatch({ type: 'reset', payload: video });
 
   return {
-    videoState,
+    editVideoState,
     updateField,
     resetVideo,
   };

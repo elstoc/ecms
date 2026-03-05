@@ -1,5 +1,5 @@
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
-import { useCustomQuery, useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
+import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 
 import {
   deleteVideoDbVideo,
@@ -15,6 +15,11 @@ import {
 import { useVideoDb } from './useVideoDb';
 
 export const EMPTY_VIDEO_ID = -99;
+export const EMPTY_VIDEO = {
+  title: '',
+  category: '',
+  watched: '',
+};
 
 const useApiPath = () => {
   const {
@@ -96,16 +101,12 @@ export const useGetVideo = (id: number) => {
 
   const queryFn = async () => {
     if (id === EMPTY_VIDEO_ID) {
-      return {
-        title: '',
-        category: '',
-        watched: '',
-      };
+      return EMPTY_VIDEO;
     }
     return getVideoDbVideo(apiPath, id);
   };
 
-  return useCustomSuspenseQuery({ queryKey: ['videodb', 'video', id], queryFn, gcTime: 0 });
+  return useCustomQuery({ queryKey: ['videodb', 'video', id], queryFn, gcTime: 0 });
 };
 
 export const usePostVideo = (successMessage: string) => {

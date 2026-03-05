@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { Video } from '@/contracts/videodb';
 import { Button } from '@/shared/components/button';
 import { Card } from '@/shared/components/card';
@@ -19,7 +21,17 @@ type EditVideoFormProps = {
 };
 
 export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormProps) => {
-  const { videoState, updateField } = useEditVideo(initialVideo);
+  const {
+    editVideoState: { initialTitle, video: videoState },
+    updateField,
+    resetVideo,
+  } = useEditVideo(initialVideo);
+
+  useEffect(() => {
+    if (initialTitle !== initialVideo.title) {
+      resetVideo(initialVideo);
+    }
+  }, [initialTitle, initialVideo, resetVideo]);
 
   return (
     <div className='edit-video-form'>

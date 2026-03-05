@@ -5,6 +5,7 @@ import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { Dialog } from '@/shared/components/dialog';
 
 import {
+  EMPTY_VIDEO,
   EMPTY_VIDEO_ID,
   useDeleteVideo,
   useGetVideo,
@@ -45,14 +46,14 @@ export const EditVideo = () => {
         {mode === 'add' && (
           <EditVideoForm
             key='add'
-            initialVideo={video}
+            initialVideo={video ?? EMPTY_VIDEO}
             onSave={async (newVideo) => postMutate(newVideo, { onSuccess })}
           />
         )}
         {mode === 'update' && (
           <EditVideoForm
             key='update'
-            initialVideo={video}
+            initialVideo={video ?? EMPTY_VIDEO}
             onSave={async (updatedVideo) => putMutate({ id, ...updatedVideo }, { onSuccess })}
             onDelete={async () => deleteMutate(id, { onSuccess })}
           />
