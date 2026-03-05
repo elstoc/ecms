@@ -10,7 +10,7 @@ type QueryOptions<T> = {
   gcTime?: number;
 };
 
-export const useCustomQuery = <T>(options: QueryOptions<T>): T => {
+export const useCustomSuspenseQuery = <T>(options: QueryOptions<T>): T => {
   const { data } = useSuspenseQuery({ refetchInterval: config.queryRefetchInterval, ...options });
   return data;
 };

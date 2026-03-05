@@ -1,16 +1,16 @@
-import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
+import { useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
 
 import { deleteMarkdownPage, getMarkdownPage, getMarkdownTree, putMarkdownPage } from '../api';
 
 export const useGetMarkdownPage = (path: string) => {
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['markdownPage', path],
     queryFn: () => getMarkdownPage(path),
   });
 };
 
 export const useGetMarkdownTree = (path: string) => {
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['markdownTree', path],
     queryFn: () => getMarkdownTree(path),
   });

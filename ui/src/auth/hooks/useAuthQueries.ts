@@ -1,10 +1,10 @@
-import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
+import { useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
 import { useSiteConfig } from '@/site';
 
 import { getUserInfo, login, logout } from '../api';
 
 export const useUserInfo = () => {
-  return useCustomQuery({ queryKey: ['user-info'], queryFn: getUserInfo });
+  return useCustomSuspenseQuery({ queryKey: ['user-info'], queryFn: getUserInfo });
 };
 
 export const useUserIsAdmin = () => {

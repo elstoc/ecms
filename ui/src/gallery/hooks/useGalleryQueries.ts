@@ -1,4 +1,4 @@
-import { useCustomQuery } from '@/shared/hooks';
+import { useCustomSuspenseQuery } from '@/shared/hooks';
 
 import { getGalleryContents } from '../api';
 
@@ -10,7 +10,7 @@ export const useGalleryContent = () => {
   } = useGallery();
 
   // initialImage is not present in the key to avoid unnecessary reload
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['galleryContents', apiPath, pages, sortOrder, shuffleSeed ?? 0],
     queryFn: () => getGalleryContents(apiPath, pages, initialImage, sortOrder, shuffleSeed),
   });

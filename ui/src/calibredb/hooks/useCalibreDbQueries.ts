@@ -1,4 +1,4 @@
-import { useCustomQuery } from '@/shared/hooks';
+import { useCustomSuspenseQuery } from '@/shared/hooks';
 
 import { getCalibreDbBookPaths, getCalibreDbBooks, getCalibreDbLookup } from '../api';
 import { useCalibreDb } from '../hooks/useCalibreDb';
@@ -15,7 +15,7 @@ export const useBooks = () => {
     state: { apiPath, pages, apiFilters },
   } = useCalibreDb();
 
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['calibredb', 'books', apiPath, JSON.stringify(apiFilters), pages],
     queryFn: () => getCalibreDbBooks(apiPath, apiFilters, pages),
   });
@@ -29,7 +29,7 @@ export const useBookPaths = () => {
     },
   } = useCalibreDb();
 
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['calibredb', 'book-paths', apiPath, JSON.stringify(devices)],
     queryFn: () => getCalibreDbBookPaths(apiPath, devices),
   });
@@ -38,7 +38,7 @@ export const useBookPaths = () => {
 export const useLookup = (lookupTable: string) => {
   const apiPath = useApiPath();
 
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['videoDb', 'lookup', apiPath, lookupTable],
     queryFn: () => getCalibreDbLookup(apiPath, lookupTable),
   });

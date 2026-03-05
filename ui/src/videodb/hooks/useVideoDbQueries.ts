@@ -1,5 +1,5 @@
 import { Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
-import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
+import { useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
 
 import {
   deleteVideoDbVideo,
@@ -26,7 +26,7 @@ const useApiPath = () => {
 export const useLookup = (lookupTable: string) => {
   const apiPath = useApiPath();
 
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['videoDb', 'lookup', apiPath, lookupTable],
     queryFn: () => getVideoDbLookup(apiPath, lookupTable),
     staleTime: 60 * 60 * 1000,
@@ -42,7 +42,7 @@ export const useLookupValue = (lookupTable: string, value?: string) => {
 export const useGetTags = () => {
   const apiPath = useApiPath();
 
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: ['videoDb', 'tags', apiPath],
     queryFn: () => getVideoDbTags(apiPath),
   });
@@ -71,7 +71,7 @@ export const useVideos = () => {
         hasProgressNotes: apiFilters.hasProgressNotes ? '1' : undefined,
       };
 
-  return useCustomQuery({
+  return useCustomSuspenseQuery({
     queryKey: [
       'videoDb',
       'videos',
@@ -105,7 +105,7 @@ export const useGetVideo = (id: number) => {
     return getVideoDbVideo(apiPath, id);
   };
 
-  return useCustomQuery({ queryKey: ['videodb', 'video', id], queryFn, gcTime: 0 });
+  return useCustomSuspenseQuery({ queryKey: ['videodb', 'video', id], queryFn, gcTime: 0 });
 };
 
 export const usePostVideo = (successMessage: string) => {
