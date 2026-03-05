@@ -44,7 +44,9 @@ export const Dialog = ({
             <CloseButton />
           </div>
 
-          <Content className={styles.Content}>{children}</Content>
+          <Content render={<div />} className={styles.Content}>
+            {children}
+          </Content>
         </Popup>
       </Portal>
     </Root>
