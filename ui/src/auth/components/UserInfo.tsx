@@ -1,5 +1,5 @@
 import { useUserInfo } from '..';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 
 import { Dialog } from '@/shared/components/dialog';
 import { IconButton } from '@/shared/components/icon-button';
@@ -37,10 +37,8 @@ export const UserInfo = () => {
         open={authDialogOpen}
         onOpenChange={() => setAuthDialogOpen(false)}
       >
-        <Suspense>
-          {loggedIn && <Welcome user={userName} />}
-          {!loggedIn && <Login />}
-        </Suspense>
+        {loggedIn && <Welcome user={userName} />}
+        {!loggedIn && <Login />}
       </Dialog>
     </div>
   );

@@ -10,9 +10,7 @@ export const App = () => {
   return (
     <div className='app-content'>
       <header>
-        <Suspense>
-          <Header />
-        </Suspense>
+        <Header />
       </header>
       <main>
         <Suspense>
@@ -20,9 +18,7 @@ export const App = () => {
         </Suspense>
       </main>
       <footer>
-        <Suspense>
-          <Footer />
-        </Suspense>
+        <Footer />
       </footer>
     </div>
   );
