@@ -1,16 +1,16 @@
-import { useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
+import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 import { useSiteConfig } from '@/site';
 
 import { getUserInfo, login, logout } from '../api';
 
 export const useUserInfo = () => {
-  return useCustomSuspenseQuery({ queryKey: ['user-info'], queryFn: getUserInfo });
+  return useCustomQuery({ queryKey: ['user-info'], queryFn: getUserInfo });
 };
 
 export const useUserIsAdmin = () => {
   const user = useUserInfo();
   const { authEnabled } = useSiteConfig();
-  return !authEnabled || (user.roles ?? []).includes('admin');
+  return !authEnabled || !user || (user.roles ?? []).includes('admin');
 };
 
 export const useLogin = (successMessage: string) => {

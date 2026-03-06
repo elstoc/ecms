@@ -16,7 +16,7 @@ export const UserInfo = () => {
   const userData = useUserInfo();
   const { authEnabled } = useSiteConfig();
 
-  if (!authEnabled) {
+  if (!authEnabled || !userData) {
     return <></>;
   }
 
