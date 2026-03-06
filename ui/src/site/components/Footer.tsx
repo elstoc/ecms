@@ -4,5 +4,5 @@ import './Footer.css';
 
 export const Footer = () => {
   const siteConfig = useSiteConfig();
-  return <div className='footer'>{siteConfig.footerText}</div>;
+  return <div className='footer'>{siteConfig?.footerText}</div>;
 };

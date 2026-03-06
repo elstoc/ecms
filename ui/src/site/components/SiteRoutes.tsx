@@ -29,6 +29,10 @@ const listComponentRoutes = (components: ComponentMetadata[]) => {
 export const SiteRoutes = () => {
   const siteComponents = useSiteComponents();
 
+  if (!siteComponents) {
+    return null;
+  }
+
   return (
     <Routes>
       {listComponentRoutes(siteComponents)}

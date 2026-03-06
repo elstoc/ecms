@@ -9,7 +9,11 @@ import './Header.scss';
 
 export const Header = () => {
   const siteComponents = useSiteComponents();
-  const { siteTitle } = useSiteConfig();
+  const { siteTitle } = useSiteConfig() ?? {};
+
+  if (!siteComponents) {
+    return null;
+  }
 
   return (
     <Suspense>

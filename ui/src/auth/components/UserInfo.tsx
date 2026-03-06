@@ -14,7 +14,7 @@ import './UserInfo.css';
 export const UserInfo = () => {
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
   const userData = useUserInfo();
-  const { authEnabled } = useSiteConfig();
+  const { authEnabled } = useSiteConfig() ?? {};
 
   if (!authEnabled || !userData) {
     return <></>;

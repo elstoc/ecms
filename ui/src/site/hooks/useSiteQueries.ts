@@ -1,9 +1,9 @@
-import { useCustomSuspenseQuery } from '@/shared/hooks';
+import { useCustomQuery } from '@/shared/hooks';
 
 import { getSiteComponents, getSiteConfig } from '../api';
 
 const useSiteComponents = () => {
-  return useCustomSuspenseQuery({
+  return useCustomQuery({
     queryKey: ['siteComponents'],
     queryFn: getSiteComponents,
     staleTime: 60 * 60 * 1000,
@@ -12,7 +12,7 @@ const useSiteComponents = () => {
 };
 
 const useSiteConfig = () => {
-  return useCustomSuspenseQuery({
+  return useCustomQuery({
     queryKey: ['siteConfig'],
     queryFn: getSiteConfig,
     staleTime: 60 * 60 * 1000,

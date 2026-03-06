@@ -9,7 +9,7 @@ export const useUserInfo = () => {
 
 export const useUserIsAdmin = () => {
   const user = useUserInfo();
-  const { authEnabled } = useSiteConfig();
+  const { authEnabled } = useSiteConfig() ?? {};
   return !authEnabled || !user || (user.roles ?? []).includes('admin');
 };
 
