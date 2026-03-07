@@ -1,7 +1,6 @@
 import { createRef, startTransition, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { ImageMetadata } from '@/contracts/gallery';
 import { Tesselate } from '@/shared/components/layout';
 import { useElementIsVisible, useScrollIntoView } from '@/shared/hooks';
 
@@ -10,16 +9,11 @@ import { useGalleryContent } from '../hooks/useGalleryQueries';
 
 import { GalleryThumb } from './GalleryThumb';
 
-const noImages: ImageMetadata[] = [];
-
 export const JustifiedGallery = () => {
   const [searchParams] = useSearchParams();
   const { dispatch } = useGallery();
 
-  const galleryContent = useGalleryContent();
-  const images = galleryContent?.images ?? noImages;
-  const totalPages = galleryContent?.totalPages ?? 1;
-  const currentPage = galleryContent?.currentPage ?? 1;
+  const { images, totalPages, currentPage } = useGalleryContent();
 
   const loadMoreImages = useCallback(
     () =>

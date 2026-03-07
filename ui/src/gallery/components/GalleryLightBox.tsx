@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { ImageMetadata } from '@/contracts/gallery';
 import { LightBox } from '@/shared/components/lightbox';
 import { useTitle } from '@/shared/hooks';
 
 import { useGallery } from '../hooks/useGallery';
 import { useGalleryContent } from '../hooks/useGalleryQueries';
-
-const noImages: ImageMetadata[] = [];
 
 export const GalleryLightBox = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,7 +13,7 @@ export const GalleryLightBox = () => {
     state: { title },
   } = useGallery();
   const galleryContent = useGalleryContent();
-  const images = galleryContent?.images ?? noImages;
+  const { images } = galleryContent;
 
   const imageName = searchParams.get('image');
   const imageIndex = images.findIndex((image) => image.fileName === imageName);
