@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { config } from '@/utils';
 
@@ -8,11 +8,6 @@ type QueryOptions<T> = {
   staleTime?: number;
   refetchInterval?: number;
   gcTime?: number;
-};
-
-export const useCustomSuspenseQuery = <T>(options: QueryOptions<T>): T => {
-  const { data } = useSuspenseQuery({ refetchInterval: config.queryRefetchInterval, ...options });
-  return data;
 };
 
 export const useCustomQuery = <T>(options: QueryOptions<T>): T | undefined => {

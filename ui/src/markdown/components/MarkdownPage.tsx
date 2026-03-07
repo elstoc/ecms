@@ -25,6 +25,10 @@ export const MarkdownPage = ({ apiPath }: MarkdownAddPageProps) => {
     dispatch({ type: 'setCurrentPageDetails', payload });
   }, [dispatch, mdPage, apiPath]);
 
+  if (!mdPage.pageExists) {
+    return null;
+  }
+
   return (
     <>
       {mode === 'edit' ? <MarkdownEditPage /> : <MarkdownViewPage />}

@@ -1,5 +1,4 @@
 import 'modern-normalize';
-import { Suspense } from 'react';
 
 import { Footer, Header, SiteRoutes } from './site';
 
@@ -13,9 +12,7 @@ export const App = () => {
         <Header />
       </header>
       <main>
-        <Suspense>
-          <SiteRoutes />
-        </Suspense>
+        <SiteRoutes />
       </main>
       <footer>
         <Footer />

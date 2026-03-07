@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
@@ -18,27 +16,19 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
     state: { singlePage },
   } = useMarkdown();
 
-  const sidebar = (
-    <Suspense>
-      <MarkdownNav />
-    </Suspense>
-  );
-
   const content = (
     <div className='markdown-page-content'>
-      <Suspense>
-        <MarkdownPage apiPath={apiPath} />
-        <InjectComponentTools>
-          <MarkdownToolbox apiPath={apiPath} />
-        </InjectComponentTools>
-      </Suspense>
+      <MarkdownPage apiPath={apiPath} />
+      <InjectComponentTools>
+        <MarkdownToolbox apiPath={apiPath} />
+      </InjectComponentTools>
     </div>
   );
 
   return (
     <ContentWithSidebar
       content={content}
-      sidebar={singlePage ? null : sidebar}
+      sidebar={singlePage ? null : <MarkdownNav />}
       closeSidebarOnClick={true}
     />
   );

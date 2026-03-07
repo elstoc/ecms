@@ -1,19 +1,43 @@
-import { useCustomSuspenseQuery, useMutationWithToast } from '@/shared/hooks';
+import { MarkdownTree } from '@/contracts/markdown';
+import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
 
-import { deleteMarkdownPage, getMarkdownPage, getMarkdownTree, putMarkdownPage } from '../api';
+import {
+  MarkdownPage,
+  deleteMarkdownPage,
+  getMarkdownPage,
+  getMarkdownTree,
+  putMarkdownPage,
+} from '../api';
+
+const emptyMarkdownPage: MarkdownPage = {
+  content: '',
+  pageExists: false,
+  canWrite: false,
+  canDelete: false,
+  pathValid: true,
+};
 
 export const useGetMarkdownPage = (path: string) => {
-  return useCustomSuspenseQuery({
+  const page = useCustomQuery({
     queryKey: ['markdownPage', path],
     queryFn: () => getMarkdownPage(path),
   });
+
+  return page ?? emptyMarkdownPage;
+};
+
+const emptyMarkdownTree: MarkdownTree = {
+  apiPath: '',
+  uiPath: '',
 };
 
 export const useGetMarkdownTree = (path: string) => {
-  return useCustomSuspenseQuery({
+  const tree = useCustomQuery({
     queryKey: ['markdownTree', path],
     queryFn: () => getMarkdownTree(path),
   });
+
+  return tree ?? emptyMarkdownTree;
 };
 
 export const useCreateMarkdownPage = (successMessage: string) => {

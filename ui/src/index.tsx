@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter } from 'react-router-dom';
@@ -24,9 +23,7 @@ root.render(
     >
       <ToastProvider>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense fallback='Loading...'>
-            <App />
-          </Suspense>
+          <App />
         </ErrorBoundary>
       </ToastProvider>
     </BrowserRouter>
