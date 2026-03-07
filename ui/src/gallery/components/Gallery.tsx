@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 
@@ -24,12 +23,10 @@ export const Gallery = (props: GalleryMetadata) => {
 
   return (
     <GalleryContext.Provider value={{ state, dispatch }}>
-      <Suspense>
-        <Routes>
-          <Route path='/' element={<GalleryContent />} />
-          <Route path='*' element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path='/' element={<GalleryContent />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
     </GalleryContext.Provider>
   );
 };
