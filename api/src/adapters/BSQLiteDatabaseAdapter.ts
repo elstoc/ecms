@@ -1,5 +1,7 @@
 import Database, { Database as DatabaseType } from 'better-sqlite3';
 
+export type DbParams = Record<string, unknown>;
+
 export class BSQLiteDatabaseAdapter {
   private database?: DatabaseType;
 
@@ -20,7 +22,7 @@ export class BSQLiteDatabaseAdapter {
     this.database?.close();
   }
 
-  public run(sql: string, params?: unknown): void {
+  public run(sql: string, params?: DbParams): void {
     if (!this.database) {
       return;
     }
@@ -34,7 +36,7 @@ export class BSQLiteDatabaseAdapter {
     stmt.run();
   }
 
-  public get<T>(sql: string, params?: unknown): T | undefined {
+  public get<T>(sql: string, params?: DbParams): T | undefined {
     if (!this.database) {
       return;
     }
@@ -48,7 +50,7 @@ export class BSQLiteDatabaseAdapter {
     return stmt.get() as T | undefined;
   }
 
-  public getAll<T>(sql: string, params?: unknown): T[] | undefined {
+  public getAll<T>(sql: string, params?: DbParams): T[] | undefined {
     if (!this.database) {
       return;
     }

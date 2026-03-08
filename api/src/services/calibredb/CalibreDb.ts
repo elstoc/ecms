@@ -2,7 +2,7 @@ import path from 'path';
 import { Logger } from 'winston';
 
 import { StorageAdapter } from '@/adapters';
-import { BSQLiteDatabaseAdapter } from '@/adapters/BSQLiteDatabaseAdapter';
+import { BSQLiteDatabaseAdapter, DbParams } from '@/adapters/BSQLiteDatabaseAdapter';
 import { Book, PaginatedBooks } from '@/contracts/calibredb';
 import { NotFoundError } from '@/errors';
 import { Config, pShuffle } from '@/utils';
@@ -221,9 +221,9 @@ export class CalibreDb {
 
   private buildBookQuery(filters: Filters): {
     sql: string;
-    params?: Record<string, unknown>;
+    params?: DbParams;
   } {
-    let params: Record<string, unknown> | undefined;
+    let params: DbParams | undefined;
     const whereClauses: string[] = [];
 
     const { author, format, bookPath, exactPath, readStatus, sortOrder, devices, titleContains } =
