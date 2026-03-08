@@ -27,11 +27,11 @@ export const createCalibreDbRouter = (site: Site): Router => {
           shuffleSeed: parseInt(query.shuffleSeed ?? '0'),
           devices: query.devices ? (query.devices.split('|') as Devices[]) : undefined,
         };
-        const books = await calibreDb.getBooks(filters, parseInt(query.pages || '1'));
+        const books = calibreDb.getBooks(filters, parseInt(query.pages || '1'));
         res.json(books);
       }
       if (fn === 'getLookup') {
-        const values = await calibreDb.getLookupValues(req.query.table as string);
+        const values = calibreDb.getLookupValues(req.query.table as string);
         res.json(values);
       }
       if (fn === 'getCover') {
@@ -40,7 +40,7 @@ export const createCalibreDbRouter = (site: Site): Router => {
         res.send(coverFileBuf);
       }
       if (fn === 'getPaths') {
-        const paths = await calibreDb.getPaths(
+        const paths = calibreDb.getPaths(
           query.devices ? (query.devices.split('|') as Devices[]) : undefined,
         );
         res.json(paths);

@@ -196,7 +196,7 @@ export class CalibreDb {
     };
   }
 
-  private async getBookContentDir(id: number): Promise<string> {
+  private getBookContentDir(id: number): string {
     const result = this.database?.get<{ path: string }>(pathSql, { id: id });
     const { path: bookDir } = result ?? {};
     const bookContentDir = path.join(this.apiPath, bookDir ?? '');
@@ -209,7 +209,7 @@ export class CalibreDb {
   }
 
   public async getCoverImage(id: number): Promise<Buffer> {
-    const bookContentDir = await this.getBookContentDir(id);
+    const bookContentDir = this.getBookContentDir(id);
     const coverPath = path.join(bookContentDir, 'cover.jpg');
 
     if (!this.storage.contentFileExists(coverPath)) {
@@ -276,7 +276,7 @@ export class CalibreDb {
     return { params, sql };
   }
 
-  public async getBooks(filters: Filters, requestedPages: number): Promise<PaginatedBooks> {
+  public getBooks(filters: Filters, requestedPages: number): PaginatedBooks {
     const { sql, params } = this.buildBookQuery(filters);
 
     let books = this.database?.getAll<BookDao>(sql, params);
@@ -305,7 +305,7 @@ export class CalibreDb {
     };
   }
 
-  public async getPaths(devices?: Devices[]): Promise<LookupValues> {
+  public getPaths(devices?: Devices[]): LookupValues {
     let sql = baseBookPathSql;
 
     if (devices) {
@@ -329,7 +329,7 @@ export class CalibreDb {
     return returnVal;
   }
 
-  public async getLookupValues(tableName: string): Promise<LookupValues> {
+  public getLookupValues(tableName: string): LookupValues {
     if (!Object.keys(lookupTableSql).includes(tableName)) {
       throw new Error(`invalid table name ${tableName}`);
     }
@@ -348,6 +348,7 @@ export class CalibreDb {
     return returnVal;
   }
 
+  // TODO: Remove async once all other node-sqlite3 functionality removed
   public async shutdown(): Promise<void> {
     this.logger.info(`shutting down database at ${this.apiPath}`);
     this.database?.close();
