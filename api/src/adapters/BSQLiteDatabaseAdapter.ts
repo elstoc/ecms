@@ -31,9 +31,9 @@ export class BSQLiteDatabaseAdapter {
 
     if (params) {
       stmt.run(params);
+    } else {
+      stmt.run();
     }
-
-    stmt.run();
   }
 
   public get<T>(sql: string, params?: DbParams): T | undefined {
