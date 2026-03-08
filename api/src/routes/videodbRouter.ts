@@ -14,30 +14,30 @@ export const createVideoDbRouter = (site: Site): Router => {
       const path = (req.query.path ?? req.body.path) as string;
       const videoDb = await site.getVideoDb(path);
       if (fn === 'getVersion') {
-        const version = await videoDb.getVersion();
+        const version = videoDb.getVersion();
         res.json({ version });
       } else if (fn === 'getOmdbKey') {
         res.send(videoDb.getOmdbApiKey(req.user));
       } else if (fn === 'getLookup') {
-        const values = await videoDb.getLookupValues(req.query.table as string);
+        const values = videoDb.getLookupValues(req.query.table as string);
         res.json(values);
       } else if (fn === 'getTags') {
-        const tags = await videoDb.getAllTags();
+        const tags = videoDb.getAllTags();
         res.json(tags);
       } else if (fn === 'postVideo') {
-        const id = await videoDb.addVideo(req.body.video, req.user);
+        const id = videoDb.addVideo(req.body.video, req.user);
         res.json({ id });
       } else if (fn === 'putVideo') {
-        await videoDb.updateVideo(req.body.id, req.body.video, req.user);
+        videoDb.updateVideo(req.body.id, req.body.video, req.user);
         res.sendStatus(200);
       } else if (fn === 'patchVideo') {
-        await videoDb.patchVideo(req.body, req.user);
+        videoDb.patchVideo(req.body, req.user);
         res.sendStatus(200);
       } else if (fn === 'getVideo') {
-        const video = await videoDb.getVideo(parseInt(req.query.id as string));
+        const video = videoDb.getVideo(parseInt(req.query.id as string));
         res.json(video);
       } else if (fn === 'deleteVideo') {
-        const video = await videoDb.deleteVideo(parseInt(req.query.id as string), req.user);
+        const video = videoDb.deleteVideo(parseInt(req.query.id as string), req.user);
         res.json(video);
       } else if (fn === 'getVideos') {
         const query = req.query as Record<string, string>;
@@ -56,7 +56,7 @@ export const createVideoDbRouter = (site: Site): Router => {
           videoIds: query.videoIds?.split('|').map(Number),
           primaryMediaType: query.primaryMediaType,
         };
-        const videos = await videoDb.queryVideos(filters, parseInt(query.pages));
+        const videos = videoDb.queryVideos(filters, parseInt(query.pages));
         res.json(videos);
       }
     } catch (err: unknown) {

@@ -140,19 +140,19 @@ export class VideoDb {
         this.dbVersion = 0;
       }
       this.database = await this.storage.getContentDbv2(dbContentPath);
-      await this.upgrade();
+      this.upgrade();
       this.logger.info(`initialised database at ${this.apiPath}`);
     }
   }
 
-  private async upgrade(): Promise<void> {
+  private upgrade(): void {
     const latestVersion = dbUpgradeSql.length;
     this.dbVersion ??= this.retrieveVersion();
     if (latestVersion > this.dbVersion) {
       for (const versionSql of dbUpgradeSql.slice(this.dbVersion)) {
         this.database?.run(versionSql);
       }
-      await this.storeVersion(latestVersion);
+      this.storeVersion(latestVersion);
     }
   }
 
@@ -167,7 +167,7 @@ export class VideoDb {
     return 0;
   }
 
-  public async getVersion(): Promise<number> {
+  public getVersion(): number {
     return this.dbVersion ?? 0;
   }
 
@@ -176,7 +176,7 @@ export class VideoDb {
     return this.config.omdbApiKey;
   }
 
-  public async getLookupValues(tableSuffix: string): Promise<LookupValues> {
+  public getLookupValues(tableSuffix: string): LookupValues {
     const tableName = `l_${tableSuffix}` as LookupTables;
     if (!Object.values(LookupTables).includes(tableName)) {
       throw new Error(`invalid table suffix ${tableSuffix}`);
@@ -202,7 +202,7 @@ export class VideoDb {
     return returnVal;
   }
 
-  public async addVideo(video: Video, user?: User): Promise<number> {
+  public addVideo(video: Video, user?: User): number {
     this.throwIfNotAdmin(user);
     const sql = `INSERT INTO videos
                      (${videoFields.join(', ')})
@@ -220,14 +220,14 @@ export class VideoDb {
       throw new Error('Unexpected error creating video');
     }
 
-    await this.createOrReplaceVideoTags(result.id, video.tags);
+    this.createOrReplaceVideoTags(result.id, video.tags);
 
     return result.id;
   }
 
-  public async updateVideo(id: number, video: Video, user?: User): Promise<void> {
+  public updateVideo(id: number, video: Video, user?: User): void {
     this.throwIfNotAdmin(user);
-    await this.throwIfNoVideo(id);
+    this.throwIfNoVideo(id);
 
     const setList = videoFields.map((field) => `${field} = $${field}`);
     const sql = `UPDATE videos SET ${setList.join(', ')} WHERE id = $id`;
@@ -239,10 +239,10 @@ export class VideoDb {
 
     this.database?.run(sql, params);
 
-    await this.createOrReplaceVideoTags(id, video.tags);
+    this.createOrReplaceVideoTags(id, video.tags);
   }
 
-  public async patchVideo(update: VideoUpdate, user?: User): Promise<void> {
+  public patchVideo(update: VideoUpdate, user?: User): void {
     this.throwIfNotAdmin(user);
 
     const sql = `UPDATE videos
@@ -252,8 +252,8 @@ export class VideoDb {
     this.database?.run(sql);
   }
 
-  private async createOrReplaceVideoTags(id: number, tags?: string[]): Promise<void> {
-    await this.deleteVideoTags(id);
+  private createOrReplaceVideoTags(id: number, tags?: string[]): void {
+    this.deleteVideoTags(id);
 
     if (!tags || tags.length === 0) return;
 
@@ -266,13 +266,13 @@ export class VideoDb {
     }
   }
 
-  private async deleteVideoTags(id: number): Promise<void> {
+  private deleteVideoTags(id: number): void {
     const deleteSql = `DELETE FROM video_tags WHERE video_id = ${id}`;
     this.database?.run(deleteSql);
   }
 
-  public async getVideo(id: number): Promise<Video> {
-    await this.throwIfNoVideo(id);
+  public getVideo(id: number): Video {
+    this.throwIfNoVideo(id);
     const sql = `SELECT ${videoFields.join(', ')}
                      FROM   videos
                      WHERE  id = ${id}`;
@@ -280,7 +280,7 @@ export class VideoDb {
     if (!video) {
       throw new Error(`Unexpected error getting video ${id}`);
     }
-    const tags = await this.getVideoTags(id);
+    const tags = this.getVideoTags(id);
     if (tags && tags.length > 0) {
       video.tags = tags;
     }
@@ -288,11 +288,11 @@ export class VideoDb {
     return videoNullMapper(video);
   }
 
-  public async deleteVideo(id: number, user?: User): Promise<void> {
+  public deleteVideo(id: number, user?: User): void {
     this.throwIfNotAdmin(user);
-    await this.throwIfNoVideo(id);
+    this.throwIfNoVideo(id);
 
-    await this.deleteVideoTags(id);
+    this.deleteVideoTags(id);
 
     const sql = `DELETE
                  FROM   videos
@@ -300,7 +300,7 @@ export class VideoDb {
     this.database?.run(sql);
   }
 
-  private async getVideoTags(id: number): Promise<string[] | undefined> {
+  private getVideoTags(id: number): string[] | undefined {
     const sql = `SELECT tag FROM video_tags WHERE video_id = ${id} ORDER BY tag`;
     const tags = this.database?.getAll<{ tag: string }>(sql);
     if (tags) {
@@ -308,7 +308,7 @@ export class VideoDb {
     }
   }
 
-  public async getAllTags(): Promise<string[]> {
+  public getAllTags(): string[] {
     const sql = 'SELECT DISTINCT tag from video_tags ORDER BY tag';
     const tags = this.database?.getAll<{ tag: string }>(sql);
     if (tags) {
@@ -423,7 +423,7 @@ export class VideoDb {
     return { sql, params };
   }
 
-  public async queryVideos(filters?: VideoFilters, requestedPages = 1): Promise<PaginatedVideos> {
+  public queryVideos(filters?: VideoFilters, requestedPages = 1): PaginatedVideos {
     const { sql, params } = this.buildVideoQuery(filters);
     let videos = this.database?.getAll<VideoWithId>(sql, params);
 
@@ -470,7 +470,7 @@ export class VideoDb {
     if (this.config.enableAuthentication && !userIsAdmin(user)) throw new NotPermittedError();
   }
 
-  private async throwIfNoVideo(id: number): Promise<void> {
+  private throwIfNoVideo(id: number): void {
     const sql = `SELECT COUNT() AS video_exists FROM videos WHERE id=${id}`;
     const result = this.database?.get<{ video_exists: number }>(sql);
     if (!result || result.video_exists === 0) {
@@ -478,7 +478,7 @@ export class VideoDb {
     }
   }
 
-  private async storeVersion(version: number): Promise<void> {
+  private storeVersion(version: number): void {
     const sql = `UPDATE db_version SET version = ${version};`;
     this.database?.run(sql);
     this.dbVersion = version;
