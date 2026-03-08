@@ -1,13 +1,11 @@
 import path from 'path';
-import { OPEN_FULLMUTEX, OPEN_READONLY } from 'sqlite3';
 import { Logger } from 'winston';
 
-import { DatabaseAdapter, StorageAdapter } from '@/adapters';
+import { StorageAdapter } from '@/adapters';
+import { BSQLiteDatabaseAdapter } from '@/adapters/BSQLiteDatabaseAdapter';
 import { Book, PaginatedBooks } from '@/contracts/calibredb';
 import { NotFoundError } from '@/errors';
 import { Config, pShuffle } from '@/utils';
-
-const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
 
 export type Devices = 'kindle' | 'kobo' | 'tablet' | 'physical';
 
@@ -152,8 +150,7 @@ export type LookupValues = {
 export class CalibreDb {
   private apiPath: string;
   private dbContentPath: string;
-  private initialising = false;
-  private database?: DatabaseAdapter;
+  private database?: BSQLiteDatabaseAdapter;
   private dbModifiedTime = -1;
 
   public constructor(
@@ -173,20 +170,10 @@ export class CalibreDb {
 
     const newDbModifiedTime = this.storage.getContentFileModifiedTime(this.dbContentPath);
 
-    while (this.initialising) {
-      this.logger.info('waiting for database to initialise');
-      await wait(50);
-    }
-
     if (!this.database || newDbModifiedTime > this.dbModifiedTime) {
       this.dbModifiedTime = newDbModifiedTime;
-      this.initialising = true;
       this.logger.info(`initialising database at ${this.apiPath}`);
-      this.database = await this.storage.getContentDb(
-        this.dbContentPath,
-        OPEN_READONLY | OPEN_FULLMUTEX,
-      );
-      this.initialising = false;
+      this.database = await this.storage.getContentDbv2(this.dbContentPath, true);
       this.logger.info(`initialised database at ${this.apiPath}`);
     }
   }
@@ -210,7 +197,7 @@ export class CalibreDb {
   }
 
   private async getBookContentDir(id: number): Promise<string> {
-    const result = await this.database?.getWithParams<{ path: string }>(pathSql, { $id: id });
+    const result = this.database?.get<{ path: string }>(pathSql, { id: id });
     const { path: bookDir } = result ?? {};
     const bookContentDir = path.join(this.apiPath, bookDir ?? '');
 
@@ -234,9 +221,9 @@ export class CalibreDb {
 
   private buildBookQuery(filters: Filters): {
     sql: string;
-    params: Record<string, unknown>;
+    params?: Record<string, unknown>;
   } {
-    const params: Record<string, unknown> = {};
+    let params: Record<string, unknown> | undefined;
     const whereClauses: string[] = [];
 
     const { author, format, bookPath, exactPath, readStatus, sortOrder, devices, titleContains } =
@@ -244,28 +231,34 @@ export class CalibreDb {
 
     if (titleContains) {
       whereClauses.push(filterSql.titleContains);
-      params['$titleContains'] = `%${titleContains.toLowerCase()}%`;
+      params = params ?? {};
+      params['titleContains'] = `%${titleContains.toLowerCase()}%`;
     }
     if (author) {
       whereClauses.push(filterSql.author);
-      params['$author'] = author;
+      params = params ?? {};
+      params['author'] = author;
     }
     if (format) {
       whereClauses.push(filterSql.format);
-      params['$format'] = format;
+      params = params ?? {};
+      params['format'] = format;
     }
     if (exactPath || bookPath) {
       if (exactPath) {
         whereClauses.push(filterSql.bookPath);
-        params['$bookPath'] = bookPath;
+        params = params ?? {};
+        params['bookPath'] = bookPath;
       } else {
         whereClauses.push(filterSql.bookPathPrefix);
-        params['$pathPrefixLike'] = `${bookPath}%`;
+        params = params ?? {};
+        params['pathPrefixLike'] = `${bookPath}%`;
       }
     }
     if (readStatus != null) {
       whereClauses.push(filterSql.readStatus);
-      params['$readStatus'] = readStatus ? 1 : 0;
+      params = params ?? {};
+      params['readStatus'] = readStatus ? 1 : 0;
     }
     if (devices) {
       const deviceSql = devices.map((device) => filterSql[device]);
@@ -286,7 +279,7 @@ export class CalibreDb {
   public async getBooks(filters: Filters, requestedPages: number): Promise<PaginatedBooks> {
     const { sql, params } = this.buildBookQuery(filters);
 
-    let books = await this.database?.getAllWithParams<BookDao>(sql, params);
+    let books = this.database?.getAll<BookDao>(sql, params);
 
     if (!books) {
       throw new Error('Unexpected error querying books');
@@ -320,7 +313,7 @@ export class CalibreDb {
       sql += ' WHERE (' + deviceSql.join(' OR ') + ')';
     }
 
-    const paths = await this.database?.getAll<LookupRow>(sql);
+    const paths = this.database?.getAll<LookupRow>(sql);
 
     if (!paths) {
       throw new Error(`No ${path} records found`);
@@ -341,7 +334,7 @@ export class CalibreDb {
       throw new Error(`invalid table name ${tableName}`);
     }
 
-    const lookupRows = await this.database?.getAll<LookupRow>(lookupTableSql[tableName]);
+    const lookupRows = this.database?.getAll<LookupRow>(lookupTableSql[tableName]);
 
     if (!lookupRows) {
       throw new Error(`No ${tableName} records found`);
@@ -357,6 +350,6 @@ export class CalibreDb {
 
   public async shutdown(): Promise<void> {
     this.logger.info(`shutting down database at ${this.apiPath}`);
-    await this.database?.close();
+    this.database?.close();
   }
 }
