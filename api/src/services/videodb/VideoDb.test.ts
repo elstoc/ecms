@@ -526,7 +526,6 @@ describe('VideoDb', () => {
     });
   });
 
-  /*
   describe('updateVideo', () => {
     const video = {
       title: 'some-title',
@@ -564,12 +563,10 @@ describe('VideoDb', () => {
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValue({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
 
-      await expect(videoDb.updateVideo(1, video, regularUser)).rejects.toThrow(
-        new NotPermittedError(),
-      );
+      expect(() => videoDb.updateVideo(1, video, regularUser)).toThrow(new NotPermittedError());
     });
 
     it('does not throw error if user is admin and auth enabled', async () => {
@@ -581,10 +578,10 @@ describe('VideoDb', () => {
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 }).mockResolvedValue({ video_exists: 1 });
+      mockGet.mockReturnValue({ ver: 4 }).mockReturnValue({ video_exists: 1 });
       await videoDb.initialise();
 
-      await expect(videoDb.updateVideo(1, video, adminUser)).resolves.toBeUndefined();
+      expect(() => videoDb.updateVideo(1, video, adminUser)).not.toThrow();
     });
 
     it('does not throw error if user is not admin and auth disabled', async () => {
@@ -596,23 +593,23 @@ describe('VideoDb', () => {
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 }).mockResolvedValue({ video_exists: 1 });
+      mockGet.mockReturnValue({ ver: 4 }).mockReturnValue({ video_exists: 1 });
       await videoDb.initialise();
 
-      await expect(videoDb.updateVideo(1, video, regularUser)).resolves.toBeUndefined();
+      expect(() => videoDb.updateVideo(1, video, regularUser)).not.toThrow();
     });
 
-    it('throws error if video id does not exist', async () => {
-      mockGet.mockResolvedValue({ video_exists: 0 });
+    it('throws error if video id does not exist', () => {
+      mockGet.mockReturnValue({ video_exists: 0 });
 
-      await expect(videoDb.updateVideo(1, video)).rejects.toThrow(
+      expect(() => videoDb.updateVideo(1, video)).toThrow(
         new NotFoundError('video id 1 does not exist'),
       );
       expect(mockGet).toHaveBeenCalledWith('SELECT COUNT() AS video_exists FROM videos WHERE id=1');
     });
 
-    it('runs update SQL with correct parameters if video exists', async () => {
-      mockGet.mockResolvedValue({ video_exists: 1 });
+    it('runs update SQL with correct parameters if video exists', () => {
+      mockGet.mockReturnValue({ video_exists: 1 });
       const expectedSql = `UPDATE videos
                                  SET title = $title,
                                      category = $category,
@@ -636,32 +633,32 @@ describe('VideoDb', () => {
                                  WHERE id = $id`;
 
       const expectedVideoParameters = {
-        $id: 1,
-        $title: 'some-title',
-        $category: 'some-category',
-        $director: 'some-director',
-        $num_episodes: 12,
-        $length_mins: 1234,
-        $watched: 'Y',
-        $priority_flag: 1,
-        $progress: 'some-progress',
-        $imdb_id: 'imdb1234',
-        $image_url: 'url',
-        $year: 1923,
-        $actors: 'some-actors',
-        $plot: 'stuff happened',
-        $primary_media_type: 'BD4K',
-        $primary_media_location: 'MOVW',
-        $primary_media_watched: 'Y',
-        $other_media_type: 'BD',
-        $other_media_location: 'MOVW',
-        $media_notes: null,
+        id: 1,
+        title: 'some-title',
+        category: 'some-category',
+        director: 'some-director',
+        num_episodes: 12,
+        length_mins: 1234,
+        watched: 'Y',
+        priority_flag: 1,
+        progress: 'some-progress',
+        imdb_id: 'imdb1234',
+        image_url: 'url',
+        year: 1923,
+        actors: 'some-actors',
+        plot: 'stuff happened',
+        primary_media_type: 'BD4K',
+        primary_media_location: 'MOVW',
+        primary_media_watched: 'Y',
+        other_media_type: 'BD',
+        other_media_location: 'MOVW',
+        media_notes: null,
       };
 
-      await videoDb.updateVideo(1, video);
+      videoDb.updateVideo(1, video);
 
-      expect(mockRunWithParams).toHaveBeenCalled();
-      const [sql, videoParameters] = mockRunWithParams.mock.calls[0];
+      expect(mockRun).toHaveBeenCalled();
+      const [sql, videoParameters] = mockRun.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videoParameters).toEqual(expectedVideoParameters);
     });
@@ -674,7 +671,7 @@ describe('VideoDb', () => {
         watched: 'Y',
       };
 
-      mockGet.mockResolvedValue({ video_exists: 1 });
+      mockGet.mockReturnValue({ video_exists: 1 });
       const expectedSql = `UPDATE videos
                                  SET title = $title,
                                      category = $category,
@@ -698,56 +695,55 @@ describe('VideoDb', () => {
                                  WHERE id = $id`;
 
       const expectedVideoParameters = {
-        $id: 1,
-        $title: 'some-title',
-        $category: 'some-category',
-        $watched: 'Y',
-        $director: null,
-        $num_episodes: null,
-        $length_mins: null,
-        $priority_flag: null,
-        $progress: null,
-        $imdb_id: null,
-        $image_url: null,
-        $year: null,
-        $actors: null,
-        $plot: null,
-        $primary_media_type: null,
-        $primary_media_location: null,
-        $primary_media_watched: null,
-        $other_media_type: null,
-        $other_media_location: null,
-        $media_notes: null,
+        id: 1,
+        title: 'some-title',
+        category: 'some-category',
+        watched: 'Y',
+        director: null,
+        num_episodes: null,
+        length_mins: null,
+        priority_flag: null,
+        progress: null,
+        imdb_id: null,
+        image_url: null,
+        year: null,
+        actors: null,
+        plot: null,
+        primary_media_type: null,
+        primary_media_location: null,
+        primary_media_watched: null,
+        other_media_type: null,
+        other_media_location: null,
+        media_notes: null,
       };
 
-      await videoDb.updateVideo(1, newVideo);
+      videoDb.updateVideo(1, newVideo);
 
-      expect(mockRunWithParams).toHaveBeenCalled();
-      const [sql, videoParameters] = mockRunWithParams.mock.calls[0];
+      expect(mockRun).toHaveBeenCalled();
+      const [sql, videoParameters] = mockRun.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videoParameters).toEqual(expectedVideoParameters);
     });
 
     it('deletes but does not insert tags if tags are undefined', async () => {
-      mockGet.mockResolvedValue({ video_exists: 1 });
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValue({ ver: 4 });
-      mockGetWithParams.mockResolvedValue({ id: 2468 });
+      mockGet.mockReturnValueOnce({ video_exists: 1 }).mockReturnValue({ id: 2468 });
 
       await videoDb.initialise();
 
       const expectedTagDeleteSql = 'DELETE FROM video_tags WHERE video_id = 1';
-      await videoDb.updateVideo(1, video);
+      videoDb.updateVideo(1, video);
 
-      expect(mockExec).toHaveBeenCalledWith(expectedTagDeleteSql);
-      expect(mockRunWithParams).toHaveBeenCalledTimes(1); //for the video update
+      expect(mockRun).toHaveBeenCalledTimes(2); // update & delete
+      expect(mockRun).toHaveBeenCalledWith(expectedTagDeleteSql);
     });
 
     it('deletes and inserts tags if tags are defined', async () => {
-      mockGet.mockResolvedValue({ video_exists: 1 });
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValue({ ver: 4 });
-      mockGetWithParams.mockResolvedValue({ id: 2468 });
+      mockGet
+        .mockReturnValueOnce({ video_exists: 1 })
+        .mockReturnValueOnce({ ver: 4 })
+        .mockReturnValue({ id: 2468 });
 
       await videoDb.initialise();
 
@@ -762,17 +758,17 @@ describe('VideoDb', () => {
         progress: 'some-progress',
         tags: ['tag1', 'tag2'],
       };
-      const expectedTagInsertParams1 = { $id: 1, $tag: 'tag1' };
-      const expectedTagInsertParams2 = { $id: 1, $tag: 'tag2' };
+      const expectedTagInsertParams1 = { id: 1, tag: 'tag1' };
+      const expectedTagInsertParams2 = { id: 1, tag: 'tag2' };
 
       const expectedTagDeleteSql = 'DELETE FROM video_tags WHERE video_id = 1';
       const expectedTagInsertSql = 'INSERT INTO video_tags (video_id, tag) VALUES ($id, $tag)';
-      await videoDb.updateVideo(1, videoWithMedia as any);
+      videoDb.updateVideo(1, videoWithMedia as any);
 
-      expect(mockExec).toHaveBeenCalledWith(expectedTagDeleteSql);
-      expect(mockRunWithParams).toHaveBeenCalledTimes(3);
-      const [tagInsertSql1, tagInsertParams1] = mockRunWithParams.mock.calls[1];
-      const [tagInsertSql2, tagInsertParams2] = mockRunWithParams.mock.calls[2];
+      expect(mockRun).toHaveBeenCalledTimes(4); // update video, delete tags, insert tags
+      expect(mockRun).toHaveBeenCalledWith(expectedTagDeleteSql);
+      const [tagInsertSql1, tagInsertParams1] = mockRun.mock.calls[2];
+      const [tagInsertSql2, tagInsertParams2] = mockRun.mock.calls[3];
       expect(stripWhiteSpace(tagInsertSql1)).toBe(stripWhiteSpace(expectedTagInsertSql));
       expect(stripWhiteSpace(tagInsertSql2)).toBe(stripWhiteSpace(expectedTagInsertSql));
       expect(tagInsertParams1).toEqual(expectedTagInsertParams1);
@@ -780,6 +776,7 @@ describe('VideoDb', () => {
     });
   });
 
+  /*
   describe('getVideo', () => {
     beforeEach(async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
