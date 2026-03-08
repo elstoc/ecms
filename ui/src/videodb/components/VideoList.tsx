@@ -1,4 +1,4 @@
-import { startTransition, useRef } from 'react';
+import { useRef } from 'react';
 
 import { useElementIsVisible } from '@/shared/hooks/useElementIsVisible';
 
@@ -12,17 +12,14 @@ import './VideoList.css';
 export const VideoList = () => {
   const refLastVideo = useRef<HTMLDivElement>(null);
   const { state, dispatch } = useVideoDb();
-  useElementIsVisible(refLastVideo, () => {
-    startTransition(() => {
-      dispatch({ type: 'setPages', payload: Math.max(Math.min(totalPages, currentPage + 1), 1) });
-    });
-  });
+  const { videos, currentPage, totalPages } = useVideos();
 
-  const videoData = useVideos();
-
-  if (!videoData) return null;
-
-  const { videos, currentPage, totalPages } = videoData;
+  useElementIsVisible(refLastVideo, () =>
+    dispatch({
+      type: 'setPages',
+      payload: Math.max(Math.min(totalPages, currentPage + 1), 1),
+    }),
+  );
 
   return (
     <div className='videos'>

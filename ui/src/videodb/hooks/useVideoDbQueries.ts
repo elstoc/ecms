@@ -76,7 +76,7 @@ export const useVideos = () => {
         hasProgressNotes: apiFilters.hasProgressNotes ? '1' : undefined,
       };
 
-  return useCustomQuery({
+  const videos = useCustomQuery({
     queryKey: [
       'videoDb',
       'videos',
@@ -94,6 +94,8 @@ export const useVideos = () => {
         pages: pages?.toString(),
       }),
   });
+
+  return videos ?? { videos: [], totalPages: 0, currentPage: 0 };
 };
 
 export const useGetVideo = (id: number) => {
