@@ -1,7 +1,7 @@
 import path from 'path';
 import { Logger } from 'winston';
 
-import { DatabaseAdapter } from '@/adapters/DatabaseAdapter';
+import { BSQLiteDatabaseAdapter, DbParams } from '@/adapters/BSQLiteDatabaseAdapter';
 import { StorageAdapter } from '@/adapters/StorageAdapter';
 import { User } from '@/contracts/auth';
 import { PaginatedVideos, Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
@@ -68,8 +68,6 @@ export type VideoFilters = {
   shuffleSeed?: number;
 };
 
-const wait = (timeMs: number) => new Promise((resolve) => setTimeout(resolve, timeMs));
-
 const videoNullMapper = (video: Video) => ({
   title: video.title,
   category: video.category,
@@ -121,8 +119,7 @@ export const filterSql = {
 
 export class VideoDb {
   private apiPath: string;
-  private initialising = false;
-  private database?: DatabaseAdapter;
+  private database?: BSQLiteDatabaseAdapter;
   private dbVersion?: number;
   private lookupTableCache: { [key: string]: LookupValues } = {};
 
@@ -136,40 +133,33 @@ export class VideoDb {
   }
 
   public async initialise(): Promise<void> {
-    while (this.initialising) {
-      this.logger.info('waiting for database to initialise');
-      await wait(50);
-    }
-
     if (!this.database) {
-      this.initialising = true;
       this.logger.info(`initialising database at ${this.apiPath}`);
       const dbContentPath = path.join(this.apiPath, 'data.db');
       if (!this.storage.contentFileExists(dbContentPath)) {
         this.dbVersion = 0;
       }
-      this.database = await this.storage.getContentDb(dbContentPath);
+      this.database = await this.storage.getContentDbv2(dbContentPath);
       await this.upgrade();
-      this.initialising = false;
       this.logger.info(`initialised database at ${this.apiPath}`);
     }
   }
 
   private async upgrade(): Promise<void> {
     const latestVersion = dbUpgradeSql.length;
-    this.dbVersion ??= await this.retrieveVersion();
+    this.dbVersion ??= this.retrieveVersion();
     if (latestVersion > this.dbVersion) {
       for (const versionSql of dbUpgradeSql.slice(this.dbVersion)) {
-        await this.database?.exec(versionSql);
+        this.database?.run(versionSql);
       }
       await this.storeVersion(latestVersion);
     }
   }
 
-  private async retrieveVersion(): Promise<number> {
+  private retrieveVersion(): number {
     if (this.database) {
       const versionSql = 'SELECT IFNULL(MAX(version), 0) AS ver FROM db_version';
-      const result = await this.database.get<{ ver: number }>(versionSql);
+      const result = this.database.get<{ ver: number }>(versionSql);
       if (result) {
         return result.ver;
       }
@@ -197,7 +187,7 @@ export class VideoDb {
     }
 
     const sql = `SELECT code, description FROM ${tableName}`;
-    const lookupRows = await this.database?.getAll<LookupRow>(sql);
+    const lookupRows = this.database?.getAll<LookupRow>(sql);
 
     if (!lookupRows) {
       throw new Error(`No records found in ${tableName}`);
@@ -222,10 +212,10 @@ export class VideoDb {
 
     const params: { [key: string]: unknown } = {};
     videoFields.forEach((key) => {
-      params[`$${key}`] = video[key as keyof Video] ?? null;
+      params[key] = video[key as keyof Video] ?? null;
     });
 
-    const result = await this.database?.getWithParams<{ id: number }>(sql, params);
+    const result = this.database?.get<{ id: number }>(sql, params);
     if (!result) {
       throw new Error('Unexpected error creating video');
     }
@@ -242,12 +232,12 @@ export class VideoDb {
     const setList = videoFields.map((field) => `${field} = $${field}`);
     const sql = `UPDATE videos SET ${setList.join(', ')} WHERE id = $id`;
 
-    const params: { [key: string]: unknown } = { $id: id };
+    const params: { [key: string]: unknown } = { id: id };
     videoFields.forEach((key) => {
-      params[`$${key}`] = video[key as keyof Video] ?? null;
+      params[key] = video[key as keyof Video] ?? null;
     });
 
-    await this.database?.runWithParams(sql, params);
+    this.database?.run(sql, params);
 
     await this.createOrReplaceVideoTags(id, video.tags);
   }
@@ -259,7 +249,7 @@ export class VideoDb {
                      SET priority_flag = ${update.priority_flag}
                      WHERE id = ${update.id}`;
 
-    await this.database?.exec(sql);
+    this.database?.run(sql);
   }
 
   private async createOrReplaceVideoTags(id: number, tags?: string[]): Promise<void> {
@@ -271,14 +261,14 @@ export class VideoDb {
                            VALUES ($id, $tag)`;
 
     for (const tag of tags) {
-      const params = { $id: id, $tag: tag };
-      await this.database?.runWithParams(insertSql, params);
+      const params = { id: id, tag: tag };
+      this.database?.run(insertSql, params);
     }
   }
 
   private async deleteVideoTags(id: number): Promise<void> {
     const deleteSql = `DELETE FROM video_tags WHERE video_id = ${id}`;
-    await this.database?.exec(deleteSql);
+    this.database?.run(deleteSql);
   }
 
   public async getVideo(id: number): Promise<Video> {
@@ -286,7 +276,7 @@ export class VideoDb {
     const sql = `SELECT ${videoFields.join(', ')}
                      FROM   videos
                      WHERE  id = ${id}`;
-    const video = await this.database?.get<Video>(sql);
+    const video = this.database?.get<Video>(sql);
     if (!video) {
       throw new Error(`Unexpected error getting video ${id}`);
     }
@@ -307,12 +297,12 @@ export class VideoDb {
     const sql = `DELETE
                  FROM   videos
                  WHERE  id = ${id}`;
-    await this.database?.exec(sql);
+    this.database?.run(sql);
   }
 
   private async getVideoTags(id: number): Promise<string[] | undefined> {
     const sql = `SELECT tag FROM video_tags WHERE video_id = ${id} ORDER BY tag`;
-    const tags = await this.database?.getAll<{ tag: string }>(sql);
+    const tags = this.database?.getAll<{ tag: string }>(sql);
     if (tags) {
       return tags.map((tagObj) => tagObj.tag);
     }
@@ -320,7 +310,7 @@ export class VideoDb {
 
   public async getAllTags(): Promise<string[]> {
     const sql = 'SELECT DISTINCT tag from video_tags ORDER BY tag';
-    const tags = await this.database?.getAll<{ tag: string }>(sql);
+    const tags = this.database?.getAll<{ tag: string }>(sql);
     if (tags) {
       return tags.map((tagObj) => tagObj.tag);
     } else {
@@ -330,9 +320,9 @@ export class VideoDb {
 
   private buildVideoQuery(filters?: VideoFilters): {
     sql: string;
-    params: Record<string, unknown>;
+    params?: DbParams;
   } {
-    let params: { [key: string]: unknown } = {};
+    let params: DbParams | undefined = undefined;
     const whereClauses: string[] = [];
     let sql = baseVideoSql;
 
@@ -352,11 +342,13 @@ export class VideoDb {
 
     if (maxLength !== undefined) {
       whereClauses.push(filterSql.maxLength);
-      params['$maxLength'] = maxLength;
+      params = params ?? {};
+      params['maxLength'] = maxLength;
     }
     if (titleContains !== undefined) {
       whereClauses.push(filterSql.titleContains);
-      params['$titleContains'] = `%${titleContains.toLowerCase()}%`;
+      params = params ?? {};
+      params['titleContains'] = `%${titleContains.toLowerCase()}%`;
     }
     if (minResolution === 'HD') {
       whereClauses.push(filterSql.minHdResolution);
@@ -371,25 +363,34 @@ export class VideoDb {
       whereClauses.push(filterSql.hasProgressNotes);
     }
     if (primaryMediaType) {
+      params = params ?? {};
       whereClauses.push(filterSql.primaryMediaType);
-      params['$primaryMediaType'] = primaryMediaType;
+      params['primaryMediaType'] = primaryMediaType;
     }
 
     if (categories !== undefined) {
+      params = params ?? {};
       const categoryParams: { [key: string]: string } = {};
       categories.forEach((category, index) => {
-        categoryParams['$category' + index.toString()] = category;
+        categoryParams['category' + index.toString()] = category;
       });
-      whereClauses.push(`(category IN (${Object.keys(categoryParams).join(', ')}))`);
+      whereClauses.push(
+        `(category IN (${Object.keys(categoryParams)
+          .map((key) => `$${key}`)
+          .join(', ')}))`,
+      );
       params = { ...params, ...categoryParams };
     }
     if (tags !== undefined) {
+      params = params ?? {};
       const tagParams: { [key: string]: string } = {};
       tags.forEach((tag, index) => {
-        tagParams['$tag' + index.toString()] = tag;
+        tagParams['tag' + index.toString()] = tag;
       });
       whereClauses.push(
-        `(EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN (${Object.keys(tagParams).join(', ')})))`,
+        `(EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN (${Object.keys(tagParams)
+          .map((key) => `$${key}`)
+          .join(', ')})))`,
       );
       params = { ...params, ...tagParams };
     }
@@ -400,11 +401,16 @@ export class VideoDb {
       whereClauses.push(`(primary_media_watched IN ('${mediaWatched}', 'P'))`);
     }
     if (videoIds !== undefined) {
+      params = params ?? {};
       const idParams: { [key: string]: number } = {};
       videoIds.forEach((id, index) => {
-        idParams['$videoId' + index.toString()] = id;
+        idParams['videoId' + index.toString()] = id;
       });
-      whereClauses.push(`(id IN (${Object.keys(idParams).join(', ')}))`);
+      whereClauses.push(
+        `(id IN (${Object.keys(idParams)
+          .map((key) => `$${key}`)
+          .join(', ')}))`,
+      );
       params = { ...params, ...idParams };
     }
 
@@ -419,7 +425,7 @@ export class VideoDb {
 
   public async queryVideos(filters?: VideoFilters, requestedPages = 1): Promise<PaginatedVideos> {
     const { sql, params } = this.buildVideoQuery(filters);
-    let videos = await this.database?.getAllWithParams<VideoWithId>(sql, params);
+    let videos = this.database?.getAll<VideoWithId>(sql, params);
 
     if (!videos) {
       throw new Error('Unexpected error querying videos');
@@ -466,7 +472,7 @@ export class VideoDb {
 
   private async throwIfNoVideo(id: number): Promise<void> {
     const sql = `SELECT COUNT() AS video_exists FROM videos WHERE id=${id}`;
-    const result = await this.database?.get<{ video_exists: number }>(sql);
+    const result = this.database?.get<{ video_exists: number }>(sql);
     if (!result || result.video_exists === 0) {
       throw new NotFoundError(`video id ${id} does not exist`);
     }
@@ -474,12 +480,12 @@ export class VideoDb {
 
   private async storeVersion(version: number): Promise<void> {
     const sql = `UPDATE db_version SET version = ${version};`;
-    await this.database?.exec(sql);
+    this.database?.run(sql);
     this.dbVersion = version;
   }
 
   public async shutdown(): Promise<void> {
     this.logger.info(`shutting down database at ${this.apiPath}`);
-    await this.database?.close();
+    this.database?.close();
   }
 }
