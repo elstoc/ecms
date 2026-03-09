@@ -776,20 +776,17 @@ describe('VideoDb', () => {
     });
   });
 
-  /*
   describe('getVideo', () => {
     beforeEach(async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValue({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
     });
 
-    it('throws error if video id does not exist', async () => {
-      mockGet.mockResolvedValue({ video_exists: 0 });
+    it('throws error if video id does not exist', () => {
+      mockGet.mockReturnValue({ video_exists: 0 });
 
-      await expect(videoDb.getVideo(12)).rejects.toThrow(
-        new NotFoundError('video id 12 does not exist'),
-      );
+      expect(() => videoDb.getVideo(12)).toThrow(new NotFoundError('video id 12 does not exist'));
       expect(mockGet).toHaveBeenCalledWith(
         'SELECT COUNT() AS video_exists FROM videos WHERE id=12',
       );
@@ -797,8 +794,8 @@ describe('VideoDb', () => {
 
     it('attempts to get video and tags', async () => {
       const mockVideo = { title: '1', category: '1', watched: 'Y' };
-      mockGet.mockResolvedValueOnce({ video_exists: 1 }).mockResolvedValue(mockVideo);
-      mockGetAll.mockResolvedValue([{ tag: 'tag1' }, { tag: 'tag2' }]);
+      mockGet.mockReturnValueOnce({ video_exists: 1 }).mockReturnValue(mockVideo);
+      mockGetAll.mockReturnValue([{ tag: 'tag1' }, { tag: 'tag2' }]);
 
       const expectedVideoSql = `SELECT title, category, director, num_episodes, length_mins, watched, priority_flag, progress,
                               imdb_id, image_url, year, actors, plot, primary_media_type, primary_media_location, primary_media_watched, other_media_type, other_media_location, media_notes
@@ -806,7 +803,7 @@ describe('VideoDb', () => {
                               WHERE id = 12`;
 
       const expectedTagSql = 'SELECT tag FROM video_tags WHERE video_id = 12 ORDER BY tag';
-      const video = await videoDb.getVideo(12);
+      const video = videoDb.getVideo(12);
 
       const actualVideoSql = mockGet.mock.calls[2][0];
       const actualTagSql = mockGetAll.mock.calls[0][0];
@@ -819,11 +816,11 @@ describe('VideoDb', () => {
   describe('patchVideo', () => {
     beforeEach(async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValue({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
     });
 
-    it('throws error if user is not admin and auth enabled', async () => {
+    it('throws error if user is not admin and auth enabled', () => {
       const newConfig = {
         ...config,
         enableAuthentication: true,
@@ -831,22 +828,22 @@ describe('VideoDb', () => {
       mockStorage.getContentDbv2.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
-      expect(() => videoDb.patchVideo({ id: 1, priority_flag: 0 }, regularUser)).rejects.toThrow(
+      expect(() => videoDb.patchVideo({ id: 1, priority_flag: 0 }, regularUser)).toThrow(
         new NotPermittedError(),
       );
     });
 
-    it.each([0, 1])('attempts to update priorty when set to %s', async (value: number) => {
-      mockGet.mockResolvedValue({ video_exists: 1 });
+    it.each([0, 1])('attempts to update priorty when set to %s', (value: number) => {
+      mockGet.mockReturnValue({ video_exists: 1 });
 
       const expectedSql = `UPDATE videos
                                  SET priority_flag = ${value}
                                  WHERE id = 99`;
 
-      await videoDb.patchVideo({ id: 99, priority_flag: value as 0 | 1 });
+      videoDb.patchVideo({ id: 99, priority_flag: value as 0 | 1 });
 
-      expect(mockExec).toHaveBeenCalledTimes(1);
-      const actualSql = mockExec.mock.calls[0][0];
+      expect(mockRun).toHaveBeenCalledTimes(1);
+      const actualSql = mockRun.mock.calls[0][0];
 
       expect(stripWhiteSpace(actualSql)).toBe(stripWhiteSpace(expectedSql));
     });
@@ -855,11 +852,11 @@ describe('VideoDb', () => {
   describe('deleteVideo', () => {
     beforeEach(async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValue({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
     });
 
-    it('throws error if user is not admin and auth enabled', async () => {
+    it('throws error if user is not admin and auth enabled', () => {
       const newConfig = {
         ...config,
         enableAuthentication: true,
@@ -867,13 +864,13 @@ describe('VideoDb', () => {
       mockStorage.getContentDbv2.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
-      expect(() => videoDb.deleteVideo(123, regularUser)).rejects.toThrow(new NotPermittedError());
+      expect(() => videoDb.deleteVideo(123, regularUser)).toThrow(new NotPermittedError());
     });
 
-    it('throws error if video id does not exist', async () => {
-      mockGet.mockResolvedValue({ video_exists: 0 });
+    it('throws error if video id does not exist', () => {
+      mockGet.mockReturnValue({ video_exists: 0 });
 
-      await expect(videoDb.deleteVideo(12)).rejects.toThrow(
+      expect(() => videoDb.deleteVideo(12)).toThrow(
         new NotFoundError('video id 12 does not exist'),
       );
       expect(mockGet).toHaveBeenCalledWith(
@@ -881,17 +878,17 @@ describe('VideoDb', () => {
       );
     });
 
-    it('attempts to delete video', async () => {
-      mockGet.mockResolvedValue({ video_exists: 1 });
+    it('attempts to delete video', () => {
+      mockGet.mockReturnValue({ video_exists: 1 });
 
       const expectedTagDeleteSql = 'DELETE FROM video_tags WHERE video_id = 12';
       const expectedVideoDeleteSql = 'DELETE FROM videos WHERE id = 12';
 
-      await videoDb.deleteVideo(12);
+      videoDb.deleteVideo(12);
 
-      expect(mockExec).toHaveBeenCalledTimes(2);
-      const actualTagDeleteSql = mockExec.mock.calls[0][0];
-      const actualVideoDeleteSql = mockExec.mock.calls[1][0];
+      expect(mockRun).toHaveBeenCalledTimes(2);
+      const actualTagDeleteSql = mockRun.mock.calls[0][0];
+      const actualVideoDeleteSql = mockRun.mock.calls[1][0];
 
       expect(stripWhiteSpace(actualTagDeleteSql)).toBe(stripWhiteSpace(expectedTagDeleteSql));
       expect(stripWhiteSpace(actualVideoDeleteSql)).toBe(stripWhiteSpace(expectedVideoDeleteSql));
@@ -916,48 +913,48 @@ describe('VideoDb', () => {
 
     it('runs the correct sql to retrieve all videos when no filter params are defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos();
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos();
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(params).toEqual({});
+      expect(params).toBeUndefined();
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql to retrieve all videos when empty filter params object is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({});
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({});
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(params).toEqual({});
+      expect(params).toBeUndefined();
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when maxLength filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + ' WHERE ' + filterSql.maxLength + orderBySql;
-      const expectedParams = { $maxLength: 3 };
+      const expectedParams = { maxLength: 3 };
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ maxLength: 3 });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ maxLength: 3 });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
       expect(videos).toEqual([mockVideoWithId]);
@@ -965,16 +962,16 @@ describe('VideoDb', () => {
 
     it('runs the correct sql with filter params when titleContains filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + ' WHERE ' + filterSql.titleContains + orderBySql;
-      const expectedParams = { $titleContains: '%sometitle%' };
+      const expectedParams = { titleContains: '%sometitle%' };
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ titleContains: 'sOmeTiTle' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ titleContains: 'sOmeTiTle' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
       expect(videos).toEqual([mockVideoWithId]);
@@ -982,93 +979,93 @@ describe('VideoDb', () => {
 
     it('runs the correct sql with HD and UHD media types when minResolution is set to HD', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + ' WHERE ' + filterSql.minHdResolution + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ minResolution: 'HD' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ minResolution: 'HD' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with UHD media types when minResolution is set to UHD', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + ' WHERE ' + filterSql.minUhdResolution + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ minResolution: 'UHD' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ minResolution: 'UHD' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when flaggedOnly param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + ' WHERE ' + filterSql.flaggedOnly + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ flaggedOnly: true });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ flaggedOnly: true });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when hasProgressNotes param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + ' WHERE ' + filterSql.hasProgressNotes + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ hasProgressNotes: true });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ hasProgressNotes: true });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when primaryMediaType param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + ' WHERE ' + filterSql.primaryMediaType + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ primaryMediaType: 'BD4K' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ primaryMediaType: 'BD4K' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(params).toEqual({ $primaryMediaType: 'BD4K' });
+      expect(params).toEqual({ primaryMediaType: 'BD4K' });
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when categories filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql =
         baseVideoSql + ' WHERE (category IN ($category0, $category1, $category2))' + orderBySql;
-      const expectedParams = { $category0: 'MOV', $category1: 'TV', $category2: 'TVDOC' };
+      const expectedParams = { category0: 'MOV', category1: 'TV', category2: 'TVDOC' };
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ categories: ['MOV', 'TV', 'TVDOC'] });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ categories: ['MOV', 'TV', 'TVDOC'] });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
       expect(videos).toEqual([mockVideoWithId]);
@@ -1076,19 +1073,19 @@ describe('VideoDb', () => {
 
     it('runs the correct sql with filter params when tags filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql =
         baseVideoSql +
         ' WHERE (EXISTS (SELECT 1 FROM video_tags WHERE video_id = id AND tag IN ($tag0, $tag1, $tag2)))' +
         orderBySql;
-      const expectedParams = { $tag0: 'tag0', $tag1: 'tag1', $tag2: 'tag2' };
+      const expectedParams = { tag0: 'tag0', tag1: 'tag1', tag2: 'tag2' };
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ tags: ['tag0', 'tag1', 'tag2'] });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ tags: ['tag0', 'tag1', 'tag2'] });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
       expect(videos).toEqual([mockVideoWithId]);
@@ -1096,79 +1093,79 @@ describe('VideoDb', () => {
 
     it('runs the correct sql with filter params when watched filter param is Y', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + " WHERE (watched IN ('Y', 'P'))" + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ watched: 'Y' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ watched: 'Y' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when watched filter param is N', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + " WHERE (watched IN ('N', 'P'))" + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ watched: 'N' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ watched: 'N' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when mediaWatched filter param is Y', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql =
         baseVideoSql + " WHERE (primary_media_watched IN ('Y', 'P'))" + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ mediaWatched: 'Y' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ mediaWatched: 'Y' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when mediaWatched filter param is N', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql =
         baseVideoSql + " WHERE (primary_media_watched IN ('N', 'P'))" + orderBySql;
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ mediaWatched: 'N' });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ mediaWatched: 'N' });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(videos).toEqual([mockVideoWithId]);
     });
 
     it('runs the correct sql with filter params when videoIds filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql =
         baseVideoSql + ' WHERE (id IN ($videoId0, $videoId1, $videoId2))' + orderBySql;
-      const expectedParams = { $videoId0: 11, $videoId1: 22, $videoId2: 33 };
+      const expectedParams = { videoId0: 11, videoId1: 22, videoId2: 33 };
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({ videoIds: [11, 22, 33] });
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ videoIds: [11, 22, 33] });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
       expect(videos).toEqual([mockVideoWithId]);
@@ -1176,7 +1173,7 @@ describe('VideoDb', () => {
 
     it('runs the correct sql with filter params when all filter params are defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql =
         baseVideoSql +
@@ -1193,22 +1190,22 @@ describe('VideoDb', () => {
           AND (id IN ($videoId0, $videoId1, $videoId2))` +
         orderBySql;
       const expectedParams = {
-        $titleContains: '%title%',
-        $category0: 'MOV',
-        $category1: 'TV',
-        $category2: 'TVDOC',
-        $tag0: 'tag0',
-        $tag1: 'tag1',
-        $tag2: 'tag2',
-        $maxLength: 120,
-        $videoId0: 11,
-        $videoId1: 22,
-        $videoId2: 33,
-        $primaryMediaType: 'BD4K',
+        titleContains: '%title%',
+        category0: 'MOV',
+        category1: 'TV',
+        category2: 'TVDOC',
+        tag0: 'tag0',
+        tag1: 'tag1',
+        tag2: 'tag2',
+        maxLength: 120,
+        videoId0: 11,
+        videoId1: 22,
+        videoId2: 33,
+        primaryMediaType: 'BD4K',
       };
 
-      mockGetAllWithParams.mockResolvedValue([mockVideoWithId]);
-      const { videos } = await videoDb.queryVideos({
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({
         titleContains: 'title',
         maxLength: 120,
         categories: ['MOV', 'TV', 'TVDOC'],
@@ -1222,8 +1219,8 @@ describe('VideoDb', () => {
         primaryMediaType: 'BD4K',
       });
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual(expectedParams);
       expect(videos).toEqual([mockVideoWithId]);
@@ -1238,31 +1235,29 @@ describe('VideoDb', () => {
       'returns the unaltered video array (no shuffling, max page count) (sort: %s, seed: %s)',
       async (sortOrder, shuffleSeed) => {
         mockStorage.contentFileExists.mockReturnValue(true);
-        mockGet.mockResolvedValueOnce({ ver: 4 });
+        mockGet.mockReturnValue({ ver: 4 });
         await videoDb.initialise();
         const expectedSql = baseVideoSql + orderBySql;
-        const expectedParams = {};
 
-        mockGetAllWithParams.mockResolvedValue(mockManyVideos);
-        const { videos } = await videoDb.queryVideos({ sortOrder, shuffleSeed }, 4);
+        mockGetAll.mockReturnValue(mockManyVideos);
+        const { videos } = videoDb.queryVideos({ sortOrder, shuffleSeed }, 4);
 
-        expect(mockGetAllWithParams).toHaveBeenCalled();
-        const [sql, params] = mockGetAllWithParams.mock.calls[0];
+        expect(mockGetAll).toHaveBeenCalled();
+        const [sql, params] = mockGetAll.mock.calls[0];
         expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-        expect(params).toEqual(expectedParams);
+        expect(params).toBeUndefined();
         expect(videos).toEqual(mockManyVideos);
       },
     );
 
     it('uses pShuffle when requested and provided with seed and max page count', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValueOnce({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
       const expectedSql = baseVideoSql + orderBySql;
-      const expectedParams = {};
 
-      mockGetAllWithParams.mockResolvedValue(structuredClone(mockManyVideos));
-      const { videos } = await videoDb.queryVideos(
+      mockGetAll.mockReturnValue(structuredClone(mockManyVideos));
+      const { videos } = videoDb.queryVideos(
         {
           sortOrder: 'shuffle',
           shuffleSeed: 1234,
@@ -1270,10 +1265,10 @@ describe('VideoDb', () => {
         2,
       );
 
-      expect(mockGetAllWithParams).toHaveBeenCalled();
-      const [sql, params] = mockGetAllWithParams.mock.calls[0];
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
-      expect(params).toEqual(expectedParams);
+      expect(params).toBeUndefined();
       expect(videos).toEqual([
         mockManyVideos[8],
         mockManyVideos[3],
@@ -1294,11 +1289,11 @@ describe('VideoDb', () => {
       'paginates results correctly (requested pages: %s, returned pages: %s)',
       async (requestedPages: number, expectedPagesReturned: number) => {
         mockStorage.contentFileExists.mockReturnValue(true);
-        mockGet.mockResolvedValueOnce({ ver: 4 });
+        mockGet.mockReturnValue({ ver: 4 });
         await videoDb.initialise();
 
-        mockGetAllWithParams.mockResolvedValue(mockManyVideos);
-        const { videos, totalPages, currentPage } = await videoDb.queryVideos({}, requestedPages);
+        mockGetAll.mockReturnValue(mockManyVideos);
+        const { videos, totalPages, currentPage } = videoDb.queryVideos({}, requestedPages);
 
         expect(totalPages).toBe(4);
         expect(currentPage).toBe(expectedPagesReturned);
@@ -1310,7 +1305,7 @@ describe('VideoDb', () => {
   describe('shutdown', () => {
     it('closes the database', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
-      mockGet.mockResolvedValue({ ver: 4 });
+      mockGet.mockReturnValue({ ver: 4 });
       await videoDb.initialise();
 
       await videoDb.shutdown();
@@ -1318,5 +1313,4 @@ describe('VideoDb', () => {
       expect(mockClose).toHaveBeenCalledTimes(1);
     });
   });
-  */
 });
