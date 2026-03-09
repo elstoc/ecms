@@ -1,6 +1,4 @@
-import { startTransition, useRef } from 'react';
-
-import { useElementIsVisible } from '@/shared/hooks';
+import { useOnInView } from 'react-intersection-observer';
 
 import { useCalibreDb } from '../hooks/useCalibreDb';
 import { useBooks } from '../hooks/useCalibreDbQueries';
@@ -12,12 +10,11 @@ import './BookList.css';
 export const BookList = () => {
   const { dispatch } = useCalibreDb();
   const { books, currentPage, totalPages } = useBooks();
-  const refLastBook = useRef<HTMLDivElement>(null);
 
-  useElementIsVisible(refLastBook, () => {
-    startTransition(() => {
+  const refLastBook = useOnInView((inView) => {
+    if (inView) {
       dispatch({ type: 'setPages', payload: Math.min(totalPages, currentPage + 1) });
-    });
+    }
   });
 
   return (

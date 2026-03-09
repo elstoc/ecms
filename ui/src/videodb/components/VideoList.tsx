@@ -1,6 +1,4 @@
-import { useRef } from 'react';
-
-import { useElementIsVisible } from '@/shared/hooks/useElementIsVisible';
+import { useOnInView } from 'react-intersection-observer';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 import { useVideos } from '../hooks/useVideoDbQueries';
@@ -10,16 +8,17 @@ import { VideoListItem } from './VideoListItem';
 import './VideoList.css';
 
 export const VideoList = () => {
-  const refLastVideo = useRef<HTMLDivElement>(null);
   const { state, dispatch } = useVideoDb();
   const { videos, currentPage, totalPages } = useVideos();
 
-  useElementIsVisible(refLastVideo, () =>
-    dispatch({
-      type: 'setPages',
-      payload: Math.max(Math.min(totalPages, currentPage + 1), 1),
-    }),
-  );
+  const refLastVideo = useOnInView((inView) => {
+    if (inView) {
+      dispatch({
+        type: 'setPages',
+        payload: Math.max(Math.min(totalPages, currentPage + 1), 1),
+      });
+    }
+  });
 
   return (
     <div className='videos'>
