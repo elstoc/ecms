@@ -19,7 +19,7 @@ const mockStorage = {
   contentDirectoryExists: jest.fn() as jest.Mock,
   getContentFileModifiedTime: jest.fn() as jest.Mock,
   getContentFile: jest.fn() as jest.Mock,
-  getContentDbv2: jest.fn() as jest.Mock,
+  getContentDb: jest.fn() as jest.Mock,
 };
 
 const apiPath = 'books';
@@ -49,7 +49,7 @@ describe('CalibreDb', () => {
   };
 
   beforeEach(() => {
-    mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+    mockStorage.getContentDb.mockResolvedValue(mockDb);
     calibreDb = new CalibreDb(apiPath, config, mockLogger, mockStorage as any);
   });
 
@@ -72,10 +72,10 @@ describe('CalibreDb', () => {
 
       await calibreDb.initialise();
 
-      expect(mockStorage.getContentDbv2).toHaveBeenCalledTimes(1);
+      expect(mockStorage.getContentDb).toHaveBeenCalledTimes(1);
       expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(1);
       expect(mockStorage.getContentFileModifiedTime).toHaveBeenCalledTimes(1);
-      expect(mockStorage.getContentDbv2).toHaveBeenCalledWith(apiDbPath, true);
+      expect(mockStorage.getContentDb).toHaveBeenCalledWith(apiDbPath, true);
     });
 
     it('does not re-initialise an already-initialised database', async () => {
@@ -85,7 +85,7 @@ describe('CalibreDb', () => {
       await calibreDb.initialise();
       await calibreDb.initialise();
 
-      expect(mockStorage.getContentDbv2).toHaveBeenCalledTimes(1);
+      expect(mockStorage.getContentDb).toHaveBeenCalledTimes(1);
       expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(2);
       expect(mockStorage.getContentFileModifiedTime).toHaveBeenCalledTimes(2);
     });
@@ -99,7 +99,7 @@ describe('CalibreDb', () => {
       mockStorage.getContentFileModifiedTime.mockReturnValue(124);
       await calibreDb.initialise();
 
-      expect(mockStorage.getContentDbv2).toHaveBeenCalledTimes(2);
+      expect(mockStorage.getContentDb).toHaveBeenCalledTimes(2);
       expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(2);
       expect(mockStorage.getContentFileModifiedTime).toHaveBeenCalledTimes(2);
     });

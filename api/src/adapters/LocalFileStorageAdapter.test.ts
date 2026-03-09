@@ -706,7 +706,7 @@ describe('LocalFileStorageAdapter', () => {
         isDirectory: () => !path.endsWith('file'),
       }));
 
-      await storage.getContentDbv2('path/to/file');
+      await storage.getContentDb('path/to/file');
 
       expect(promiseWriteFileMock).toHaveBeenCalledWith(
         `${dataDir}/content/path/to/file`,
@@ -721,7 +721,7 @@ describe('LocalFileStorageAdapter', () => {
         isDirectory: () => !path.endsWith('file'),
       }));
 
-      await storage.getContentDbv2('path/to/file');
+      await storage.getContentDb('path/to/file');
 
       expect(promiseWriteFileMock).not.toHaveBeenCalled();
     });
@@ -733,7 +733,7 @@ describe('LocalFileStorageAdapter', () => {
         isDirectory: () => !path.endsWith('file'),
       }));
 
-      await storage.getContentDbv2('path/to/file', true);
+      await storage.getContentDb('path/to/file', true);
 
       expect(mockSQLiteDatabaseAdapter).toHaveBeenCalledWith(`${dataDir}/content/path/to/file`);
       expect(mockInit).toHaveBeenCalledWith(true);

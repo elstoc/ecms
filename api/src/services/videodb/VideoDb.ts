@@ -139,7 +139,7 @@ export class VideoDb {
       if (!this.storage.contentFileExists(dbContentPath)) {
         this.dbVersion = 0;
       }
-      this.database = await this.storage.getContentDbv2(dbContentPath);
+      this.database = await this.storage.getContentDb(dbContentPath);
       this.upgrade();
       this.logger.info(`initialised database at ${this.apiPath}`);
     }

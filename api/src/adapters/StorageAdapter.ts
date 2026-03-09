@@ -9,7 +9,7 @@ export interface StorageAdapter {
   contentFileExists(contentPath: string): boolean;
   contentDirectoryExists(contentPath: string): boolean;
   getContentFile(apiPath: string): Promise<Buffer>;
-  getContentDbv2(contentPath: string, readOnly?: boolean): Promise<SQLiteDatabaseAdapter>;
+  getContentDb(contentPath: string, readOnly?: boolean): Promise<SQLiteDatabaseAdapter>;
   getAdminFile(adminPath: string): Promise<Buffer>;
   getGeneratedFile(apiPath: string, tag: string): Promise<Buffer>;
   storeContentFile(apiPath: string, fileBuffer: Buffer): Promise<void>;

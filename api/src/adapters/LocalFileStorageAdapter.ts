@@ -57,7 +57,7 @@ export class LocalFileStorageAdapter implements StorageAdapter {
     return dir.filter(fileMatcher);
   }
 
-  public async getContentDbv2(
+  public async getContentDb(
     contentPath: string,
     readOnly?: boolean,
   ): Promise<SQLiteDatabaseAdapter> {

@@ -173,7 +173,7 @@ export class CalibreDb {
     if (!this.database || newDbModifiedTime > this.dbModifiedTime) {
       this.dbModifiedTime = newDbModifiedTime;
       this.logger.info(`initialising database at ${this.apiPath}`);
-      this.database = await this.storage.getContentDbv2(this.dbContentPath, true);
+      this.database = await this.storage.getContentDb(this.dbContentPath, true);
       this.logger.info(`initialised database at ${this.apiPath}`);
     }
   }

@@ -11,7 +11,7 @@ jest.mock('./dbUpgradeSql', () => ({
 
 const mockStorage = {
   contentFileExists: jest.fn() as jest.Mock,
-  getContentDbv2: jest.fn() as jest.Mock,
+  getContentDb: jest.fn() as jest.Mock,
 };
 
 const versionSql = ['SQL v1', 'SQL v2', 'SQL v3', 'SQL v4'];
@@ -48,7 +48,7 @@ describe('VideoDb', () => {
   } as any;
 
   beforeEach(() => {
-    mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+    mockStorage.getContentDb.mockResolvedValue(mockDb);
     videoDb = new VideoDb(apiPath, config, mockLogger, mockStorage as any);
   });
 
@@ -62,8 +62,8 @@ describe('VideoDb', () => {
 
       await videoDb.initialise();
 
-      expect(mockStorage.getContentDbv2).toHaveBeenCalledTimes(1);
-      expect(mockStorage.getContentDbv2).toHaveBeenCalledWith(apiDbPath);
+      expect(mockStorage.getContentDb).toHaveBeenCalledTimes(1);
+      expect(mockStorage.getContentDb).toHaveBeenCalledWith(apiDbPath);
     });
 
     it('runs all upgrade SQL on a new database, updates but does not attempt to retrieve version', async () => {
@@ -110,7 +110,7 @@ describe('VideoDb', () => {
       await videoDb.initialise();
 
       expect(mockStorage.contentFileExists).toHaveBeenCalledTimes(1);
-      expect(mockStorage.getContentDbv2).toHaveBeenCalledTimes(1);
+      expect(mockStorage.getContentDb).toHaveBeenCalledTimes(1);
       expect(mockGet).toHaveBeenCalledTimes(1);
       expect(mockRun).not.toHaveBeenCalled();
     });
@@ -199,7 +199,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       expect(() => videoDb.getOmdbApiKey(regularUser)).toThrow(new NotPermittedError());
@@ -210,7 +210,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: false,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       expect(() => videoDb.getOmdbApiKey(regularUser)).not.toThrow();
@@ -221,7 +221,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       expect(() => videoDb.getOmdbApiKey(adminUser)).not.toThrow();
@@ -254,7 +254,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
@@ -291,7 +291,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
@@ -328,7 +328,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: false,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
@@ -559,7 +559,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
@@ -574,7 +574,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
@@ -589,7 +589,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: false,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       mockStorage.contentFileExists.mockReturnValue(true);
@@ -825,7 +825,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       expect(() => videoDb.patchVideo({ id: 1, priority_flag: 0 }, regularUser)).toThrow(
@@ -861,7 +861,7 @@ describe('VideoDb', () => {
         ...config,
         enableAuthentication: true,
       } as any;
-      mockStorage.getContentDbv2.mockResolvedValue(mockDb);
+      mockStorage.getContentDb.mockResolvedValue(mockDb);
       videoDb = new VideoDb(apiPath, newConfig, mockLogger, mockStorage as any);
 
       expect(() => videoDb.deleteVideo(123, regularUser)).toThrow(new NotPermittedError());
