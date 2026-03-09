@@ -24,7 +24,7 @@ export const useGalleryContent = () => {
 
   return {
     images: noImages,
-    currentPage: 1,
-    totalPages: 1,
+    currentPage: 0,
+    totalPages: 0,
   };
 };

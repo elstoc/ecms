@@ -1,8 +1,9 @@
-import { createRef, startTransition, useCallback, useMemo } from 'react';
+import { useMemo, useRef } from 'react';
+import { useOnInView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
 
 import { Tesselate } from '@/shared/components/layout';
-import { useElementIsVisible, useScrollIntoView } from '@/shared/hooks';
+import { useScrollIntoView } from '@/shared/hooks';
 
 import { useGallery } from '../hooks/useGallery';
 import { useGalleryContent } from '../hooks/useGalleryQueries';
@@ -10,41 +11,36 @@ import { useGalleryContent } from '../hooks/useGalleryQueries';
 import { GalleryThumb } from './GalleryThumb';
 
 export const JustifiedGallery = () => {
+  const refActiveImage = useRef<HTMLAnchorElement>(null);
   const [searchParams] = useSearchParams();
   const { dispatch } = useGallery();
 
   const { images, totalPages, currentPage } = useGalleryContent();
 
-  const loadMoreImages = useCallback(
-    () =>
-      startTransition(() => {
-        dispatch({
-          type: 'setPages',
-          payload: Math.min(totalPages, currentPage + 1),
-        });
-      }),
-    [currentPage, dispatch, totalPages],
-  );
+  const refPenultimateImage = useOnInView((inView) => {
+    if (inView) {
+      dispatch({
+        type: 'setPages',
+        payload: Math.max(Math.min(totalPages, currentPage + 1), 1),
+      });
+    }
+  });
 
-  const refPenultimateImage = createRef<HTMLAnchorElement>();
-  useElementIsVisible(refPenultimateImage, loadMoreImages);
-
-  const refActiveImage = createRef<HTMLAnchorElement>();
   useScrollIntoView(refActiveImage);
 
   const imageTiles = useMemo(
     () =>
       images.map((image, index) => {
-        let ref = image.fileName === searchParams.get('image') ? refActiveImage : null;
-        if (index === images.length - 2) ref = refPenultimateImage;
+        const active = image.fileName === searchParams.get('image');
+        const penultimate = index === images.length - 2;
 
         const element = (
           <GalleryThumb
-            key={`${image.fileName}${ref == null}`} // forces replacement and therefore unwatching of any previously-watched element
+            key={`${image.fileName}${active}${penultimate}`} // forces replacement and therefore unwatching of any previously-watched element
             fileName={image.fileName}
             description={image.description}
             url={image.thumbSrcUrl}
-            ref={ref}
+            ref={penultimate ? refPenultimateImage : active ? refActiveImage : null}
           />
         );
 
