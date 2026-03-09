@@ -1,4 +1,4 @@
-import { BSQLiteDatabaseAdapter } from './BSQLiteDatabaseAdapter';
+import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
 
 export interface StorageAdapter {
   listContentChildren(
@@ -9,7 +9,7 @@ export interface StorageAdapter {
   contentFileExists(contentPath: string): boolean;
   contentDirectoryExists(contentPath: string): boolean;
   getContentFile(apiPath: string): Promise<Buffer>;
-  getContentDbv2(contentPath: string, readOnly?: boolean): Promise<BSQLiteDatabaseAdapter>;
+  getContentDbv2(contentPath: string, readOnly?: boolean): Promise<SQLiteDatabaseAdapter>;
   getAdminFile(adminPath: string): Promise<Buffer>;
   getGeneratedFile(apiPath: string, tag: string): Promise<Buffer>;
   storeContentFile(apiPath: string, fileBuffer: Buffer): Promise<void>;

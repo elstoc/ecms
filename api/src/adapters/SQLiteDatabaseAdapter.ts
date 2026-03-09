@@ -2,7 +2,7 @@ import Database, { Database as DatabaseType } from 'better-sqlite3';
 
 export type DbParams = Record<string, unknown>;
 
-export class BSQLiteDatabaseAdapter {
+export class SQLiteDatabaseAdapter {
   private database?: DatabaseType;
 
   public constructor(private dbFullPath: string) {}

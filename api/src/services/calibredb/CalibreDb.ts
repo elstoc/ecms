@@ -2,7 +2,7 @@ import path from 'path';
 import { Logger } from 'winston';
 
 import { StorageAdapter } from '@/adapters';
-import { BSQLiteDatabaseAdapter, DbParams } from '@/adapters/BSQLiteDatabaseAdapter';
+import { DbParams, SQLiteDatabaseAdapter } from '@/adapters/SQLiteDatabaseAdapter';
 import { Book, PaginatedBooks } from '@/contracts/calibredb';
 import { NotFoundError } from '@/errors';
 import { Config, pShuffle } from '@/utils';
@@ -150,7 +150,7 @@ export type LookupValues = {
 export class CalibreDb {
   private apiPath: string;
   private dbContentPath: string;
-  private database?: BSQLiteDatabaseAdapter;
+  private database?: SQLiteDatabaseAdapter;
   private dbModifiedTime = -1;
 
   public constructor(

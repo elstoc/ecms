@@ -1,17 +1,17 @@
 import Database from 'better-sqlite3';
 
-import { BSQLiteDatabaseAdapter } from './BSQLiteDatabaseAdapter';
+import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
 
 jest.mock('better-sqlite3');
 const mockedDatabase = jest.mocked(Database);
 
 const dbFullPath = '/path/to/file';
 
-describe('BSQLiteDatabaseAdapter', () => {
-  let adapter: BSQLiteDatabaseAdapter;
+describe('SQLiteDatabaseAdapter', () => {
+  let adapter: SQLiteDatabaseAdapter;
 
   beforeEach(() => {
-    adapter = new BSQLiteDatabaseAdapter(dbFullPath);
+    adapter = new SQLiteDatabaseAdapter(dbFullPath);
     mockedDatabase.mockClear();
   });
 

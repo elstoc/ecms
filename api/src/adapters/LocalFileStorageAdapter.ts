@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { BSQLiteDatabaseAdapter } from './BSQLiteDatabaseAdapter';
+import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
 import { StorageAdapter } from './StorageAdapter';
 import fs from './fs';
 
@@ -60,12 +60,12 @@ export class LocalFileStorageAdapter implements StorageAdapter {
   public async getContentDbv2(
     contentPath: string,
     readOnly?: boolean,
-  ): Promise<BSQLiteDatabaseAdapter> {
+  ): Promise<SQLiteDatabaseAdapter> {
     if (!this.contentFileExists(contentPath)) {
       await this.storeContentFile(contentPath, Buffer.from(''));
     }
 
-    const db = new BSQLiteDatabaseAdapter(this.getContentFullPath(contentPath));
+    const db = new SQLiteDatabaseAdapter(this.getContentFullPath(contentPath));
     db.initialise(readOnly);
 
     return db;

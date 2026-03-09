@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BSQLiteDatabaseAdapter } from './BSQLiteDatabaseAdapter';
 import { LocalFileStorageAdapter } from './LocalFileStorageAdapter';
+import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
 import { StorageAdapter } from './StorageAdapter';
 import fs from './fs';
 
-const mockSQLiteDatabaseAdapter = jest.mocked(BSQLiteDatabaseAdapter);
+const mockSQLiteDatabaseAdapter = jest.mocked(SQLiteDatabaseAdapter);
 
-jest.mock('./BSQLiteDatabaseAdapter');
+jest.mock('./SQLiteDatabaseAdapter');
 
 jest.mock('./fs', () => ({
   existsSync: jest.fn(),

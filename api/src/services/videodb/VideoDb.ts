@@ -1,7 +1,7 @@
 import path from 'path';
 import { Logger } from 'winston';
 
-import { BSQLiteDatabaseAdapter, DbParams } from '@/adapters/BSQLiteDatabaseAdapter';
+import { DbParams, SQLiteDatabaseAdapter } from '@/adapters/SQLiteDatabaseAdapter';
 import { StorageAdapter } from '@/adapters/StorageAdapter';
 import { User } from '@/contracts/auth';
 import { PaginatedVideos, Video, VideoUpdate, VideoWithId } from '@/contracts/videodb';
@@ -119,7 +119,7 @@ export const filterSql = {
 
 export class VideoDb {
   private apiPath: string;
-  private database?: BSQLiteDatabaseAdapter;
+  private database?: SQLiteDatabaseAdapter;
   private dbVersion?: number;
   private lookupTableCache: { [key: string]: LookupValues } = {};
 
