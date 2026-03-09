@@ -11,13 +11,13 @@ import { useGalleryContent } from '../hooks/useGalleryQueries';
 import { GalleryThumb } from './GalleryThumb';
 
 export const JustifiedGallery = () => {
-  const refActiveImage = useRef<HTMLAnchorElement>(null);
+  const activeImageRef = useRef<HTMLAnchorElement>(null);
   const [searchParams] = useSearchParams();
   const { dispatch } = useGallery();
 
   const { images, totalPages, currentPage } = useGalleryContent();
 
-  const refPenultimateImage = useOnInView((inView) => {
+  const penultimateImageRef = useOnInView((inView) => {
     if (inView) {
       dispatch({
         type: 'setPages',
@@ -26,7 +26,7 @@ export const JustifiedGallery = () => {
     }
   });
 
-  useScrollIntoView(refActiveImage);
+  useScrollIntoView(activeImageRef);
 
   const imageTiles = useMemo(
     () =>
@@ -40,7 +40,7 @@ export const JustifiedGallery = () => {
             fileName={image.fileName}
             description={image.description}
             url={image.thumbSrcUrl}
-            ref={penultimate ? refPenultimateImage : active ? refActiveImage : null}
+            ref={penultimate ? penultimateImageRef : active ? activeImageRef : null}
           />
         );
 
@@ -51,7 +51,7 @@ export const JustifiedGallery = () => {
           maxWidth: image.thumbDimensions.width,
         };
       }),
-    [images, refActiveImage, refPenultimateImage, searchParams],
+    [images, activeImageRef, penultimateImageRef, searchParams],
   );
 
   return <Tesselate tiles={imageTiles} marginPx={3} />;
