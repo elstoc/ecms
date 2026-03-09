@@ -11,7 +11,7 @@
   height: 100%;
   width: 100%;
   position: fixed;
-  z-index: 1; /* Sit on top */
+  z-index: var(--dialog-popup-z-index); /* Sit on top */
   left: 0;
   top: 0;
   background-color: rgba(40, 40, 40, 0.95);
@@ -41,7 +41,7 @@
     width: 8%;
     text-decoration: none;
     user-select: none;
-    z-index: 0;
+    z-index: var(--dialog-popup-z-index); /* Sit on top */
   }
 
   .prev .icon,
@@ -69,7 +69,7 @@
     right: 10px;
     padding: 0 10px;
     text-decoration: none;
-    z-index: 1;
+    z-index: var(--dialog-popup-z-index); /* Sit on top */
   }
 
   .prev:hover,

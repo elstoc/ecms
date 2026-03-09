@@ -1,6 +1,6 @@
 .Viewport {
   position: fixed;
-  z-index: 1;
+  z-index: var(--toast-viewport-z-index);
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
@@ -43,7 +43,7 @@
     opacity 0.5s,
     height 0.15s;
   cursor: default;
-  z-index: calc(1000 - var(--toast-index));
+  z-index: calc(var(--toast-popup-z-index) - var(--toast-index));
   height: var(--height);
   transform: translateX(var(--toast-swipe-movement-x))
     translateY(

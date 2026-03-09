@@ -55,4 +55,12 @@
   --input-height: 2rem;
 
   --disabled-opacity: 0.4;
+
+  --header-footer-z-index: 1;
+  --toast-viewport-z-index: 1;
+  --dialog-backdrop-z-index: 10;
+  --dialog-popup-z-index: 20;
+  --navmenu-popup-z-index: 20;
+  --select-popup-z-index: 100;
+  --toast-popup-z-index: 1000;
 }

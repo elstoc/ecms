@@ -45,7 +45,7 @@
 /* positioning the popup */
 .Positioner {
   outline: none;
-  z-index: 100;
+  z-index: var(--select-popup-z-index);
   user-select: none;
 }
 

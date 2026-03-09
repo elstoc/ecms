@@ -85,7 +85,7 @@
 
   height: var(--popup-height);
 
-  z-index: 9999;
+  z-index: var(--navmenu-popup-z-index);
 
   &[data-starting-style],
   &[data-ending-style] {

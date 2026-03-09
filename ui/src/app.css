@@ -20,7 +20,7 @@ footer {
   width: 98%;
   min-height: 2rem;
   font-size: 1rem;
-  z-index: 1;
+  z-index: var(--header-footer-z-index);
   background-color: var(--app-bg-color);
 }
 
