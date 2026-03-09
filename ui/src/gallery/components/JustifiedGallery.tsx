@@ -36,7 +36,7 @@ export const JustifiedGallery = () => {
 
         const element = (
           <GalleryThumb
-            key={`${image.fileName}${active}${penultimate}`} // forces replacement and therefore unwatching of any previously-watched element
+            key={`${image.fileName}${active}${penultimate}`} // re-render if ref changes
             fileName={image.fileName}
             description={image.description}
             url={image.thumbSrcUrl}
