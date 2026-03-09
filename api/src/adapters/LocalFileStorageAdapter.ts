@@ -1,8 +1,6 @@
 import path from 'path';
 
 import { BSQLiteDatabaseAdapter } from './BSQLiteDatabaseAdapter';
-import { DatabaseAdapter } from './DatabaseAdapter';
-import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
 import { StorageAdapter } from './StorageAdapter';
 import fs from './fs';
 
@@ -57,16 +55,6 @@ export class LocalFileStorageAdapter implements StorageAdapter {
     }
     const dir = await fs.promises.readdir(fullPath);
     return dir.filter(fileMatcher);
-  }
-
-  public async getContentDb(contentPath: string, mode?: number): Promise<DatabaseAdapter> {
-    if (!this.contentFileExists(contentPath)) {
-      await this.storeContentFile(contentPath, Buffer.from(''));
-    }
-    const db = new SQLiteDatabaseAdapter(this.getContentFullPath(contentPath));
-    await db.initialise(mode);
-    await db.exec('PRAGMA foreign_keys = ON');
-    return db;
   }
 
   public async getContentDbv2(

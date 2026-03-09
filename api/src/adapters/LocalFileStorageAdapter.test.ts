@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { BSQLiteDatabaseAdapter } from './BSQLiteDatabaseAdapter';
 import { LocalFileStorageAdapter } from './LocalFileStorageAdapter';
-import { SQLiteDatabaseAdapter } from './SQLiteDatabaseAdapter';
 import { StorageAdapter } from './StorageAdapter';
 import fs from './fs';
 
-const mockSQLiteDatabaseAdapter = jest.mocked(SQLiteDatabaseAdapter);
+const mockSQLiteDatabaseAdapter = jest.mocked(BSQLiteDatabaseAdapter);
 
-jest.mock('./SQLiteDatabaseAdapter');
+jest.mock('./BSQLiteDatabaseAdapter');
 
 jest.mock('./fs', () => ({
   existsSync: jest.fn(),
@@ -706,7 +706,7 @@ describe('LocalFileStorageAdapter', () => {
         isDirectory: () => !path.endsWith('file'),
       }));
 
-      await storage.getContentDb('path/to/file');
+      await storage.getContentDbv2('path/to/file');
 
       expect(promiseWriteFileMock).toHaveBeenCalledWith(
         `${dataDir}/content/path/to/file`,
@@ -721,7 +721,7 @@ describe('LocalFileStorageAdapter', () => {
         isDirectory: () => !path.endsWith('file'),
       }));
 
-      await storage.getContentDb('path/to/file');
+      await storage.getContentDbv2('path/to/file');
 
       expect(promiseWriteFileMock).not.toHaveBeenCalled();
     });
@@ -733,11 +733,10 @@ describe('LocalFileStorageAdapter', () => {
         isDirectory: () => !path.endsWith('file'),
       }));
 
-      await storage.getContentDb('path/to/file', 1234);
+      await storage.getContentDbv2('path/to/file', true);
 
       expect(mockSQLiteDatabaseAdapter).toHaveBeenCalledWith(`${dataDir}/content/path/to/file`);
-      expect(mockInit).toHaveBeenCalledWith(1234);
-      expect(mockExec).toHaveBeenCalledWith('PRAGMA foreign_keys = ON');
+      expect(mockInit).toHaveBeenCalledWith(true);
     });
   });
 });
