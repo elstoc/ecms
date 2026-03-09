@@ -17,7 +17,7 @@ export const SiteNav = ({ siteComponents }: SiteNavProps) => {
 
   const getLinkItem = (title: string, uiPath: string) => ({
     title,
-    href: uiPath,
+    href: `/${uiPath}`,
     active: isNavActive(pathname, uiPath),
   });
 

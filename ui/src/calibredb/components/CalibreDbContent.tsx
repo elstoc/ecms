@@ -1,8 +1,11 @@
 import { Books } from '@/calibredb/components/Books';
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
+import { Layout } from '@/site/components/Layout';
 
 import { BookFilters } from './BookFilters';
 
 export const CalibreDbContent = () => (
-  <ContentWithSidebar content={<Books />} sidebar={<BookFilters />} />
+  <Layout>
+    <ContentWithSidebar content={<Books />} sidebar={<BookFilters />} />
+  </Layout>
 );
