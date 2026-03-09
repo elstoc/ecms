@@ -348,7 +348,6 @@ export class CalibreDb {
     return returnVal;
   }
 
-  // TODO: Remove async once all other node-sqlite3 functionality removed
   public async shutdown(): Promise<void> {
     this.logger.info(`shutting down database at ${this.apiPath}`);
     this.database?.close();
