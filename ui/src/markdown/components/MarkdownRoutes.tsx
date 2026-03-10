@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { MarkdownTree } from '@/contracts/markdown';
+import { Layout } from '@/site/components/Layout';
 import { NotFoundPage } from '@/site/components/NotFoundPage';
 
 import { useMarkdown } from '../hooks/useMarkdown';
@@ -13,13 +14,15 @@ export const MarkdownRoutes = () => {
   const {
     state: { rootApiPath, singlePage },
   } = useMarkdown();
-  const markdownTree = useGetMarkdownTree(rootApiPath);
 
-  if (!markdownTree.children) return <></>;
+  const { children } = useGetMarkdownTree(rootApiPath);
+
+  // make sure a layout is always rendered
+  if (!children) return <Layout> </Layout>;
 
   return (
     <Routes>
-      {listMarkdownRoutes(markdownTree.children, singlePage)}
+      {listMarkdownRoutes(children, singlePage)}
       <Route key='*' path='*' element={<NotFoundPage />} />
     </Routes>
   );
