@@ -6,12 +6,8 @@ import { SiteNav } from './SiteNav';
 import './Header.scss';
 
 export const Header = () => {
-  const siteComponents = useSiteComponents();
+  const siteComponents = useSiteComponents() ?? [];
   const { siteTitle } = useSiteConfig() ?? {};
-
-  if (!siteComponents) {
-    return null;
-  }
 
   return (
     <div className='header'>
