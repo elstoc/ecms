@@ -42,8 +42,11 @@ export const ToggleGroup = ({
 }: ToggleButtonGroupProps) => {
   const classes = cn(styles.Root, className);
 
-  const onValueChange = (value: string[]) => {
-    if (allowEmpty || value.length > 0) {
+  const onValueChange = (newValue: string[]) => {
+    if (allowEmpty || newValue.length > 0) {
+      onChange(newValue);
+    } else {
+      // allow the event to fire even if not changed
       onChange(value);
     }
   };
