@@ -4,7 +4,6 @@ import { Disclosure, DisclosurePanel } from '@/shared/components/disclosure';
 import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { useIsDualPanel } from '@/shared/hooks';
-import { InjectSideExpander } from '@/site/components/HeaderToolbox';
 
 import { Layout } from './Layout';
 
@@ -31,6 +30,7 @@ export const ContentWithSidebar = ({
   }, [isDualPanel]);
 
   let sidebarElement = <div className='cws-sidebar'>{sidebar}</div>;
+  let sideExpander = <></>;
 
   if (!isDualPanel && sidebar) {
     sidebarElement = (
@@ -45,25 +45,24 @@ export const ContentWithSidebar = ({
         </DisclosurePanel>
       </Disclosure>
     );
+
+    sideExpander = (
+      <Toolbox>
+        <IconButton
+          icon='menu'
+          label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
+          className='sidebar-button'
+          onClick={() => setSidebarDrawerVisible((visible) => !visible)}
+        />
+      </Toolbox>
+    );
   }
 
   return (
-    <Layout componentTools={componentTools}>
+    <Layout componentTools={componentTools} sideExpander={sideExpander}>
       <div className='cws-container'>
         <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
           <div className='cws-content-and-sidebar'>
-            {!isDualPanel && sidebar && (
-              <InjectSideExpander>
-                <Toolbox>
-                  <IconButton
-                    icon='menu'
-                    label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
-                    className='sidebar-button'
-                    onClick={() => setSidebarDrawerVisible((visible) => !visible)}
-                  />
-                </Toolbox>
-              </InjectSideExpander>
-            )}
             {sidebar && sidebarElement}
             <div className='cws-content'>{children}</div>
           </div>
