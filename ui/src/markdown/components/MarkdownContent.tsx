@@ -16,20 +16,14 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
     state: { singlePage },
   } = useMarkdown();
 
-  const content = (
-    <div className='markdown-page-content'>
-      <MarkdownPage apiPath={apiPath} />
-      <InjectComponentTools>
-        <MarkdownToolbox apiPath={apiPath} />
-      </InjectComponentTools>
-    </div>
-  );
-
   return (
-    <ContentWithSidebar
-      content={content}
-      sidebar={singlePage ? null : <MarkdownNav />}
-      closeSidebarOnClick={true}
-    />
+    <ContentWithSidebar sidebar={singlePage ? null : <MarkdownNav />} closeSidebarOnClick={true}>
+      <div className='markdown-page-content'>
+        <MarkdownPage apiPath={apiPath} />
+        <InjectComponentTools>
+          <MarkdownToolbox apiPath={apiPath} />
+        </InjectComponentTools>
+      </div>
+    </ContentWithSidebar>
   );
 };

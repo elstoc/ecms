@@ -11,13 +11,13 @@ import { Layout } from './Layout';
 import './ContentWithSidebar.scss';
 
 type ContentWithSideBarProps = {
-  content: ReactNode;
+  children: ReactNode;
   sidebar: ReactNode;
   closeSidebarOnClick?: boolean;
 };
 
 export const ContentWithSidebar = ({
-  content,
+  children,
   sidebar,
   closeSidebarOnClick,
 }: ContentWithSideBarProps) => {
@@ -63,7 +63,7 @@ export const ContentWithSidebar = ({
               </InjectSideExpander>
             )}
             {sidebar && sidebarElement}
-            <div className='cws-content'>{content}</div>
+            <div className='cws-content'>{children}</div>
           </div>
         </div>
       </div>

@@ -24,7 +24,9 @@ export const VideoDbContent = () => {
       <InjectComponentTools>
         <VideoToolbox />
       </InjectComponentTools>
-      <ContentWithSidebar content={<VideoList />} sidebar={<VideoFilters />} />
+      <ContentWithSidebar sidebar={<VideoFilters />}>
+        <VideoList />
+      </ContentWithSidebar>
       <EditVideo />
     </>
   );

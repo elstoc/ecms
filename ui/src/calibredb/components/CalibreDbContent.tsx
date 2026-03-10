@@ -4,5 +4,7 @@ import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 import { BookFilters } from './BookFilters';
 
 export const CalibreDbContent = () => (
-  <ContentWithSidebar content={<Books />} sidebar={<BookFilters />} />
+  <ContentWithSidebar sidebar={<BookFilters />}>
+    <Books />
+  </ContentWithSidebar>
 );
