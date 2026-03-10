@@ -6,6 +6,8 @@ import { Toolbox } from '@/shared/components/layout';
 import { useIsDualPanel } from '@/shared/hooks';
 import { InjectSideExpander } from '@/site/components/HeaderToolbox';
 
+import { Layout } from './Layout';
+
 import './ContentWithSidebar.scss';
 
 type ContentWithSideBarProps = {
@@ -44,25 +46,27 @@ export const ContentWithSidebar = ({
   }
 
   return (
-    <div className='cws-container'>
-      <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
-        <div className='cws-content-and-sidebar'>
-          {!isDualPanel && sidebar && (
-            <InjectSideExpander>
-              <Toolbox>
-                <IconButton
-                  icon='menu'
-                  label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
-                  className='sidebar-button'
-                  onClick={() => setSidebarDrawerVisible((visible) => !visible)}
-                />
-              </Toolbox>
-            </InjectSideExpander>
-          )}
-          {sidebar && sidebarElement}
-          <div className='cws-content'>{content}</div>
+    <Layout>
+      <div className='cws-container'>
+        <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
+          <div className='cws-content-and-sidebar'>
+            {!isDualPanel && sidebar && (
+              <InjectSideExpander>
+                <Toolbox>
+                  <IconButton
+                    icon='menu'
+                    label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
+                    className='sidebar-button'
+                    onClick={() => setSidebarDrawerVisible((visible) => !visible)}
+                  />
+                </Toolbox>
+              </InjectSideExpander>
+            )}
+            {sidebar && sidebarElement}
+            <div className='cws-content'>{content}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };

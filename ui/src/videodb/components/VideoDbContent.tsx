@@ -2,7 +2,6 @@ import { useParams } from 'react-router';
 
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 import { InjectComponentTools } from '@/site/components/HeaderToolbox';
-import { Layout } from '@/site/components/Layout';
 import { NotFoundPage } from '@/site/components/NotFoundPage';
 
 import { EditVideo } from './EditVideo';
@@ -21,12 +20,12 @@ export const VideoDbContent = () => {
   }
 
   return (
-    <Layout>
+    <>
       <InjectComponentTools>
         <VideoToolbox />
       </InjectComponentTools>
       <ContentWithSidebar content={<VideoList />} sidebar={<VideoFilters />} />
       <EditVideo />
-    </Layout>
+    </>
   );
 };
