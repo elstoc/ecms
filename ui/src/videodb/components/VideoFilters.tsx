@@ -39,7 +39,7 @@ export const VideoFilters = () => {
         onChange={(value) =>
           updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
         }
-        width='lg'
+        width='full'
       />
       <SelectLookup
         label='Category'
@@ -92,7 +92,7 @@ export const VideoFilters = () => {
         onChange={(value) =>
           updateUiFilter({ key: 'tags', value: value?.length ? value : undefined })
         }
-        width='lg'
+        width='full'
       />
       <SelectLookup
         label='Primary Media'

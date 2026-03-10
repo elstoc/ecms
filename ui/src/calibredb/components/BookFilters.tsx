@@ -59,12 +59,6 @@ export const BookFilters = () => {
 
   return (
     <form role='search' aria-labelledby='book-search-title' className='book-filters'>
-      <ToggleGroup
-        label='Mode'
-        items={modeOptionItems}
-        value={[mode]}
-        onChange={() => dispatch({ type: 'toggleMode' })}
-      />
       <Input
         label='Title Search'
         value={uiFilters.titleContains ?? ''}
@@ -72,6 +66,12 @@ export const BookFilters = () => {
           updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
         }
         width='full'
+      />
+      <ToggleGroup
+        label='Mode'
+        items={modeOptionItems}
+        value={[mode]}
+        onChange={() => dispatch({ type: 'toggleMode' })}
       />
       <TagSelect
         label='Devices'
