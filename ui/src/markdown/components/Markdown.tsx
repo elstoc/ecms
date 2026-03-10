@@ -3,7 +3,7 @@ import { useTitle } from '@/shared/hooks';
 
 import { MarkdownContext, useMarkdownReducer } from '../hooks/useMarkdown';
 
-import { MarkdownRoutes } from './MarkdownRoutes';
+import { MarkdownContent } from './MarkdownContent';
 
 export const Markdown = ({ uiPath, apiPath, title, singlePage }: MarkdownMetadata) => {
   const { state, dispatch } = useMarkdownReducer(uiPath, apiPath, singlePage);
@@ -11,7 +11,7 @@ export const Markdown = ({ uiPath, apiPath, title, singlePage }: MarkdownMetadat
 
   return (
     <MarkdownContext.Provider value={{ state, dispatch }}>
-      <MarkdownRoutes />
+      <MarkdownContent />
     </MarkdownContext.Provider>
   );
 };
