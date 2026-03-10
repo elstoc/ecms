@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 
+import { UserInfo } from '@/auth';
+
 import { useSiteComponents, useSiteConfig } from '../hooks/useSiteQueries';
 
-import { HeaderToolbox } from './HeaderToolbox';
 import { SiteNav } from './SiteNav';
 
 import './Header.scss';
@@ -22,8 +23,16 @@ export const Header = ({ componentTools, sideExpander }: HeaderProps) => {
         {siteTitle && <div className='site-title'>{siteTitle}</div>}
         <SiteNav siteComponents={siteComponents} />
       </div>
+
       <div className='toolbar'>
-        <HeaderToolbox componentTools={componentTools} sideExpander={sideExpander} />
+        <div className='left'>
+          <div>{sideExpander}</div>
+        </div>
+
+        <div className='right'>
+          <div>{componentTools}</div>
+          <UserInfo />
+        </div>
       </div>
     </div>
   );
