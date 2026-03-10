@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { Ref, useState } from 'react';
 
 import { BookCard } from '@/calibredb/components/book-card';
 import { Book } from '@/contracts/calibredb';
@@ -9,9 +9,10 @@ import { useLookup, useLookupValue } from '../hooks/useCalibreDbQueries';
 
 type BookListItemProps = {
   book: Book;
+  ref?: Ref<HTMLDivElement>;
 };
 
-export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ book }, ref) => {
+export const BookListItem = ({ book, ref }: BookListItemProps) => {
   const {
     state: { apiPath },
   } = useCalibreDb();
@@ -43,4 +44,4 @@ export const BookListItem = forwardRef<HTMLDivElement, BookListItemProps>(({ boo
       coverUrl={`${config.apiUrl}/calibredb/cover?${coverUrlParams.toString()}`}
     />
   );
-});
+};

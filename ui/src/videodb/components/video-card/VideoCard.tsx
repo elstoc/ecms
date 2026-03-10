@@ -1,5 +1,4 @@
-import 'modern-normalize';
-import { forwardRef } from 'react';
+import { Ref } from 'react';
 
 import { Card } from '@/shared/components/card';
 import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/shared/components/disclosure';
@@ -28,6 +27,7 @@ type VideoCardProps = {
   onPressEdit?: () => void;
   mediaNotes?: string;
   progress?: string;
+  ref?: Ref<HTMLDivElement>;
 };
 
 type TitleAndDataProps = {
@@ -44,68 +44,62 @@ export const TitleAndData = ({ title, data }: TitleAndDataProps) => {
   );
 };
 
-export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
-  (
-    {
-      expanded,
-      onExpandedChange,
-      title,
-      categoryDesc,
-      formatDesc,
-      lengthDesc,
-      locationDesc,
-      otherMediaDesc,
-      tags,
-      watched,
-      mediaWatched,
-      flagged,
-      onFlaggedChange,
-      onPressEdit,
-      mediaNotes,
-      progress,
-    },
-    ref,
-  ) => {
-    return (
-      <Card className='video-card' highlight={expanded} ref={ref}>
-        <Disclosure open={expanded} onOpenChange={onExpandedChange}>
-          <div className='info-panel'>
-            <div className='left'>
-              <DisclosureTrigger heading={title} clearButtonFormatting />
-              <div>
-                <WatchedIcon watchedStatus={watched} />
-                <WatchedIcon watchedStatus={mediaWatched} />
-                <span>
-                  {' '}
-                  {formatDesc} {lengthDesc ? `(${lengthDesc})` : ''}
-                </span>
-              </div>
-            </div>
-            <div className='right'>
-              <Flag flagged={flagged} className='priority' onChange={onFlaggedChange} />
-            </div>
+export const VideoCard = ({
+  expanded,
+  onExpandedChange,
+  title,
+  categoryDesc,
+  formatDesc,
+  lengthDesc,
+  locationDesc,
+  otherMediaDesc,
+  tags,
+  watched,
+  mediaWatched,
+  flagged,
+  onFlaggedChange,
+  onPressEdit,
+  mediaNotes,
+  progress,
+  ref,
+}: VideoCardProps) => (
+  <Card className='video-card' highlight={expanded} ref={ref}>
+    <Disclosure open={expanded} onOpenChange={onExpandedChange}>
+      <div className='info-panel'>
+        <div className='left'>
+          <DisclosureTrigger heading={title} clearButtonFormatting />
+          <div>
+            <WatchedIcon watchedStatus={watched} />
+            <WatchedIcon watchedStatus={mediaWatched} />
+            <span>
+              {' '}
+              {formatDesc} {lengthDesc ? `(${lengthDesc})` : ''}
+            </span>
           </div>
-          <DisclosurePanel keepMounted>
-            <div className='info-panel'>
-              <div className='left'>
-                <TagList label='tags'>
-                  <Tag label={categoryDesc} dark />
-                  {tags?.map((tag) => (
-                    <Tag key={tag} label={tag} />
-                  ))}
-                </TagList>
-                <TitleAndData title='Location' data={locationDesc} />
-                <TitleAndData title='Other Media' data={otherMediaDesc} />
-                <TitleAndData title='Media notes' data={mediaNotes} />
-                <TitleAndData title='Progress' data={progress} />
-              </div>
-              <div className='right'>
-                {onPressEdit && <IconButton label='edit video' icon='edit' onClick={onPressEdit} />}
-              </div>
-            </div>
-          </DisclosurePanel>
-        </Disclosure>
-      </Card>
-    );
-  },
+        </div>
+        <div className='right'>
+          <Flag flagged={flagged} className='priority' onChange={onFlaggedChange} />
+        </div>
+      </div>
+      <DisclosurePanel keepMounted>
+        <div className='info-panel'>
+          <div className='left'>
+            <TagList label='tags'>
+              <Tag label={categoryDesc} dark />
+              {tags?.map((tag) => (
+                <Tag key={tag} label={tag} />
+              ))}
+            </TagList>
+            <TitleAndData title='Location' data={locationDesc} />
+            <TitleAndData title='Other Media' data={otherMediaDesc} />
+            <TitleAndData title='Media notes' data={mediaNotes} />
+            <TitleAndData title='Progress' data={progress} />
+          </div>
+          <div className='right'>
+            {onPressEdit && <IconButton label='edit video' icon='edit' onClick={onPressEdit} />}
+          </div>
+        </div>
+      </DisclosurePanel>
+    </Disclosure>
+  </Card>
 );
