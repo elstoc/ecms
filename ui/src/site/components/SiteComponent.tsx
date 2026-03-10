@@ -8,16 +8,16 @@ type SiteComponentProps = { metadata: ComponentMetadata };
 
 export const SiteComponent = ({ metadata }: SiteComponentProps) => {
   if (metadata.type === ComponentTypes.gallery) {
-    return <Gallery key={metadata.apiPath} {...metadata} />;
+    return <Gallery {...metadata} />;
   }
   if (metadata.type === ComponentTypes.markdown) {
-    return <Markdown key={metadata.apiPath} {...metadata} />;
+    return <Markdown {...metadata} />;
   }
   if (metadata.type === ComponentTypes.videodb) {
-    return <VideoDb key={metadata.apiPath} {...metadata} />;
+    return <VideoDb {...metadata} />;
   }
   if (metadata.type === ComponentTypes.calibredb) {
-    return <CalibreDb key={metadata.apiPath} {...metadata} />;
+    return <CalibreDb {...metadata} />;
   }
 
   return <div>Component Type Not Supported</div>;
