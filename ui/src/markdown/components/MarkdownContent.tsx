@@ -21,7 +21,7 @@ export const MarkdownContent = ({ apiPath }: MarkdownContentProps) => {
       <div className='markdown-page-content'>
         <MarkdownPage apiPath={apiPath} />
         <InjectComponentTools>
-          <MarkdownToolbox apiPath={apiPath} />
+          <MarkdownToolbox />
         </InjectComponentTools>
       </div>
     </ContentWithSidebar>

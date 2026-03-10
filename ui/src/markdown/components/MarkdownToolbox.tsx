@@ -11,20 +11,18 @@ import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdo
 
 import './MarkdownToolbox.css';
 
-type MarkdownToolboxProps = { apiPath: string };
-
-export const MarkdownToolbox = ({ apiPath }: MarkdownToolboxProps) => {
+export const MarkdownToolbox = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const {
-    state: { editedMarkdown, singlePage, currentPage },
+    state: { editedMarkdown, singlePage, currentPage, pageApiPath },
   } = useMarkdown();
-  const mode = searchParams.get('mode');
-  const { mutate: saveMutate } = useUpdateMarkdownPage(apiPath, 'page saved');
-  const { mutate: deleteMutate } = useDeleteMarkdownPage(apiPath, 'page deleted');
-
   const { content, canWrite, canDelete, pathValid, pageExists } = currentPage ?? {};
+
+  const mode = searchParams.get('mode');
+  const { mutate: saveMutate } = useUpdateMarkdownPage(pageApiPath, 'page saved');
+  const { mutate: deleteMutate } = useDeleteMarkdownPage(pageApiPath, 'page deleted');
 
   const toggleEditMode = useCallback(() => {
     if (mode === 'edit') {
