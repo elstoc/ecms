@@ -77,7 +77,7 @@ export const VideoCard = forwardRef<HTMLDivElement, VideoCardProps>(
                 <WatchedIcon watchedStatus={mediaWatched} />
                 <span>
                   {' '}
-                  {formatDesc} ({lengthDesc})
+                  {formatDesc} {lengthDesc ? `(${lengthDesc})` : ''}
                 </span>
               </div>
             </div>
