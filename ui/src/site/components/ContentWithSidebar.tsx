@@ -14,12 +14,14 @@ type ContentWithSideBarProps = {
   children: ReactNode;
   sidebar: ReactNode;
   closeSidebarOnClick?: boolean;
+  componentTools?: ReactNode;
 };
 
 export const ContentWithSidebar = ({
   children,
   sidebar,
   closeSidebarOnClick,
+  componentTools,
 }: ContentWithSideBarProps) => {
   const isDualPanel = useIsDualPanel();
   const [sidebarDrawerVisible, setSidebarDrawerVisible] = useState(false);
@@ -46,7 +48,7 @@ export const ContentWithSidebar = ({
   }
 
   return (
-    <Layout>
+    <Layout componentTools={componentTools}>
       <div className='cws-container'>
         <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
           <div className='cws-content-and-sidebar'>

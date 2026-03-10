@@ -1,5 +1,4 @@
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
-import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 
 import { useMarkdown } from '../hooks/useMarkdown';
 
@@ -17,12 +16,13 @@ export const MarkdownContent = () => {
   const sidebar = singlePage ? null : <MarkdownNav />;
 
   return (
-    <ContentWithSidebar sidebar={sidebar} closeSidebarOnClick={true}>
+    <ContentWithSidebar
+      componentTools={<MarkdownToolbox />}
+      sidebar={sidebar}
+      closeSidebarOnClick={true}
+    >
       <div className='markdown-page-content'>
         <MarkdownPageRoutes />
-        <InjectComponentTools>
-          <MarkdownToolbox />
-        </InjectComponentTools>
       </div>
     </ContentWithSidebar>
   );

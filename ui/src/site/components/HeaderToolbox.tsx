@@ -9,36 +9,22 @@ type ChildrenOnly = {
   children: ReactNode;
 };
 
-export const HeaderToolbox = () => {
+type HeaderToolboxProps = {
+  componentTools?: ReactNode;
+};
+
+export const HeaderToolbox = ({ componentTools }: HeaderToolboxProps) => {
   return (
     <div className='toolbox-content'>
       <div className='left'>
         <div id='sidebar-expander-target'></div>
       </div>
       <div className='right'>
-        <div id='component-tools-target'></div>
+        <div id='component-tools-target'>{componentTools}</div>
         <UserInfo />
       </div>
     </div>
   );
-};
-
-/* This is a React component that can be called from any other component
-   and injects itself into the Header Toolbox */
-export const InjectComponentTools = ({ children }: ChildrenOnly) => {
-  const [toolsTarget, setToolsTarget] = useState<HTMLElement | null>(null);
-
-  // TODO: This will be better solved with a layout component
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    setToolsTarget(document.getElementById('component-tools-target'));
-  });
-
-  if (!toolsTarget) {
-    return <></>;
-  }
-
-  return createPortal(children, toolsTarget);
 };
 
 export const InjectSideExpander = ({ children }: ChildrenOnly) => {

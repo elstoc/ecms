@@ -7,13 +7,14 @@ import './Layout.css';
 
 type LayoutProps = {
   children: ReactNode;
+  componentTools?: ReactNode;
 };
 
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children, componentTools }: LayoutProps) => {
   return (
     <div className='app-content'>
       <header>
-        <Header />
+        <Header componentTools={componentTools} />
       </header>
       <main>{children}</main>
       <footer>

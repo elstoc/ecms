@@ -1,5 +1,4 @@
 import { useTitle } from '@/shared/hooks';
-import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 import { Layout } from '@/site/components/Layout';
 
 import { useGallery } from '../hooks/useGallery';
@@ -18,11 +17,8 @@ export const GalleryContent = () => {
   useTitle(title);
 
   return (
-    <Layout>
+    <Layout componentTools={<GalleryToolbox />}>
       <div className='gallery-content'>
-        <InjectComponentTools>
-          <GalleryToolbox />
-        </InjectComponentTools>
         <GalleryLightBox />
         <JustifiedGallery />
       </div>

@@ -1,7 +1,6 @@
 import { useParams } from 'react-router';
 
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
-import { InjectComponentTools } from '@/site/components/HeaderToolbox';
 import { NotFoundPage } from '@/site/components/NotFoundPage';
 
 import { EditVideo } from './EditVideo';
@@ -21,10 +20,7 @@ export const VideoDbContent = () => {
 
   return (
     <>
-      <InjectComponentTools>
-        <VideoToolbox />
-      </InjectComponentTools>
-      <ContentWithSidebar sidebar={<VideoFilters />}>
+      <ContentWithSidebar componentTools={<VideoToolbox />} sidebar={<VideoFilters />}>
         <VideoList />
       </ContentWithSidebar>
       <EditVideo />
