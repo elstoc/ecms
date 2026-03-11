@@ -3,7 +3,8 @@ import { useCallback, useEffect } from 'react';
 export const useKeyPress: (
   keys: string[],
   handler: null | ((event: KeyboardEvent) => void),
-) => void = (keys, handler) => {
+  deactivateListener?: boolean,
+) => void = (keys, handler, deactivateListener) => {
   const eventListenerFn = useCallback(
     (ev: KeyboardEvent) => {
       if (keys.includes(ev.key)) {
@@ -21,8 +22,12 @@ export const useKeyPress: (
 
     window.addEventListener('keydown', eventListener);
 
+    if (deactivateListener) {
+      window.removeEventListener('keydown', eventListener);
+    }
+
     return () => {
       window.removeEventListener('keydown', eventListener);
     };
-  }, [eventListenerFn]);
+  }, [eventListenerFn, deactivateListener]);
 };
