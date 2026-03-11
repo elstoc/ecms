@@ -31,7 +31,7 @@ type StateAction =
   | { type: 'toggleMode' };
 
 const initialFilters = {
-  exactPath: false,
+  exactPath: true,
   sortOrder: 'title',
   devices: ['kobo', 'tablet', 'physical'],
 };
@@ -112,7 +112,7 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
     pages: 1,
     uiFilters: { ...initialFilters },
     apiFilters: { ...initialFilters },
-    mode: 'search',
+    mode: 'browse',
   } as CalibreDbState;
   const [state, dispatch] = useReducer(reducer, initialState);
 
