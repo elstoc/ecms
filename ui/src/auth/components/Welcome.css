@@ -1,11 +1,5 @@
 .welcome-user {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: right;
-  justify-content: right;
-}
-
-.welcome-user button {
-  margin: 1.5em 0 0 0;
+  gap: 0.5rem;
 }
