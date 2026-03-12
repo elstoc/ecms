@@ -18,6 +18,7 @@ export const useLogin = (successMessage: string) => {
     mutationFn: ({ userId, password }) => login(userId, password),
     invalidateKeys: 'all',
     successMessage,
+    suppressErrorToast: true,
   });
 };
 

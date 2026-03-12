@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { UserInfo } from '@/auth';
+import { UserTools } from '@/auth';
 
 import { useSiteComponents, useSiteConfig } from '../hooks/useSiteQueries';
 
@@ -31,7 +31,7 @@ export const Header = ({ componentTools, sideExpander }: HeaderProps) => {
 
         <div className='right'>
           <div>{componentTools}</div>
-          <UserInfo />
+          <UserTools />
         </div>
       </div>
     </div>

@@ -2,18 +2,16 @@ import { Button } from '@/shared/components/button';
 
 import { useLogout } from '../hooks/useAuthQueries';
 
-import './Welcome.css';
+type WelcomeProps = { userName: string };
 
-type WelcomeProps = { user: string };
-
-export const Welcome = ({ user }: WelcomeProps) => {
+export const Welcome = ({ userName }: WelcomeProps) => {
   const { mutate: logout } = useLogout('logged out');
   const handleLogout = () => logout();
 
   return (
-    <div className='welcome-user'>
-      <div>You are currently logged in as {user}</div>
+    <>
+      <div>You are currently logged in as {userName}</div>
       <Button onClick={handleLogout}>Log Out</Button>
-    </div>
+    </>
   );
 };

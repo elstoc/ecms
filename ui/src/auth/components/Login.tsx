@@ -5,7 +5,7 @@ import { Input } from '@/shared/components/input';
 
 import { useLogin } from '../hooks/useAuthQueries';
 
-import './Login.css';
+import * as styles from './AuthDialog.module.css';
 
 export const Login = () => {
   const [loginFailed, setLoginFailed] = useState(false);
@@ -21,7 +21,7 @@ export const Login = () => {
   const handleLogin = () => login(userInfo, { onError: handleLoginError });
 
   return (
-    <div className='login-form'>
+    <>
       <Input
         label='User ID'
         value={userId}
@@ -37,8 +37,8 @@ export const Login = () => {
         onPressEnter={handleLogin}
         width='full'
       />
-      <div className='error'>{loginFailed && 'Invalid UserId or password'}</div>
+      <div className={styles.Error}>{loginFailed && 'Invalid UserId or password'}</div>
       <Button onClick={handleLogin}>Log In</Button>
-    </div>
+    </>
   );
 };

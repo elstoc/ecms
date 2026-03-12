@@ -1,15 +1,13 @@
 import { useUserInfo } from '..';
 import { useState } from 'react';
 
-import { Dialog } from '@/shared/components/dialog';
 import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
 import { useSiteConfig } from '@/site';
 
-import { Login } from './Login';
-import { Welcome } from './Welcome';
+import { AuthDialog } from './AuthDialog';
 
-export const UserInfo = () => {
+export const UserTools = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const userData = useUserInfo();
   const { authEnabled } = useSiteConfig() ?? {};
@@ -18,26 +16,24 @@ export const UserInfo = () => {
     return <></>;
   }
 
-  const loggedIn = userData.id !== 'guest';
+  const isLoggedIn = userData.id !== 'guest';
   const userName = userData.fullName || userData.id;
 
   return (
-    <div className='user-info'>
+    <>
       <Toolbox>
         <IconButton
-          label={loggedIn ? 'log out' : 'log in'}
-          icon={loggedIn ? 'user' : 'noUser'}
+          label={isLoggedIn ? 'log out' : 'log in'}
+          icon={isLoggedIn ? 'user' : 'noUser'}
           onClick={() => setDialogOpen(true)}
         />
       </Toolbox>
-      <Dialog
-        title={loggedIn ? 'Welcome' : 'Log in'}
+      <AuthDialog
         open={dialogOpen}
-        onOpenChange={() => setDialogOpen(false)}
-      >
-        {loggedIn && <Welcome user={userName} />}
-        {!loggedIn && <Login />}
-      </Dialog>
-    </div>
+        setOpen={setDialogOpen}
+        userName={userName}
+        isLoggedIn={isLoggedIn}
+      />
+    </>
   );
 };
