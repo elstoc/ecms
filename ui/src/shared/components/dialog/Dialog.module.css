@@ -44,6 +44,10 @@
     opacity: 0;
     transform: translate(-50%, -50%) scale(0);
   }
+
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 .Header {
