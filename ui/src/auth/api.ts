@@ -20,13 +20,11 @@ export const login = async (userId: string, password: string): Promise<void> => 
   });
   const { accessToken, accessTokenExpiry } = response.data;
   setAccessToken(accessToken, accessTokenExpiry);
-  console.log('logged in');
 };
 
 export const logout = async (): Promise<void> => {
   await axiosClient.post('auth/logout');
   setAccessToken('', 0);
-  console.log('logged out');
 };
 
 export const getAccessToken = (): AccessToken => {
@@ -42,7 +40,7 @@ export const refreshAccessToken = async (): Promise<void> => {
     setAccessToken(accessToken, accessTokenExpiry);
     console.log('access token refreshed');
   } catch (e) {
-    console.log('Error', e);
+    console.error('Error refreshing token', e);
     setAccessToken('', 0);
   }
 };
