@@ -10,7 +10,7 @@ import { Login } from './Login';
 import { Welcome } from './Welcome';
 
 export const UserInfo = () => {
-  const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const userData = useUserInfo();
   const { authEnabled } = useSiteConfig() ?? {};
 
@@ -27,13 +27,13 @@ export const UserInfo = () => {
         <IconButton
           label={loggedIn ? 'log out' : 'log in'}
           icon={loggedIn ? 'user' : 'noUser'}
-          onClick={() => setAuthDialogOpen(true)}
+          onClick={() => setDialogOpen(true)}
         />
       </Toolbox>
       <Dialog
         title={loggedIn ? 'Welcome' : 'Log in'}
-        open={authDialogOpen}
-        onOpenChange={() => setAuthDialogOpen(false)}
+        open={dialogOpen}
+        onOpenChange={() => setDialogOpen(false)}
       >
         {loggedIn && <Welcome user={userName} />}
         {!loggedIn && <Login />}
