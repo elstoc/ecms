@@ -1,0 +1,51 @@
+.Filters {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  > :first-child {
+    margin-bottom: 1rem;
+  }
+
+  .ActionButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+}
+
+.Books {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  background-color: var(--content-bg-color);
+  height: 100%;
+  padding: 5px;
+
+  .BookList {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .Paths {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      height: 2.1rem;
+      font-size: 1.1rem;
+      padding: 0.5rem;
+      justify-content: left;
+      margin: 0.125rem 0.25rem;
+
+      &.PathBack:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}

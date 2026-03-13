@@ -13,7 +13,7 @@ import { useLookup } from '../hooks/useCalibreDbQueries';
 
 import { SelectLookup } from './SelectLookup';
 
-import * as styles from './BookFilters.module.css';
+import * as styles from './CalibreDb.module.css';
 
 const modeOptionItems = [
   { value: 'browse', label: 'Browse' },
@@ -58,7 +58,7 @@ export const BookFilters = () => {
   }
 
   return (
-    <form role='search' aria-labelledby='book-search-title' className={styles.Root}>
+    <form role='search' aria-labelledby='book-search-title' className={styles.Filters}>
       <Input
         label='Title Search'
         value={uiFilters.titleContains ?? ''}

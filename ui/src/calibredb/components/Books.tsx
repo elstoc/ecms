@@ -1,11 +1,11 @@
 import { BookList } from './BookList';
 import { PathLinks } from './PathLinks';
 
-import * as styles from './Books.module.css';
+import * as styles from './CalibreDb.module.css';
 
 export const Books = () => {
   return (
-    <div className={styles.Root}>
+    <div className={styles.Books}>
       <PathLinks />
       <BookList />
     </div>
