@@ -303,10 +303,16 @@ export class CalibreDb {
       books = books.slice(0, limit);
     }
 
+    const childPaths = this.getPaths({
+      devices: filters.devices,
+      startsWith: filters.bookPath ? `${filters.bookPath}/` : undefined,
+    });
+
     return {
       books: books.map((book) => this.toBookDto(book)),
       currentPage,
       totalPages,
+      childPaths,
     };
   }
 

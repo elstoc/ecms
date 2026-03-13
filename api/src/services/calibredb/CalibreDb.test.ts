@@ -119,8 +119,20 @@ describe('CalibreDb', () => {
       { id: 10, title: 'Book 10', fixed: false, read: false },
     ];
 
+    const mockChildPaths = [
+      { code: 1, description: 'path/to/something' },
+      { code: 2, description: 'path/to/something/else' },
+    ];
+
+    const expectedChildPaths = {
+      1: 'path/to/something',
+      2: 'path/to/something/else',
+    };
+
     beforeEach(async () => {
-      mockGetAll.mockReturnValue(structuredClone(mockManyBooks));
+      mockGetAll
+        .mockReturnValueOnce(structuredClone(mockManyBooks))
+        .mockReturnValue(mockChildPaths);
       mockStorage.contentFileExists.mockReturnValue(true);
       await calibreDb.initialise();
     });
@@ -129,7 +141,7 @@ describe('CalibreDb', () => {
       const books = calibreDb.getBooks({}, 10);
 
       const expectedSql = baseBooksSql + sortOrderSql.title;
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -141,7 +153,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ titleContains: 'Some-Text' }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({ titleContains: '%some-text%' });
@@ -153,7 +165,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ author: 1234 }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({ author: 1234 });
@@ -165,7 +177,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ format: 1234 }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({ format: 1234 });
@@ -177,7 +189,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ bookPath: 'Fiction' }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({ pathPrefixLike: 'Fiction%' });
@@ -189,7 +201,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ readStatus: true }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({ readStatus: 1 });
@@ -201,7 +213,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ bookPath: 'NonFiction', exactPath: true }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({ bookPath: 'NonFiction' });
@@ -213,7 +225,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ devices: ['kobo'] }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -225,7 +237,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ devices: ['kindle'] }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -237,7 +249,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ devices: ['tablet'] }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -249,7 +261,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ devices: ['physical'] }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -266,7 +278,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ devices: ['tablet', 'kobo', 'kindle', 'physical'] }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -291,7 +303,7 @@ describe('CalibreDb', () => {
         10,
       );
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toEqual({
@@ -325,7 +337,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ sortOrder: 'title' }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -337,7 +349,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ sortOrder: 'author' }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -349,7 +361,7 @@ describe('CalibreDb', () => {
 
       const books = calibreDb.getBooks({ sortOrder: 'shuffle', shuffleSeed: 123 }, 10);
 
-      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
       const [sql, params] = mockGetAll.mock.calls[0];
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(params).toBeUndefined();
@@ -365,6 +377,32 @@ describe('CalibreDb', () => {
         mockManyBooks[1],
         mockManyBooks[4],
       ]);
+    });
+
+    it('gets child paths for devices (with path filter if path is populated)', () => {
+      const expectedSql =
+        baseBookPathSql +
+        ` WHERE (${filterSql.kobo}) AND (description LIKE '/path/to/something/%')`;
+
+      const books = calibreDb.getBooks({ devices: ['kobo'], bookPath: '/path/to/something' }, 10);
+
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
+      const [sql, params] = mockGetAll.mock.calls[1];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toBeUndefined();
+      expect(books.childPaths).toEqual(expectedChildPaths);
+    });
+
+    it('gets child paths for devices (with no path filter if path is empty)', () => {
+      const expectedSql = baseBookPathSql + ` WHERE (${filterSql.kobo})`;
+
+      const books = calibreDb.getBooks({ devices: ['kobo'], bookPath: '' }, 10);
+
+      expect(mockGetAll).toHaveBeenCalledTimes(2);
+      const [sql, params] = mockGetAll.mock.calls[1];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toBeUndefined();
+      expect(books.childPaths).toEqual(expectedChildPaths);
     });
   });
 
