@@ -1,15 +1,14 @@
 import cn from 'classnames';
 
-import './Tag.css';
+import * as styles from './TagList.module.css';
 
 export type TagProps = {
   label: string;
   dark?: boolean;
-  className?: string;
 };
 
-export const Tag = ({ label, dark, className }: TagProps) => {
-  const classNames = cn('ecms-tag', { dark: dark }, className);
+export const Tag = ({ label, dark }: TagProps) => {
+  const classNames = cn(styles.Tag, { [styles.Dark]: dark });
 
   return <li className={classNames}>{label}</li>;
 };

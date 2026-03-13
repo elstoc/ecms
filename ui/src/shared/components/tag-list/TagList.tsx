@@ -1,20 +1,14 @@
-import cn from 'classnames';
 import { ReactNode } from 'react';
 
-import './TagList.css';
+import * as styles from './TagList.module.css';
 
 type TagListProps = {
-  className?: string;
   label: string;
   children: ReactNode;
 };
 
-export const TagList = ({ label, className, children }: TagListProps) => {
-  const classNames = cn('ecms-tag-list', className);
-
-  return (
-    <ul aria-label={label} className={classNames}>
-      {children}
-    </ul>
-  );
-};
+export const TagList = ({ label, children }: TagListProps) => (
+  <ul aria-label={label} className={styles.Root}>
+    {children}
+  </ul>
+);
