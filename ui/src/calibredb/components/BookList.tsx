@@ -5,7 +5,7 @@ import { useBooks } from '../hooks/useCalibreDbQueries';
 
 import { BookListItem } from './BookListItem';
 
-import './BookList.css';
+import * as styles from './BookList.module.css';
 
 export const BookList = () => {
   const { dispatch } = useCalibreDb();
@@ -18,7 +18,7 @@ export const BookList = () => {
   });
 
   return (
-    <div className='book-list'>
+    <div className={styles.Root}>
       {books.map((book, index) => {
         const lastBook = index === books.length - 1;
         return <BookListItem key={book.id} book={book} ref={lastBook ? refLastBook : undefined} />;

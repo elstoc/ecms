@@ -13,7 +13,7 @@ import { useLookup } from '../hooks/useCalibreDbQueries';
 
 import { SelectLookup } from './SelectLookup';
 
-import './BookFilters.css';
+import * as styles from './BookFilters.module.css';
 
 const modeOptionItems = [
   { value: 'browse', label: 'Browse' },
@@ -58,7 +58,7 @@ export const BookFilters = () => {
   }
 
   return (
-    <form role='search' aria-labelledby='book-search-title' className='book-filters'>
+    <form role='search' aria-labelledby='book-search-title' className={styles.Root}>
       <Input
         label='Title Search'
         value={uiFilters.titleContains ?? ''}
@@ -129,7 +129,7 @@ export const BookFilters = () => {
         value={[uiFilters.sortOrder]}
         onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value[0] ?? 'title' })}
       />
-      <div className='filter-action-buttons'>
+      <div className={styles.ActionButtons}>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
       </div>
     </form>

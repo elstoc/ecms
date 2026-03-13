@@ -4,7 +4,7 @@ import { useKeyPress } from '@/shared/hooks';
 import { useAllPaths } from '../hooks/useAllPaths';
 import { useCalibreDb } from '../hooks/useCalibreDb';
 
-import './PathLinks.css';
+import * as styles from './PathLinks.module.css';
 
 export const PathLinks = () => {
   const paths = useAllPaths();
@@ -54,8 +54,12 @@ export const PathLinks = () => {
   }
 
   return (
-    <div className='path-links'>
-      {bookPath && <Button onClick={goPrevious}>..</Button>}
+    <div className={styles.Root}>
+      {bookPath && (
+        <Button className={styles.Back} onClick={goPrevious}>
+          . .
+        </Button>
+      )}
       {childPaths.map((childPath) => (
         <Button
           key={childPath}
