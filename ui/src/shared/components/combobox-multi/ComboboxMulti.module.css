@@ -37,7 +37,7 @@
   outline: 0;
 
   background-color: var(--grey-90);
-  color: var(--grey-10);
+  color: var(--grey-00);
   cursor: default;
 
   &:focus-within {
