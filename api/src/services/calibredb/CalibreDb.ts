@@ -311,10 +311,15 @@ export class CalibreDb {
 
   public getPaths({ devices }: PathFilters): LookupValues {
     let sql = baseBookPathSql;
+    const whereClauses: string[] = [];
 
     if (devices) {
       const deviceSql = devices.map((device) => filterSql[device]);
-      sql += ' WHERE (' + deviceSql.join(' OR ') + ')';
+      whereClauses.push(`(${deviceSql.join(' OR ')})`);
+    }
+
+    if (whereClauses.length > 0) {
+      sql += ` WHERE ${whereClauses.join(' AND ')}`;
     }
 
     const paths = this.database?.getAll<LookupRow>(sql);
