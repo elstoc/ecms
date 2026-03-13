@@ -84,12 +84,14 @@ export const VideoCard = ({
       <DisclosurePanel keepMounted>
         <div className='info-panel'>
           <div className='left'>
-            <TagList label='tags'>
-              <Tag label={categoryDesc} dark />
-              {tags?.map((tag) => (
-                <Tag key={tag} label={tag} />
-              ))}
-            </TagList>
+            <div className='tags'>
+              <TagList label='tags'>
+                <Tag label={categoryDesc} dark />
+                {tags?.map((tag) => (
+                  <Tag key={tag} label={tag} />
+                ))}
+              </TagList>
+            </div>
             <TitleAndData title='Location' data={locationDesc} />
             <TitleAndData title='Other Media' data={otherMediaDesc} />
             <TitleAndData title='Media notes' data={mediaNotes} />

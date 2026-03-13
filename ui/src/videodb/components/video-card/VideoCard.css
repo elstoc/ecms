@@ -18,6 +18,10 @@
     }
   }
 
+  .tags {
+    margin-block: 0.25rem;
+  }
+
   .ec-disclosure-panel {
     .info-panel {
       padding-top: 5px;
