@@ -52,6 +52,8 @@
 }
 
 .ChipText {
+  display: flex;
+  align-items: center;
   height: 1rem;
   padding: 0.0625rem;
   font-size: 0.875rem;
