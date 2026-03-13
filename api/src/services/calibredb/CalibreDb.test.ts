@@ -440,6 +440,27 @@ describe('CalibreDb', () => {
       expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
       expect(paths).toEqual(expectedReturnVal);
     });
+
+    it('runs correct SQL with startsWith filter and returns an array of paths', () => {
+      const paths = calibreDb.getPaths({ startsWith: '/path/to/something' });
+
+      const expectedSql = baseBookPathSql + " WHERE (description LIKE '/path/to/something%')";
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const sql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(paths).toEqual(expectedReturnVal);
+    });
+
+    it('runs correct SQL with startsWith and device filters and returns an array of paths', () => {
+      const paths = calibreDb.getPaths({ startsWith: '/path/to/something', devices: ['kobo'] });
+
+      const expectedSql =
+        baseBookPathSql + ` WHERE (${filterSql.kobo}) AND (description LIKE '/path/to/something%')`;
+      expect(mockGetAll).toHaveBeenCalledTimes(1);
+      const sql = mockGetAll.mock.calls[0][0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(paths).toEqual(expectedReturnVal);
+    });
   });
 
   describe('getLookupValues', () => {

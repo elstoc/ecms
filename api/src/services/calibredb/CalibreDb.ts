@@ -39,6 +39,7 @@ type BookDao = {
 
 type PathFilters = {
   devices?: Devices[];
+  startsWith?: string;
 };
 
 export const baseBookPathSql = `
@@ -309,13 +310,17 @@ export class CalibreDb {
     };
   }
 
-  public getPaths({ devices }: PathFilters): LookupValues {
+  public getPaths({ devices, startsWith }: PathFilters): LookupValues {
     let sql = baseBookPathSql;
     const whereClauses: string[] = [];
 
     if (devices) {
       const deviceSql = devices.map((device) => filterSql[device]);
       whereClauses.push(`(${deviceSql.join(' OR ')})`);
+    }
+
+    if (startsWith) {
+      whereClauses.push(`(description LIKE '${startsWith}%')`);
     }
 
     if (whereClauses.length > 0) {
