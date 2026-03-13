@@ -388,7 +388,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL with no filters and returns an array of paths', () => {
-      const paths = calibreDb.getPaths();
+      const paths = calibreDb.getPaths({});
 
       const expectedSql = baseBookPathSql;
       expect(mockGetAll).toHaveBeenCalledTimes(1);
@@ -398,7 +398,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL with device filter (kobo) and returns an array of paths', () => {
-      const paths = calibreDb.getPaths(['kobo']);
+      const paths = calibreDb.getPaths({ devices: ['kobo'] });
 
       const expectedSql = baseBookPathSql + ' WHERE (' + filterSql.kobo + ')';
       expect(mockGetAll).toHaveBeenCalledTimes(1);
@@ -408,7 +408,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL with device filter (tablet) and returns an array of paths', () => {
-      const paths = calibreDb.getPaths(['tablet']);
+      const paths = calibreDb.getPaths({ devices: ['tablet'] });
 
       const expectedSql = baseBookPathSql + ' WHERE (' + filterSql.tablet + ')';
       expect(mockGetAll).toHaveBeenCalledTimes(1);
@@ -418,7 +418,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL with device filter (kindle) and returns an array of paths', () => {
-      const paths = calibreDb.getPaths(['kindle']);
+      const paths = calibreDb.getPaths({ devices: ['kindle'] });
 
       const expectedSql = baseBookPathSql + ' WHERE (' + filterSql.kindle + ')';
       expect(mockGetAll).toHaveBeenCalledTimes(1);
@@ -428,7 +428,7 @@ describe('CalibreDb', () => {
     });
 
     it('runs correct SQL with device filter (all) and returns an array of paths', () => {
-      const paths = calibreDb.getPaths(['tablet', 'kobo', 'kindle']);
+      const paths = calibreDb.getPaths({ devices: ['tablet', 'kobo', 'kindle'] });
 
       const expectedSql =
         baseBookPathSql +

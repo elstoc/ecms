@@ -37,6 +37,10 @@ type BookDao = {
   fixed: number;
 };
 
+type PathFilters = {
+  devices?: Devices[];
+};
+
 export const baseBookPathSql = `
     SELECT DISTINCT code, description
     FROM   books
@@ -305,7 +309,7 @@ export class CalibreDb {
     };
   }
 
-  public getPaths(devices?: Devices[]): LookupValues {
+  public getPaths({ devices }: PathFilters): LookupValues {
     let sql = baseBookPathSql;
 
     if (devices) {

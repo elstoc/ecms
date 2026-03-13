@@ -41,7 +41,7 @@ export const createCalibreDbRouter = (site: Site): Router => {
       }
       if (fn === 'getPaths') {
         const paths = calibreDb.getPaths(
-          query.devices ? (query.devices.split('|') as Devices[]) : undefined,
+          query.devices ? { devices: query.devices.split('|') as Devices[] } : {},
         );
         res.json(paths);
       }
