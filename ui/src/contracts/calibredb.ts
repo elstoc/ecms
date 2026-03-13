@@ -18,4 +18,5 @@ export type PaginatedBooks = {
   books: Book[];
   currentPage: number;
   totalPages: number;
+  childPaths: Record<string, string>;
 };

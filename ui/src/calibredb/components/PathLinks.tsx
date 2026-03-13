@@ -1,13 +1,16 @@
 import { Button } from '@/shared/components/button';
 import { useKeyPress } from '@/shared/hooks';
 
-import { useAllPaths } from '../hooks/useAllPaths';
 import { useCalibreDb } from '../hooks/useCalibreDb';
+import { useBooks } from '../hooks/useCalibreDbQueries';
+import { getUniquePaths } from '../utils/getUniquePaths';
 
 import * as styles from './CalibreDb.module.css';
 
 export const PathLinks = () => {
-  const paths = useAllPaths();
+  const { childPaths: paths } = useBooks();
+
+  const uniquePaths = getUniquePaths(paths);
 
   const {
     state: {
@@ -20,7 +23,7 @@ export const PathLinks = () => {
   const childPaths =
     mode === 'search'
       ? []
-      : paths.filter((path) => {
+      : uniquePaths.filter((path) => {
           if (bookPath && !path.startsWith(`${bookPath}/`)) {
             return false;
           }

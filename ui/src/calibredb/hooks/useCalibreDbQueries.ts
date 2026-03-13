@@ -28,6 +28,7 @@ export const useBooks = () => {
       books: emptyBooks,
       currentPage: 1,
       totalPages: 1,
+      childPaths: {},
     }
   );
 };
