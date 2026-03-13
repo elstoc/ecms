@@ -65,7 +65,7 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
     return {
       ...state,
       pages: 1,
-      mode: 'search',
+      mode: 'browse',
       uiFilters: { ...initialFilters },
       apiFilters: { ...initialFilters },
     };
