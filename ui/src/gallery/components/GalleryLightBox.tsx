@@ -32,21 +32,20 @@ export const GalleryLightBox = () => {
   const prevImage = images[imageIndex - 1];
 
   return (
-    currImage && (
-      <LightBox
-        onClose={() => setSearchParams({}, { replace: true })}
-        onPrev={
-          prevImage && (() => setSearchParams({ image: prevImage.fileName }, { replace: true }))
-        }
-        onNext={
-          nextImage && (() => setSearchParams({ image: nextImage.fileName }, { replace: true }))
-        }
-        caption={currImage.description}
-        alt={currImage.fileName}
-        imageUrl={currImage.fhdSrcUrl}
-        prevImageUrl={prevImage?.fhdSrcUrl}
-        nextImageUrl={nextImage?.fhdSrcUrl}
-      />
-    )
+    <LightBox
+      open={Boolean(currImage)}
+      onClose={() => setSearchParams({}, { replace: true })}
+      onPrev={
+        prevImage && (() => setSearchParams({ image: prevImage.fileName }, { replace: true }))
+      }
+      onNext={
+        nextImage && (() => setSearchParams({ image: nextImage.fileName }, { replace: true }))
+      }
+      caption={currImage?.description}
+      alt={currImage?.fileName}
+      imageUrl={currImage?.fhdSrcUrl}
+      prevImageUrl={prevImage?.fhdSrcUrl}
+      nextImageUrl={nextImage?.fhdSrcUrl}
+    />
   );
 };

@@ -7,6 +7,7 @@ import { IconButton } from '../icon-button';
 import './LightBox.scss';
 
 type LightBoxProps = {
+  open: boolean;
   onClose: () => void;
   onPrev?: () => void;
   onNext?: () => void;
@@ -18,6 +19,7 @@ type LightBoxProps = {
 };
 
 export const LightBox = ({
+  open,
   onClose,
   onPrev,
   onNext,
@@ -51,6 +53,10 @@ export const LightBox = ({
   useKeyPress(['ArrowLeft'], () => onPrev?.());
   useKeyPress(['ArrowRight'], () => onNext?.());
   useKeyPress(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End'], null);
+
+  if (!open) {
+    return <></>;
+  }
 
   return (
     <div className='lightbox' onClick={handleOuterClick} onMouseMove={restartFadeOut}>
