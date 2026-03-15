@@ -2,7 +2,9 @@
   display: block;
   position: relative;
   height: 100%;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+  box-shadow:
+    0 0 6px rgba(0, 0, 0, 0.55),
+    0 0 10px rgba(0, 0, 0, 0.4);
   border-radius: 0.125rem;
   outline: 1px solid var(--grey-55);
 }
