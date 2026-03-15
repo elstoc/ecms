@@ -1,9 +1,7 @@
-:root {
-  background-color: var(--app-bg-color);
-}
-
 #app {
-  height: 100vh;
+  background-color: var(--app-bg-color);
+  height: 100dvh;
+  width: 100vw;
 
   scrollbar-gutter: stable;
   overflow-y: auto;
