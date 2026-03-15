@@ -4,7 +4,7 @@ import { useKeyPress } from '@/shared/hooks';
 
 import { IconButton } from '../icon-button';
 
-import './LightBox.scss';
+import './LightBox.css';
 
 type LightBoxProps = {
   open: boolean;
