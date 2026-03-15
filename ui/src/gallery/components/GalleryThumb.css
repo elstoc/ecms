@@ -5,7 +5,6 @@
   box-shadow:
     0 0 6px rgba(0, 0, 0, 0.6),
     0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 2px;
   outline: 2px solid var(--grey-35);
   outline-offset: -1px;
 }
@@ -14,7 +13,6 @@
   width: auto;
   height: 100%;
   object-fit: fill;
-  border-radius: 2px;
 }
 
 .gallery-thumb .overlay {
@@ -28,7 +26,6 @@
   font-size: 0.9rem;
   text-align: center;
   padding: 2px;
-  border-radius: 0 0 2px 2px;
 }
 
 .gallery-thumb:hover .overlay {
