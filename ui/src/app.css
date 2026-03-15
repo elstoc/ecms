@@ -1,6 +1,10 @@
 :root {
+  background-color: var(--app-bg-color);
+}
+
+#app {
+  height: 100vh;
+
   scrollbar-gutter: stable;
   overflow-y: auto;
-
-  background-color: var(--app-bg-color);
 }
