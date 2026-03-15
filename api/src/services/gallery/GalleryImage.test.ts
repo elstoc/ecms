@@ -84,7 +84,7 @@ describe('GalleryImage', () => {
         expect(resizeImageMock).toHaveBeenCalledWith(sourceContentBuf, imageParams);
         expect(mockStorage.storeGeneratedFile).toHaveBeenCalledWith(
           imagePath,
-          `${size}_v1`,
+          `${size}_v${imageParams.version}`,
           targetContentBuf,
         );
         expect(actualFileBuf).toBe(targetContentBuf);
@@ -93,9 +93,12 @@ describe('GalleryImage', () => {
       },
     );
 
-    it.each(['thumb', 'fhd'])(
+    it.each([
+      ['thumb', RESIZE_OPTIONS['thumb']],
+      ['fhd', RESIZE_OPTIONS['fhd']],
+    ])(
       'attempts to retrieve and send the resulting file where the source exists and is older - %s',
-      async (size: string) => {
+      async (size: string, imageParams) => {
         const generatedContentBuf = Buffer.from('generated-content');
         mockStorage.contentFileExists.mockReturnValue(true);
         mockStorage.generatedFileIsOlder.mockReturnValue(false);
@@ -103,7 +106,10 @@ describe('GalleryImage', () => {
 
         const actualFileBuf = await galleryImage.getFile(size as ImageSize, '1234');
 
-        expect(mockStorage.getGeneratedFile).toHaveBeenCalledWith(imagePath, `${size}_v1`);
+        expect(mockStorage.getGeneratedFile).toHaveBeenCalledWith(
+          imagePath,
+          `${size}_v${imageParams.version}`,
+        );
         expect(actualFileBuf).toBe(generatedContentBuf);
 
         expect(resizeImageMock).not.toHaveBeenCalled();
@@ -137,7 +143,7 @@ describe('GalleryImage', () => {
       exif: { title: 'my image', ISO: '1000' },
       thumbDimensions: { width: 100, height: 200 },
       thumbSrcUrl:
-        'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=thumb&version=1',
+        'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=thumb&version=2',
       fhdSrcUrl: 'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=fhd&version=1',
     };
 
@@ -203,7 +209,7 @@ describe('GalleryImage', () => {
       const expectedMetadata2 = {
         ...expectedMetadata,
         thumbSrcUrl:
-          'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=thumb&version=1',
+          'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=thumb&version=2',
         fhdSrcUrl:
           'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=fhd&version=1',
       };

@@ -12,13 +12,12 @@ import { resizeImage } from './utils/resizeImage';
 
 export const RESIZE_OPTIONS = {
   thumb: {
-    version: 1,
+    version: 2,
     desc: ImageSize.thumb,
     width: 100000,
     height: 300,
     quality: 60,
     stripExif: true,
-    addBorder: true,
   },
   fhd: {
     version: 1,
@@ -27,7 +26,6 @@ export const RESIZE_OPTIONS = {
     height: 1440,
     quality: 85,
     stripExif: true,
-    addBorder: false,
   },
   forExif: {
     version: 1,
@@ -36,7 +34,6 @@ export const RESIZE_OPTIONS = {
     height: 1,
     quality: 1,
     stripExif: false,
-    addBorder: false,
   },
 };
 

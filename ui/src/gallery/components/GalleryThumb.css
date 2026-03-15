@@ -2,24 +2,30 @@
   display: block;
   position: relative;
   height: 100%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+  border-radius: 0.125rem;
+  outline: 1px solid var(--grey-55);
 }
 
 .gallery-thumb img {
   width: auto;
   height: 100%;
   object-fit: fill;
+  border-radius: 0.125rem;
 }
 
 .gallery-thumb .overlay {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(50, 50, 50, 0.6);
   transition: 0.5s ease;
   opacity: 0;
-  color: rgb(200, 200, 200);
+  color: var(--grey-85);
   font-size: 0.9rem;
   text-align: center;
+  padding: 0.125rem;
+  border-radius: 0 0 0.125rem 0.125rem;
 }
 
 .gallery-thumb:hover .overlay {

@@ -54,5 +54,5 @@ export const JustifiedGallery = () => {
     [images, activeImageRef, penultimateImageRef, searchParams],
   );
 
-  return <Tesselate tiles={imageTiles} marginPx={3} />;
+  return <Tesselate tiles={imageTiles} marginPx={5} />;
 };
