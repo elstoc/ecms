@@ -10,7 +10,7 @@ header,
 footer {
   flex-grow: 0;
   flex-shrink: 0;
-  width: 98%;
+  width: min(98%, 2000px);
   min-height: 2rem;
   font-size: 1rem;
   z-index: var(--header-footer-z-index);
@@ -19,7 +19,7 @@ footer {
 
 main {
   display: flex;
-  width: 98%;
+  width: min(98%, 2000px);
   margin: 0;
   flex-grow: 1;
   flex-shrink: 1;
