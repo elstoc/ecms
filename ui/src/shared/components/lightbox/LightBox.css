@@ -4,7 +4,7 @@
   }
 }
 
-.lightbox {
+.lightbox-backdrop {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,15 +17,19 @@
   background-color: rgba(60, 60, 60, 0.95);
   overflow-x: hidden; /* Disable horizontal scroll */
 
+  .lightbox-image-container {
+    position: relative;
+  }
+
   img {
-    max-height: 97%;
-    max-width: 99%;
+    max-height: 97vh;
+    max-width: 98vw;
     object-fit: scale-down;
   }
 
   .fadeout {
     animation-name: lightbox-fadeout;
-    animation-duration: 2s;
+    animation-duration: 1s;
     animation-delay: 2s;
     animation-fill-mode: forwards;
   }
@@ -36,20 +40,30 @@
     align-items: center;
     cursor: pointer;
     position: absolute;
-    top: 20%;
-    height: 60%;
-    width: 8%;
+    top: 0;
+    height: 100%;
+    width: 45%;
     text-decoration: none;
     user-select: none;
     z-index: var(--dialog-popup-z-index); /* Sit on top */
   }
 
+  button.prev,
+  button.next,
+  button.close {
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
   .prev .icon,
   .next .icon,
   .close .icon {
-    stroke: white;
+    stroke: var(--grey-80);
     width: 40px;
     height: 40px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
   }
 
   .next {
@@ -65,18 +79,18 @@
   .close {
     color: white;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 0 10px;
+    top: 0;
+    right: 0;
+    padding: 10px 10px 20px 20px;
     text-decoration: none;
-    z-index: var(--dialog-popup-z-index); /* Sit on top */
+    z-index: calc(var(--dialog-popup-z-index) + 1); /* Sit on top */
   }
 
   .prev:hover,
   .next:hover,
   .close:hover {
     .icon {
-      stroke: grey;
+      stroke: white;
     }
     cursor: pointer;
   }
@@ -85,13 +99,12 @@
     position: absolute;
     text-align: center;
     font-size: 1rem;
-    padding-bottom: 20px;
-    padding-top: 5px;
+    padding-block: 5px;
     bottom: 0%;
     width: 100%;
     height: auto;
-    color: white;
-    background-color: rgba(55, 55, 55, 0.5);
+    color: var(--grey-85);
+    background: rgba(50, 50, 50, 0.6);
   }
 
   .preload {
