@@ -1,4 +1,6 @@
-import { useCustomQuery, useMutationWithToast } from '@/shared/hooks';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { useCustomQuery } from '@/shared/hooks';
 import { useSiteConfig } from '@/site';
 
 import { getUserInfo, login, logout } from '../api';
@@ -13,19 +15,22 @@ export const useUserIsAdmin = () => {
   return !authEnabled || !user || (user.roles ?? []).includes('admin');
 };
 
-export const useLogin = (successMessage: string) => {
-  return useMutationWithToast<{ userId: string; password: string }>({
-    mutationFn: ({ userId, password }) => login(userId, password),
-    invalidateKeys: 'all',
-    successMessage,
-    suppressErrorToast: true,
+type UserWithPassword = { userId: string; password: string };
+
+export const useLogin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ userId, password }: UserWithPassword) => login(userId, password),
+    onSuccess: () => queryClient.invalidateQueries({ refetchType: 'all' }),
   });
 };
 
-export const useLogout = (successMessage: string) => {
-  return useMutationWithToast<void>({
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
     mutationFn: () => logout(),
-    invalidateKeys: 'all',
-    successMessage,
+    onSuccess: () => queryClient.invalidateQueries({ refetchType: 'all' }),
   });
 };

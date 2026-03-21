@@ -11,7 +11,7 @@ export const Login = () => {
   const [loginFailed, setLoginFailed] = useState(false);
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const { mutate: login } = useLogin('logged in');
+  const { mutate: login } = useLogin();
 
   const userInfo = { userId, password };
   const handleLoginError = () => {
