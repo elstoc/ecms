@@ -32,6 +32,14 @@ export const VideoFilters = () => {
 
   return (
     <div className='video-filters'>
+      <SelectLookup
+        label='Category'
+        lookupTable='categories'
+        valueForNullCode='All'
+        disabled={showOnlyExpandedIds}
+        value={uiFilters.categories ?? null}
+        onChange={(value) => updateUiFilter({ key: 'categories', value: value ?? undefined })}
+      />
       <Input
         label='Title Search'
         disabled={showOnlyExpandedIds}
@@ -40,14 +48,6 @@ export const VideoFilters = () => {
           updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
         }
         width='full'
-      />
-      <SelectLookup
-        label='Category'
-        lookupTable='categories'
-        valueForNullCode='All'
-        disabled={showOnlyExpandedIds}
-        value={uiFilters.categories ?? null}
-        onChange={(value) => updateUiFilter({ key: 'categories', value: value ?? undefined })}
       />
       <ToggleGroup
         label='Min Resolution'

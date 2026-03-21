@@ -59,19 +59,20 @@ export const BookFilters = () => {
 
   return (
     <form role='search' aria-labelledby='book-search-title' className={styles.Filters}>
-      <Input
-        label='Title Search'
-        value={uiFilters.titleContains ?? ''}
-        onChange={(value) =>
-          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
-        }
-        width='full'
-      />
       <ToggleGroup
         label='Mode'
         items={modeOptionItems}
         value={[mode]}
         onChange={() => dispatch({ type: 'toggleMode' })}
+      />
+      <Input
+        label='Title Search'
+        value={uiFilters.titleContains ?? ''}
+        disabled={mode == 'browse'}
+        onChange={(value) =>
+          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
+        }
+        width='full'
       />
       <TagSelect
         label='Devices'
@@ -92,37 +93,36 @@ export const BookFilters = () => {
         maxListItems={100}
         width='full'
       />
-      {mode === 'search' && (
-        <>
-          <Combobox
-            label='Author'
-            items={allAuthorItems}
-            value={uiFilters.author?.toString() ?? null}
-            onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
-            emptyMessage='No authors found'
-            maxListItems={100}
-            width='full'
-          />
-          <SelectLookup
-            label='Format'
-            lookupTable='formats'
-            valueForNullCode='All'
-            value={uiFilters.format?.toString() ?? null}
-            onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
-          />
-          <ToggleGroup
-            label='Read'
-            items={readStatusOptionItems}
-            value={[readStatusCode ?? 'All']}
-            onChange={(value) =>
-              updateUiFilter({
-                key: 'readStatus',
-                value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
-              })
-            }
-          />
-        </>
-      )}
+      <Combobox
+        label='Author'
+        items={allAuthorItems}
+        value={uiFilters.author?.toString() ?? null}
+        onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
+        emptyMessage='No authors found'
+        maxListItems={100}
+        disabled={mode === 'browse'}
+        width='full'
+      />
+      <SelectLookup
+        label='Format'
+        lookupTable='formats'
+        valueForNullCode='All'
+        value={uiFilters.format?.toString() ?? null}
+        onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
+        disabled={mode === 'browse'}
+      />
+      <ToggleGroup
+        label='Read'
+        items={readStatusOptionItems}
+        value={[readStatusCode ?? 'All']}
+        onChange={(value) =>
+          updateUiFilter({
+            key: 'readStatus',
+            value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
+          })
+        }
+        disabled={mode === 'browse'}
+      />
       <ToggleGroup
         label='Sort'
         items={sortOrderOptionItems}
