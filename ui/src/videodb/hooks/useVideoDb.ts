@@ -4,6 +4,7 @@ import { KeyValueOfType, getRandomSeed } from '@/utils';
 
 type Filters = {
   maxLength?: number;
+  minLength?: number;
   categories?: string;
   tags?: string[];
   titleContains?: string;

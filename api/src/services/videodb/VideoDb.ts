@@ -53,6 +53,7 @@ export type LookupValues = {
 
 export type VideoFilters = {
   maxLength?: number;
+  minLength?: number;
   categories?: string[];
   tags?: string[];
   titleContains?: string;
@@ -109,6 +110,7 @@ export const orderBySql = ` ORDER BY (
 
 export const filterSql = {
   maxLength: '(length_mins <= $maxLength)',
+  minLength: '(length_mins >= $minLength)',
   titleContains: '(LOWER(title) LIKE $titleContains)',
   minHdResolution: "(primary_media_type IN ('BD4K', 'DL2160', 'BD', 'DL1080', 'DL720'))",
   minUhdResolution: "(primary_media_type IN ('BD4K', 'DL2160'))",
@@ -328,6 +330,7 @@ export class VideoDb {
 
     const {
       maxLength,
+      minLength,
       categories,
       tags,
       titleContains,
@@ -344,6 +347,11 @@ export class VideoDb {
       whereClauses.push(filterSql.maxLength);
       params = params ?? {};
       params['maxLength'] = maxLength;
+    }
+    if (minLength !== undefined) {
+      whereClauses.push(filterSql.minLength);
+      params = params ?? {};
+      params['minLength'] = minLength;
     }
     if (titleContains !== undefined) {
       whereClauses.push(filterSql.titleContains);

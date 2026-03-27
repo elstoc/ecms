@@ -960,6 +960,23 @@ describe('VideoDb', () => {
       expect(videos).toEqual([mockVideoWithId]);
     });
 
+    it('runs the correct sql with filter params when minLength filter param is defined', async () => {
+      mockStorage.contentFileExists.mockReturnValue(true);
+      mockGet.mockReturnValue({ ver: 4 });
+      await videoDb.initialise();
+      const expectedSql = baseVideoSql + ' WHERE ' + filterSql.minLength + orderBySql;
+      const expectedParams = { minLength: 3 };
+
+      mockGetAll.mockReturnValue([mockVideoWithId]);
+      const { videos } = videoDb.queryVideos({ minLength: 3 });
+
+      expect(mockGetAll).toHaveBeenCalled();
+      const [sql, params] = mockGetAll.mock.calls[0];
+      expect(stripWhiteSpace(sql)).toBe(stripWhiteSpace(expectedSql));
+      expect(params).toEqual(expectedParams);
+      expect(videos).toEqual([mockVideoWithId]);
+    });
+
     it('runs the correct sql with filter params when titleContains filter param is defined', async () => {
       mockStorage.contentFileExists.mockReturnValue(true);
       mockGet.mockReturnValue({ ver: 4 });
@@ -1178,6 +1195,7 @@ describe('VideoDb', () => {
       const expectedSql =
         baseVideoSql +
         ` WHERE ${filterSql.maxLength}
+          AND ${filterSql.minLength}
           AND ${filterSql.titleContains}
           AND ${filterSql.minUhdResolution}
           AND ${filterSql.flaggedOnly}
@@ -1197,6 +1215,7 @@ describe('VideoDb', () => {
         tag0: 'tag0',
         tag1: 'tag1',
         tag2: 'tag2',
+        minLength: 100,
         maxLength: 120,
         videoId0: 11,
         videoId1: 22,
@@ -1207,6 +1226,7 @@ describe('VideoDb', () => {
       mockGetAll.mockReturnValue([mockVideoWithId]);
       const { videos } = videoDb.queryVideos({
         titleContains: 'title',
+        minLength: 100,
         maxLength: 120,
         categories: ['MOV', 'TV', 'TVDOC'],
         tags: ['tag0', 'tag1', 'tag2'],

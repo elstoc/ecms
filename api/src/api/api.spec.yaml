@@ -353,6 +353,13 @@ paths:
             type: integer
             minimum: 1
         - in: query
+          name: minLength
+          required: false
+          description: The minimum video length to include
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
           name: titleContains
           required: false
           description: Case insensitive like clause for video title (percent is wildcard)

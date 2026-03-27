@@ -42,6 +42,7 @@ export const createVideoDbRouter = (site: Site): Router => {
       } else if (fn === 'getVideos') {
         const query = req.query as Record<string, string>;
         const filters = {
+          minLength: parseInt(query.minLength ?? '0') || undefined,
           maxLength: parseInt(query.maxLength ?? '0') || undefined,
           categories: query.categories?.split('|'),
           tags: query.tags?.split('|'),

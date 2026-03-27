@@ -71,6 +71,7 @@ export const useVideos = () => {
     : {
         ...apiFilters,
         maxLength: apiFilters.maxLength?.toString(),
+        minLength: apiFilters.minLength?.toString(),
         tags: apiFilters.tags?.join('|'),
         flaggedOnly: apiFilters.flaggedOnly ? '1' : undefined,
         hasProgressNotes: apiFilters.hasProgressNotes ? '1' : undefined,

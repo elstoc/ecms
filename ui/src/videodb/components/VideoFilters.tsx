@@ -102,14 +102,28 @@ export const VideoFilters = () => {
         value={uiFilters.primaryMediaType ?? null}
         onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
       />
-      <NumberInput
-        label='Max Length'
-        value={uiFilters.maxLength ?? null}
-        onChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)}
-        maximumFractionDigits={0}
-        disabled={showOnlyExpandedIds}
-        width='sm'
-      />
+      <div className='video-lengths'>
+        <NumberInput
+          label='Min Length'
+          value={uiFilters.minLength ?? null}
+          onChange={(value) =>
+            updateUiFilter({ key: 'minLength', value: value ?? undefined }, 1000)
+          }
+          maximumFractionDigits={0}
+          disabled={showOnlyExpandedIds}
+          width='sm'
+        />
+        <NumberInput
+          label='Max Length'
+          value={uiFilters.maxLength ?? null}
+          onChange={(value) =>
+            updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)
+          }
+          maximumFractionDigits={0}
+          disabled={showOnlyExpandedIds}
+          width='sm'
+        />
+      </div>
       <div className='switches'>
         <Switch
           label='In progress'
