@@ -10,13 +10,14 @@ type CardProps = {
   /** Class name for the wrapping div (in addition to `ecms-card`) */
   className?: string;
   ref?: Ref<HTMLDivElement>;
+  onClick?: () => void;
 };
 
-export const Card = ({ children, highlight, className, ref }: CardProps) => {
+export const Card = ({ children, highlight, className, onClick, ref }: CardProps) => {
   const classes = cn('ecms-card', className, { highlight: highlight });
 
   return (
-    <div ref={ref} className={classes}>
+    <div ref={ref} className={classes} onClick={onClick}>
       {children}
     </div>
   );
