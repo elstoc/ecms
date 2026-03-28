@@ -144,7 +144,7 @@ describe('GalleryImage', () => {
       thumbDimensions: { width: 100, height: 200 },
       thumbSrcUrl:
         'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=thumb&version=2',
-      fhdSrcUrl: 'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=fhd&version=1',
+      fhdSrcUrl: 'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=fhd&version=2',
     };
 
     beforeEach(() => {
@@ -211,7 +211,7 @@ describe('GalleryImage', () => {
         thumbSrcUrl:
           'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=thumb&version=2',
         fhdSrcUrl:
-          'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=fhd&version=1',
+          'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=fhd&version=2',
       };
 
       mockStorage.contentFileExists.mockReturnValue(true);

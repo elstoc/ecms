@@ -18,14 +18,16 @@ export const RESIZE_OPTIONS = {
     height: 300,
     quality: 60,
     stripExif: true,
+    sharpen: true,
   },
   fhd: {
-    version: 1,
+    version: 2,
     desc: ImageSize.fhd,
     width: 2560,
     height: 1440,
     quality: 85,
     stripExif: true,
+    sharpen: true,
   },
   forExif: {
     version: 1,
@@ -34,6 +36,7 @@ export const RESIZE_OPTIONS = {
     height: 1,
     quality: 1,
     stripExif: false,
+    sharpen: false,
   },
 };
 
