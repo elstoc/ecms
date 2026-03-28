@@ -50,7 +50,7 @@ export const BookCard = ({
         </div>
       </div>
       <DisclosurePanel>
-        <div className='info-panel'>
+        <div className='info-panel bottom'>
           <div className='devices-and-rating'>
             {devices && (
               <TagList label='devices'>

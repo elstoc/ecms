@@ -29,38 +29,36 @@
     }
   }
 
-  .ec-disclosure-panel {
-    .info-panel {
-      padding-top: 10px;
-      flex-direction: column;
+  .info-panel.bottom {
+    padding-top: 10px;
+    flex-direction: column;
+    gap: 10px;
+
+    .book-path {
+      font-style: italic;
+    }
+
+    .devices-and-rating {
+      display: flex;
+      flex-direction: row;
       gap: 10px;
+    }
 
-      .book-path {
-        font-style: italic;
+    .cover-and-desc {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+
+      .description :first-child {
+        margin-top: 0;
+        padding-top: 0;
       }
 
-      .devices-and-rating {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-      }
-
-      .cover-and-desc {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-
-        .description :first-child {
-          margin-top: 0;
-          padding-top: 0;
-        }
-
-        .cover {
-          width: 150px;
-          height: 200px;
-          object-fit: contain;
-          object-position: top;
-        }
+      .cover {
+        width: 150px;
+        height: 200px;
+        object-fit: contain;
+        object-position: top;
       }
     }
   }

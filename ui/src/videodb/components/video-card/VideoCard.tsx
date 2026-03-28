@@ -82,7 +82,7 @@ export const VideoCard = ({
         </div>
       </div>
       <DisclosurePanel keepMounted>
-        <div className='info-panel'>
+        <div className='info-panel bottom'>
           <div className='left'>
             <div className='tags'>
               <TagList label='tags'>

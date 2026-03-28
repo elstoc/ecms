@@ -22,15 +22,13 @@
     margin-block: 0.25rem;
   }
 
-  .ec-disclosure-panel {
-    .info-panel {
-      padding-top: 5px;
+  .info-panel.bottom {
+    padding-top: 5px;
 
-      .left {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      }
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
     }
   }
 }
