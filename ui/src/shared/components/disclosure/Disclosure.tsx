@@ -1,9 +1,9 @@
 import { Collapsible, CollapsibleRootProps } from '@base-ui/react/collapsible';
 
-import './Disclosure.css';
+import * as styles from './Disclosure.module.css';
 
 type DisclosureProps = Pick<CollapsibleRootProps, 'children' | 'open' | 'onOpenChange'>;
 
 export const Disclosure = (props: DisclosureProps) => {
-  return <Collapsible.Root {...props} className='ec-disclosure' />;
+  return <Collapsible.Root {...props} className={styles.Root} />;
 };

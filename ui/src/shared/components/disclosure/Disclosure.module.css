@@ -1,9 +1,5 @@
-.ec-disclosure {
-  .ecms-disclosure-heading {
-    margin-block: 0;
-  }
-
-  .ec-disclosure-trigger {
+.Root {
+  .Trigger {
     font-weight: 400;
     font-size: 1.3rem;
     gap: 8px;
@@ -22,7 +18,7 @@
     }
   }
 
-  .ec-disclosure-panel {
+  .Panel {
     transition: var(--transition-timing);
     transition-property: all;
     height: var(--collapsible-panel-height);
@@ -39,7 +35,7 @@
   }
 
   &[data-open] {
-    .ec-disclosure-trigger svg {
+    .Trigger svg {
       rotate: 90deg;
     }
   }
