@@ -1,0 +1,16 @@
+.Root {
+  background-color: canvas;
+  &:hover {
+    background-color: var(--grey-975);
+  }
+}
+.Root > div {
+  width: 100%;
+  margin: 0;
+  padding: 5px;
+
+  transition: var(--transition-timing);
+  transition-property: box-shadow;
+
+  user-select: none;
+}
