@@ -28,17 +28,23 @@ const Root = ({ expanded, onExpandedChange, ref, children }: ExpandableCardRootP
 
 export type ExpandableCardTopProps = {
   children: ReactNode;
+  className?: string;
 };
 
-const Top = ({ children }: ExpandableCardTopProps) => <div>{children}</div>;
+const Top = ({ children, className }: ExpandableCardTopProps) => (
+  <div className={className}>{children}</div>
+);
 
 export type ExpandableCardBottomProps = {
   children: ReactNode;
   keepMounted?: boolean;
+  className?: string;
 };
 
-const Bottom = ({ children, keepMounted }: ExpandableCardBottomProps) => (
-  <DisclosurePanel keepMounted={keepMounted}>{children}</DisclosurePanel>
+const Bottom = ({ children, keepMounted, className }: ExpandableCardBottomProps) => (
+  <DisclosurePanel keepMounted={keepMounted} className={className}>
+    {children}
+  </DisclosurePanel>
 );
 
 export const ExpandableCard = {
