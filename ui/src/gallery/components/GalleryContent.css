@@ -1,5 +1,7 @@
 .gallery-content {
   width: 100%;
   min-height: 100%;
-  padding: 0.4rem 0.2rem;
+  padding: 4px;
+  margin-block: 10px;
+  background-color: var(--grey-80);
 }

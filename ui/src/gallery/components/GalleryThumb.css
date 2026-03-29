@@ -2,9 +2,6 @@
   display: block;
   position: relative;
   height: 100%;
-  box-shadow:
-    0 0 6px rgba(0, 0, 0, 0.3),
-    0 0 8px rgba(0, 0, 0, 0.3);
   outline: 2px solid var(--grey-35);
   outline-offset: -1px;
 }
@@ -22,7 +19,7 @@
   background: rgba(50, 50, 50, 0.6);
   transition: 0.5s ease;
   opacity: 0;
-  color: var(--grey-85);
+  color: var(--grey-925);
   font-size: 0.9rem;
   text-align: center;
   padding: 2px;
