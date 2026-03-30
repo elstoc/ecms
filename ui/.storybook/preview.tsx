@@ -7,12 +7,7 @@ import '../src/theme.css';
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <BrowserRouter
-        future={{
-          v7_relativeSplatPath: true,
-          v7_startTransition: true,
-        }}
-      >
+      <BrowserRouter unstable_useTransitions={true}>
         <div
           style={{
             width: 'min(800px, 80vw)',
