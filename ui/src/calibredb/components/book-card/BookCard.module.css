@@ -1,0 +1,62 @@
+.Panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.TopLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.Title {
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+.TopRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Format {
+  font-style: italic;
+}
+
+.Bottom {
+  padding-top: 10px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.BookPath {
+  font-style: italic;
+}
+
+.DeviceAndRating {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.CoverAndDesc {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.Description :first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.Cover {
+  width: 150px;
+  height: 200px;
+  object-fit: contain;
+  object-position: top;
+}
