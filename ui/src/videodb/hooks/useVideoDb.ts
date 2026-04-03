@@ -125,8 +125,8 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
     apiPath,
     pages: 1,
     sortOrder: 'asc',
-    uiFilters: {},
-    apiFilters: {},
+    uiFilters: { minResolution: 'HD' },
+    apiFilters: { minResolution: 'HD' },
     expandedVideoIds: [],
     showOnlyExpandedIds: false,
   };
