@@ -65,15 +65,6 @@ export const BookFilters = () => {
         value={[mode]}
         onChange={() => dispatch({ type: 'toggleMode' })}
       />
-      <Input
-        label='Title Search'
-        value={uiFilters.titleContains ?? ''}
-        disabled={mode == 'browse'}
-        onChange={(value) =>
-          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
-        }
-        width='full'
-      />
       <TagSelect
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
@@ -125,6 +116,15 @@ export const BookFilters = () => {
           disabled={mode === 'browse'}
         />
       </div>
+      <Input
+        label='Title Search'
+        value={uiFilters.titleContains ?? ''}
+        disabled={mode == 'browse'}
+        onChange={(value) =>
+          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
+        }
+        width='full'
+      />
       <ToggleGroup
         label='Sort'
         items={sortOrderOptionItems}
