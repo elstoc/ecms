@@ -32,7 +32,7 @@ export const VideoFilters = () => {
 
   return (
     <div className='video-filters'>
-      <div className='row'>
+      <div className='row between'>
         <SelectLookup
           label='Category'
           lookupTable='categories'
@@ -63,29 +63,6 @@ export const VideoFilters = () => {
         }
         width='full'
       />
-      <div className='row'>
-        <ToggleGroup
-          label='Watched'
-          disabled={showOnlyExpandedIds}
-          items={watchedStatusItems}
-          value={[uiFilters.watched ?? 'All']}
-          onChange={(value) =>
-            updateUiFilter({ key: 'watched', value: value[0] === 'All' ? undefined : value[0] })
-          }
-        />
-        <ToggleGroup
-          label='Media Watched'
-          disabled={showOnlyExpandedIds}
-          items={watchedStatusItems}
-          value={[uiFilters.mediaWatched ?? 'All']}
-          onChange={(value) =>
-            updateUiFilter({
-              key: 'mediaWatched',
-              value: value[0] === 'All' ? undefined : value[0],
-            })
-          }
-        />
-      </div>
       <VideoTagInput
         label='Tags'
         selectedTags={uiFilters.tags}
@@ -96,6 +73,51 @@ export const VideoFilters = () => {
         }
         width='full'
       />
+      <div className='row between'>
+        <div className='col'>
+          <NumberInput
+            label='Min Length'
+            value={uiFilters.minLength ?? null}
+            onChange={(value) =>
+              updateUiFilter({ key: 'minLength', value: value ?? undefined }, 1000)
+            }
+            maximumFractionDigits={0}
+            disabled={showOnlyExpandedIds}
+          />
+          <NumberInput
+            label='Max Length'
+            value={uiFilters.maxLength ?? null}
+            onChange={(value) =>
+              updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)
+            }
+            maximumFractionDigits={0}
+            disabled={showOnlyExpandedIds}
+          />
+        </div>
+        <div className='col'>
+          <ToggleGroup
+            label='Watched'
+            disabled={showOnlyExpandedIds}
+            items={watchedStatusItems}
+            value={[uiFilters.watched ?? 'All']}
+            onChange={(value) =>
+              updateUiFilter({ key: 'watched', value: value[0] === 'All' ? undefined : value[0] })
+            }
+          />
+          <ToggleGroup
+            label='Media'
+            disabled={showOnlyExpandedIds}
+            items={watchedStatusItems}
+            value={[uiFilters.mediaWatched ?? 'All']}
+            onChange={(value) =>
+              updateUiFilter({
+                key: 'mediaWatched',
+                value: value[0] === 'All' ? undefined : value[0],
+              })
+            }
+          />
+        </div>
+      </div>
       <SelectLookup
         label='Primary Media'
         lookupTable='media_types'
@@ -103,29 +125,8 @@ export const VideoFilters = () => {
         disabled={showOnlyExpandedIds}
         value={uiFilters.primaryMediaType ?? null}
         onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
+        width='full'
       />
-      <div className='row'>
-        <NumberInput
-          label='Min Length'
-          value={uiFilters.minLength ?? null}
-          onChange={(value) =>
-            updateUiFilter({ key: 'minLength', value: value ?? undefined }, 1000)
-          }
-          maximumFractionDigits={0}
-          disabled={showOnlyExpandedIds}
-          width='sm'
-        />
-        <NumberInput
-          label='Max Length'
-          value={uiFilters.maxLength ?? null}
-          onChange={(value) =>
-            updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)
-          }
-          maximumFractionDigits={0}
-          disabled={showOnlyExpandedIds}
-          width='sm'
-        />
-      </div>
       <div className='switches'>
         <Switch
           label='In progress'
