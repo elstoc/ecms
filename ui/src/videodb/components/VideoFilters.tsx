@@ -32,14 +32,28 @@ export const VideoFilters = () => {
 
   return (
     <div className='video-filters'>
-      <SelectLookup
-        label='Category'
-        lookupTable='categories'
-        valueForNullCode='All'
-        disabled={showOnlyExpandedIds}
-        value={uiFilters.categories ?? null}
-        onChange={(value) => updateUiFilter({ key: 'categories', value: value ?? undefined })}
-      />
+      <div className='category-and-resolution'>
+        <SelectLookup
+          label='Category'
+          lookupTable='categories'
+          valueForNullCode='All'
+          disabled={showOnlyExpandedIds}
+          value={uiFilters.categories ?? null}
+          onChange={(value) => updateUiFilter({ key: 'categories', value: value ?? undefined })}
+        />
+        <ToggleGroup
+          label='Min Resolution'
+          disabled={showOnlyExpandedIds}
+          items={minResolutionItems}
+          value={[uiFilters.minResolution ?? 'SD']}
+          onChange={(value) =>
+            updateUiFilter({
+              key: 'minResolution',
+              value: value[0] === 'SD' ? undefined : value[0],
+            })
+          }
+        />
+      </div>
       <Input
         label='Title Search'
         disabled={showOnlyExpandedIds}
@@ -48,18 +62,6 @@ export const VideoFilters = () => {
           updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
         }
         width='full'
-      />
-      <ToggleGroup
-        label='Min Resolution'
-        disabled={showOnlyExpandedIds}
-        items={minResolutionItems}
-        value={[uiFilters.minResolution ?? 'SD']}
-        onChange={(value) =>
-          updateUiFilter({
-            key: 'minResolution',
-            value: value[0] === 'SD' ? undefined : value[0],
-          })
-        }
       />
       <div className='watched-group'>
         <ToggleGroup
