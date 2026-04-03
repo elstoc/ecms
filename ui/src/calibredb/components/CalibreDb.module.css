@@ -11,8 +11,13 @@
   .ActionButtons {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    margin-top: 1rem;
+    justify-content: flex-start;
+  }
+
+  .Row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 

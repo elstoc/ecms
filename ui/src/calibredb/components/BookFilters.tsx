@@ -103,26 +103,28 @@ export const BookFilters = () => {
         disabled={mode === 'browse'}
         width='full'
       />
-      <SelectLookup
-        label='Format'
-        lookupTable='formats'
-        valueForNullCode='All'
-        value={uiFilters.format?.toString() ?? null}
-        onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
-        disabled={mode === 'browse'}
-      />
-      <ToggleGroup
-        label='Read'
-        items={readStatusOptionItems}
-        value={[readStatusCode ?? 'All']}
-        onChange={(value) =>
-          updateUiFilter({
-            key: 'readStatus',
-            value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
-          })
-        }
-        disabled={mode === 'browse'}
-      />
+      <div className={styles.Row}>
+        <SelectLookup
+          label='Format'
+          lookupTable='formats'
+          valueForNullCode='All'
+          value={uiFilters.format?.toString() ?? null}
+          onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
+          disabled={mode === 'browse'}
+        />
+        <ToggleGroup
+          label='Read'
+          items={readStatusOptionItems}
+          value={[readStatusCode ?? 'All']}
+          onChange={(value) =>
+            updateUiFilter({
+              key: 'readStatus',
+              value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
+            })
+          }
+          disabled={mode === 'browse'}
+        />
+      </div>
       <ToggleGroup
         label='Sort'
         items={sortOrderOptionItems}
