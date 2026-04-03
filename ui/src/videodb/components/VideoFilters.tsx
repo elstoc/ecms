@@ -54,25 +54,6 @@ export const VideoFilters = () => {
           }
         />
       </div>
-      <Input
-        label='Title Search'
-        disabled={showOnlyExpandedIds}
-        value={uiFilters.titleContains ?? ''}
-        onChange={(value) =>
-          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
-        }
-        width='full'
-      />
-      <VideoTagInput
-        label='Tags'
-        selectedTags={uiFilters.tags}
-        allowCreation={false}
-        disabled={showOnlyExpandedIds}
-        onChange={(value) =>
-          updateUiFilter({ key: 'tags', value: value?.length ? value : undefined })
-        }
-        width='full'
-      />
       <div className='row between'>
         <div className='col'>
           <NumberInput
@@ -83,6 +64,7 @@ export const VideoFilters = () => {
             }
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
+            width='sm'
           />
           <NumberInput
             label='Max Length'
@@ -92,6 +74,7 @@ export const VideoFilters = () => {
             }
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
+            width='sm'
           />
         </div>
         <div className='col'>
@@ -118,6 +101,25 @@ export const VideoFilters = () => {
           />
         </div>
       </div>
+      <VideoTagInput
+        label='Tags'
+        selectedTags={uiFilters.tags}
+        allowCreation={false}
+        disabled={showOnlyExpandedIds}
+        onChange={(value) =>
+          updateUiFilter({ key: 'tags', value: value?.length ? value : undefined })
+        }
+        width='full'
+      />
+      <Input
+        label='Title Search'
+        disabled={showOnlyExpandedIds}
+        value={uiFilters.titleContains ?? ''}
+        onChange={(value) =>
+          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
+        }
+        width='full'
+      />
       <SelectLookup
         label='Primary Media'
         lookupTable='media_types'
@@ -125,7 +127,6 @@ export const VideoFilters = () => {
         disabled={showOnlyExpandedIds}
         value={uiFilters.primaryMediaType ?? null}
         onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
-        width='full'
       />
       <div className='switches'>
         <Switch

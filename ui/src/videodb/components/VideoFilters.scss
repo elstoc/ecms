@@ -33,7 +33,8 @@
     justify-content: space-between;
   }
 
-  .between {
+  .row.between {
     justify-content: space-between;
+    gap: 0;
   }
 }
