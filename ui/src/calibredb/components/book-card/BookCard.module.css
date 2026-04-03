@@ -28,7 +28,6 @@
 }
 
 .Bottom {
-  padding-top: 10px;
   flex-direction: column;
   gap: 10px;
 }
@@ -38,6 +37,7 @@
 }
 
 .DeviceAndRating {
+  padding-top: 10px;
   display: flex;
   flex-direction: row;
   gap: 10px;
