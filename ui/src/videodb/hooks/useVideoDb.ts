@@ -63,8 +63,8 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
   if (action.type === 'resetFilters') {
     return {
       ...state,
-      uiFilters: {},
-      apiFilters: {},
+      uiFilters: { minResolution: 'HD' },
+      apiFilters: { minResolution: 'HD' },
       pages: 1,
       showOnlyExpandedIds: false,
     };
