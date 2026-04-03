@@ -1,24 +1,25 @@
 .Root {
   height: 2.125rem;
   font-size: 1rem;
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
   min-width: 2rem;
+  border: var(--input-border); /* 0.0625rem */
   border-radius: var(--input-border-radius);
 
   &:not([data-pressed]) {
-    background: none;
-    border: none;
-    box-shadow: none;
+    border-color: var(--grey-90);
+    background-color: var(--grey-90);
+    color: var(--grey-20);
 
     &:hover {
-      border: none;
-      background-color: var(--toggle-button-hovered-bg-color);
+      border-color: var(--grey-85);
+      background-color: var(--grey-85);
     }
   }
 
   &[data-pressed] {
+    color: var(--grey-00);
     border-color: var(--grey-50);
-    border: var(--input-border); /* 0.0625rem */
     background-color: canvas;
   }
 
