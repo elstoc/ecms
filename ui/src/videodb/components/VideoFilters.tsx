@@ -32,7 +32,7 @@ export const VideoFilters = () => {
 
   return (
     <div className='video-filters'>
-      <div className='category-and-resolution'>
+      <div className='row'>
         <SelectLookup
           label='Category'
           lookupTable='categories'
@@ -63,7 +63,7 @@ export const VideoFilters = () => {
         }
         width='full'
       />
-      <div className='watched-group'>
+      <div className='row'>
         <ToggleGroup
           label='Watched'
           disabled={showOnlyExpandedIds}
@@ -104,7 +104,7 @@ export const VideoFilters = () => {
         value={uiFilters.primaryMediaType ?? null}
         onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
       />
-      <div className='video-lengths'>
+      <div className='row'>
         <NumberInput
           label='Min Length'
           value={uiFilters.minLength ?? null}

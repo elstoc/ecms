@@ -8,19 +8,16 @@
     margin-bottom: 1rem;
   }
 
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
   .switches {
     display: flex;
     justify-content: flex-end;
     margin: 1rem 0;
-  }
-
-  .category-and-resolution,
-  .watched-group,
-  .resolution-and-length,
-  .video-lengths {
-    display: flex;
-    flex-direction: row;
-    gap: 1.5rem;
   }
 
   .filter-action-buttons {
