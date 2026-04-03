@@ -18,5 +18,16 @@ export const Button = ({ clearFormatting, className, ...props }: ButtonProps) =>
     [styles.ClearFormatting]: clearFormatting,
   });
 
-  return <BaseButton {...props} className={classes} />;
+  return (
+    <BaseButton
+      {...props}
+      className={classes}
+      onClick={(e) => {
+        if (props.onClick) {
+          props.onClick(e);
+          e.stopPropagation();
+        }
+      }}
+    />
+  );
 };
