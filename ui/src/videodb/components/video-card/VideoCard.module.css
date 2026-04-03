@@ -1,0 +1,27 @@
+.Panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Title {
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+.Right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.Tags {
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
