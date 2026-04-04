@@ -32,7 +32,7 @@ export const VideoFilters = () => {
 
   return (
     <div className='video-filters'>
-      <div className='row between'>
+      <div className='row'>
         <SelectLookup
           label='Category'
           lookupTable='categories'
@@ -54,7 +54,7 @@ export const VideoFilters = () => {
           }
         />
       </div>
-      <div className='row between'>
+      <div className='row'>
         <div className='col'>
           <NumberInput
             label='Min Length'
@@ -64,7 +64,6 @@ export const VideoFilters = () => {
             }
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
-            width='sm'
           />
           <NumberInput
             label='Max Length'
@@ -74,7 +73,6 @@ export const VideoFilters = () => {
             }
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
-            width='sm'
           />
         </div>
         <div className='col'>
