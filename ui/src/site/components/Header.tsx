@@ -9,11 +9,11 @@ import { SiteNav } from './SiteNav';
 import './Header.scss';
 
 type HeaderProps = {
-  componentTools?: ReactNode;
-  sideExpander?: ReactNode;
+  toolsLeft?: ReactNode;
+  toolsRight?: ReactNode;
 };
 
-export const Header = ({ componentTools, sideExpander }: HeaderProps) => {
+export const Header = ({ toolsLeft, toolsRight }: HeaderProps) => {
   const siteComponents = useSiteComponents() ?? [];
   const { siteTitle } = useSiteConfig() ?? {};
 
@@ -26,11 +26,11 @@ export const Header = ({ componentTools, sideExpander }: HeaderProps) => {
 
       <div className='toolbar'>
         <div className='left'>
-          <div>{sideExpander}</div>
+          <div>{toolsRight}</div>
         </div>
 
         <div className='right'>
-          <div>{componentTools}</div>
+          <div>{toolsLeft}</div>
           <UserTools />
         </div>
       </div>

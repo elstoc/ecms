@@ -7,15 +7,15 @@ import './Layout.css';
 
 type LayoutProps = {
   children: ReactNode;
-  componentTools?: ReactNode;
-  sideExpander?: ReactNode;
+  headerToolsLeft?: ReactNode;
+  headerToolsRight?: ReactNode;
 };
 
-export const Layout = ({ children, componentTools, sideExpander }: LayoutProps) => {
+export const Layout = ({ children, headerToolsLeft, headerToolsRight }: LayoutProps) => {
   return (
     <div className='app-content'>
       <header>
-        <Header componentTools={componentTools} sideExpander={sideExpander} />
+        <Header toolsLeft={headerToolsLeft} toolsRight={headerToolsRight} />
       </header>
       <main>{children}</main>
       <footer>

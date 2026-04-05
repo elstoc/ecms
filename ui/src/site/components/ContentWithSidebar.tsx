@@ -59,7 +59,7 @@ export const ContentWithSidebar = ({
   }
 
   return (
-    <Layout componentTools={componentTools} sideExpander={sideExpander}>
+    <Layout headerToolsLeft={componentTools} headerToolsRight={sideExpander}>
       <div className='cws-container'>
         <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
           <div className='cws-content-and-sidebar'>

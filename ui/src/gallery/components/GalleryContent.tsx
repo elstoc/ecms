@@ -17,7 +17,7 @@ export const GalleryContent = () => {
   useTitle(title);
 
   return (
-    <Layout componentTools={<GalleryToolbox />}>
+    <Layout headerToolsLeft={<GalleryToolbox />}>
       <div className='gallery-content'>
         <GalleryLightBox />
         <JustifiedGallery />
