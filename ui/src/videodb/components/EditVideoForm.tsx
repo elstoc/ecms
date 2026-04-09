@@ -141,6 +141,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         selectedTags={videoState.tags ?? undefined}
         onChange={(value) => updateField({ key: 'tags', value })}
         width='full'
+        allowCreation
       />
       <Input
         label='Progress'

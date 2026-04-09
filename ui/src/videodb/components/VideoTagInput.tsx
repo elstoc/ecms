@@ -25,6 +25,7 @@ export const VideoTagInput = (props: VideoTagInputProps) => {
       emptyMessage='No tags found'
       disabled={props.disabled}
       width={props.width}
+      allowCreation={props.allowCreation}
     />
   );
 };
