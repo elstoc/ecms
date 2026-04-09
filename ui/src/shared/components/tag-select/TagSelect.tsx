@@ -48,7 +48,7 @@ export const TagSelect = ({
   );
 
   if (allowCreation && query && !sortedTagItems.find((item) => item.value === query)) {
-    sortedTagItems.unshift({ value: query, label: ` + ${query}` });
+    sortedTagItems.push({ value: query, label: ` + ${query}` });
   }
 
   return (
