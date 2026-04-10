@@ -7,6 +7,8 @@ import { Toolbox } from '@/shared/components/layout';
 import { ContentWithSideBarProps } from './ContentWithSidebar';
 import { Layout } from './Layout';
 
+import * as styles from './CWSSinglePanel.module.css';
+
 export const CWSSinglePanel = ({
   children,
   sidebar,
@@ -28,24 +30,20 @@ export const CWSSinglePanel = ({
 
   return (
     <Layout headerToolsLeft={componentTools} headerToolsRight={sideExpander}>
-      <div className='cws-container'>
-        <div className={sidebar ? 'cws' : 'cws no-sidebar'}>
-          <div className='cws-content-and-sidebar'>
-            {sidebar && (
-              <Disclosure open={sidebarDrawerVisible}>
-                <DisclosurePanel>
-                  <div
-                    className='cws-sidebar'
-                    onClick={() => closeSidebarOnClick && setSidebarDrawerVisible(false)}
-                  >
-                    {sidebar}
-                  </div>
-                </DisclosurePanel>
-              </Disclosure>
-            )}
-            <div className='cws-content'>{children}</div>
-          </div>
-        </div>
+      <div className={styles.Root}>
+        {sidebar && (
+          <Disclosure open={sidebarDrawerVisible}>
+            <DisclosurePanel>
+              <div
+                className={styles.Sidebar}
+                onClick={() => closeSidebarOnClick && setSidebarDrawerVisible(false)}
+              >
+                {sidebar}
+              </div>
+            </DisclosurePanel>
+          </Disclosure>
+        )}
+        <div className={styles.Content}>{children}</div>
       </div>
     </Layout>
   );
