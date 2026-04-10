@@ -17,6 +17,10 @@ export const BookList = () => {
     }
   });
 
+  if (books.length === 0) {
+    return null;
+  }
+
   return (
     <div className={styles.BookList}>
       {books.map((book, index) => {
