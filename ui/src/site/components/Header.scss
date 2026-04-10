@@ -10,6 +10,7 @@
 
   .toolbar {
     padding-block: 10px;
+    padding-inline: 5px;
     flex-grow: 1;
 
     display: flex;
@@ -45,7 +46,7 @@
     border-bottom: 1px solid var(--border-grey);
 
     .toolbar {
-      padding-block: 0;
+      padding: 0;
     }
 
     .nav-and-title {
