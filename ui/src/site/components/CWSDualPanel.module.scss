@@ -1,0 +1,39 @@
+@use '../../variables.scss' as variables;
+
+.Root {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.CWS {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 1;
+
+  border-inline: 1px solid var(--border-grey);
+  box-shadow:
+    10px 0 50px var(--shadow-grey),
+    -10px 0 50px var(--shadow-grey);
+
+  max-width: min(98%, variables.$maxContentPlusSidebarWidth);
+
+  &.NoSidebar {
+    max-width: min(98%, variables.$maxContentWidth);
+  }
+}
+
+.Sidebar {
+  width: variables.$maxSidebarWidth;
+
+  padding: 10px;
+  padding-block: 25px;
+  padding-left: 25px;
+}
+
+.Content {
+  max-width: variables.$maxContentWidth;
+  flex-grow: 1;
+}
