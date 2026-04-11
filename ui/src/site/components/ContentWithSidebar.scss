@@ -1,18 +1,15 @@
 @use '../../variables.scss' as variables;
 
-#app .cws-container {
+.cws-root {
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: center;
 
   .cws {
-    width: 100%;
-    max-width: variables.$maxContentPlusSidebarWidth;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 30px;
     flex-grow: 1;
 
     border-inline: 1px solid var(--border-grey);
@@ -20,27 +17,23 @@
       10px 0 50px var(--shadow-grey),
       -10px 0 50px var(--shadow-grey);
 
+    max-width: min(98%, variables.$maxContentPlusSidebarWidth);
+
+    &.no-sidebar {
+      max-width: min(98%, variables.$maxContentWidth);
+    }
+
     .cws-content {
-      width: 64%;
       max-width: variables.$maxContentWidth;
       flex-grow: 1;
     }
 
     .cws-sidebar {
-      flex-grow: 1;
+      width: variables.$maxSidebarWidth;
+
       padding: 10px;
       padding-block: 25px;
       padding-left: 25px;
-      width: 28%;
-      max-width: variables.$maxSidebarWidth;
-    }
-
-    &.no-sidebar {
-      max-width: variables.$maxContentWidth;
-    }
-
-    &.no-sidebar .cws-content {
-      width: 100%;
     }
   }
 }
