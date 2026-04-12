@@ -1,0 +1,18 @@
+.Root {
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  gap: 5px;
+
+  &[data-orientation='vertical'] {
+    flex-direction: column;
+  }
+
+  &[data-orientation='horizontal'] {
+    flex-direction: row;
+  }
+
+  background-color: canvas;
+  box-shadow: 0 0 0 1px rgba(17, 20, 24, 0.15);
+  border-radius: 2px;
+}
