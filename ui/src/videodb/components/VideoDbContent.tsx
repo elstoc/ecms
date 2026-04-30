@@ -6,7 +6,7 @@ import { NotFoundPage } from '@/site/components/NotFoundPage';
 import { EditVideo } from './EditVideo';
 import { VideoFilters } from './VideoFilters';
 import { VideoList } from './VideoList';
-import { VideoToolbox } from './VideoToolbox';
+import { VideoTools } from './VideoTools';
 
 export const VideoDbContent = () => {
   const { mode, id } = useParams();
@@ -20,7 +20,7 @@ export const VideoDbContent = () => {
 
   return (
     <>
-      <ContentWithSidebar componentTools={<VideoToolbox />} sidebar={<VideoFilters />}>
+      <ContentWithSidebar componentTools={<VideoTools />} sidebar={<VideoFilters />}>
         <VideoList />
       </ContentWithSidebar>
       <EditVideo />

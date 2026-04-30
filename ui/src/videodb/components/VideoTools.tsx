@@ -8,7 +8,7 @@ import { Separator } from '@/shared/components/toolbar';
 import { useVideoDb } from '../hooks/useVideoDb';
 import { downloadVideoCSV } from '../utils/downloadVideoCSV';
 
-export const VideoToolbox = () => {
+export const VideoTools = () => {
   const userIsAdmin = useUserIsAdmin();
   const navigate = useNavigate();
   const {

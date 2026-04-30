@@ -9,7 +9,7 @@ import { splitFrontMatter } from '@/utils';
 import { useMarkdown } from '../hooks/useMarkdown';
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
 
-export const MarkdownToolbox = () => {
+export const MarkdownTools = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 

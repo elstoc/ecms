@@ -4,7 +4,7 @@ import { useMarkdown } from '../hooks/useMarkdown';
 
 import { MarkdownNav } from './MarkdownNav';
 import { MarkdownPageRoutes } from './MarkdownPageRoutes';
-import { MarkdownToolbox } from './MarkdownToolbox';
+import { MarkdownTools } from './MarkdownTools';
 
 import './MarkdownContent.css';
 
@@ -17,7 +17,7 @@ export const MarkdownContent = () => {
 
   return (
     <ContentWithSidebar
-      componentTools={<MarkdownToolbox />}
+      componentTools={<MarkdownTools />}
       sidebar={sidebar}
       closeSidebarOnClick={true}
     >
