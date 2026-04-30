@@ -15,3 +15,5 @@ export const Toolbar = ({ children, orientation = 'horizontal' }: ToolbarProps) 
     </BaseToolbar.Root>
   );
 };
+
+export const Separator = () => <BaseToolbar.Separator className={styles.Separator} />;

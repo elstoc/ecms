@@ -3,7 +3,7 @@ import { useArgs } from 'storybook/internal/preview-api';
 
 import { IconButton } from '../icon-button';
 
-import { Toolbar } from './Toolbar';
+import { Separator, Toolbar } from './Toolbar';
 
 const meta = {
   title: 'Toolbar',
@@ -28,6 +28,7 @@ export const Default: Story = {
     return (
       <Toolbar orientation={args.orientation}>
         <IconButton icon='add' label='add' />
+        <Separator />
         <IconButton icon='delete' label='delete' />
       </Toolbar>
     );

@@ -4,12 +4,27 @@
   padding: 1px;
   gap: 5px;
 
+  .Separator {
+    margin: 0.25rem;
+    background-color: var(--grey-80);
+  }
+
   &[data-orientation='vertical'] {
     flex-direction: column;
+
+    .Separator {
+      width: 16px;
+      height: 1px;
+    }
   }
 
   &[data-orientation='horizontal'] {
     flex-direction: row;
+
+    .Separator {
+      width: 1px;
+      height: 16px;
+    }
   }
 
   background-color: canvas;
