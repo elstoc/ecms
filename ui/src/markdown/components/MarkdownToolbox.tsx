@@ -3,13 +3,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 
 import { IconButton } from '@/shared/components/icon-button';
-import { Toolbox } from '@/shared/components/layout';
+import { Separator } from '@/shared/components/toolbar';
 import { splitFrontMatter } from '@/utils';
 
 import { useMarkdown } from '../hooks/useMarkdown';
 import { useDeleteMarkdownPage, useUpdateMarkdownPage } from '../hooks/useMarkdownQueries';
-
-import './MarkdownToolbox.css';
 
 export const MarkdownToolbox = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,7 +61,7 @@ export const MarkdownToolbox = () => {
   };
 
   return (
-    <Toolbox>
+    <>
       <IconButton
         label={mode === 'edit' ? 'cancel page edit' : 'edit page'}
         icon={mode === 'edit' ? 'cancel' : 'edit'}
@@ -73,10 +71,10 @@ export const MarkdownToolbox = () => {
       <IconButton
         icon='save'
         label='save page'
-        className='save-markdown'
         onClick={savePage}
         isDisabled={mode !== 'edit' || !canWrite || content === editedMarkdown}
       />
+      <Separator />
       <IconButton
         icon='add'
         label='add page'
@@ -89,6 +87,6 @@ export const MarkdownToolbox = () => {
         isDisabled={singlePage || !canDelete || mode === 'edit'}
         onClick={deletePage}
       />
-    </Toolbox>
+    </>
   );
 };

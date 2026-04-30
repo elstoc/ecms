@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Disclosure, DisclosurePanel } from '@/shared/components/disclosure';
 import { IconButton } from '@/shared/components/icon-button';
 import { Toolbox } from '@/shared/components/layout';
+import { Toolbar } from '@/shared/components/toolbar';
 
 import { ContentWithSideBarProps } from './ContentWithSidebar';
 import { Layout } from './Layout';
@@ -29,7 +30,10 @@ export const CWSSinglePanel = ({
   ) : null;
 
   return (
-    <Layout headerToolsLeft={componentTools} headerToolsRight={sideExpander}>
+    <Layout
+      headerToolsRight={sideExpander}
+      headerToolsLeft={componentTools ? <Toolbar>{componentTools}</Toolbar> : null}
+    >
       <div className={styles.Root}>
         {sidebar && (
           <Disclosure open={sidebarDrawerVisible}>

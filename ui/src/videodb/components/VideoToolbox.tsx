@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { IconButton } from '@/shared/components/icon-button';
-import { Toolbox } from '@/shared/components/layout';
+import { Separator } from '@/shared/components/toolbar';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 import { downloadVideoCSV } from '../utils/downloadVideoCSV';
-
-import './VideoToolbox.css';
 
 export const VideoToolbox = () => {
   const userIsAdmin = useUserIsAdmin();
@@ -23,16 +21,12 @@ export const VideoToolbox = () => {
   }, [apiPath]);
 
   return (
-    <Toolbox>
+    <>
       {userIsAdmin && (
         <>
           <IconButton label='add video' icon='add' onClick={() => navigate('./add')} />
-          <IconButton
-            label='download videos as CSV'
-            className='download-icon'
-            icon='download'
-            onClick={downloadCSV}
-          />
+          <IconButton label='download videos as CSV' icon='download' onClick={downloadCSV} />
+          <Separator />
         </>
       )}
       <IconButton
@@ -57,6 +51,6 @@ export const VideoToolbox = () => {
           })
         }
       />
-    </Toolbox>
+    </>
   );
 };
