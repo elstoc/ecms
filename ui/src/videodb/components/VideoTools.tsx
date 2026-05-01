@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useUserIsAdmin } from '@/auth/hooks/useAuthQueries';
 import { IconButton } from '@/shared/components/icon-button';
-import { Separator } from '@/shared/components/toolbar';
+import { Toolbar } from '@/shared/components/toolbar';
 
 import { useVideoDb } from '../hooks/useVideoDb';
 import { downloadVideoCSV } from '../utils/downloadVideoCSV';
@@ -26,7 +26,7 @@ export const VideoTools = () => {
         <>
           <IconButton label='add video' icon='add' onClick={() => navigate('./add')} />
           <IconButton label='download videos as CSV' icon='download' onClick={downloadCSV} />
-          <Separator />
+          <Toolbar.Separator />
         </>
       )}
       <IconButton

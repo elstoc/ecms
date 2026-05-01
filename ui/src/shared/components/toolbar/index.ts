@@ -1,1 +1,6 @@
-export { Toolbar, Separator } from './Toolbar';
+import { Toolbar as Root, Separator } from './Toolbar';
+
+export const Toolbar = {
+  Root,
+  Separator,
+};

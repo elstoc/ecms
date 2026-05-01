@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import YAML from 'yaml';
 
 import { IconButton } from '@/shared/components/icon-button';
-import { Separator } from '@/shared/components/toolbar';
+import { Toolbar } from '@/shared/components/toolbar';
 import { splitFrontMatter } from '@/utils';
 
 import { useMarkdown } from '../hooks/useMarkdown';
@@ -74,7 +74,7 @@ export const MarkdownTools = () => {
         onClick={savePage}
         isDisabled={mode !== 'edit' || !canWrite || content === editedMarkdown}
       />
-      <Separator />
+      <Toolbar.Separator />
       <IconButton
         icon='add'
         label='add page'

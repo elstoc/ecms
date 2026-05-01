@@ -3,12 +3,12 @@ import { useArgs } from 'storybook/internal/preview-api';
 
 import { IconButton } from '../icon-button';
 
-import { Separator, Toolbar } from './Toolbar';
+import { Toolbar } from './';
 
 const meta = {
   title: 'Toolbar',
-  component: Toolbar,
-} satisfies Meta<typeof Toolbar>;
+  component: Toolbar.Root,
+} satisfies Meta<typeof Toolbar.Root>;
 
 export default meta;
 
@@ -26,11 +26,11 @@ export const Default: Story = {
     };
 
     return (
-      <Toolbar orientation={args.orientation}>
+      <Toolbar.Root orientation={args.orientation}>
         <IconButton icon='add' label='add' />
-        <Separator />
+        <Toolbar.Separator />
         <IconButton icon='delete' label='delete' />
-      </Toolbar>
+      </Toolbar.Root>
     );
   },
 };

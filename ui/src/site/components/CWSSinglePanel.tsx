@@ -32,7 +32,7 @@ export const CWSSinglePanel = ({
   return (
     <Layout
       headerToolsRight={sideExpander}
-      headerToolsLeft={componentTools ? <Toolbar>{componentTools}</Toolbar> : null}
+      headerToolsLeft={componentTools ? <Toolbar.Root>{componentTools}</Toolbar.Root> : null}
     >
       <div className={styles.Root}>
         {sidebar && (
