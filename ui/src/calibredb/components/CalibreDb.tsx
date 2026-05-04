@@ -4,6 +4,7 @@ import { useTitle } from '@/shared/hooks';
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 
 import { BookFilters } from './BookFilters';
+import { BookTools } from './BookTools';
 import { Books } from './Books';
 
 export const CalibreDb = ({ title, apiPath }: CalibreDbMetadata) => {
@@ -13,7 +14,7 @@ export const CalibreDb = ({ title, apiPath }: CalibreDbMetadata) => {
 
   return (
     <CalibreDbContext.Provider value={reducerProps}>
-      <ContentWithSidebar sidebar={<BookFilters />}>
+      <ContentWithSidebar sidebar={<BookFilters />} componentTools={<BookTools />}>
         <Books />
       </ContentWithSidebar>
     </CalibreDbContext.Provider>

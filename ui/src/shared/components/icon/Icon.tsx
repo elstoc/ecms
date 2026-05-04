@@ -1,6 +1,7 @@
 // See https://react-icons.github.io/react-icons for summary of available icons
 import cn from 'classnames';
 import {
+  FiBookOpen,
   FiCheck,
   FiChevronDown,
   FiChevronLeft,
@@ -45,6 +46,8 @@ const icons = {
   sortDesc: LuArrowDownWideNarrow,
   sortAsc: LuArrowUpNarrowWide,
   sortAscAlpha: LuArrowDownAZ,
+  sortBook: FiBookOpen,
+  sortAuthor: FiUser,
 };
 
 export type IconProps = {

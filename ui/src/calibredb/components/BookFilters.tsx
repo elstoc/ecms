@@ -26,12 +26,6 @@ const readStatusOptionItems = [
   { value: 'N', label: 'N' },
 ];
 
-const sortOrderOptionItems = [
-  { value: 'title', label: 'Title' },
-  { value: 'author', label: 'Author' },
-  { value: 'shuffle', label: 'Shuffle' },
-];
-
 export const BookFilters = () => {
   const allPaths = useAllPaths();
   const allAuthorsLookup = useLookup('authors');
@@ -124,12 +118,6 @@ export const BookFilters = () => {
           updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
         }
         width='full'
-      />
-      <ToggleGroup
-        label='Sort'
-        items={sortOrderOptionItems}
-        value={[uiFilters.sortOrder]}
-        onChange={(value) => updateUiFilter({ key: 'sortOrder', value: value[0] ?? 'title' })}
       />
       <div className={styles.ActionButtons}>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
