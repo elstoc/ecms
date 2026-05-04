@@ -18,19 +18,19 @@
   }
 }
 
-.CWS {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-grow: 1;
-}
-
 .Tools {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   padding-block: 5px;
   background-color: var(--app-bg-color);
+}
+
+.CWS {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .Sidebar {
