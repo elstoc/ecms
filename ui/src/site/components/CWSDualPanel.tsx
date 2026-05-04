@@ -8,14 +8,9 @@ import { Layout } from './Layout';
 import * as styles from './CWSDualPanel.module.scss';
 
 export const CWSDualPanel = ({ children, sidebar, componentTools }: ContentWithSideBarProps) => (
-  <Layout>
+  <Layout headerToolsLeft={componentTools ? <Toolbar.Root>{componentTools}</Toolbar.Root> : null}>
     <div className={styles.Root}>
       <div className={cn(styles.FixedWidthContent, { [styles.NoSidebar]: !sidebar })}>
-        {componentTools && (
-          <div className={styles.Tools}>
-            <Toolbar.Root>{componentTools}</Toolbar.Root>
-          </div>
-        )}
         <div className={styles.CWS}>
           {sidebar && <div className={styles.Sidebar}>{sidebar}</div>}
 
