@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
-import { useArgs } from 'storybook/internal/preview-api';
 
 import { IconButton } from '../icon-button';
 
@@ -19,12 +18,6 @@ export const Default: Story = {
     children: 'anything',
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs();
-
-    const onChange = (newValue: string[]) => {
-      updateArgs({ value: newValue });
-    };
-
     return (
       <Toolbar.Root orientation={args.orientation}>
         <IconButton icon='add' label='add' />

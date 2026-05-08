@@ -13,10 +13,10 @@ export const CalibreDb = ({ title, apiPath }: CalibreDbMetadata) => {
   useTitle(title);
 
   return (
-    <CalibreDbContext.Provider value={reducerProps}>
+    <CalibreDbContext value={reducerProps}>
       <ContentWithSidebar sidebar={<BookFilters />} componentTools={<BookTools />}>
         <Books />
       </ContentWithSidebar>
-    </CalibreDbContext.Provider>
+    </CalibreDbContext>
   );
 };

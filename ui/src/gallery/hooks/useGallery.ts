@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, use, useReducer } from 'react';
 
 import { getRandomSeed } from '@/utils';
 
@@ -45,4 +45,4 @@ export const useGalleryReducer: (initialState: GalleryState) => ContextProps = (
 
 export const GalleryContext = createContext({} as ContextProps);
 
-export const useGallery = () => useContext(GalleryContext);
+export const useGallery = () => use(GalleryContext);

@@ -20,6 +20,7 @@ export const Default: Story = {
     onChange: () => undefined,
   },
   render: (args) => {
+    // eslint-disable-next-line @eslint-react/rules-of-hooks
     const [{ value }, updateArgs] = useArgs();
 
     const onChange = (newValue: number | null) => {

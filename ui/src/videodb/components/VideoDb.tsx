@@ -13,10 +13,10 @@ export const VideoDb = ({ title, apiPath }: VideoDbMetadata) => {
   useTitle(title);
 
   return (
-    <VideoDbContext.Provider value={reducerProps}>
+    <VideoDbContext value={reducerProps}>
       <Routes>
         <Route path=':mode?/:id?' element={<VideoDbContent />} />
       </Routes>
-    </VideoDbContext.Provider>
+    </VideoDbContext>
   );
 };

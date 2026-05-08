@@ -1,30 +1,25 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import eslintReact from '@eslint-react/eslint-plugin';
 import eslintJs from '@eslint/js';
 import configPrettier from 'eslint-config-prettier/flat';
-import pluginReact from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 import storybook from 'eslint-plugin-storybook';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
-export default [
+export default defineConfig([
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   { languageOptions: { globals: globals.browser } },
   eslintJs.configs.recommended,
   tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  pluginReact.configs.flat['jsx-runtime'],
-  reactHooks.configs.flat['recommended'],
+  eslintReact.configs['recommended-typescript'],
   configPrettier,
   {
     rules: {
-      'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx', '.ts'] }],
       semi: [2, 'always'],
       'eol-last': 2,
       '@typescript-eslint/no-non-null-assertion': 'off',
-      'react/display-name': 'off',
-      'react-hooks/set-state-in-effect': 'off',
     },
   },
   {
@@ -38,4 +33,4 @@ export default [
     ignores: ['node_modules/', 'dist/', 'public/', 'webpack.config.js', 'storybook-static/'],
   },
   ...storybook.configs['flat/recommended'],
-];
+]);

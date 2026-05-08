@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useReducer, useRef } from 'react';
+import { createContext, use, useCallback, useReducer, useRef } from 'react';
 
 import { KeyValueOfType, getRandomSeed } from '@/utils';
 
@@ -152,4 +152,4 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
   return { state, dispatch, updateUiFilter };
 };
 
-export const useVideoDb = () => useContext(VideoDbContext);
+export const useVideoDb = () => use(VideoDbContext);

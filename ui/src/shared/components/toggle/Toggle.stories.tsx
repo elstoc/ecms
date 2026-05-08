@@ -18,6 +18,7 @@ export const Default: Story = {
     pressed: false,
   },
   render: (args) => {
+    // eslint-disable-next-line @eslint-react/rules-of-hooks
     const [{ pressed }, updateArgs] = useArgs();
 
     const onPressedChange = (pressed: boolean) => {

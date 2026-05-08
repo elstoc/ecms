@@ -22,11 +22,11 @@ export const Gallery = (props: GalleryMetadata) => {
   });
 
   return (
-    <GalleryContext.Provider value={{ state, dispatch }}>
+    <GalleryContext value={{ state, dispatch }}>
       <Routes>
         <Route path='/' element={<GalleryContent />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
-    </GalleryContext.Provider>
+    </GalleryContext>
   );
 };

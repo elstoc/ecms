@@ -36,6 +36,7 @@ export const Default = {
     onPressEdit: fn(),
   },
   render: (args) => {
+    // eslint-disable-next-line @eslint-react/rules-of-hooks
     const [{ expanded, flagged }, updateArgs] = useArgs();
 
     const onExpandedChange = () => {

@@ -19,6 +19,7 @@ export const Default: Story = {
     onChange: () => undefined,
   },
   render: (args) => {
+    // eslint-disable-next-line @eslint-react/rules-of-hooks
     const [{ checked }, updateArgs] = useArgs();
 
     const onChange = (newValue: boolean) => {

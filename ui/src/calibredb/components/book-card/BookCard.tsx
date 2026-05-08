@@ -65,6 +65,7 @@ export const BookCard = ({
           <img className={styles.Cover} alt='' src={coverUrl} />
         </div>
         {description && (
+          // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
           <div className={styles.Description} dangerouslySetInnerHTML={{ __html: description }} />
         )}
       </div>

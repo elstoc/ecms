@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useReducer, useRef } from 'react';
+import { createContext, use, useCallback, useReducer, useRef } from 'react';
 
 import { KeyValueOfType, getRandomSeed } from '@/utils';
 
@@ -134,4 +134,4 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
   return { state, dispatch, updateUiFilter };
 };
 
-export const useCalibreDb = () => useContext(CalibreDbContext);
+export const useCalibreDb = () => use(CalibreDbContext);

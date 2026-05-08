@@ -25,6 +25,7 @@ export const Default: Story = {
     children: 'anything',
   },
   render: (args) => {
+    // eslint-disable-next-line @eslint-react/rules-of-hooks
     const [{ open }, updateArgs] = useArgs();
 
     const setOpen = (open: boolean) => {

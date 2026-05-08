@@ -10,8 +10,8 @@ export const Markdown = ({ uiPath, apiPath, title, singlePage }: MarkdownMetadat
   useTitle(title);
 
   return (
-    <MarkdownContext.Provider value={{ state, dispatch }}>
+    <MarkdownContext value={{ state, dispatch }}>
       <MarkdownContent />
-    </MarkdownContext.Provider>
+    </MarkdownContext>
   );
 };

@@ -25,6 +25,7 @@ export const Default = {
     children: 'anything',
   },
   render: () => {
+    // eslint-disable-next-line @eslint-react/rules-of-hooks
     const [{ expanded }, updateArgs] = useArgs();
 
     const onExpandedChange = () => {

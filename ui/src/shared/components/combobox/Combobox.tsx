@@ -61,9 +61,11 @@ export const Combobox = ({
     (searchTerm: string) => {
       if (maxListItems && items.length > maxListItems) {
         if (!searchTerm) {
+          // eslint-disable-next-line @eslint-react/set-state-in-effect
           setDisplayedItems(items.slice(0, maxListItems));
         }
 
+        // eslint-disable-next-line @eslint-react/set-state-in-effect
         setDisplayedItems([...limitedItemFilter(items, maxListItems, searchTerm)]);
       }
     },
@@ -83,6 +85,7 @@ export const Combobox = ({
   useEffect(() => {
     /* in case selectedItem is changed externally, keep everything up-to-date */
     const newQuery = selectedItem?.label ?? '';
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
     setQuery(newQuery);
     updateDisplayedItems(newQuery);
   }, [selectedItem, updateDisplayedItems]);

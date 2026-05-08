@@ -35,6 +35,7 @@ export const Default = {
     coverUrl: 'https://m.media-amazon.com/images/I/71b674P2aKL._SL1500_.jpg',
   },
   render: (args) => {
+    // eslint-disable-next-line @eslint-react/rules-of-hooks
     const [{ expanded }, updateArgs] = useArgs();
 
     const onExpandedChange = () => {

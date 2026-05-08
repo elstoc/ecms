@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, use, useReducer } from 'react';
 
 import { MarkdownPage } from '../api';
 
@@ -52,4 +52,4 @@ export const useMarkdownReducer = (
   return { state, dispatch };
 };
 
-export const useMarkdown = () => useContext(MarkdownContext);
+export const useMarkdown = () => use(MarkdownContext);
