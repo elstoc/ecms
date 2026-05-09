@@ -34,6 +34,7 @@ export const Default = {
     flagged: false,
     onFlaggedChange: () => undefined,
     onPressEdit: fn(),
+    plot: 'Some stuff happens, then also some more stuff and then some fun bits',
   },
   render: (args) => {
     // eslint-disable-next-line @eslint-react/rules-of-hooks

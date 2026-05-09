@@ -72,6 +72,13 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           maximumFractionDigits={0}
           width='sm'
         />
+        <NumberInput
+          label='Year'
+          value={videoState.year ?? null}
+          onChange={(value) => updateField({ key: 'year', value: value ?? undefined })}
+          maximumFractionDigits={0}
+          width='sm'
+        />
       </div>
       <Card className='media'>
         <div className='media-block'>
@@ -142,6 +149,13 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         onChange={(value) => updateField({ key: 'tags', value })}
         width='full'
         allowCreation
+      />
+      <Input
+        label='Plot'
+        value={videoState.plot ?? ''}
+        onChange={(value) => updateField({ key: 'plot', value: value || undefined })}
+        width='full'
+        variant='textarea'
       />
       <Input
         label='Progress'

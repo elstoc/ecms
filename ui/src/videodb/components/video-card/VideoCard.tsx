@@ -27,6 +27,7 @@ type VideoCardProps = {
   mediaNotes?: string;
   progress?: string;
   ref?: Ref<HTMLDivElement>;
+  plot?: string;
 };
 
 type TitleAndDataProps = {
@@ -61,6 +62,7 @@ export const VideoCard = ({
   mediaNotes,
   progress,
   ref,
+  plot,
 }: VideoCardProps) => (
   <ExpandableCard.Root expanded={expanded} onExpandedChange={onExpandedChange} ref={ref}>
     <ExpandableCard.Top className={styles.Panel}>
@@ -93,6 +95,7 @@ export const VideoCard = ({
         <TitleAndData title='Other Media' data={otherMediaDesc} />
         <TitleAndData title='Media notes' data={mediaNotes} />
         <TitleAndData title='Progress' data={progress} />
+        <TitleAndData title='Plot' data={plot} />
       </div>
       <div className={styles.Right}>
         {onPressEdit && <IconButton label='edit video' icon='edit' onClick={onPressEdit} />}
