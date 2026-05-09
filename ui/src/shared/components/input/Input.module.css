@@ -1,5 +1,13 @@
 .Root {
-  height: 2.125rem;
+  &.VariantText {
+    height: 2.125rem;
+  }
+
+  &.VariantTextArea {
+    min-height: 2.125rem;
+    field-sizing: content;
+  }
+
   font-size: 1rem;
   padding: 0.5rem;
   border: var(--input-border); /* 0.0625rem */

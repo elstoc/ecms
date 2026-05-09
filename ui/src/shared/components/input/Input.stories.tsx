@@ -30,3 +30,11 @@ export const Default: Story = {
     return <Input {...args} value={value} onChange={onChange} />;
   },
 };
+
+export const TextArea: Story = {
+  ...Default,
+  args: {
+    ...Default.args,
+    variant: 'textarea',
+  },
+};

@@ -1,4 +1,5 @@
 import { Input as BaseInput } from '@base-ui/react/input';
+import cn from 'classnames';
 import { useId } from 'react';
 
 import { InputWidth, LabelledField } from '../labelled-field';
@@ -14,6 +15,7 @@ type InputProps = {
   width?: InputWidth;
   onPressEnter?: () => void;
   disabled?: boolean;
+  variant?: 'text' | 'textarea';
 };
 
 export const Input = ({
@@ -25,6 +27,7 @@ export const Input = ({
   width = 'md',
   onPressEnter,
   disabled,
+  variant = 'text',
 }: InputProps) => {
   const id = useId();
 
@@ -38,12 +41,16 @@ export const Input = ({
     <LabelledField label={label} width={width} disabled={disabled} htmlFor={id}>
       <BaseInput
         id={id}
-        className={styles.Root}
+        className={cn(styles.Root, {
+          [styles.VariantText]: variant === 'text',
+          [styles.VariantTextArea]: variant === 'textarea',
+        })}
         value={value}
         onValueChange={onChange}
         autoFocus={autoFocus}
         type={type}
         onKeyDown={handleKeyDown}
+        render={variant == 'textarea' ? <textarea /> : undefined}
       />
     </LabelledField>
   );
