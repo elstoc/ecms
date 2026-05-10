@@ -28,6 +28,7 @@ type VideoCardProps = {
   progress?: string;
   ref?: Ref<HTMLDivElement>;
   plot?: string;
+  year?: number;
 };
 
 type TitleAndDataProps = {
@@ -63,6 +64,7 @@ export const VideoCard = ({
   progress,
   ref,
   plot,
+  year,
 }: VideoCardProps) => (
   <ExpandableCard.Root expanded={expanded} onExpandedChange={onExpandedChange} ref={ref}>
     <ExpandableCard.Top className={styles.Panel}>
@@ -85,7 +87,7 @@ export const VideoCard = ({
       <div className={styles.Left}>
         <div className={styles.Tags}>
           <TagList label='tags'>
-            <Tag label={categoryDesc} dark />
+            <Tag label={categoryDesc + (year ? ` (${year})` : '')} dark />
             {tags?.map((tag) => (
               <Tag key={tag} label={tag} />
             ))}

@@ -40,14 +40,12 @@ export const VideoListItem = ({ video, expanded, toggleExpanded, ref }: VideoLis
   const togglePriorityFlag = (checked: boolean) =>
     mutate({ id: video.id, priority_flag: checked ? 1 : 0 });
 
-  const titleText = `${video.title}${video.year ? ` (${video.year})` : ''}`;
-
   return (
     <VideoCard
       ref={ref}
       expanded={expanded}
       onExpandedChange={toggleExpanded}
-      title={titleText}
+      title={video.title}
       categoryDesc={videoCategory}
       formatDesc={primaryMediaType}
       lengthDesc={lengthText}
@@ -62,6 +60,7 @@ export const VideoListItem = ({ video, expanded, toggleExpanded, ref }: VideoLis
       mediaNotes={video.media_notes}
       progress={video.progress}
       plot={video.plot}
+      year={video.year}
     />
   );
 };
