@@ -59,8 +59,8 @@ export const LightBox = ({
   }
 
   return (
-    <div className='lightbox-backdrop' onClick={handleOuterClick} onMouseMove={restartFadeOut}>
-      <div className='lightbox-image-container'>
+    <div className='lightbox-backdrop' onClick={handleOuterClick}>
+      <div className='lightbox-image-container' onMouseMove={restartFadeOut}>
         <img src={imageUrl} alt={alt} />
         <IconButton
           label='close lightbox'
