@@ -35,6 +35,11 @@ const MarkdownAddPageContent = () => {
   const newPageFullPath = `${pageApiPath}/${newPagePath}`;
 
   const createPage = async () => {
+    if (newPagePath === '') {
+      setErrorText('Invalid path');
+      return;
+    }
+
     const possNewPage = await getMarkdownPage(newPageFullPath);
     if (possNewPage.pageExists) {
       setErrorText('Page already exists');
