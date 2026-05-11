@@ -100,7 +100,11 @@ export class GalleryImage {
 
   private getSourceUrl(size: ImageSize) {
     const config = RESIZE_OPTIONS[size];
-    return `${this.config.apiUrl}/gallery/image/?path=${this.contentPath}&timestamp=${this.imageDataFromSourceFileTime}&size=${config.desc}&version=${config.version}`;
+    const pathParts = this.contentPath.split('/');
+
+    const fileName = pathParts.pop();
+    const filePath = pathParts.join('/');
+    return `${this.config.apiUrl}/gallery/image/${fileName}?path=${filePath}&timestamp=${this.imageDataFromSourceFileTime}&size=${config.desc}&version=${config.version}`;
   }
 
   public async getFile(size: ImageSize, timestamp: string): Promise<Buffer> {

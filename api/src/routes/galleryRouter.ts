@@ -24,8 +24,10 @@ export const createGalleryRouter = (site: Site): Router => {
         );
         res.json(images);
       } else if (fn === 'image') {
+        const { file } = req.params;
+        const apiPath = `${path}/${file}`;
         const imageFileBuf = await gallery.getImageFile(
-          path as string,
+          apiPath,
           size as ImageSize,
           timestamp as string,
         );
@@ -38,6 +40,6 @@ export const createGalleryRouter = (site: Site): Router => {
 
   const router = Router();
   router.get('/contents', async (req, res, next) => galleryHandler(req, res, next, 'contents'));
-  router.get('/image', async (req, res, next) => galleryHandler(req, res, next, 'image'));
+  router.get('/image/:file', async (req, res, next) => galleryHandler(req, res, next, 'image'));
   return router;
 };
