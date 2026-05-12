@@ -34,7 +34,7 @@
     position: absolute;
     top: 0;
     height: 100%;
-    width: 45%;
+    width: 40%;
     text-decoration: none;
     user-select: none;
     z-index: var(--dialog-popup-z-index); /* Sit on top */
@@ -51,7 +51,7 @@
   .prev .icon,
   .next .icon,
   .close .icon {
-    stroke: var(--grey-80);
+    stroke: var(--grey-60);
     width: 40px;
     height: 40px;
     background: rgba(50, 50, 50, 0.6);
