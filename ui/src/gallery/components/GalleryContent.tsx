@@ -7,7 +7,7 @@ import { GalleryLightBox } from './GalleryLightBox';
 import { GalleryToolbox } from './GalleryToolbox';
 import { JustifiedGallery } from './JustifiedGallery';
 
-import './GalleryContent.css';
+import * as styles from './GalleryContent.module.css';
 
 export const GalleryContent = () => {
   const {
@@ -18,7 +18,7 @@ export const GalleryContent = () => {
 
   return (
     <Layout headerToolsLeft={<GalleryToolbox />}>
-      <div className='gallery-content'>
+      <div className={styles.Root}>
         <GalleryLightBox />
         <JustifiedGallery />
       </div>

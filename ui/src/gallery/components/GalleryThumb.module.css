@@ -1,4 +1,4 @@
-.gallery-thumb {
+.Root {
   display: block;
   position: relative;
   height: 100%;
@@ -6,13 +6,13 @@
   outline-offset: -1px;
 }
 
-.gallery-thumb img {
+.Image {
   width: auto;
   height: 100%;
   object-fit: fill;
 }
 
-.gallery-thumb .overlay {
+.Overlay {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -25,6 +25,6 @@
   padding: 2px;
 }
 
-.gallery-thumb:hover .overlay {
+.Root:hover .Overlay {
   opacity: 1;
 }
