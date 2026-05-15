@@ -1,4 +1,4 @@
-.markdown-nav {
+.Root {
   min-height: 100%;
   display: block;
   font-family: var(--heading-font);
@@ -34,11 +34,12 @@
     text-decoration: none;
   }
 
-  a.active {
+  /* :global references the plain string class from NavLink */
+  a:global(.active) {
     text-shadow: 0px 0px 1px black;
   }
 
   a:focus {
-    outline: none; // remove BlueprintJS outline
+    outline: none;
   }
 }

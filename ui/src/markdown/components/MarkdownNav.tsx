@@ -6,7 +6,7 @@ import { MarkdownTree } from '@/contracts/markdown';
 import { useMarkdown } from '../hooks/useMarkdown';
 import { useGetMarkdownTree } from '../hooks/useMarkdownQueries';
 
-import './MarkdownNav.scss';
+import * as styles from './MarkdownNav.module.css';
 
 export const MarkdownNav = () => {
   const {
@@ -15,7 +15,7 @@ export const MarkdownNav = () => {
   const markdownTree = useGetMarkdownTree(rootApiPath);
 
   const navContent = (
-    <span className='markdown-nav'>
+    <span className={styles.Root}>
       {markdownTree?.children && (
         <MarkdownNavRecurse rootUiPath={rootUiPath} treeChildren={markdownTree.children} />
       )}

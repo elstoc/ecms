@@ -1,0 +1,14 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin-top: 1rem;
+  }
+}
+
+.Error {
+  margin-top: 1em;
+  text-align: center;
+  color: red;
+}

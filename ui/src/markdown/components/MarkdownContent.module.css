@@ -1,4 +1,4 @@
-#app .markdown-page-content {
+.Root {
   display: flex;
   flex-direction: column;
   background-color: var(--content-bg-color);

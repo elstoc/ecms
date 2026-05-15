@@ -7,7 +7,7 @@ import { splitFrontMatter } from '@/utils';
 
 import { useMarkdown } from '../hooks/useMarkdown';
 
-import './MarkdownViewPage.scss';
+import * as styles from './MarkdownViewPage.module.scss';
 
 const RenderMd = lazy(() => import('@/shared/components/rendermd/RenderMdAsDefault'));
 
@@ -34,7 +34,7 @@ export const MarkdownViewPage = () => {
 
   return (
     <Suspense>
-      <div className='markdown-view-page'>
+      <div className={styles.Root}>
         <RenderMd pageTitle={pageTitle} markdown={markdown} renderLink={renderLink} />
       </div>
     </Suspense>

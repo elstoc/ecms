@@ -9,7 +9,7 @@ import { getMarkdownPage } from '../api';
 import { useMarkdown } from '../hooks/useMarkdown';
 import { useCreateMarkdownPage } from '../hooks/useMarkdownQueries';
 
-import './MarkdownAddPage.scss';
+import * as styles from './MarkdownAddPage.module.css';
 
 export const MarkdownAddPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -56,8 +56,8 @@ const MarkdownAddPageContent = () => {
   };
 
   return (
-    <div className='markdown-add-page'>
-      <div className='add-page-form'>
+    <div>
+      <div className={styles.Form}>
         <Input
           label='Path'
           value={newPagePath}
@@ -70,7 +70,7 @@ const MarkdownAddPageContent = () => {
         />
         <Button onClick={createPage}>Create Page</Button>
       </div>
-      {errorText && <div className='error'>{errorText}</div>}
+      {errorText && <div className={styles.Error}>{errorText}</div>}
     </div>
   );
 };
