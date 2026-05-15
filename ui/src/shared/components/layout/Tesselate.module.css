@@ -1,0 +1,17 @@
+.Root {
+  display: flex;
+  flex-direction: column;
+}
+
+.Row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  border: 0;
+  padding: 0;
+}
+
+.Cell {
+  height: 100%;
+  width: auto;
+}

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 
-import './Tesselate.scss';
+import * as styles from './Tesselate.module.css';
 
 type TileInfo = { maxWidth: number; maxHeight: number; key: string; element: ReactElement };
 
@@ -27,7 +27,7 @@ export const Tesselate = ({ tiles, marginPx }: TesselateProps) => {
     tiles.forEach((tile, index) => {
       const isLastRow = index === tiles.length - 1;
       rowContents.push(
-        <div key={tile.key} style={{ margin: `0 ${marginPx}px` }}>
+        <div className={styles.Cell} key={tile.key} style={{ margin: `0 ${marginPx}px` }}>
           {tile.element}
         </div>,
       );
@@ -41,7 +41,7 @@ export const Tesselate = ({ tiles, marginPx }: TesselateProps) => {
       if (fillRatio <= 1) {
         const rowElement = (
           <div
-            className='row'
+            className={styles.Row}
             key={rowContents[0].key}
             style={{
               height: `${tile.maxHeight * fillRatio}px`,
@@ -60,7 +60,7 @@ export const Tesselate = ({ tiles, marginPx }: TesselateProps) => {
   }
 
   return (
-    <div ref={widthRef} className='tiled-container'>
+    <div ref={widthRef} className={styles.Root}>
       {tiledRows}
     </div>
   );
