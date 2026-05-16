@@ -3,14 +3,15 @@ import { languages } from '@codemirror/language-data';
 import { EditorView } from '@codemirror/view';
 import CodeMirror from '@uiw/react-codemirror';
 
-import './EditMd.css';
+import * as styles from './EditMd.module.css';
 
 type EditMdProps = { markdown: string; setMarkdown: (value: string) => void };
 
 export const EditMd = ({ markdown, setMarkdown }: EditMdProps) => {
   return (
-    <div className='edit-markdown'>
+    <div className={styles.Root}>
       <CodeMirror
+        className={styles.CodeMirror}
         height='100%'
         autoFocus={true}
         value={markdown}
