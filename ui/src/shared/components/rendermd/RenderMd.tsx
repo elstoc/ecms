@@ -6,8 +6,8 @@ import emoji from 'remark-emoji';
 import remarkGfm from 'remark-gfm';
 import smartypants from 'remark-smartypants';
 
-import './RenderMd.scss';
-import './RenderMdCode.scss';
+import './RenderMd.css';
+import './RenderMdCode.css';
 
 export type RenderMdProps = {
   markdown: string;
