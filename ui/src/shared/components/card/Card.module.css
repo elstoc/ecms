@@ -1,10 +1,10 @@
-.ecms-card {
+.Root {
   margin: 5px;
   box-shadow: 0 0 0 1px rgba(17, 20, 24, 0.15);
   border-radius: 2px;
   background-color: #ffffff;
 
-  &.highlight {
+  &.Highlight {
     box-shadow: 0 0 0 1px var(--grey-20);
   }
 }

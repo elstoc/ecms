@@ -1,20 +1,20 @@
 import cn from 'classnames';
 import { ReactNode, Ref } from 'react';
 
-import './Card.css';
+import * as styles from './Card.module.css';
 
 type CardProps = {
   children: ReactNode;
   /** Give the card a stronger outline */
   highlight?: boolean;
-  /** Class name for the wrapping div (in addition to `ecms-card`) */
+  /** Additional class name for the wrapping div */
   className?: string;
   ref?: Ref<HTMLDivElement>;
   onClick?: () => void;
 };
 
 export const Card = ({ children, highlight, className, onClick, ref }: CardProps) => {
-  const classes = cn('ecms-card', className, { highlight: highlight });
+  const classes = cn(styles.Root, className, { [styles.Highlight]: highlight });
 
   return (
     <div ref={ref} className={classes} onClick={onClick}>
