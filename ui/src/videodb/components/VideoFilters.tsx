@@ -9,7 +9,7 @@ import { useVideoDb } from '../hooks/useVideoDb';
 import { SelectLookup } from './SelectLookup';
 import { VideoTagInput } from './VideoTagInput';
 
-import './VideoFilters.scss';
+import * as styles from './VideoFilters.module.css';
 
 const minResolutionItems = [
   { value: 'SD', label: 'SD' },
@@ -31,8 +31,8 @@ export const VideoFilters = () => {
   } = useVideoDb();
 
   return (
-    <div className='video-filters'>
-      <div className='row'>
+    <div className={styles.Root}>
+      <div className={styles.Row}>
         <SelectLookup
           label='Category'
           lookupTable='categories'
@@ -54,8 +54,8 @@ export const VideoFilters = () => {
           }
         />
       </div>
-      <div className='row'>
-        <div className='col'>
+      <div className={styles.Row}>
+        <div className={styles.Col}>
           <NumberInput
             label='Min Length'
             value={uiFilters.minLength ?? null}
@@ -75,7 +75,7 @@ export const VideoFilters = () => {
             disabled={showOnlyExpandedIds}
           />
         </div>
-        <div className='col'>
+        <div className={styles.Col}>
           <ToggleGroup
             label='Watched'
             disabled={showOnlyExpandedIds}
@@ -126,7 +126,7 @@ export const VideoFilters = () => {
         value={uiFilters.primaryMediaType ?? null}
         onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
       />
-      <div className='switches'>
+      <div className={styles.Switches}>
         <Switch
           label='In progress'
           disabled={showOnlyExpandedIds}
@@ -140,7 +140,7 @@ export const VideoFilters = () => {
           onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
         />
       </div>
-      <div className='filter-action-buttons'>
+      <div className={styles.ActionButtons}>
         <Button
           disabled={expandedVideoIds.length === 0}
           onClick={() => dispatch({ type: 'resetVideoExpanded' })}
