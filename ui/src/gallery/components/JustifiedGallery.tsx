@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react';
 import { useOnInView } from 'react-intersection-observer';
 import { useSearchParams } from 'react-router-dom';
 
-import { Tesselate } from '@/shared/components/layout';
+import { Tesselate } from '@/shared/components/tesselate';
 import { useScrollIntoView } from '@/shared/hooks';
 
 import { useGallery } from '../hooks/useGallery';
