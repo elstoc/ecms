@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import { Video } from '@/contracts/videodb';
 import { Button } from '@/shared/components/button';
-import { Card } from '@/shared/components/card';
 import { Input } from '@/shared/components/input';
 import { NumberInput } from '@/shared/components/number-input';
 import { Switch } from '@/shared/components/switch';
@@ -80,64 +79,60 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           width='sm'
         />
       </div>
-      <Card className={styles.Media}>
-        <div className={styles.FlexRow}>
-          <SelectLookup
-            label='Media'
-            lookupTable='media_types'
-            value={videoState.primary_media_type ?? null}
-            onChange={(value) =>
-              updateField({ key: 'primary_media_type', value: value ?? undefined })
-            }
-            valueForNullCode='—'
-          />
-          <SelectLookup
-            label='Location'
-            lookupTable='media_locations'
-            value={videoState.primary_media_location ?? null}
-            onChange={(value) =>
-              updateField({ key: 'primary_media_location', value: value ?? undefined })
-            }
-            valueForNullCode='—'
-          />
-          <SelectLookup
-            label='Watched'
-            lookupTable='watched_status'
-            value={videoState.primary_media_watched ?? null}
-            onChange={(value) =>
-              updateField({ key: 'primary_media_watched', value: value ?? undefined })
-            }
-            valueForNullCode='—'
-            width='sm'
-          />
-        </div>
-        <div className={styles.FlexRow}>
-          <SelectLookup
-            label='Second Media'
-            lookupTable='media_types'
-            value={videoState.other_media_type ?? null}
-            onChange={(value) =>
-              updateField({ key: 'other_media_type', value: value ?? undefined })
-            }
-            valueForNullCode='—'
-          />
-          <SelectLookup
-            label='Second Location'
-            lookupTable='media_locations'
-            value={videoState.other_media_location ?? null}
-            onChange={(value) =>
-              updateField({ key: 'other_media_location', value: value ?? undefined })
-            }
-            valueForNullCode='—'
-          />
-        </div>
-        <Input
-          label='Notes'
-          value={videoState.media_notes ?? ''}
-          onChange={(value) => updateField({ key: 'media_notes', value: value || undefined })}
-          width='full'
+      <div className={styles.FlexRow}>
+        <SelectLookup
+          label='Media'
+          lookupTable='media_types'
+          value={videoState.primary_media_type ?? null}
+          onChange={(value) =>
+            updateField({ key: 'primary_media_type', value: value ?? undefined })
+          }
+          valueForNullCode='—'
         />
-      </Card>
+        <SelectLookup
+          label='Location'
+          lookupTable='media_locations'
+          value={videoState.primary_media_location ?? null}
+          onChange={(value) =>
+            updateField({ key: 'primary_media_location', value: value ?? undefined })
+          }
+          valueForNullCode='—'
+        />
+        <SelectLookup
+          label='Watched'
+          lookupTable='watched_status'
+          value={videoState.primary_media_watched ?? null}
+          onChange={(value) =>
+            updateField({ key: 'primary_media_watched', value: value ?? undefined })
+          }
+          valueForNullCode='—'
+          width='sm'
+        />
+      </div>
+      <div className={styles.FlexRow}>
+        <SelectLookup
+          label='Second Media'
+          lookupTable='media_types'
+          value={videoState.other_media_type ?? null}
+          onChange={(value) => updateField({ key: 'other_media_type', value: value ?? undefined })}
+          valueForNullCode='—'
+        />
+        <SelectLookup
+          label='Second Location'
+          lookupTable='media_locations'
+          value={videoState.other_media_location ?? null}
+          onChange={(value) =>
+            updateField({ key: 'other_media_location', value: value ?? undefined })
+          }
+          valueForNullCode='—'
+        />
+      </div>
+      <Input
+        label='Media Notes'
+        value={videoState.media_notes ?? ''}
+        onChange={(value) => updateField({ key: 'media_notes', value: value || undefined })}
+        width='full'
+      />
       <Switch
         label='Flag'
         checked={(videoState.priority_flag ?? 0) > 0}
