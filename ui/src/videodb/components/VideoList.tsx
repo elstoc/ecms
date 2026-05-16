@@ -5,7 +5,7 @@ import { useVideos } from '../hooks/useVideoDbQueries';
 
 import { VideoListItem } from './VideoListItem';
 
-import './VideoList.css';
+import * as styles from './VideoList.module.css';
 
 export const VideoList = () => {
   const { state, dispatch } = useVideoDb();
@@ -21,8 +21,8 @@ export const VideoList = () => {
   });
 
   return (
-    <div className='videos'>
-      <div className='video-list'>
+    <div className={styles.Root}>
+      <div className={styles.List}>
         {videos.map((video, index) => {
           const lastVideo = index === videos.length - 1;
           return (
