@@ -2,7 +2,7 @@ import { useUserInfo } from '..';
 import { useState } from 'react';
 
 import { IconButton } from '@/shared/components/icon-button';
-import { Toolbox } from '@/shared/components/layout';
+import { Toolbar } from '@/shared/components/toolbar';
 import { useSiteConfig } from '@/site';
 
 import { AuthDialog } from './AuthDialog';
@@ -21,13 +21,13 @@ export const UserTools = () => {
 
   return (
     <>
-      <Toolbox>
+      <Toolbar.Root>
         <IconButton
           label={isLoggedIn ? 'log out' : 'log in'}
           icon={isLoggedIn ? 'user' : 'noUser'}
           onClick={() => setDialogOpen(true)}
         />
-      </Toolbox>
+      </Toolbar.Root>
       <AuthDialog
         open={dialogOpen}
         setOpen={setDialogOpen}

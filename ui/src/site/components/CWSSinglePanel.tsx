@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { Disclosure, DisclosurePanel } from '@/shared/components/disclosure';
 import { IconButton } from '@/shared/components/icon-button';
-import { Toolbox } from '@/shared/components/layout';
 import { Toolbar } from '@/shared/components/toolbar';
 
 import { ContentWithSideBarProps } from './ContentWithSidebar';
@@ -19,14 +18,14 @@ export const CWSSinglePanel = ({
   const [sidebarDrawerVisible, setSidebarDrawerVisible] = useState(false);
 
   const sideExpander = sidebar ? (
-    <Toolbox>
+    <Toolbar.Root>
       <IconButton
         icon='menu'
         label={sidebarDrawerVisible ? 'collapse menu' : 'expand menu'}
         className='sidebar-button'
         onClick={() => setSidebarDrawerVisible((visible) => !visible)}
       />
-    </Toolbox>
+    </Toolbar.Root>
   ) : null;
 
   return (
