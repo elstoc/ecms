@@ -6,7 +6,7 @@ import { useSiteComponents, useSiteConfig } from '../hooks/useSiteQueries';
 
 import { SiteNav } from './SiteNav';
 
-import './Header.scss';
+import * as styles from './Header.module.scss';
 
 type HeaderProps = {
   toolsLeft?: ReactNode;
@@ -18,18 +18,18 @@ export const Header = ({ toolsLeft, toolsRight }: HeaderProps) => {
   const { siteTitle } = useSiteConfig() ?? {};
 
   return (
-    <div className='header'>
-      <div className='nav-and-title'>
-        {siteTitle && <div className='site-title'>{siteTitle}</div>}
+    <div className={styles.Root}>
+      <div className={styles.NavAndTitle}>
+        {siteTitle && <div className={styles.Title}>{siteTitle}</div>}
         <SiteNav siteComponents={siteComponents} />
       </div>
 
-      <div className='toolbar'>
-        <div className='left'>
+      <div className={styles.Toolbar}>
+        <div>
           <div>{toolsRight}</div>
         </div>
 
-        <div className='right'>
+        <div className={styles.Right}>
           <div>{toolsLeft}</div>
           <UserTools />
         </div>

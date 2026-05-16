@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { Footer } from './Footer';
 import { Header } from './Header';
 
-import './Layout.css';
+import * as styles from './Layout.module.css';
 
 type LayoutProps = {
   children: ReactNode;
@@ -13,7 +13,7 @@ type LayoutProps = {
 
 export const Layout = ({ children, headerToolsLeft, headerToolsRight }: LayoutProps) => {
   return (
-    <div className='app-content'>
+    <div className={styles.Root}>
       <header>
         <Header toolsLeft={headerToolsLeft} toolsRight={headerToolsRight} />
       </header>

@@ -1,0 +1,66 @@
+@use '../../variables.scss' as variables;
+
+.Root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.Toolbar {
+  padding-block: 5px;
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  border-bottom: 1px solid var(--border-grey);
+}
+
+.Right {
+  display: flex;
+  column-gap: 25px;
+  flex-direction: row;
+}
+
+.NavAndTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  flex-grow: 1;
+  border-bottom: 1px solid var(--border-grey);
+}
+
+.Title {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: var(--heading-font);
+  cursor: default;
+}
+
+@media screen and (min-width: variables.$minDualPanelWidth) {
+  .Root {
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid var(--border-grey);
+  }
+
+  .Toolbar {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .NavAndTitle {
+    flex-direction: row;
+    column-gap: 40px;
+    border-bottom: 0;
+  }
+
+  .Title {
+    padding: 0 2rem 0 0;
+  }
+}

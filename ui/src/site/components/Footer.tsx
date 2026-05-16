@@ -1,8 +1,8 @@
 import { useSiteConfig } from '../hooks/useSiteQueries';
 
-import './Footer.css';
+import * as styles from './Footer.module.css';
 
 export const Footer = () => {
   const siteConfig = useSiteConfig();
-  return <div className='footer'>{siteConfig?.footerText}</div>;
+  return <div className={styles.Root}>{siteConfig?.footerText}</div>;
 };
