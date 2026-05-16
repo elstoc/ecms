@@ -12,7 +12,7 @@ import { useEditVideo } from '../hooks/useEditVideo';
 import { SelectLookup } from './SelectLookup';
 import { VideoTagInput } from './VideoTagInput';
 
-import './EditVideoForm.scss';
+import * as styles from './EditVideoForm.module.css';
 
 type EditVideoFormProps = {
   initialVideo: Video;
@@ -34,7 +34,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
   }, [initialTitle, initialVideo, resetVideo]);
 
   return (
-    <div className='edit-video-form'>
+    <div className={styles.Root}>
       <Input
         label='Title'
         value={videoState.title}
@@ -42,7 +42,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         autoFocus={true}
         width='full'
       />
-      <div className='watched-and-category'>
+      <div className={styles.FlexRow}>
         <SelectLookup
           label='Watched'
           value={videoState.watched}
@@ -57,7 +57,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           onChange={(value) => updateField({ key: 'category', value: value || '' })}
         />
       </div>
-      <div className='episodes-and-length'>
+      <div className={styles.FlexRow}>
         <NumberInput
           label='Episodes'
           value={videoState.num_episodes ?? null}
@@ -80,8 +80,8 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
           width='sm'
         />
       </div>
-      <Card className='media'>
-        <div className='media-block'>
+      <Card className={styles.Media}>
+        <div className={styles.FlexRow}>
           <SelectLookup
             label='Media'
             lookupTable='media_types'
@@ -111,7 +111,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
             width='sm'
           />
         </div>
-        <div className='media-block'>
+        <div className={styles.FlexRow}>
           <SelectLookup
             label='Second Media'
             lookupTable='media_types'
@@ -163,7 +163,7 @@ export const EditVideoForm = ({ initialVideo, onSave, onDelete }: EditVideoFormP
         onChange={(value) => updateField({ key: 'progress', value: value || undefined })}
         width='full'
       />
-      <div className='form-buttons'>
+      <div className={styles.FormButtons}>
         {onDelete && (
           <Button tabIndex={-1} className='delete-button' onClick={() => onDelete?.()}>
             Delete Video
