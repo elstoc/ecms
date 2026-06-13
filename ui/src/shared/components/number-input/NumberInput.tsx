@@ -28,7 +28,12 @@ export const NumberInput = ({
 
   return (
     <LabelledField label={label} htmlFor={id} width={width} disabled={disabled}>
-      <Root id={id} value={value} onValueChange={onChange} format={{ maximumFractionDigits }}>
+      <Root
+        id={id}
+        value={value}
+        onValueChange={onChange}
+        format={{ maximumFractionDigits, useGrouping: false }}
+      >
         <Input className={styles.Input} />
       </Root>
     </LabelledField>
