@@ -2,7 +2,8 @@ import { MouseEvent, useEffect } from 'react';
 
 import { useKeyPress } from '@/shared/hooks';
 
-import { IconButton } from '../icon-button';
+import { Button } from '../button';
+import { Icon } from '../icon';
 
 import './LightBox.css';
 
@@ -62,27 +63,23 @@ export const LightBox = ({
     <div className='lightbox-backdrop' onClick={handleOuterClick}>
       <div className='lightbox-image-container' onMouseMove={restartFadeOut}>
         <img src={imageUrl} alt={alt} />
-        <IconButton
-          label='close lightbox'
-          className='close fadeout'
-          icon='close'
-          onClick={onClose}
-        />
+        <Button clearFormatting className='close fadeout' onClick={onClose}>
+          <Icon icon='close' label='close lightbox' className='icon' />
+        </Button>
         <div className='preload'>
           {prevImageUrl && <img src={prevImageUrl} alt='preload' />}
           {nextImageUrl && <img src={nextImageUrl} alt='preload' />}
         </div>
 
         {onPrev && (
-          <IconButton
-            label='previous image'
-            className='prev fadeout'
-            icon='previous'
-            onClick={onPrev}
-          />
+          <Button clearFormatting className='prev fadeout' onClick={onPrev}>
+            <Icon icon='previous' label='previous image' className='icon' />
+          </Button>
         )}
         {onNext && (
-          <IconButton label='next image' className='next fadeout' icon='next' onClick={onNext} />
+          <Button clearFormatting className='next fadeout' onClick={onNext}>
+            <Icon icon='next' label='next image' className='icon' />
+          </Button>
         )}
         {caption && <div className='image-info fadeout'>{caption}</div>}
       </div>
