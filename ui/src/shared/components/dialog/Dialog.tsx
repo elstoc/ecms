@@ -1,57 +1,30 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
-import { ReactNode } from 'react';
+
+import { Overlay, OverlayProps } from '../overlay/Overlay';
 
 import * as styles from './Dialog.module.css';
 
-const { Root, Portal, Backdrop, Popup, Title, Close, Description: Content } = BaseDialog;
+const { Title, Close, Description: Content } = BaseDialog;
 
-type DialogProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  children: ReactNode;
+type DialogProps = OverlayProps & {
   title: string;
-  disablePointerDismissal?: boolean;
-  disableEscapeKeyDismissal?: boolean;
 };
 
-export const Dialog = ({
-  open,
-  onOpenChange,
-  children,
-  title,
-  disablePointerDismissal,
-  disableEscapeKeyDismissal,
-}: DialogProps) => {
-  const handleOpenChange = (open: boolean, eventDetails: BaseDialog.Root.ChangeEventDetails) => {
-    if (!disableEscapeKeyDismissal || eventDetails.reason !== 'escape-key') {
-      onOpenChange(open);
-    }
-  };
-
+export const Dialog = ({ children, title, ...overlayProps }: DialogProps) => {
   return (
-    <Root
-      open={open}
-      onOpenChange={handleOpenChange}
-      disablePointerDismissal={disablePointerDismissal}
-    >
-      <Portal>
-        <Backdrop className={styles.Backdrop} />
+    <Overlay {...overlayProps}>
+      <div className={styles.PopupContent}>
+        <div className={styles.Header}>
+          <Title className={styles.Title}>{title}</Title>
 
-        <Popup className={styles.Popup}>
-          <div className={styles.PopupContent}>
-            <div className={styles.Header}>
-              <Title className={styles.Title}>{title}</Title>
+          <CloseButton />
+        </div>
 
-              <CloseButton />
-            </div>
-
-            <Content render={<div />} className={styles.Content}>
-              {children}
-            </Content>
-          </div>
-        </Popup>
-      </Portal>
-    </Root>
+        <Content render={<div />} className={styles.Content}>
+          {children}
+        </Content>
+      </div>
+    </Overlay>
   );
 };
 
