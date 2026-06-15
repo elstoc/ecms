@@ -38,15 +38,17 @@ export const Dialog = ({
         <Backdrop className={styles.Backdrop} />
 
         <Popup className={styles.Popup}>
-          <div className={styles.Header}>
-            <Title className={styles.Title}>{title}</Title>
+          <div className={styles.PopupContent}>
+            <div className={styles.Header}>
+              <Title className={styles.Title}>{title}</Title>
 
-            <CloseButton />
+              <CloseButton />
+            </div>
+
+            <Content render={<div />} className={styles.Content}>
+              {children}
+            </Content>
           </div>
-
-          <Content render={<div />} className={styles.Content}>
-            {children}
-          </Content>
         </Popup>
       </Portal>
     </Root>
