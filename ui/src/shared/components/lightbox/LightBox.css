@@ -5,7 +5,7 @@
   height: 100%;
   width: 100%;
   position: fixed;
-  z-index: var(--dialog-popup-z-index); /* Sit on top */
+  z-index: var(--overlay-popup-z-index); /* Sit on top */
   left: 0;
   top: 0;
   background-color: rgba(60, 60, 60, 0.95);
@@ -37,7 +37,7 @@
     width: 40%;
     text-decoration: none;
     user-select: none;
-    z-index: var(--dialog-popup-z-index); /* Sit on top */
+    z-index: var(--overlay-popup-z-index); /* Sit on top */
   }
 
   button.prev,
@@ -74,7 +74,7 @@
     right: 0;
     padding: 10px 10px 20px 20px;
     text-decoration: none;
-    z-index: calc(var(--dialog-popup-z-index) + 1); /* Sit on top */
+    z-index: calc(var(--overlay-popup-z-index) + 1); /* Sit on top */
   }
 
   .prev:hover,
