@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { MouseEvent, useEffect } from 'react';
 
 import { useKeyPress } from '@/shared/hooks';
@@ -5,7 +6,7 @@ import { useKeyPress } from '@/shared/hooks';
 import { Button } from '../button';
 import { Icon } from '../icon';
 
-import './LightBox.css';
+import * as styles from './LightBox.module.css';
 
 type LightBoxProps = {
   open: boolean;
@@ -37,11 +38,11 @@ export const LightBox = ({
   };
 
   const restartFadeOut = () => {
-    const elements = document.querySelectorAll<HTMLElement>('.fadeout');
+    const elements = document.querySelectorAll<HTMLElement>(`.${styles.Fadeout}`);
     elements.forEach((element) => {
-      element.classList.remove('fadeout');
+      element.classList.remove(styles.Fadeout);
       setTimeout(() => {
-        element.classList.add('fadeout');
+        element.classList.add(styles.Fadeout);
       }, 10);
     });
   };
@@ -60,28 +61,28 @@ export const LightBox = ({
   }
 
   return (
-    <div className='lightbox-backdrop' onClick={handleOuterClick}>
-      <div className='lightbox-image-container' onMouseMove={restartFadeOut}>
-        <img src={imageUrl} alt={alt} />
-        <Button clearFormatting className='close fadeout' onClick={onClose}>
-          <Icon icon='close' label='close lightbox' className='icon' />
+    <div className={styles.Backdrop} onClick={handleOuterClick}>
+      <div className={styles.ImageContainer} onMouseMove={restartFadeOut}>
+        <img className={styles.CurrentImage} src={imageUrl} alt={alt} />
+        <Button clearFormatting className={cn(styles.Close, styles.Fadeout)} onClick={onClose}>
+          <Icon icon='close' label='close lightbox' className={styles.Icon} />
         </Button>
-        <div className='preload'>
+        <div className={styles.Preload}>
           {prevImageUrl && <img src={prevImageUrl} alt='preload' />}
           {nextImageUrl && <img src={nextImageUrl} alt='preload' />}
         </div>
 
         {onPrev && (
-          <Button clearFormatting className='prev fadeout' onClick={onPrev}>
-            <Icon icon='previous' label='previous image' className='icon' />
+          <Button clearFormatting className={cn(styles.Prev, styles.Fadeout)} onClick={onPrev}>
+            <Icon icon='previous' label='previous image' className={styles.Icon} />
           </Button>
         )}
         {onNext && (
-          <Button clearFormatting className='next fadeout' onClick={onNext}>
-            <Icon icon='next' label='next image' className='icon' />
+          <Button clearFormatting className={cn(styles.Next, styles.Fadeout)} onClick={onNext}>
+            <Icon icon='next' label='next image' className={styles.Icon} />
           </Button>
         )}
-        {caption && <div className='image-info fadeout'>{caption}</div>}
+        {caption && <div className={cn(styles.Info, styles.Fadeout)}>{caption}</div>}
       </div>
     </div>
   );
