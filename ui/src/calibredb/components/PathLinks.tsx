@@ -56,8 +56,11 @@ export const PathLinks = () => {
     return <></>;
   }
 
+  const pathBaseName = bookPath?.split('/')?.pop() || '/';
+
   return (
     <div className={styles.Paths}>
+      <h1 className={styles.PathName}>{pathBaseName}</h1>
       {bookPath && (
         <Button className={styles.PathBack} onClick={goPrevious}>
           . .
