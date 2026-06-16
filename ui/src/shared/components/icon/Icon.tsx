@@ -24,7 +24,7 @@ import {
   LuShuffle,
 } from 'react-icons/lu';
 
-import './Icon.css';
+import * as styles from './Icon.module.css';
 
 const icons = {
   user: FiUser,
@@ -60,11 +60,11 @@ export type IconProps = {
 
 export const Icon = ({ icon, isDisabled, className, color, label }: IconProps) => {
   const IconComponent = icons[icon];
-  const classNames = cn('ecms-icon', className, { disabled: isDisabled });
+  const classNames = cn(className, { [styles.Disabled]: isDisabled });
 
   return (
     <div className={classNames}>
-      <IconComponent title={label} className='icon' color={color} />
+      <IconComponent title={label} className={styles.Icon} color={color} />
     </div>
   );
 };
