@@ -14,19 +14,20 @@ export const BookTools = () => {
         icon='sortBook'
         label='sort by title'
         onClick={() => updateUiFilter({ key: 'sortOrder', value: 'title' })}
+        color={uiFilters.sortOrder === 'title' ? 'black' : 'grey'}
         isDisabled={uiFilters.sortOrder !== 'title'}
       />
       <IconButton
         icon='sortAuthor'
         label='sort by author'
         onClick={() => updateUiFilter({ key: 'sortOrder', value: 'author' })}
-        isDisabled={uiFilters.sortOrder !== 'author'}
+        color={uiFilters.sortOrder === 'author' ? 'black' : 'grey'}
       />
       <IconButton
         icon='shuffle'
         label='shuffle'
         onClick={() => updateUiFilter({ key: 'sortOrder', value: 'shuffle' })}
-        isDisabled={uiFilters.sortOrder !== 'shuffle'}
+        color={uiFilters.sortOrder === 'shuffle' ? 'black' : 'grey'}
       />
     </>
   );
