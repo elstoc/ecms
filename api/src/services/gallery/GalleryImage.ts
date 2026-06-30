@@ -23,9 +23,9 @@ export const RESIZE_OPTIONS = {
   fhd: {
     version: 2,
     desc: ImageSize.fhd,
-    width: 2560,
-    height: 1440,
-    quality: 85,
+    width: 3000,
+    height: 2000,
+    quality: 80,
     stripExif: true,
     sharpen: true,
   },
