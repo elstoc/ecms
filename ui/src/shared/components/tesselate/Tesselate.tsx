@@ -39,12 +39,14 @@ export const Tesselate = ({ tiles, marginPx }: TesselateProps) => {
       if (isLastRow && fillRatio > 1) fillRatio = 1;
 
       if (fillRatio <= 1) {
+        const actualHeight = Math.trunc(tile.maxHeight * fillRatio);
+
         const rowElement = (
           <div
             className={styles.Row}
             key={rowContents[0].key}
             style={{
-              height: `${tile.maxHeight * fillRatio}px`,
+              height: `${actualHeight}px`,
               margin: `${marginPx}px 0`,
             }}
           >
