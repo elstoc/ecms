@@ -1,4 +1,4 @@
-import { createContext, use, useCallback, useReducer, useRef } from 'react';
+import { createContext, use, useCallback, useReducer } from 'react';
 
 import { KeyValueOfType, getRandomSeed } from '@/utils';
 
@@ -112,14 +112,12 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
 type VideoDbContextProps = {
   state: VideoDbState;
   dispatch: React.Dispatch<StateAction>;
-  updateUiFilter: (payload: KeyValueOfType<Filters>, debounceTimeout?: number) => void;
+  updateUiFilter: (payload: KeyValueOfType<Filters>) => void;
 };
 
 export const VideoDbContext = createContext({} as VideoDbContextProps);
 
 export const useVideoDbReducer = (title: string, apiPath: string) => {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   const initialState: VideoDbState = {
     title,
     apiPath,
@@ -134,17 +132,9 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const updateUiFilter = useCallback(
-    (payload: KeyValueOfType<Filters>, debounceTimeout?: number) => {
+    (payload: KeyValueOfType<Filters>) => {
       dispatch({ type: 'setUiFilter', payload });
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-
-      timeoutRef.current = setTimeout(() => {
-        dispatch({ type: 'syncFilters' });
-      }, debounceTimeout ?? 0);
+      dispatch({ type: 'syncFilters' });
     },
     [dispatch],
   );

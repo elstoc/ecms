@@ -1,4 +1,4 @@
-import { createContext, use, useCallback, useReducer, useRef } from 'react';
+import { createContext, use, useCallback, useReducer } from 'react';
 
 import { KeyValueOfType, getRandomSeed } from '@/utils';
 
@@ -99,13 +99,12 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
 type CalibreDbContextProps = {
   state: CalibreDbState;
   dispatch: React.Dispatch<StateAction>;
-  updateUiFilter: (payload: KeyValueOfType<BookFilters>, debounceTimeout?: number) => void;
+  updateUiFilter: (payload: KeyValueOfType<BookFilters>) => void;
 };
 
 export const CalibreDbContext = createContext({} as CalibreDbContextProps);
 
 export const useCalibreDbReducer = (apiPath: string, title: string) => {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const initialState = {
     apiPath,
     title,
@@ -117,17 +116,9 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const updateUiFilter = useCallback(
-    (payload: KeyValueOfType<BookFilters>, debounceTimeout?: number) => {
+    (payload: KeyValueOfType<BookFilters>) => {
       dispatch({ type: 'setUiFilter', payload });
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-
-      timeoutRef.current = setTimeout(() => {
-        dispatch({ type: 'syncFilters' });
-      }, debounceTimeout ?? 0);
+      dispatch({ type: 'syncFilters' });
     },
     [dispatch],
   );

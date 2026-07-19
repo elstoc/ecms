@@ -59,20 +59,18 @@ export const VideoFilters = () => {
           <NumberInput
             label='Min Length'
             value={uiFilters.minLength ?? null}
-            onChange={(value) =>
-              updateUiFilter({ key: 'minLength', value: value ?? undefined }, 1000)
-            }
+            onChange={(value) => updateUiFilter({ key: 'minLength', value: value ?? undefined })}
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
+            debounceTimeout={1000}
           />
           <NumberInput
             label='Max Length'
             value={uiFilters.maxLength ?? null}
-            onChange={(value) =>
-              updateUiFilter({ key: 'maxLength', value: value ?? undefined }, 1000)
-            }
+            onChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? undefined })}
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
+            debounceTimeout={1000}
           />
         </div>
         <div className={styles.Col}>
@@ -113,10 +111,9 @@ export const VideoFilters = () => {
         label='Title Search'
         disabled={showOnlyExpandedIds}
         value={uiFilters.titleContains ?? ''}
-        onChange={(value) =>
-          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
-        }
+        onChange={(value) => updateUiFilter({ key: 'titleContains', value: value || undefined })}
         width='full'
+        debounceTimeout={1000}
       />
       <SelectLookup
         label='Primary Media'

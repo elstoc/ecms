@@ -2,6 +2,8 @@ import { Input as BaseInput } from '@base-ui/react/input';
 import cn from 'classnames';
 import { useId } from 'react';
 
+import { useDebouncedInput } from '@/shared/hooks';
+
 import { InputWidth, LabelledField } from '../labelled-field';
 
 import * as styles from './Input.module.css';
@@ -16,6 +18,7 @@ type InputProps = {
   onPressEnter?: () => void;
   disabled?: boolean;
   variant?: 'text' | 'textarea';
+  debounceTimeout?: number;
 };
 
 export const Input = ({
@@ -28,8 +31,11 @@ export const Input = ({
   onPressEnter,
   disabled,
   variant = 'text',
+  debounceTimeout,
 }: InputProps) => {
   const id = useId();
+
+  const { debouncedValue, debouncedOnChange } = useDebouncedInput(value, onChange, debounceTimeout);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -45,8 +51,8 @@ export const Input = ({
           [styles.VariantText]: variant === 'text',
           [styles.VariantTextArea]: variant === 'textarea',
         })}
-        value={value}
-        onValueChange={onChange}
+        value={debouncedValue}
+        onValueChange={debouncedOnChange}
         autoFocus={autoFocus}
         type={type}
         onKeyDown={handleKeyDown}

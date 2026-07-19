@@ -114,10 +114,9 @@ export const BookFilters = () => {
         label='Title Search'
         value={uiFilters.titleContains ?? ''}
         disabled={mode == 'browse'}
-        onChange={(value) =>
-          updateUiFilter({ key: 'titleContains', value: value || undefined }, 1000)
-        }
+        onChange={(value) => updateUiFilter({ key: 'titleContains', value: value || undefined })}
         width='full'
+        debounceTimeout={1000}
       />
       <div className={styles.ActionButtons}>
         <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
