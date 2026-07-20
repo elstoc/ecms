@@ -11,7 +11,7 @@ type GalleryThumbProps = {
 };
 
 export const GalleryThumb = ({ fileName, description, url, ref }: GalleryThumbProps) => (
-  <Link to={`?image=${fileName}`} replace={true} className={styles.Root} ref={ref}>
+  <Link to={`?image=${fileName}`} className={styles.Root} ref={ref}>
     <img className={styles.Image} src={url} alt={fileName} />
     <div className={styles.Overlay}>{description}</div>
   </Link>
