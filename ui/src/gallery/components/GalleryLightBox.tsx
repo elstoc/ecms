@@ -28,6 +28,10 @@ export const GalleryLightBox = () => {
 
   useTitle(imageName ? `${title} - ${imageName}` : title);
 
+  if (!imageName) {
+    return null;
+  }
+
   const currImage = images[imageIndex];
   const nextImage = images[imageIndex + 1];
   const prevImage = images[imageIndex - 1];
