@@ -99,9 +99,7 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const updateApiFilter = useCallback(
-    (payload: KeyValueOfType<BookFilters>) => {
-      dispatch({ type: 'setApiFilter', payload });
-    },
+    (payload: KeyValueOfType<BookFilters>) => dispatch({ type: 'setApiFilter', payload }),
     [dispatch],
   );
   return { state, dispatch, updateApiFilter };

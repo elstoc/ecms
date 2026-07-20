@@ -122,9 +122,7 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const updateApiFilter = useCallback(
-    (payload: KeyValueOfType<Filters>) => {
-      dispatch({ type: 'setApiFilter', payload });
-    },
+    (payload: KeyValueOfType<Filters>) => dispatch({ type: 'setApiFilter', payload }),
     [dispatch],
   );
 
