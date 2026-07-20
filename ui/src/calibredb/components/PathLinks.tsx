@@ -15,9 +15,9 @@ export const PathLinks = () => {
   const {
     state: {
       mode,
-      uiFilters: { bookPath },
+      apiFilters: { bookPath },
     },
-    updateUiFilter,
+    updateApiFilter,
   } = useCalibreDb();
 
   const childPaths =
@@ -40,7 +40,7 @@ export const PathLinks = () => {
       const newPath = bookPath.includes('/')
         ? bookPath.substring(0, bookPath.lastIndexOf('/'))
         : undefined;
-      updateUiFilter({
+      updateApiFilter({
         key: 'bookPath',
         value: newPath,
       });
@@ -70,7 +70,7 @@ export const PathLinks = () => {
         <Button
           key={childPath}
           onClick={() =>
-            updateUiFilter({
+            updateApiFilter({
               key: 'bookPath',
               value: childPath,
             })

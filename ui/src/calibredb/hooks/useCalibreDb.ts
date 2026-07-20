@@ -19,15 +19,13 @@ type CalibreDbState = {
   title: string;
   pages: number;
   mode: 'browse' | 'search';
-  uiFilters: BookFilters;
   apiFilters: BookFilters;
 };
 
 type StateAction =
   | { type: 'setPages'; payload: number }
-  | { type: 'syncFilters' }
   | { type: 'resetFilters' }
-  | { type: 'setUiFilter'; payload: KeyValueOfType<BookFilters> }
+  | { type: 'setApiFilter'; payload: KeyValueOfType<BookFilters> }
   | { type: 'toggleMode' };
 
 const initialFilters = {
@@ -40,25 +38,19 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
   if (action.type === 'setPages') {
     return { ...state, pages: action.payload };
   }
-  if (action.type === 'setUiFilter') {
+  if (action.type === 'setApiFilter') {
     const { key, value } = action.payload;
     return {
       ...state,
-      uiFilters: {
-        ...state.uiFilters,
+      pages: 1,
+      apiFilters: {
+        ...state.apiFilters,
         [key]: value,
         shuffleSeed:
           key === 'sortOrder' && value === 'shuffle'
             ? getRandomSeed()
-            : state.uiFilters.shuffleSeed,
+            : state.apiFilters.shuffleSeed,
       },
-    };
-  }
-  if (action.type === 'syncFilters') {
-    return {
-      ...state,
-      pages: 1,
-      apiFilters: state.uiFilters,
     };
   }
   if (action.type === 'resetFilters') {
@@ -66,24 +58,16 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
       ...state,
       pages: 1,
       mode: 'browse',
-      uiFilters: { ...initialFilters },
       apiFilters: { ...initialFilters },
     };
   }
   if (action.type === 'toggleMode') {
     const newMode = state.mode === 'browse' ? 'search' : 'browse';
-    const { devices, bookPath, sortOrder } = state.uiFilters;
+    const { devices, bookPath, sortOrder } = state.apiFilters;
     return {
       ...state,
       mode: newMode,
       pages: 1,
-      uiFilters: {
-        ...initialFilters,
-        devices,
-        bookPath,
-        sortOrder,
-        exactPath: newMode === 'browse',
-      },
       apiFilters: {
         ...initialFilters,
         devices,
@@ -99,7 +83,7 @@ const reducer: (state: CalibreDbState, action: StateAction) => CalibreDbState = 
 type CalibreDbContextProps = {
   state: CalibreDbState;
   dispatch: React.Dispatch<StateAction>;
-  updateUiFilter: (payload: KeyValueOfType<BookFilters>) => void;
+  updateApiFilter: (payload: KeyValueOfType<BookFilters>) => void;
 };
 
 export const CalibreDbContext = createContext({} as CalibreDbContextProps);
@@ -109,20 +93,18 @@ export const useCalibreDbReducer = (apiPath: string, title: string) => {
     apiPath,
     title,
     pages: 1,
-    uiFilters: { ...initialFilters },
     apiFilters: { ...initialFilters },
     mode: 'browse',
   } as CalibreDbState;
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const updateUiFilter = useCallback(
+  const updateApiFilter = useCallback(
     (payload: KeyValueOfType<BookFilters>) => {
-      dispatch({ type: 'setUiFilter', payload });
-      dispatch({ type: 'syncFilters' });
+      dispatch({ type: 'setApiFilter', payload });
     },
     [dispatch],
   );
-  return { state, dispatch, updateUiFilter };
+  return { state, dispatch, updateApiFilter };
 };
 
 export const useCalibreDb = () => use(CalibreDbContext);

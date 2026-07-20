@@ -41,14 +41,14 @@ export const BookFilters = () => {
   );
 
   const {
-    state: { uiFilters, mode },
-    updateUiFilter,
+    state: { apiFilters, mode },
+    updateApiFilter,
     dispatch,
   } = useCalibreDb();
 
   let readStatusCode: 'Y' | 'N' | undefined;
-  if (uiFilters.readStatus != null) {
-    readStatusCode = uiFilters.readStatus ? 'Y' : 'N';
+  if (apiFilters.readStatus != null) {
+    readStatusCode = apiFilters.readStatus ? 'Y' : 'N';
   }
 
   return (
@@ -62,9 +62,9 @@ export const BookFilters = () => {
       <TagSelect
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
-        selectedTags={uiFilters.devices ?? []}
+        selectedTags={apiFilters.devices ?? []}
         onChange={(value) =>
-          updateUiFilter({ key: 'devices', value: value.length ? value : undefined })
+          updateApiFilter({ key: 'devices', value: value.length ? value : undefined })
         }
         emptyMessage='No devices found'
         width='full'
@@ -73,16 +73,16 @@ export const BookFilters = () => {
         label='Path'
         items={allPathItems}
         emptyMessage='No paths found'
-        value={uiFilters.bookPath ?? null}
-        onChange={(value) => updateUiFilter({ key: 'bookPath', value: value ?? undefined })}
+        value={apiFilters.bookPath ?? null}
+        onChange={(value) => updateApiFilter({ key: 'bookPath', value: value ?? undefined })}
         maxListItems={100}
         width='full'
       />
       <Combobox
         label='Author'
         items={allAuthorItems}
-        value={uiFilters.author?.toString() ?? null}
-        onChange={(value) => updateUiFilter({ key: 'author', value: toIntOrUndefined(value) })}
+        value={apiFilters.author?.toString() ?? null}
+        onChange={(value) => updateApiFilter({ key: 'author', value: toIntOrUndefined(value) })}
         emptyMessage='No authors found'
         maxListItems={100}
         disabled={mode === 'browse'}
@@ -93,8 +93,8 @@ export const BookFilters = () => {
           label='Format'
           lookupTable='formats'
           valueForNullCode='All'
-          value={uiFilters.format?.toString() ?? null}
-          onChange={(value) => updateUiFilter({ key: 'format', value: toIntOrUndefined(value) })}
+          value={apiFilters.format?.toString() ?? null}
+          onChange={(value) => updateApiFilter({ key: 'format', value: toIntOrUndefined(value) })}
           disabled={mode === 'browse'}
         />
         <ToggleGroup
@@ -102,7 +102,7 @@ export const BookFilters = () => {
           items={readStatusOptionItems}
           value={[readStatusCode ?? 'All']}
           onChange={(value) =>
-            updateUiFilter({
+            updateApiFilter({
               key: 'readStatus',
               value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
             })
@@ -112,9 +112,9 @@ export const BookFilters = () => {
       </div>
       <Input
         label='Title Search'
-        value={uiFilters.titleContains ?? ''}
+        value={apiFilters.titleContains ?? ''}
         disabled={mode == 'browse'}
-        onChange={(value) => updateUiFilter({ key: 'titleContains', value: value || undefined })}
+        onChange={(value) => updateApiFilter({ key: 'titleContains', value: value || undefined })}
         width='full'
         debounceTimeout={1000}
       />
