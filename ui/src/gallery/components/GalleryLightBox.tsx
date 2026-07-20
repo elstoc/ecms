@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { LightBox } from '@/shared/components/lightbox';
 import { useTitle } from '@/shared/hooks';
@@ -8,6 +8,7 @@ import { useGallery } from '../hooks/useGallery';
 import { useGalleryContent } from '../hooks/useGalleryQueries';
 
 export const GalleryLightBox = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const {
     state: { title },
@@ -34,7 +35,7 @@ export const GalleryLightBox = () => {
   return (
     <LightBox
       open={Boolean(currImage)}
-      onClose={() => setSearchParams({}, { replace: true })}
+      onClose={() => navigate(-1)}
       onPrev={
         prevImage && (() => setSearchParams({ image: prevImage.fileName }, { replace: true }))
       }
