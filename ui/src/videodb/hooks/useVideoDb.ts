@@ -22,16 +22,14 @@ type VideoDbState = {
   pages: number;
   sortOrder?: 'asc' | 'shuffle';
   shuffleSeed?: number;
-  uiFilters: Filters;
   apiFilters: Filters;
   expandedVideoIds: number[];
   showOnlyExpandedIds: boolean;
 };
 
 type StateAction =
-  | { type: 'setUiFilter'; payload: KeyValueOfType<Filters> }
+  | { type: 'setApiFilter'; payload: KeyValueOfType<Filters> }
   | { type: 'resetFilters' }
-  | { type: 'syncFilters' }
   | { type: 'setPages'; payload: number }
   | { type: 'setSortOrder'; payload: 'asc' | 'shuffle' }
   | { type: 'setVideoExpanded'; payload: { videoId: number; expanded: boolean } }
@@ -50,30 +48,23 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
       shuffleSeed: action.payload === 'shuffle' ? getRandomSeed() : undefined,
     };
   }
-  if (action.type === 'setUiFilter') {
+  if (action.type === 'setApiFilter') {
     const { key, value } = action.payload;
     return {
       ...state,
-      uiFilters: {
-        ...state.uiFilters,
+      apiFilters: {
+        ...state.apiFilters,
         [key]: value,
       },
+      pages: 1,
     };
   }
   if (action.type === 'resetFilters') {
     return {
       ...state,
-      uiFilters: { minResolution: 'HD' },
       apiFilters: { minResolution: 'HD' },
       pages: 1,
       showOnlyExpandedIds: false,
-    };
-  }
-  if (action.type === 'syncFilters') {
-    return {
-      ...state,
-      apiFilters: state.uiFilters,
-      pages: 1,
     };
   }
   if (action.type === 'setVideoExpanded') {
@@ -112,7 +103,7 @@ const reducer: (state: VideoDbState, action: StateAction) => VideoDbState = (sta
 type VideoDbContextProps = {
   state: VideoDbState;
   dispatch: React.Dispatch<StateAction>;
-  updateUiFilter: (payload: KeyValueOfType<Filters>) => void;
+  updateApiFilter: (payload: KeyValueOfType<Filters>) => void;
 };
 
 export const VideoDbContext = createContext({} as VideoDbContextProps);
@@ -123,7 +114,6 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
     apiPath,
     pages: 1,
     sortOrder: 'asc',
-    uiFilters: { minResolution: 'HD' },
     apiFilters: { minResolution: 'HD' },
     expandedVideoIds: [],
     showOnlyExpandedIds: false,
@@ -131,15 +121,14 @@ export const useVideoDbReducer = (title: string, apiPath: string) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const updateUiFilter = useCallback(
+  const updateApiFilter = useCallback(
     (payload: KeyValueOfType<Filters>) => {
-      dispatch({ type: 'setUiFilter', payload });
-      dispatch({ type: 'syncFilters' });
+      dispatch({ type: 'setApiFilter', payload });
     },
     [dispatch],
   );
 
-  return { state, dispatch, updateUiFilter };
+  return { state, dispatch, updateApiFilter };
 };
 
 export const useVideoDb = () => use(VideoDbContext);

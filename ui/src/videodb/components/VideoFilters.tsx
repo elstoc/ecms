@@ -25,9 +25,9 @@ const watchedStatusItems = [
 
 export const VideoFilters = () => {
   const {
-    state: { uiFilters, showOnlyExpandedIds, expandedVideoIds },
+    state: { apiFilters, showOnlyExpandedIds, expandedVideoIds },
     dispatch,
-    updateUiFilter,
+    updateApiFilter,
   } = useVideoDb();
 
   return (
@@ -38,16 +38,16 @@ export const VideoFilters = () => {
           lookupTable='categories'
           valueForNullCode='All'
           disabled={showOnlyExpandedIds}
-          value={uiFilters.categories ?? null}
-          onChange={(value) => updateUiFilter({ key: 'categories', value: value ?? undefined })}
+          value={apiFilters.categories ?? null}
+          onChange={(value) => updateApiFilter({ key: 'categories', value: value ?? undefined })}
         />
         <ToggleGroup
           label='Min Resolution'
           disabled={showOnlyExpandedIds}
           items={minResolutionItems}
-          value={[uiFilters.minResolution ?? 'SD']}
+          value={[apiFilters.minResolution ?? 'SD']}
           onChange={(value) =>
-            updateUiFilter({
+            updateApiFilter({
               key: 'minResolution',
               value: value[0] === 'SD' ? undefined : value[0],
             })
@@ -58,16 +58,16 @@ export const VideoFilters = () => {
         <div className={styles.Col}>
           <NumberInput
             label='Min Length'
-            value={uiFilters.minLength ?? null}
-            onChange={(value) => updateUiFilter({ key: 'minLength', value: value ?? undefined })}
+            value={apiFilters.minLength ?? null}
+            onChange={(value) => updateApiFilter({ key: 'minLength', value: value ?? undefined })}
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
             debounceTimeout={1000}
           />
           <NumberInput
             label='Max Length'
-            value={uiFilters.maxLength ?? null}
-            onChange={(value) => updateUiFilter({ key: 'maxLength', value: value ?? undefined })}
+            value={apiFilters.maxLength ?? null}
+            onChange={(value) => updateApiFilter({ key: 'maxLength', value: value ?? undefined })}
             maximumFractionDigits={0}
             disabled={showOnlyExpandedIds}
             debounceTimeout={1000}
@@ -78,18 +78,18 @@ export const VideoFilters = () => {
             label='Watched'
             disabled={showOnlyExpandedIds}
             items={watchedStatusItems}
-            value={[uiFilters.watched ?? 'All']}
+            value={[apiFilters.watched ?? 'All']}
             onChange={(value) =>
-              updateUiFilter({ key: 'watched', value: value[0] === 'All' ? undefined : value[0] })
+              updateApiFilter({ key: 'watched', value: value[0] === 'All' ? undefined : value[0] })
             }
           />
           <ToggleGroup
             label='Media'
             disabled={showOnlyExpandedIds}
             items={watchedStatusItems}
-            value={[uiFilters.mediaWatched ?? 'All']}
+            value={[apiFilters.mediaWatched ?? 'All']}
             onChange={(value) =>
-              updateUiFilter({
+              updateApiFilter({
                 key: 'mediaWatched',
                 value: value[0] === 'All' ? undefined : value[0],
               })
@@ -99,19 +99,19 @@ export const VideoFilters = () => {
       </div>
       <VideoTagInput
         label='Tags'
-        selectedTags={uiFilters.tags}
+        selectedTags={apiFilters.tags}
         allowCreation={false}
         disabled={showOnlyExpandedIds}
         onChange={(value) =>
-          updateUiFilter({ key: 'tags', value: value?.length ? value : undefined })
+          updateApiFilter({ key: 'tags', value: value?.length ? value : undefined })
         }
         width='full'
       />
       <Input
         label='Title Search'
         disabled={showOnlyExpandedIds}
-        value={uiFilters.titleContains ?? ''}
-        onChange={(value) => updateUiFilter({ key: 'titleContains', value: value || undefined })}
+        value={apiFilters.titleContains ?? ''}
+        onChange={(value) => updateApiFilter({ key: 'titleContains', value: value || undefined })}
         width='full'
         debounceTimeout={1000}
       />
@@ -120,21 +120,23 @@ export const VideoFilters = () => {
         lookupTable='media_types'
         valueForNullCode='All'
         disabled={showOnlyExpandedIds}
-        value={uiFilters.primaryMediaType ?? null}
-        onChange={(value) => updateUiFilter({ key: 'primaryMediaType', value: value ?? undefined })}
+        value={apiFilters.primaryMediaType ?? null}
+        onChange={(value) =>
+          updateApiFilter({ key: 'primaryMediaType', value: value ?? undefined })
+        }
       />
       <div className={styles.Switches}>
         <Switch
           label='In progress'
           disabled={showOnlyExpandedIds}
-          checked={!!uiFilters.hasProgressNotes}
-          onChange={(value) => updateUiFilter({ key: 'hasProgressNotes', value })}
+          checked={!!apiFilters.hasProgressNotes}
+          onChange={(value) => updateApiFilter({ key: 'hasProgressNotes', value })}
         />
         <Switch
           label='Flagged'
           disabled={showOnlyExpandedIds}
-          checked={!!uiFilters.flaggedOnly}
-          onChange={(value) => updateUiFilter({ key: 'flaggedOnly', value })}
+          checked={!!apiFilters.flaggedOnly}
+          onChange={(value) => updateApiFilter({ key: 'flaggedOnly', value })}
         />
       </div>
       <div className={styles.ActionButtons}>
