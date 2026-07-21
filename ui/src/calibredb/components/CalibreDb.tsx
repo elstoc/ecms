@@ -1,4 +1,3 @@
-import { CalibreDbContext, useCalibreDbReducer } from '@/calibredb/hooks/useCalibreDb';
 import { CalibreDbMetadata } from '@/contracts/site';
 import { useTitle } from '@/shared/hooks';
 import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
@@ -6,17 +5,16 @@ import { ContentWithSidebar } from '@/site/components/ContentWithSidebar';
 import { BookFilters } from './BookFilters';
 import { BookTools } from './BookTools';
 import { Books } from './Books';
+import { CalibreDbProvider } from './CalibreDbProvider';
 
 export const CalibreDb = ({ title, apiPath }: CalibreDbMetadata) => {
-  const reducerProps = useCalibreDbReducer(apiPath, title);
-
   useTitle(title);
 
   return (
-    <CalibreDbContext value={reducerProps}>
+    <CalibreDbProvider title={title} apiPath={apiPath}>
       <ContentWithSidebar sidebar={<BookFilters />} componentTools={<BookTools />}>
         <Books />
       </ContentWithSidebar>
-    </CalibreDbContext>
+    </CalibreDbProvider>
   );
 };
