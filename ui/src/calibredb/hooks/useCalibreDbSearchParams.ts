@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router';
 import { KeyValueOfType } from '@/utils';
 
 type SearchParamUiValues = {
-  sortOrder: string;
+  bookPath?: string;
 };
 
 type UseCalibreDbSearchParamsReturn = {
@@ -35,7 +35,7 @@ export const useCalibreDbSearchParams = (): UseCalibreDbSearchParamsReturn => {
 
   const searchParamsState = useMemo<SearchParamUiValues>(
     () => ({
-      sortOrder: searchParams.get('sortOrder') ?? 'title',
+      bookPath: searchParams.get('bookPath') || undefined,
     }),
     [searchParams],
   );
