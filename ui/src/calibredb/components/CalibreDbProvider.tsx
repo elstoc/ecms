@@ -32,11 +32,11 @@ export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProvide
 
   const updateApiFilter = useCallback(
     (payload: KeyValueOfType<BookFilters>) => {
-      if (payload.key === 'sortOrder') {
+      if (payload.key === 'bookPath') {
         updateSearchParamState(payload);
+      } else {
+        dispatch({ type: 'setApiFilter', payload });
       }
-
-      dispatch({ type: 'setApiFilter', payload });
     },
     [dispatch, updateSearchParamState],
   );
@@ -45,7 +45,7 @@ export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProvide
     ...state,
     apiFilters: {
       ...state.apiFilters,
-      sortOrder: searchParamsState.sortOrder,
+      bookPath: searchParamsState.bookPath,
     },
   };
 
