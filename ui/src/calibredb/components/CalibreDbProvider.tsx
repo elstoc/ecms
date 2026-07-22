@@ -33,12 +33,12 @@ export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProvide
   const updateApiFilter = useCallback(
     (payload: KeyValueOfType<BookFilters>) => {
       if (payload.key === 'bookPath') {
-        updateSearchParamState(payload);
+        updateSearchParamState(payload, state.mode === 'search');
       } else {
         dispatch({ type: 'setApiFilter', payload });
       }
     },
-    [dispatch, updateSearchParamState],
+    [state, dispatch, updateSearchParamState],
   );
 
   const combinedState = {
