@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import { Button } from '@/shared/components/button';
+import { useTitle } from '@/shared/hooks';
 
 import { useCalibreDb } from '../hooks/useCalibreDb';
 import { useBooks } from '../hooks/useCalibreDbQueries';
@@ -17,10 +18,15 @@ export const PathLinks = () => {
   const {
     state: {
       mode,
+      title,
       apiFilters: { bookPath },
     },
     updateApiFilter,
   } = useCalibreDb();
+
+  const pathBaseName = bookPath?.split('/')?.pop() || '/';
+
+  useTitle(mode === 'search' ? title : `${title}${bookPath ? ' - ' + bookPath : ''}`);
 
   const childPaths =
     mode === 'search'
@@ -40,8 +46,6 @@ export const PathLinks = () => {
   if (mode === 'search') {
     return <></>;
   }
-
-  const pathBaseName = bookPath?.split('/')?.pop() || '/';
 
   return (
     <div className={styles.Paths}>
