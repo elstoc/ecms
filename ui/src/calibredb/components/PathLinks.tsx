@@ -1,5 +1,6 @@
+import { useNavigate } from 'react-router';
+
 import { Button } from '@/shared/components/button';
-import { useKeyPress } from '@/shared/hooks';
 
 import { useCalibreDb } from '../hooks/useCalibreDb';
 import { useBooks } from '../hooks/useCalibreDbQueries';
@@ -9,6 +10,7 @@ import * as styles from './CalibreDb.module.css';
 
 export const PathLinks = () => {
   const { childPaths: paths } = useBooks();
+  const navigate = useNavigate();
 
   const uniquePaths = getUniquePaths(paths);
 
@@ -35,23 +37,6 @@ export const PathLinks = () => {
           }
         });
 
-  const goPrevious = () => {
-    if (bookPath) {
-      const newPath = bookPath.includes('/')
-        ? bookPath.substring(0, bookPath.lastIndexOf('/'))
-        : undefined;
-      updateApiFilter({
-        key: 'bookPath',
-        value: newPath,
-      });
-    }
-  };
-
-  // do not activate backspace listener at root of path tree or in search mode
-  const deactivateListener = Boolean(mode === 'search' || !bookPath);
-
-  useKeyPress(['Backspace'], () => goPrevious(), deactivateListener);
-
   if (mode === 'search') {
     return <></>;
   }
@@ -62,7 +47,7 @@ export const PathLinks = () => {
     <div className={styles.Paths}>
       <h1 className={styles.PathName}>{pathBaseName}</h1>
       {bookPath && (
-        <Button className={styles.PathBack} onClick={goPrevious}>
+        <Button className={styles.PathBack} onClick={() => navigate(-1)}>
           . .
         </Button>
       )}
