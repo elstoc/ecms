@@ -43,6 +43,7 @@ export const BookFilters = () => {
   const {
     state: { apiFilters, mode },
     updateApiFilter,
+    resetFilters,
     dispatch,
   } = useCalibreDb();
 
@@ -119,7 +120,7 @@ export const BookFilters = () => {
         debounceTimeout={1000}
       />
       <div className={styles.ActionButtons}>
-        <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
+        <Button onClick={resetFilters}>Reset Filters</Button>
       </div>
     </form>
   );
