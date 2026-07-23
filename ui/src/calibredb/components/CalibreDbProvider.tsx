@@ -11,6 +11,7 @@ type CalibreDbContextProps = {
   state: CalibreDbState;
   dispatch: React.Dispatch<StateAction>;
   updateApiFilter: (payload: KeyValueOfType<BookFilters>) => void;
+  resetFilters: () => void;
 };
 
 export const CalibreDbContext = createContext({} as CalibreDbContextProps);
@@ -36,9 +37,9 @@ export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProvide
         setSearchParams(
           (params) => {
             if (payload.value === undefined) {
-              params.delete(payload.key);
+              params.delete('bookPath');
             } else {
-              params.set(payload.key, payload.value.toString());
+              params.set('bookPath', payload.value.toString());
             }
             return params;
           },
@@ -51,6 +52,14 @@ export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProvide
     [state, dispatch, setSearchParams],
   );
 
+  const resetFilters = useCallback(() => {
+    setSearchParams((params) => {
+      params.delete('bookPath');
+      return params;
+    });
+    dispatch({ type: 'resetFilters' });
+  }, [dispatch, setSearchParams]);
+
   const combinedState = {
     ...state,
     apiFilters: {
@@ -60,7 +69,7 @@ export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProvide
   };
 
   return (
-    <CalibreDbContext value={{ state: combinedState, dispatch, updateApiFilter }}>
+    <CalibreDbContext value={{ state: combinedState, dispatch, updateApiFilter, resetFilters }}>
       {children}
     </CalibreDbContext>
   );
