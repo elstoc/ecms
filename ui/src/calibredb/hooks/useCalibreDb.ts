@@ -12,7 +12,6 @@ export type BookFilters = {
   exactPath?: boolean;
   readStatus?: boolean;
   sortOrder: string;
-  shuffleSeed?: number;
   devices?: string[];
 };
 
@@ -20,6 +19,7 @@ export type CalibreDbState = {
   apiPath: string;
   title: string;
   pages: number;
+  shuffleSeed?: number;
   mode: 'browse' | 'search';
   apiFilters: BookFilters;
 };

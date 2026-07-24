@@ -7,6 +7,7 @@ export const getCalibreDbBooks = async (
   path: string,
   filters: BookFilters,
   pages: number,
+  shuffleSeed?: number,
 ): Promise<PaginatedBooks> => {
   const url = 'calibredb/books';
   const { data } = await axiosSecureClient.get<PaginatedBooks>(url, {
@@ -17,6 +18,7 @@ export const getCalibreDbBooks = async (
       exactPath: filters.exactPath ? '1' : '0',
       readStatus: filters.readStatus == null ? undefined : filters.readStatus ? '1' : '0',
       devices: filters.devices?.join('|'),
+      shuffleSeed: shuffleSeed?.toString(),
     },
   });
 

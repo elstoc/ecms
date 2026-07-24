@@ -14,13 +14,10 @@ export const calibreDbReducer: (state: CalibreDbState, action: StateAction) => C
     return {
       ...state,
       pages: 1,
+      shuffleSeed: key === 'sortOrder' && value === 'shuffle' ? getRandomSeed() : state.shuffleSeed,
       apiFilters: {
         ...state.apiFilters,
         [key]: value,
-        shuffleSeed:
-          key === 'sortOrder' && value === 'shuffle'
-            ? getRandomSeed()
-            : state.apiFilters.shuffleSeed,
       },
     };
   }
