@@ -44,21 +44,21 @@ export const useSearchParamMapper = ({
   const [shuffleSeed, setShuffleSeed] = useState(0);
   const [pages, setPages] = useState(1);
 
+  const mode = useMemo<string>(() => searchParams.get('mode') || defaultMode, [searchParams]);
+
   const apiFilters = useMemo<BookApiFilters>(
     () => ({
       titleContains: searchParams.get('titleContains') || undefined,
       author: toIntOrUndefined(searchParams.get('author')),
       format: toIntOrUndefined(searchParams.get('format')),
       bookPath: searchParams.get('bookPath') || undefined,
-      exactPath: searchParams.get('exactPath') === '1',
+      exactPath: mode === 'browse',
       readStatus: searchParams.get('readStatus') === '1',
       sortOrder: searchParams.get('sortOrder') || defaultSortOrder,
       devices: searchParams.get('devices')?.split('|') || ['kobo', 'tablet', 'physical'],
     }),
-    [searchParams],
+    [mode, searchParams],
   );
-
-  const mode = useMemo<string>(() => searchParams.get('mode') || defaultMode, [searchParams]);
 
   const updateApiFilter = useCallback(
     ({ key, value }: KeyValueOfType<BookApiFilters>) => {
@@ -101,11 +101,9 @@ export const useSearchParamMapper = ({
     setSearchParams((params) => {
       const newMode = mode === 'browse' ? 'search' : 'browse';
       if (newMode === 'search') {
-        params.set('exactPath', '0');
         params.set('mode', 'search');
       } else {
         // 'browse' mode is the default so has empty search params
-        params.set('exactPath', '1');
         params.delete('mode');
       }
       return params;
