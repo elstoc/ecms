@@ -1,7 +1,7 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
-import { KeyValueOfType, toIntOrUndefined } from '@/utils';
+import { KeyValueOfType, getRandomSeed, toIntOrUndefined } from '@/utils';
 
 export type NewBookFilters = {
   titleContains?: string;
@@ -14,22 +14,37 @@ export type NewBookFilters = {
   devices?: string[];
 };
 
-type UseSearchParamMapperReturn = {
-  bookFilters: NewBookFilters;
-  mode: string;
-  toggleMode: () => void;
-  setBookFilter: (payload: KeyValueOfType<NewBookFilters>) => void;
-  resetBookFilters: () => void;
+export type State = {
+  apiPath: string;
+  title: string;
+  pages: number;
+  shuffleSeed?: number;
+  mode: 'browse' | 'search';
+  apiFilters: NewBookFilters;
 };
 
 const defaultDevices = ['kobo', 'tablet', 'physical'];
 const defaultSortOrder = 'title';
 const defaultMode = 'browse';
 
-export const useSearchParamMapper = (): UseSearchParamMapperReturn => {
-  const [searchParams, setSearchParams] = useSearchParams();
+type UseSearchParamMapperProps = { title: string; apiPath: string };
 
-  const bookFilters = useMemo<NewBookFilters>(
+type UseSearchParamMapperReturn = {
+  state: State;
+  toggleMode: () => void;
+  updateApiFilter: (payload: KeyValueOfType<NewBookFilters>) => void;
+  resetFilters: () => void;
+};
+
+export const useSearchParamMapper = ({
+  title,
+  apiPath,
+}: UseSearchParamMapperProps): UseSearchParamMapperReturn => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [shuffleSeed, setShuffleSeed] = useState(0);
+  const [pages, setPages] = useState(1);
+
+  const apiFilters = useMemo<NewBookFilters>(
     () => ({
       titleContains: searchParams.get('titleContains') || undefined,
       author: toIntOrUndefined(searchParams.get('author')),
@@ -45,7 +60,7 @@ export const useSearchParamMapper = (): UseSearchParamMapperReturn => {
 
   const mode = useMemo<string>(() => searchParams.get('mode') || defaultMode, [searchParams]);
 
-  const setBookFilter = useCallback(
+  const updateApiFilter = useCallback(
     ({ key, value }: KeyValueOfType<NewBookFilters>) => {
       let newSearchParamValue: string | undefined;
 
@@ -57,6 +72,9 @@ export const useSearchParamMapper = (): UseSearchParamMapperReturn => {
         }
       } else if (key === 'sortOrder') {
         newSearchParamValue = value === defaultSortOrder ? undefined : value;
+        if (value === 'shuffle') {
+          setShuffleSeed(getRandomSeed());
+        }
       } else if (key === 'author' || key === 'format') {
         newSearchParamValue = value?.toString();
       } else if (key === 'exactPath' || key === 'readStatus') {
@@ -73,8 +91,10 @@ export const useSearchParamMapper = (): UseSearchParamMapperReturn => {
         }
         return params;
       });
+
+      setPages(1);
     },
-    [setSearchParams],
+    [setPages, setSearchParams],
   );
 
   const toggleMode = useCallback(() => {
@@ -92,9 +112,20 @@ export const useSearchParamMapper = (): UseSearchParamMapperReturn => {
     });
   }, [mode, setSearchParams]);
 
-  const resetBookFilters = useCallback(() => {
+  const resetFilters = useCallback(() => {
     setSearchParams('');
+    setPages(0);
+    setShuffleSeed(0);
   }, [setSearchParams]);
 
-  return { bookFilters, mode, setBookFilter, toggleMode, resetBookFilters };
+  const state: State = {
+    title,
+    apiPath,
+    pages,
+    shuffleSeed,
+    mode: mode as 'browse' | 'search',
+    apiFilters: apiFilters,
+  };
+
+  return { state, updateApiFilter, toggleMode, resetFilters };
 };
