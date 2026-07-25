@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { KeyValueOfType, getRandomSeed, toIntOrUndefined } from '@/utils';
@@ -34,6 +34,7 @@ type UseSearchParamMapperReturn = {
   toggleMode: () => void;
   updateApiFilter: (payload: KeyValueOfType<BookApiFilters>) => void;
   resetFilters: () => void;
+  setPages: Dispatch<SetStateAction<number>>;
 };
 
 export const useSearchParamMapper = ({
@@ -125,5 +126,5 @@ export const useSearchParamMapper = ({
     apiFilters: apiFilters,
   };
 
-  return { state, updateApiFilter, toggleMode, resetFilters };
+  return { state, updateApiFilter, toggleMode, resetFilters, setPages };
 };
