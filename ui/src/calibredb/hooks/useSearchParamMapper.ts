@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router';
 
 import { KeyValueOfType, getRandomSeed, toIntOrUndefined } from '@/utils';
 
-export type NewBookFilters = {
+export type BookApiFilters = {
   titleContains?: string;
   author?: number;
   format?: number;
@@ -20,7 +20,7 @@ export type State = {
   pages: number;
   shuffleSeed?: number;
   mode: 'browse' | 'search';
-  apiFilters: NewBookFilters;
+  apiFilters: BookApiFilters;
 };
 
 const defaultDevices = ['kobo', 'tablet', 'physical'];
@@ -32,7 +32,7 @@ type UseSearchParamMapperProps = { title: string; apiPath: string };
 type UseSearchParamMapperReturn = {
   state: State;
   toggleMode: () => void;
-  updateApiFilter: (payload: KeyValueOfType<NewBookFilters>) => void;
+  updateApiFilter: (payload: KeyValueOfType<BookApiFilters>) => void;
   resetFilters: () => void;
 };
 
@@ -44,7 +44,7 @@ export const useSearchParamMapper = ({
   const [shuffleSeed, setShuffleSeed] = useState(0);
   const [pages, setPages] = useState(1);
 
-  const apiFilters = useMemo<NewBookFilters>(
+  const apiFilters = useMemo<BookApiFilters>(
     () => ({
       titleContains: searchParams.get('titleContains') || undefined,
       author: toIntOrUndefined(searchParams.get('author')),
@@ -61,7 +61,7 @@ export const useSearchParamMapper = ({
   const mode = useMemo<string>(() => searchParams.get('mode') || defaultMode, [searchParams]);
 
   const updateApiFilter = useCallback(
-    ({ key, value }: KeyValueOfType<NewBookFilters>) => {
+    ({ key, value }: KeyValueOfType<BookApiFilters>) => {
       let newSearchParamValue: string | undefined;
 
       if (key === 'devices') {
