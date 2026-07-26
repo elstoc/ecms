@@ -1,75 +1,23 @@
-import { ReactNode, createContext, useCallback, useReducer } from 'react';
-import { useSearchParams } from 'react-router';
+import { ReactNode, createContext } from 'react';
 
 import { CalibreDbMetadata } from '@/contracts/site';
-import { KeyValueOfType } from '@/utils';
 
-import { BookFilters, CalibreDbState, StateAction, initialFilters } from '../hooks/useCalibreDb';
-import { calibreDbReducer } from '../utils/calibreDbReducer';
+import { UseSearchParamMapperReturn, useSearchParamMapper } from '../hooks/useSearchParamMapper';
 
-type CalibreDbContextProps = {
-  state: CalibreDbState;
-  dispatch: React.Dispatch<StateAction>;
-  updateApiFilter: (payload: KeyValueOfType<BookFilters>) => void;
-  resetFilters: () => void;
-};
-
-export const CalibreDbContext = createContext({} as CalibreDbContextProps);
+export const CalibreDbContext = createContext({} as UseSearchParamMapperReturn);
 
 type CalibreDbProviderProps = Pick<CalibreDbMetadata, 'title' | 'apiPath'> & {
   children: ReactNode;
 };
 
 export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProviderProps) => {
-  const initialState = {
-    apiPath,
+  const { state, toggleMode, updateApiFilter, resetFilters, setPages } = useSearchParamMapper({
     title,
-    pages: 1,
-    apiFilters: { ...initialFilters },
-    mode: 'browse',
-  } as CalibreDbState;
-  const [state, dispatch] = useReducer(calibreDbReducer, initialState);
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const updateApiFilter = useCallback(
-    (payload: KeyValueOfType<BookFilters>) => {
-      if (payload.key === 'bookPath') {
-        setSearchParams(
-          (params) => {
-            if (payload.value === undefined) {
-              params.delete('bookPath');
-            } else {
-              params.set('bookPath', payload.value.toString());
-            }
-            return params;
-          },
-          { replace: state.mode === 'search' },
-        );
-      } else {
-        dispatch({ type: 'setApiFilter', payload });
-      }
-    },
-    [state, dispatch, setSearchParams],
-  );
-
-  const resetFilters = useCallback(() => {
-    setSearchParams((params) => {
-      params.delete('bookPath');
-      return params;
-    });
-    dispatch({ type: 'resetFilters' });
-  }, [dispatch, setSearchParams]);
-
-  const combinedState = {
-    ...state,
-    apiFilters: {
-      ...state.apiFilters,
-      bookPath: searchParams.get('bookPath') || undefined,
-    },
-  };
+    apiPath,
+  });
 
   return (
-    <CalibreDbContext value={{ state: combinedState, dispatch, updateApiFilter, resetFilters }}>
+    <CalibreDbContext value={{ state, toggleMode, updateApiFilter, resetFilters, setPages }}>
       {children}
     </CalibreDbContext>
   );

@@ -44,7 +44,7 @@ export const BookFilters = () => {
     state: { apiFilters, mode },
     updateApiFilter,
     resetFilters,
-    dispatch,
+    toggleMode,
   } = useCalibreDb();
 
   let readStatusCode: 'Y' | 'N' | undefined;
@@ -54,12 +54,7 @@ export const BookFilters = () => {
 
   return (
     <form role='search' aria-labelledby='book-search-title' className={styles.Filters}>
-      <ToggleGroup
-        label='Mode'
-        items={modeOptionItems}
-        value={[mode]}
-        onChange={() => dispatch({ type: 'toggleMode' })}
-      />
+      <ToggleGroup label='Mode' items={modeOptionItems} value={[mode]} onChange={toggleMode} />
       <TagSelect
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}

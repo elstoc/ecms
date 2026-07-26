@@ -29,7 +29,7 @@ const defaultMode = 'browse';
 
 type UseSearchParamMapperProps = { title: string; apiPath: string };
 
-type UseSearchParamMapperReturn = {
+export type UseSearchParamMapperReturn = {
   state: State;
   toggleMode: () => void;
   updateApiFilter: (payload: KeyValueOfType<BookApiFilters>) => void;
@@ -42,7 +42,7 @@ export const useSearchParamMapper = ({
   apiPath,
 }: UseSearchParamMapperProps): UseSearchParamMapperReturn => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [shuffleSeed, setShuffleSeed] = useState(0);
+  const [shuffleSeed, setShuffleSeed] = useState(1);
   const [pages, setPages] = useState(1);
 
   const mode = useMemo<string>(() => searchParams.get('mode') || defaultMode, [searchParams]);
@@ -54,7 +54,10 @@ export const useSearchParamMapper = ({
       format: toIntOrUndefined(searchParams.get('format')),
       bookPath: searchParams.get('bookPath') || undefined,
       exactPath: mode === 'browse',
-      readStatus: searchParams.get('readStatus') === '1',
+      readStatus:
+        searchParams.get('readStatus') === null
+          ? undefined
+          : searchParams.get('readStatus') === '1',
       sortOrder: searchParams.get('sortOrder') || defaultSortOrder,
       devices: searchParams.get('devices')?.split('|') || ['kobo', 'tablet', 'physical'],
     }),
@@ -66,7 +69,10 @@ export const useSearchParamMapper = ({
       let newSearchParamValue: string | undefined;
 
       if (key === 'devices') {
-        if (!value || value?.every((device) => defaultDevices.includes(device))) {
+        const onlyDefaultDevicesSelected =
+          value?.length === defaultDevices.length &&
+          value.every((device) => defaultDevices.includes(device));
+        if (!value || onlyDefaultDevicesSelected) {
           newSearchParamValue = undefined;
         } else {
           newSearchParamValue = value.join('|');
@@ -78,8 +84,14 @@ export const useSearchParamMapper = ({
         }
       } else if (key === 'author' || key === 'format') {
         newSearchParamValue = value?.toString();
-      } else if (key === 'exactPath' || key === 'readStatus') {
+      } else if (key === 'exactPath') {
         newSearchParamValue = value ? undefined : '1';
+      } else if (key === 'readStatus') {
+        if (value === undefined) {
+          newSearchParamValue = undefined;
+        } else {
+          newSearchParamValue = value ? '1' : '0';
+        }
       } else if (key === 'titleContains' || key === 'bookPath') {
         newSearchParamValue = value;
       }
@@ -113,8 +125,8 @@ export const useSearchParamMapper = ({
 
   const resetFilters = useCallback(() => {
     setSearchParams('');
-    setPages(0);
-    setShuffleSeed(0);
+    setPages(1);
+    setShuffleSeed(1);
   }, [setSearchParams]);
 
   const state: State = {
