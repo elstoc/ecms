@@ -1,7 +1,5 @@
 import { use } from 'react';
 
-import { KeyValueOfType } from '@/utils';
-
 import { CalibreDbContext } from '../components/CalibreDbProvider';
 
 export type BookFilters = {
@@ -22,18 +20,6 @@ export type CalibreDbState = {
   shuffleSeed?: number;
   mode: 'browse' | 'search';
   apiFilters: BookFilters;
-};
-
-export type StateAction =
-  | { type: 'setPages'; payload: number }
-  | { type: 'resetFilters' }
-  | { type: 'setApiFilter'; payload: KeyValueOfType<BookFilters> }
-  | { type: 'toggleMode' };
-
-export const initialFilters = {
-  exactPath: true,
-  sortOrder: 'title',
-  devices: ['kobo', 'tablet', 'physical'],
 };
 
 export const useCalibreDb = () => use(CalibreDbContext);

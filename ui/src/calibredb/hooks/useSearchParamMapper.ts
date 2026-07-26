@@ -3,25 +3,7 @@ import { useSearchParams } from 'react-router';
 
 import { KeyValueOfType, getRandomSeed, toIntOrUndefined } from '@/utils';
 
-export type BookApiFilters = {
-  titleContains?: string;
-  author?: number;
-  format?: number;
-  bookPath?: string;
-  exactPath?: boolean;
-  readStatus?: boolean;
-  sortOrder: string;
-  devices?: string[];
-};
-
-export type State = {
-  apiPath: string;
-  title: string;
-  pages: number;
-  shuffleSeed?: number;
-  mode: 'browse' | 'search';
-  apiFilters: BookApiFilters;
-};
+import { BookFilters, CalibreDbState } from './useCalibreDb';
 
 const defaultDevices = ['kobo', 'tablet', 'physical'];
 const defaultSortOrder = 'title';
@@ -30,9 +12,9 @@ const defaultMode = 'browse';
 type UseSearchParamMapperProps = { title: string; apiPath: string };
 
 export type UseSearchParamMapperReturn = {
-  state: State;
+  state: CalibreDbState;
   toggleMode: () => void;
-  updateApiFilter: (payload: KeyValueOfType<BookApiFilters>) => void;
+  updateApiFilter: (payload: KeyValueOfType<BookFilters>) => void;
   resetFilters: () => void;
   setPages: Dispatch<SetStateAction<number>>;
 };
@@ -47,7 +29,7 @@ export const useSearchParamMapper = ({
 
   const mode = useMemo<string>(() => searchParams.get('mode') || defaultMode, [searchParams]);
 
-  const apiFilters = useMemo<BookApiFilters>(
+  const apiFilters = useMemo<BookFilters>(
     () => ({
       titleContains: searchParams.get('titleContains') || undefined,
       author: toIntOrUndefined(searchParams.get('author')),
@@ -65,7 +47,7 @@ export const useSearchParamMapper = ({
   );
 
   const updateApiFilter = useCallback(
-    ({ key, value }: KeyValueOfType<BookApiFilters>) => {
+    ({ key, value }: KeyValueOfType<BookFilters>) => {
       let newSearchParamValue: string | undefined;
 
       if (key === 'devices') {
@@ -132,7 +114,7 @@ export const useSearchParamMapper = ({
     setShuffleSeed(1);
   }, [mode, setSearchParams]);
 
-  const state: State = {
+  const state: CalibreDbState = {
     title,
     apiPath,
     pages,
