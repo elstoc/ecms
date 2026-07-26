@@ -1,7 +1,9 @@
-import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { KeyValueOfType, getRandomSeed, toIntOrUndefined } from '@/utils';
+
+import { CalibreDbProviderValue } from '../components/CalibreDbProvider';
 
 import { BookFilters, CalibreDbState } from './useCalibreDb';
 
@@ -9,20 +11,12 @@ const defaultDevices = ['kobo', 'tablet', 'physical'];
 const defaultSortOrder = 'title';
 const defaultMode = 'browse';
 
-type UseSearchParamMapperProps = { title: string; apiPath: string };
+type UseCalibreDbStateProps = { title: string; apiPath: string };
 
-export type UseSearchParamMapperReturn = {
-  state: CalibreDbState;
-  toggleMode: () => void;
-  updateApiFilter: (payload: KeyValueOfType<BookFilters>) => void;
-  resetFilters: () => void;
-  setPages: Dispatch<SetStateAction<number>>;
-};
-
-export const useSearchParamMapper = ({
+export const useCalibreDbState = ({
   title,
   apiPath,
-}: UseSearchParamMapperProps): UseSearchParamMapperReturn => {
+}: UseCalibreDbStateProps): CalibreDbProviderValue => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [shuffleSeed, setShuffleSeed] = useState(1);
   const [pages, setPages] = useState(1);
