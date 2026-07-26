@@ -96,18 +96,21 @@ export const useSearchParamMapper = ({
         newSearchParamValue = value;
       }
 
-      setSearchParams((params) => {
-        if (newSearchParamValue === undefined) {
-          params.delete(key);
-        } else {
-          params.set(key, newSearchParamValue);
-        }
-        return params;
-      });
+      setSearchParams(
+        (params) => {
+          if (newSearchParamValue === undefined) {
+            params.delete(key);
+          } else {
+            params.set(key, newSearchParamValue);
+          }
+          return params;
+        },
+        { replace: mode === 'search' },
+      );
 
       setPages(1);
     },
-    [setPages, setSearchParams],
+    [mode, setPages, setSearchParams],
   );
 
   const toggleMode = useCallback(() => {
@@ -124,10 +127,10 @@ export const useSearchParamMapper = ({
   }, [mode, setSearchParams]);
 
   const resetFilters = useCallback(() => {
-    setSearchParams('');
+    setSearchParams('', { replace: mode === 'search' });
     setPages(1);
     setShuffleSeed(1);
-  }, [setSearchParams]);
+  }, [mode, setSearchParams]);
 
   const state: State = {
     title,
