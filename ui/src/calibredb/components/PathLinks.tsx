@@ -21,7 +21,7 @@ export const PathLinks = () => {
       title,
       apiFilters: { bookPath },
     },
-    updateApiFilter,
+    updateFilter,
   } = useCalibreDb();
 
   const pathBaseName = bookPath?.split('/')?.pop() || '/';
@@ -59,7 +59,7 @@ export const PathLinks = () => {
         <Button
           key={childPath}
           onClick={() =>
-            updateApiFilter({
+            updateFilter({
               key: 'bookPath',
               value: childPath,
             })

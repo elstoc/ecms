@@ -42,7 +42,7 @@ export const BookFilters = () => {
 
   const {
     state: { apiFilters, mode },
-    updateApiFilter,
+    updateFilter,
     resetFilters,
     toggleMode,
   } = useCalibreDb();
@@ -60,7 +60,7 @@ export const BookFilters = () => {
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
         selectedTags={apiFilters.devices ?? []}
         onChange={(value) =>
-          updateApiFilter({ key: 'devices', value: value.length ? value : undefined })
+          updateFilter({ key: 'devices', value: value.length ? value : undefined })
         }
         emptyMessage='No devices found'
         width='full'
@@ -70,7 +70,7 @@ export const BookFilters = () => {
         items={allPathItems}
         emptyMessage='No paths found'
         value={apiFilters.bookPath ?? null}
-        onChange={(value) => updateApiFilter({ key: 'bookPath', value: value ?? undefined })}
+        onChange={(value) => updateFilter({ key: 'bookPath', value: value ?? undefined })}
         maxListItems={100}
         width='full'
       />
@@ -78,7 +78,7 @@ export const BookFilters = () => {
         label='Author'
         items={allAuthorItems}
         value={apiFilters.author?.toString() ?? null}
-        onChange={(value) => updateApiFilter({ key: 'author', value: toIntOrUndefined(value) })}
+        onChange={(value) => updateFilter({ key: 'author', value: toIntOrUndefined(value) })}
         emptyMessage='No authors found'
         maxListItems={100}
         disabled={mode === 'browse'}
@@ -90,7 +90,7 @@ export const BookFilters = () => {
           lookupTable='formats'
           valueForNullCode='All'
           value={apiFilters.format?.toString() ?? null}
-          onChange={(value) => updateApiFilter({ key: 'format', value: toIntOrUndefined(value) })}
+          onChange={(value) => updateFilter({ key: 'format', value: toIntOrUndefined(value) })}
           disabled={mode === 'browse'}
         />
         <ToggleGroup
@@ -98,7 +98,7 @@ export const BookFilters = () => {
           items={readStatusOptionItems}
           value={[readStatusCode ?? 'All']}
           onChange={(value) =>
-            updateApiFilter({
+            updateFilter({
               key: 'readStatus',
               value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
             })
@@ -110,7 +110,7 @@ export const BookFilters = () => {
         label='Title Search'
         value={apiFilters.titleContains ?? ''}
         disabled={mode == 'browse'}
-        onChange={(value) => updateApiFilter({ key: 'titleContains', value: value || undefined })}
+        onChange={(value) => updateFilter({ key: 'titleContains', value: value || undefined })}
         width='full'
         debounceTimeout={1000}
       />

@@ -9,9 +9,10 @@ import { useCalibreDbState } from '../hooks/useCalibreDbState';
 export type CalibreDbProviderValue = {
   state: CalibreDbState;
   toggleMode: () => void;
-  updateApiFilter: (payload: KeyValueOfType<BookFilters>) => void;
+  updateFilter: (payload: KeyValueOfType<BookFilters>) => void;
   resetFilters: () => void;
   setPages: Dispatch<SetStateAction<number>>;
+  apiQueryParams: Record<string, string | number | undefined>;
 };
 
 export const CalibreDbContext = createContext({} as CalibreDbProviderValue);
@@ -21,14 +22,10 @@ type CalibreDbProviderProps = Pick<CalibreDbMetadata, 'title' | 'apiPath'> & {
 };
 
 export const CalibreDbProvider = ({ title, apiPath, children }: CalibreDbProviderProps) => {
-  const { state, toggleMode, updateApiFilter, resetFilters, setPages } = useCalibreDbState({
+  const value = useCalibreDbState({
     title,
     apiPath,
   });
 
-  return (
-    <CalibreDbContext value={{ state, toggleMode, updateApiFilter, resetFilters, setPages }}>
-      {children}
-    </CalibreDbContext>
-  );
+  return <CalibreDbContext value={value}>{children}</CalibreDbContext>;
 };

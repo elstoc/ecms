@@ -40,7 +40,7 @@ export const useCalibreDbState = ({
     [mode, searchParams],
   );
 
-  const updateApiFilter = useCallback(
+  const updateFilter = useCallback(
     ({ key, value }: KeyValueOfType<BookFilters>) => {
       let newSearchParamValue: string | undefined;
 
@@ -117,5 +117,15 @@ export const useCalibreDbState = ({
     apiFilters: apiFilters,
   };
 
-  return { state, updateApiFilter, toggleMode, resetFilters, setPages };
+  const apiQueryParams: Record<string, number | string | undefined> = {
+    path: apiPath,
+    pages: (pages || 1).toString(),
+    ...apiFilters,
+    exactPath: apiFilters.exactPath ? '1' : '0',
+    readStatus: apiFilters.readStatus == null ? undefined : apiFilters.readStatus ? '1' : '0',
+    devices: apiFilters.devices?.join('|'),
+    shuffleSeed: shuffleSeed?.toString(),
+  };
+
+  return { state, updateFilter, toggleMode, resetFilters, setPages, apiQueryParams };
 };

@@ -1,26 +1,11 @@
 import { PaginatedBooks } from '@/contracts/calibredb';
 import { axiosSecureClient } from '@/shared/api';
 
-import { BookFilters } from './hooks/useCalibreDb';
-
 export const getCalibreDbBooks = async (
-  path: string,
-  filters: BookFilters,
-  pages: number,
-  shuffleSeed?: number,
+  params: Record<string, string | number | undefined>,
 ): Promise<PaginatedBooks> => {
   const url = 'calibredb/books';
-  const { data } = await axiosSecureClient.get<PaginatedBooks>(url, {
-    params: {
-      path,
-      pages: (pages || 1).toString(),
-      ...filters,
-      exactPath: filters.exactPath ? '1' : '0',
-      readStatus: filters.readStatus == null ? undefined : filters.readStatus ? '1' : '0',
-      devices: filters.devices?.join('|'),
-      shuffleSeed: shuffleSeed?.toString(),
-    },
-  });
+  const { data } = await axiosSecureClient.get<PaginatedBooks>(url, { params });
 
   return data;
 };
