@@ -24,7 +24,7 @@ export const PathLinks = () => {
     updateFilter,
   } = useCalibreDb();
 
-  const pathBaseName = bookPath?.split('/')?.pop() || '/';
+  const pathTitle = bookPath?.split('/')?.join(' | ');
 
   useTitle(mode === 'search' ? title : `${title}${bookPath ? ' - ' + bookPath : ''}`);
 
@@ -49,7 +49,7 @@ export const PathLinks = () => {
 
   return (
     <div className={styles.Paths}>
-      <h1 className={styles.PathName}>{pathBaseName}</h1>
+      <h1 className={styles.PathName}>{pathTitle}</h1>
       {bookPath && (
         <Button className={styles.PathBack} onClick={() => navigate(-1)}>
           . .
