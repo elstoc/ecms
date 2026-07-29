@@ -16,11 +16,7 @@ export const PathLinks = () => {
   const uniquePaths = getUniquePaths(paths);
 
   const {
-    state: {
-      mode,
-      title,
-      apiFilters: { bookPath },
-    },
+    state: { mode, title, bookPath },
     updateFilter,
   } = useCalibreDb();
 

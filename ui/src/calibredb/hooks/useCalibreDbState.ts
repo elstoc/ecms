@@ -114,7 +114,7 @@ export const useCalibreDbState = ({
     pages,
     shuffleSeed,
     mode: mode as 'browse' | 'search',
-    apiFilters: apiFilters,
+    ...apiFilters,
   };
 
   const apiQueryParams: Record<string, number | string | undefined> = {

@@ -35,10 +35,7 @@ const emptyBookPaths: Record<string, string> = {};
 
 export const useBookPaths = () => {
   const {
-    state: {
-      apiPath,
-      apiFilters: { devices },
-    },
+    state: { apiPath, devices },
   } = useCalibreDb();
 
   const bookPaths = useCustomQuery({

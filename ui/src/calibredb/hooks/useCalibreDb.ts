@@ -19,7 +19,14 @@ export type CalibreDbState = {
   pages: number;
   shuffleSeed?: number;
   mode: 'browse' | 'search';
-  apiFilters: BookFilters;
+  titleContains?: string;
+  author?: number;
+  format?: number;
+  bookPath?: string;
+  exactPath?: boolean;
+  readStatus?: boolean;
+  sortOrder: string;
+  devices?: string[];
 };
 
 export const useCalibreDb = () => use(CalibreDbContext);
