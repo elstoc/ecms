@@ -25,6 +25,13 @@ export const MarkdownViewPage = () => {
   useTitle(pageTitle);
 
   const renderLink = (href: string, children: ReactNode) => {
+    if (href.startsWith('http')) {
+      return (
+        <Link to={href} target='_blank' rel='noopener noreferrer' relative='path'>
+          {children}
+        </Link>
+      );
+    }
     return (
       <Link to={href.replace(/\/$/, '')} relative='path'>
         {children}
