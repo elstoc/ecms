@@ -92,6 +92,7 @@ export const useCalibreDbState = ({
   const toggleMode = useCallback(() => {
     const newMode = mode === 'browse' ? 'search' : 'browse';
     if (newMode === 'search') {
+      // reset everything except mode to default (undefined)
       setSearchParams({ mode: 'search' });
     } else {
       // 'browse' mode is the default so has empty search params
