@@ -1,15 +1,17 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
-import { KeyValueOfType, getRandomSeed, toIntOrUndefined } from '@/utils';
+import { KeyValueOfType, getRandomSeed } from '@/utils';
 
 import { CalibreDbProviderValue } from '../components/CalibreDbProvider';
+import {
+  SearchParamState,
+  getApiQueryParamsFromState,
+  getStateFromUiSearchParams,
+  getUiSearchParamForKey,
+} from '../utils/searchParamStateMapper';
 
-import { BookFilters, CalibreDbState } from './useCalibreDb';
-
-const defaultDevices = ['kobo', 'tablet', 'physical'];
-const defaultSortOrder = 'title';
-const defaultMode = 'browse';
+import { CalibreDbState } from './useCalibreDb';
 
 type UseCalibreDbStateProps = { title: string; apiPath: string };
 
@@ -21,63 +23,19 @@ export const useCalibreDbState = ({
   const [shuffleSeed, setShuffleSeed] = useState(1);
   const [pages, setPages] = useState(1);
 
-  const mode = useMemo<string>(() => searchParams.get('mode') || defaultMode, [searchParams]);
-
-  const apiFilters = useMemo<BookFilters>(
-    () => ({
-      titleContains: searchParams.get('titleContains') || undefined,
-      author: toIntOrUndefined(searchParams.get('author')),
-      format: toIntOrUndefined(searchParams.get('format')),
-      bookPath: searchParams.get('bookPath') || undefined,
-      exactPath: mode === 'browse',
-      readStatus:
-        searchParams.get('readStatus') === null
-          ? undefined
-          : searchParams.get('readStatus') === '1',
-      sortOrder: searchParams.get('sortOrder') || defaultSortOrder,
-      devices: searchParams.get('devices')?.split('|') || ['kobo', 'tablet', 'physical'],
-    }),
-    [mode, searchParams],
-  );
+  const searchParamState = useMemo(() => getStateFromUiSearchParams(searchParams), [searchParams]);
+  const { mode } = searchParamState;
 
   const updateFilter = useCallback(
-    ({ key, value }: KeyValueOfType<BookFilters>) => {
-      let newSearchParamValue: string | undefined;
-
-      if (key === 'devices') {
-        const onlyDefaultDevicesSelected =
-          value?.length === defaultDevices.length &&
-          value.every((device) => defaultDevices.includes(device));
-        if (!value || onlyDefaultDevicesSelected) {
-          newSearchParamValue = undefined;
-        } else {
-          newSearchParamValue = value.join('|');
-        }
-      } else if (key === 'sortOrder') {
-        newSearchParamValue = value === defaultSortOrder ? undefined : value;
-        if (value === 'shuffle') {
-          setShuffleSeed(getRandomSeed());
-        }
-      } else if (key === 'author' || key === 'format') {
-        newSearchParamValue = value?.toString();
-      } else if (key === 'exactPath') {
-        newSearchParamValue = value ? undefined : '1';
-      } else if (key === 'readStatus') {
-        if (value === undefined) {
-          newSearchParamValue = undefined;
-        } else {
-          newSearchParamValue = value ? '1' : '0';
-        }
-      } else if (key === 'titleContains' || key === 'bookPath') {
-        newSearchParamValue = value;
-      }
+    (payload: KeyValueOfType<SearchParamState>) => {
+      const newSearchParamValue = getUiSearchParamForKey(payload);
 
       setSearchParams(
         (params) => {
           if (newSearchParamValue === undefined) {
-            params.delete(key);
+            params.delete(payload.key);
           } else {
-            params.set(key, newSearchParamValue);
+            params.set(payload.key, newSearchParamValue);
           }
           return params;
         },
@@ -85,6 +43,10 @@ export const useCalibreDbState = ({
       );
 
       setPages(1);
+
+      if (payload.key === 'sortOrder' && payload.value === 'shuffle') {
+        setShuffleSeed(getRandomSeed());
+      }
     },
     [mode, setPages, setSearchParams],
   );
@@ -113,19 +75,10 @@ export const useCalibreDbState = ({
     apiPath,
     pages,
     shuffleSeed,
-    mode: mode as 'browse' | 'search',
-    ...apiFilters,
+    ...searchParamState,
   };
 
-  const apiQueryParams: Record<string, number | string | undefined> = {
-    path: apiPath,
-    pages: (pages || 1).toString(),
-    ...apiFilters,
-    exactPath: apiFilters.exactPath ? '1' : '0',
-    readStatus: apiFilters.readStatus == null ? undefined : apiFilters.readStatus ? '1' : '0',
-    devices: apiFilters.devices?.join('|'),
-    shuffleSeed: shuffleSeed?.toString(),
-  };
+  const apiQueryParams = getApiQueryParamsFromState(state);
 
   return { state, updateFilter, toggleMode, resetFilters, setPages, apiQueryParams };
 };

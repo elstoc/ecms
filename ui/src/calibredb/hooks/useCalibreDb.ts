@@ -18,12 +18,11 @@ export type CalibreDbState = {
   title: string;
   pages: number;
   shuffleSeed?: number;
-  mode: 'browse' | 'search';
+  mode: string;
   titleContains?: string;
   author?: number;
   format?: number;
   bookPath?: string;
-  exactPath?: boolean;
   readStatus?: boolean;
   sortOrder: string;
   devices?: string[];

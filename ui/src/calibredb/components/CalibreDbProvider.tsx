@@ -3,13 +3,14 @@ import { Dispatch, ReactNode, SetStateAction, createContext } from 'react';
 import { CalibreDbMetadata } from '@/contracts/site';
 import { KeyValueOfType } from '@/utils';
 
-import { BookFilters, CalibreDbState } from '../hooks/useCalibreDb';
+import { CalibreDbState } from '../hooks/useCalibreDb';
 import { useCalibreDbState } from '../hooks/useCalibreDbState';
+import { SearchParamState } from '../utils/searchParamStateMapper';
 
 export type CalibreDbProviderValue = {
   state: CalibreDbState;
   toggleMode: () => void;
-  updateFilter: (payload: KeyValueOfType<BookFilters>) => void;
+  updateFilter: (payload: KeyValueOfType<SearchParamState>) => void;
   resetFilters: () => void;
   setPages: Dispatch<SetStateAction<number>>;
   apiQueryParams: Record<string, string | number | undefined>;
