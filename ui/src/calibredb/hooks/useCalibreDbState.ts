@@ -63,10 +63,10 @@ export const useCalibreDbState = ({
   }, [mode, setSearchParams]);
 
   const resetFilters = useCallback(() => {
-    setSearchParams('', { replace: mode === 'search' });
+    setSearchParams();
     setPages(1);
     setShuffleSeed(1);
-  }, [mode, setSearchParams]);
+  }, [setSearchParams]);
 
   const state: CalibreDbState = {
     title,
