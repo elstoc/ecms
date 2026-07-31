@@ -49,24 +49,18 @@ export const useCalibreDbState = ({
     [mode, setPages, setSearchParams],
   );
 
-  const toggleMode = useCallback(() => {
-    const newMode = mode === 'browse' ? 'search' : 'browse';
-    if (newMode === 'search') {
-      // reset everything except mode to default (undefined)
-      setSearchParams({ mode: 'search' });
-    } else {
-      // 'browse' mode is the default so has empty search params
-      setSearchParams();
-    }
-    setPages(1);
-    setShuffleSeed(1);
-  }, [mode, setSearchParams]);
+  const resetFilters = useCallback(
+    (newMode?: string) => {
+      setSearchParams(newMode === 'search' ? { mode: 'search' } : undefined);
+      setPages(1);
+      setShuffleSeed(1);
+    },
+    [setSearchParams],
+  );
 
-  const resetFilters = useCallback(() => {
-    setSearchParams();
-    setPages(1);
-    setShuffleSeed(1);
-  }, [setSearchParams]);
+  const toggleMode = useCallback(() => {
+    resetFilters(mode === 'browse' ? 'search' : 'browse');
+  }, [mode, resetFilters]);
 
   const state: CalibreDbState = {
     title,
