@@ -3,15 +3,13 @@ import { useSearchParams } from 'react-router';
 
 import { KeyValueOfType, getRandomSeed } from '@/utils';
 
-import { CalibreDbProviderValue } from '../components/CalibreDbProvider';
+import { CalibreDbProviderValue, CalibreDbState } from '../components/CalibreDbProvider';
 import {
   SearchParamState,
   getApiQueryParamsFromState,
   getStateFromUiSearchParams,
   getUiSearchParamForKey,
 } from '../utils/searchParamStateMapper';
-
-import { CalibreDbState } from './useCalibreDb';
 
 type UseCalibreDbStateProps = { title: string; apiPath: string };
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { KeyValueOfType, toIntOrUndefined } from '@/utils';
 
-import { CalibreDbState } from '../hooks/useCalibreDb';
+import { CalibreDbState } from '../components/CalibreDbProvider';
 
 export type SearchParamState = {
   titleContains?: string;
