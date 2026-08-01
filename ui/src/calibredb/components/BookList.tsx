@@ -8,12 +8,12 @@ import { BookListItem } from './BookListItem';
 import * as styles from './CalibreDb.module.css';
 
 export const BookList = () => {
-  const { dispatch } = useCalibreDb();
+  const { setPages } = useCalibreDb();
   const { books, currentPage, totalPages } = useBooks();
 
   const refLastBook = useOnInView((inView) => {
     if (inView) {
-      dispatch({ type: 'setPages', payload: Math.min(totalPages, currentPage + 1) });
+      setPages(Math.min(totalPages, currentPage + 1));
     }
   });
 

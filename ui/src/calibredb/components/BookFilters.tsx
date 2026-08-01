@@ -40,15 +40,11 @@ export const BookFilters = () => {
     [allAuthorsLookup],
   );
 
-  const {
-    state: { apiFilters, mode },
-    updateApiFilter,
-    dispatch,
-  } = useCalibreDb();
+  const { state, updateFilter, resetFilters, toggleMode } = useCalibreDb();
 
   let readStatusCode: 'Y' | 'N' | undefined;
-  if (apiFilters.readStatus != null) {
-    readStatusCode = apiFilters.readStatus ? 'Y' : 'N';
+  if (state.readStatus != null) {
+    readStatusCode = state.readStatus ? 'Y' : 'N';
   }
 
   return (
@@ -56,36 +52,38 @@ export const BookFilters = () => {
       <ToggleGroup
         label='Mode'
         items={modeOptionItems}
-        value={[mode]}
-        onChange={() => dispatch({ type: 'toggleMode' })}
+        value={[state.mode]}
+        onChange={toggleMode}
       />
       <TagSelect
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
-        selectedTags={apiFilters.devices ?? []}
+        selectedTags={state.devices ?? []}
         onChange={(value) =>
-          updateApiFilter({ key: 'devices', value: value.length ? value : undefined })
+          updateFilter({ key: 'devices', value: value.length ? value : undefined })
         }
         emptyMessage='No devices found'
+        disabled={Boolean(state.mode === 'browse' && state.bookPath)}
         width='full'
       />
       <Combobox
         label='Path'
         items={allPathItems}
         emptyMessage='No paths found'
-        value={apiFilters.bookPath ?? null}
-        onChange={(value) => updateApiFilter({ key: 'bookPath', value: value ?? undefined })}
+        value={state.bookPath ?? null}
+        onChange={(value) => updateFilter({ key: 'bookPath', value: value ?? undefined })}
         maxListItems={100}
+        disabled={state.mode === 'browse'}
         width='full'
       />
       <Combobox
         label='Author'
         items={allAuthorItems}
-        value={apiFilters.author?.toString() ?? null}
-        onChange={(value) => updateApiFilter({ key: 'author', value: toIntOrUndefined(value) })}
+        value={state.author?.toString() ?? null}
+        onChange={(value) => updateFilter({ key: 'author', value: toIntOrUndefined(value) })}
         emptyMessage='No authors found'
         maxListItems={100}
-        disabled={mode === 'browse'}
+        disabled={state.mode === 'browse'}
         width='full'
       />
       <div className={styles.Row}>
@@ -93,33 +91,33 @@ export const BookFilters = () => {
           label='Format'
           lookupTable='formats'
           valueForNullCode='All'
-          value={apiFilters.format?.toString() ?? null}
-          onChange={(value) => updateApiFilter({ key: 'format', value: toIntOrUndefined(value) })}
-          disabled={mode === 'browse'}
+          value={state.format?.toString() ?? null}
+          onChange={(value) => updateFilter({ key: 'format', value: toIntOrUndefined(value) })}
+          disabled={state.mode === 'browse'}
         />
         <ToggleGroup
           label='Read'
           items={readStatusOptionItems}
           value={[readStatusCode ?? 'All']}
           onChange={(value) =>
-            updateApiFilter({
+            updateFilter({
               key: 'readStatus',
               value: value[0] !== 'All' ? value[0] === 'Y' : undefined,
             })
           }
-          disabled={mode === 'browse'}
+          disabled={state.mode === 'browse'}
         />
       </div>
       <Input
         label='Title Search'
-        value={apiFilters.titleContains ?? ''}
-        disabled={mode == 'browse'}
-        onChange={(value) => updateApiFilter({ key: 'titleContains', value: value || undefined })}
+        value={state.titleContains ?? ''}
+        disabled={state.mode == 'browse'}
+        onChange={(value) => updateFilter({ key: 'titleContains', value: value || undefined })}
         width='full'
         debounceTimeout={1000}
       />
       <div className={styles.ActionButtons}>
-        <Button onClick={() => dispatch({ type: 'resetFilters' })}>Reset Filters</Button>
+        <Button onClick={resetFilters}>Reset Filters</Button>
       </div>
     </form>
   );

@@ -14,13 +14,11 @@ const useApiPath = () => {
 };
 
 export const useBooks = () => {
-  const {
-    state: { apiPath, pages, apiFilters },
-  } = useCalibreDb();
+  const { apiQueryParams } = useCalibreDb();
 
   const books = useCustomQuery({
-    queryKey: ['calibredb', 'books', apiPath, JSON.stringify(apiFilters), pages],
-    queryFn: () => getCalibreDbBooks(apiPath, apiFilters, pages),
+    queryKey: ['calibredb', 'books', JSON.stringify(apiQueryParams)],
+    queryFn: () => getCalibreDbBooks(apiQueryParams),
   });
 
   return (
@@ -37,10 +35,7 @@ const emptyBookPaths: Record<string, string> = {};
 
 export const useBookPaths = () => {
   const {
-    state: {
-      apiPath,
-      apiFilters: { devices },
-    },
+    state: { apiPath, devices },
   } = useCalibreDb();
 
   const bookPaths = useCustomQuery({
