@@ -20,16 +20,15 @@ const defaultDevices = ['kobo', 'tablet', 'physical'];
 const defaultSortOrder = 'title';
 const defaultMode = 'browse';
 
-export const getStateFromUiSearchParams = (searchParams: URLSearchParams): SearchParamState => ({
-  titleContains: searchParams.get('titleContains') || undefined,
-  author: toIntOrUndefined(searchParams.get('author')),
-  format: toIntOrUndefined(searchParams.get('format')),
-  bookPath: searchParams.get('bookPath') || undefined,
-  readStatus:
-    searchParams.get('readStatus') == null ? undefined : searchParams.get('readStatus') === '1',
-  sortOrder: searchParams.get('sortOrder') || defaultSortOrder,
-  devices: searchParams.get('devices')?.split('|') || defaultDevices,
-  mode: searchParams.get('mode') ?? defaultMode,
+export const getStateFromUiSearchParams = (params: URLSearchParams): SearchParamState => ({
+  titleContains: params.get('titleContains') || undefined,
+  author: toIntOrUndefined(params.get('author')),
+  format: toIntOrUndefined(params.get('format')),
+  bookPath: params.get('bookPath') || undefined,
+  readStatus: params.get('readStatus') == null ? undefined : params.get('readStatus') === '1',
+  sortOrder: params.get('sortOrder') || defaultSortOrder,
+  devices: params.get('devices')?.split('|') || defaultDevices,
+  mode: params.get('mode') ?? defaultMode,
 });
 
 export const getApiQueryParamsFromState = ({
