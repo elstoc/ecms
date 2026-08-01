@@ -22,13 +22,13 @@ const defaultMode = 'browse';
 
 export const getStateFromUiSearchParams = (params: URLSearchParams): SearchParamState => ({
   titleContains: params.get('titleContains') || undefined,
+  bookPath: params.get('bookPath') || undefined,
   author: toIntOrUndefined(params.get('author')),
   format: toIntOrUndefined(params.get('format')),
-  bookPath: params.get('bookPath') || undefined,
-  readStatus: params.get('readStatus') == null ? undefined : params.get('readStatus') === '1',
   sortOrder: params.get('sortOrder') || defaultSortOrder,
   devices: params.get('devices')?.split('|') || defaultDevices,
   mode: params.get('mode') ?? defaultMode,
+  readStatus: params.get('readStatus') == null ? undefined : params.get('readStatus') === '1',
 });
 
 export const getApiQueryParamsFromState = ({
@@ -42,8 +42,8 @@ export const getApiQueryParamsFromState = ({
   path,
   ...rest,
   readStatus: readStatus == null ? undefined : readStatus ? '1' : '0',
-  devices: devices?.join('|'),
   exactPath: mode === 'browse' ? '1' : '0',
+  devices: devices?.join('|'),
 });
 
 export const getUiSearchParamForKey = ({
@@ -52,18 +52,6 @@ export const getUiSearchParamForKey = ({
 }: KeyValueOfType<SearchParamState>): string | undefined => {
   if (key === 'titleContains' || key === 'bookPath' || key === 'author' || key === 'format') {
     return value?.toString();
-  }
-
-  if (key === 'devices') {
-    const onlyDefaultDevicesSelected =
-      value?.length === defaultDevices.length &&
-      value.every((device) => defaultDevices.includes(device));
-
-    if (!value || onlyDefaultDevicesSelected) {
-      return undefined;
-    }
-
-    return value.join('|');
   }
 
   if (key === 'sortOrder') {
@@ -79,5 +67,17 @@ export const getUiSearchParamForKey = ({
       return undefined;
     }
     return value ? '1' : '0';
+  }
+
+  if (key === 'devices') {
+    const onlyDefaultDevicesSelected =
+      value?.length === defaultDevices.length &&
+      value.every((device) => defaultDevices.includes(device));
+
+    if (!value || onlyDefaultDevicesSelected) {
+      return undefined;
+    }
+
+    return value.join('|');
   }
 };
