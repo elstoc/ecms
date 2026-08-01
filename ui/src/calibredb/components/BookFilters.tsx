@@ -63,6 +63,7 @@ export const BookFilters = () => {
           updateFilter({ key: 'devices', value: value.length ? value : undefined })
         }
         emptyMessage='No devices found'
+        disabled={Boolean(state.mode === 'browse' && state.bookPath)}
         width='full'
       />
       <Combobox
@@ -72,6 +73,7 @@ export const BookFilters = () => {
         value={state.bookPath ?? null}
         onChange={(value) => updateFilter({ key: 'bookPath', value: value ?? undefined })}
         maxListItems={100}
+        disabled={state.mode === 'browse'}
         width='full'
       />
       <Combobox
