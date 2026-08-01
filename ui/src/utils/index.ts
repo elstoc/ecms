@@ -6,3 +6,4 @@ export { createCSV } from './createCSV';
 export { downloadBlob } from './downloadBlob';
 export { getRandomSeed } from './getRandomSeed';
 export { KeyValueOfType } from './KeyValueOfType';
+export { setOrClearSearchParam } from './setOrClearSearchParam';
