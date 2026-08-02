@@ -5,7 +5,7 @@ export const useSetOrClearSearchParams = () => {
   const [, setSearchParams] = useSearchParams();
 
   const setOrClearSearchParams = useCallback(
-    (key: string, value: string | undefined, replace: boolean) => {
+    (key: string, value: string | undefined, replace?: boolean) => {
       setSearchParams(
         (params) => {
           if (value === undefined) {
