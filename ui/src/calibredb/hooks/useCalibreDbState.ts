@@ -18,7 +18,7 @@ export const useCalibreDbState = ({
   title,
   apiPath,
 }: UseCalibreDbStateProps): CalibreDbProviderValue => {
-  const setOrClearSearchParam = useSetOrClearSearchParams();
+  const setOrClearSearchParams = useSetOrClearSearchParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [shuffleSeed, setShuffleSeed] = useState(1);
   const [pages, setPages] = useState(1);
@@ -31,14 +31,19 @@ export const useCalibreDbState = ({
       const newSearchParamValue = getUiSearchParamForKey(payload);
       const { key, value } = payload;
 
-      setOrClearSearchParam(key, newSearchParamValue, mode === 'search');
+      if (key === 'titleContains' && newSearchParamValue && mode === 'browse') {
+        setSearchParams({ mode: 'search', [key]: newSearchParamValue });
+      } else {
+        setOrClearSearchParams({ [key]: newSearchParamValue }, mode === 'search');
+      }
+
       setPages(1);
 
       if (key === 'sortOrder' && value === 'shuffle') {
         setShuffleSeed(getRandomSeed());
       }
     },
-    [mode, setPages, setOrClearSearchParam],
+    [mode, setPages, setSearchParams, setOrClearSearchParams],
   );
 
   const resetFilters = useCallback(

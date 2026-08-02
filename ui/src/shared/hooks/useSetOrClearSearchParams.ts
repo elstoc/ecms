@@ -5,14 +5,16 @@ export const useSetOrClearSearchParams = () => {
   const [, setSearchParams] = useSearchParams();
 
   const setOrClearSearchParams = useCallback(
-    (key: string, value: string | undefined, replace?: boolean) => {
+    (updatedParams: Record<string, string | undefined>, replace?: boolean) => {
       setSearchParams(
         (params) => {
-          if (value === undefined) {
-            params.delete(key);
-          } else {
-            params.set(key, value);
-          }
+          Object.entries(updatedParams).forEach(([key, value]) => {
+            if (value === undefined) {
+              params.delete(key);
+            } else {
+              params.set(key, value);
+            }
+          });
 
           return params;
         },

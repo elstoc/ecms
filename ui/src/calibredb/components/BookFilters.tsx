@@ -111,7 +111,6 @@ export const BookFilters = () => {
       <Input
         label='Title Search'
         value={state.titleContains ?? ''}
-        disabled={state.mode == 'browse'}
         onChange={(value) => updateFilter({ key: 'titleContains', value: value || undefined })}
         width='full'
         debounceTimeout={1000}
