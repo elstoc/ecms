@@ -5,3 +5,4 @@ export { useScrollIntoView } from './useScrollIntoView';
 export { useIsDualPanel } from './useIsDualPanel';
 export { useMutationWithToast } from './useMutationWithToast';
 export { useDebouncedInput } from './useDebouncedInput';
+export { useSetOrClearSearchParams } from './useSetOrClearSearchParams';

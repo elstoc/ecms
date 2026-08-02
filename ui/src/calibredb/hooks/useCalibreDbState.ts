@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
-import { KeyValueOfType, getRandomSeed, setOrClearSearchParam } from '@/utils';
+import { useSetOrClearSearchParams } from '@/shared/hooks';
+import { KeyValueOfType, getRandomSeed } from '@/utils';
 
 import { CalibreDbProviderValue, CalibreDbState } from '../components/CalibreDbProvider';
 import {
@@ -17,6 +18,7 @@ export const useCalibreDbState = ({
   title,
   apiPath,
 }: UseCalibreDbStateProps): CalibreDbProviderValue => {
+  const setOrClearSearchParam = useSetOrClearSearchParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [shuffleSeed, setShuffleSeed] = useState(1);
   const [pages, setPages] = useState(1);
@@ -29,17 +31,14 @@ export const useCalibreDbState = ({
       const newSearchParamValue = getUiSearchParamForKey(payload);
       const { key, value } = payload;
 
-      setSearchParams((params) => setOrClearSearchParam(params, key, newSearchParamValue), {
-        replace: mode === 'search',
-      });
-
+      setOrClearSearchParam(key, newSearchParamValue, mode === 'search');
       setPages(1);
 
       if (key === 'sortOrder' && value === 'shuffle') {
         setShuffleSeed(getRandomSeed());
       }
     },
-    [mode, setPages, setSearchParams],
+    [mode, setPages, setOrClearSearchParam],
   );
 
   const resetFilters = useCallback(
