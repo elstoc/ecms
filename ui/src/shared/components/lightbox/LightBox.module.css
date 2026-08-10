@@ -13,6 +13,8 @@
 }
 
 .ImageContainer {
+  max-height: 97dvh;
+  max-width: 98dvw;
   position: relative;
 }
 
@@ -35,7 +37,7 @@
   position: absolute;
   top: 0;
   height: 100%;
-  width: 40%;
+  width: 45%;
   text-decoration: none;
   user-select: none;
   z-index: var(--overlay-popup-z-index); /* Sit on top */
@@ -47,6 +49,8 @@
   &:focus-visible {
     outline: none;
   }
+
+  padding-block: 0;
 
   &:hover {
     svg {
@@ -66,12 +70,14 @@
 
 .Next {
   justify-content: right;
-  right: 10px;
+  padding: 20px;
+  right: -10px;
 }
 
 .Prev {
   justify-content: left;
-  left: 10px;
+  padding: 20px;
+  left: -10px;
 }
 
 .Close {
