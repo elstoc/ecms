@@ -19,8 +19,12 @@
   border-bottom: 1px solid var(--border-grey);
 }
 
+.Left,
 .Right {
   margin-block: 5px;
+}
+
+.Right {
   display: flex;
   column-gap: 25px;
   flex-direction: row;

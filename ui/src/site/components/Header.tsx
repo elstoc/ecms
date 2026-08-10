@@ -25,7 +25,7 @@ export const Header = ({ toolsLeft, toolsRight }: HeaderProps) => {
       </div>
 
       <div className={styles.Toolbar}>
-        <div>
+        <div className={styles.Left}>
           <div>{toolsRight}</div>
         </div>
 
