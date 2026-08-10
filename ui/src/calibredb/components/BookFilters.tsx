@@ -55,6 +55,13 @@ export const BookFilters = () => {
         value={[state.mode]}
         onChange={toggleMode}
       />
+      <Input
+        label='Title Search'
+        value={state.titleContains ?? ''}
+        onChange={(value) => updateFilter({ key: 'titleContains', value: value || undefined })}
+        width='full'
+        debounceTimeout={1000}
+      />
       <TagSelect
         label='Devices'
         selectableTags={['kobo', 'tablet', 'kindle', 'physical']}
@@ -108,13 +115,6 @@ export const BookFilters = () => {
           disabled={state.mode === 'browse'}
         />
       </div>
-      <Input
-        label='Title Search'
-        value={state.titleContains ?? ''}
-        onChange={(value) => updateFilter({ key: 'titleContains', value: value || undefined })}
-        width='full'
-        debounceTimeout={1000}
-      />
       <div className={styles.ActionButtons}>
         <Button onClick={resetFilters}>Reset Filters</Button>
       </div>

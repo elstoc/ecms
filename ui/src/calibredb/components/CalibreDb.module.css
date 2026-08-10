@@ -9,9 +9,10 @@
   }
 
   .ActionButtons {
+    padding-top: 1rem;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   .Row {

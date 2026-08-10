@@ -54,6 +54,14 @@ export const VideoFilters = () => {
           }
         />
       </div>
+      <Input
+        label='Title Search'
+        disabled={showOnlyExpandedIds}
+        value={apiFilters.titleContains ?? ''}
+        onChange={(value) => updateApiFilter({ key: 'titleContains', value: value || undefined })}
+        width='full'
+        debounceTimeout={1000}
+      />
       <div className={styles.Row}>
         <div className={styles.Col}>
           <NumberInput
@@ -107,14 +115,6 @@ export const VideoFilters = () => {
         }
         width='full'
       />
-      <Input
-        label='Title Search'
-        disabled={showOnlyExpandedIds}
-        value={apiFilters.titleContains ?? ''}
-        onChange={(value) => updateApiFilter({ key: 'titleContains', value: value || undefined })}
-        width='full'
-        debounceTimeout={1000}
-      />
       <SelectLookup
         label='Primary Media'
         lookupTable='media_types'
@@ -124,6 +124,7 @@ export const VideoFilters = () => {
         onChange={(value) =>
           updateApiFilter({ key: 'primaryMediaType', value: value ?? undefined })
         }
+        width='full'
       />
       <div className={styles.Switches}>
         <Switch
