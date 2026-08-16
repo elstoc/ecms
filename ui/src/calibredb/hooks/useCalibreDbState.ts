@@ -30,11 +30,14 @@ export const useCalibreDbState = ({
     (payload: KeyValueOfType<SearchParamState>) => {
       const newSearchParamValue = getUiSearchParamForKey(payload);
       const { key, value } = payload;
+      const browsingNewDirectory = mode === 'browse' && key === 'bookPath' && value;
+      const searchingByTitleInBrowseMode =
+        key === 'titleContains' && newSearchParamValue && mode === 'browse';
 
-      if (key === 'titleContains' && newSearchParamValue && mode === 'browse') {
-        setSearchParams({ mode: 'search', [key]: newSearchParamValue });
+      if (searchingByTitleInBrowseMode) {
+        setSearchParams({ mode: 'search', [key]: newSearchParamValue }, { replace: true });
       } else {
-        setOrClearSearchParams({ [key]: newSearchParamValue }, mode === 'search');
+        setOrClearSearchParams({ [key]: newSearchParamValue }, !browsingNewDirectory);
       }
 
       setPages(1);
@@ -48,7 +51,7 @@ export const useCalibreDbState = ({
 
   const resetFilters = useCallback(
     (newMode?: string) => {
-      setSearchParams(newMode === 'search' ? { mode: 'search' } : undefined);
+      setSearchParams(newMode === 'search' ? { mode: 'search' } : undefined, { replace: true });
       setPages(1);
       setShuffleSeed(1);
     },
