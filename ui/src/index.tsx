@@ -15,7 +15,7 @@ const root = createRoot(appContainer);
 
 root.render(
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter unstable_useTransitions={true}>
+    <BrowserRouter>
       <ToastProvider>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <App />
