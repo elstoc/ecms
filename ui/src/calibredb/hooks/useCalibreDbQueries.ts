@@ -52,7 +52,7 @@ export const useLookup = (lookupTable: string) => {
   const apiPath = useApiPath();
 
   const lookup = useCustomQuery({
-    queryKey: ['videoDb', 'lookup', apiPath, lookupTable],
+    queryKey: ['calibredb', 'lookup', apiPath, lookupTable],
     queryFn: () => getCalibreDbLookup(apiPath, lookupTable),
   });
 
