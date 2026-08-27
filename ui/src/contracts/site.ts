@@ -10,6 +10,7 @@ export enum ComponentTypes {
   videodb = 'videodb',
   calibredb = 'calibredb',
   componentgroup = 'componentgroup',
+  musictutor = 'musictutor',
 }
 
 export type ComponentMetadataCommon = {
@@ -41,6 +42,11 @@ export type CalibreDbMetadata = ComponentMetadataCommon & {
   defaultComponent?: boolean;
 };
 
+export type MusicTutorMetadata = ComponentMetadataCommon & {
+  type: ComponentTypes.musictutor;
+  defaultComponent?: boolean;
+};
+
 export type ComponentGroupMetadata = ComponentMetadataCommon & {
   type: ComponentTypes.componentgroup;
   components: ComponentMetadata[];
@@ -52,4 +58,5 @@ export type ComponentMetadata =
   | MarkdownMetadata
   | VideoDbMetadata
   | CalibreDbMetadata
+  | MusicTutorMetadata
   | ComponentGroupMetadata;

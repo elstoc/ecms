@@ -175,6 +175,29 @@ describe('Component', () => {
         expect(actualMetadata).toEqual(expectedMetadata);
       });
 
+      it('correctly returns metadata for musictutor component (and empty uiPath if default component)', async () => {
+        mockStorage.contentFileExists.mockReturnValue(true);
+        mockStorage.contentDirectoryExists.mockReturnValue(true);
+        mockStorage.getContentFileModifiedTime.mockReturnValue(1234);
+        mockStorage.getContentFile.mockResolvedValue(contentFileBuf);
+        yamlParseMock.mockReturnValue({
+          title: 'The Title',
+          type: 'musictutor',
+          defaultComponent: true,
+        });
+
+        const actualMetadata = await component.getMetadata();
+
+        const expectedMetadata = {
+          apiPath: 'my-component',
+          uiPath: '',
+          title: 'The Title',
+          defaultComponent: true,
+          type: 'musictutor',
+        };
+        expect(actualMetadata).toEqual(expectedMetadata);
+      });
+
       it('gets metadata by parsing the component file on the first run', async () => {
         mockStorage.contentFileExists.mockReturnValue(true);
         mockStorage.contentDirectoryExists.mockReturnValue(true);

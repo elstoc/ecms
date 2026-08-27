@@ -10,6 +10,7 @@ export enum ComponentTypes {
   videodb = 'videodb',
   calibredb = 'calibredb',
   componentgroup = 'componentgroup',
+  musictutor = 'musictutor',
 }
 
 export type ComponentMetadataCommon = {

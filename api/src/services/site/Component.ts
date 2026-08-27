@@ -91,7 +91,11 @@ export class Component {
         defaultComponent: defaultComponent === true,
         ...commonMetadata,
       };
-    } else if (type === ComponentTypes.videodb || type === ComponentTypes.gallery) {
+    } else if (
+      type === ComponentTypes.videodb ||
+      type === ComponentTypes.gallery ||
+      type === ComponentTypes.musictutor
+    ) {
       const { defaultComponent } = parsedYaml;
       return {
         type,
