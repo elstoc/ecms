@@ -1,13 +1,13 @@
 export const Flute = () => (
-  <div style={{ width: '100%' }}>
+  <div style={{ width: '100%', maxWidth: '500px' }}>
     <svg
       viewBox='1.35 2.41 51.23 10.75'
       version='1.1'
       id='svg1'
       xmlns='http://www.w3.org/2000/svg'
-      stroke='#000000'
-      fill='#f9f9f9'
-      strokeWidth={0.25}
+      stroke='black'
+      fill='white'
+      strokeWidth={0.4}
       strokeLinecap='round'
       strokeLinejoin='round'
       paintOrder='stroke markers fill'

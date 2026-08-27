@@ -10,9 +10,13 @@ export const StaffRender = ({ tune }: StaffRenderProps) => {
 
   useEffect(() => {
     if (staffRef.current) {
-      abcjs.renderAbc(staffRef.current, tune, { scale: 3 });
+      abcjs.renderAbc(staffRef.current, tune, { scale: 2, staffwidth: 200 });
     }
   }, [tune]);
 
-  return <div ref={staffRef}></div>;
+  return (
+    <div>
+      <div style={{ width: '100px' }} ref={staffRef}></div>
+    </div>
+  );
 };
