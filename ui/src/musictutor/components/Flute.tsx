@@ -1,7 +1,7 @@
 export const Flute = () => (
   <div style={{ width: '100%' }}>
     <svg
-      viewBox='0 0 54 16'
+      viewBox='1.35 2.41 51.23 10.75'
       version='1.1'
       id='svg1'
       xmlns='http://www.w3.org/2000/svg'
@@ -20,7 +20,11 @@ export const Flute = () => (
         <circle id='L3-A' cx='13.612689' cy='7.3943181' r='2' />
         <circle id='L4-G' cx='19.769697' cy='7.3943181' r='2' />
         <ellipse id='L5-Gsharp' cx='23.695972' cy='3.9358461' rx='2' ry='1.0291389' />
-        <path id='divider' d='m 26.278788,5.1443186 c 0,4.4999988 0,4.4999988 0,4.4999988 v 0 0' />
+        <path
+          id='divider'
+          d='m 26.278788,5.1443186 c 0,4.4999988 0,4.4999988 0,4.4999988 v 0 0'
+          strokeWidth={0.1}
+        />
         <circle id='R2-Fsharp' cx='30.640154' cy='7.3943181' r='2' />
         <circle id='R3-E' cx='36.797161' cy='7.3943181' r='2' />
         <circle id='R4-D' cx='42.95417' cy='7.3943181' r='2' />
