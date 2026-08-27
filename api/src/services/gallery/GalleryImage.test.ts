@@ -143,8 +143,8 @@ describe('GalleryImage', () => {
       exif: { title: 'my image', ISO: '1000' },
       thumbDimensions: { width: 100, height: 200 },
       thumbSrcUrl:
-        'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=thumb&version=2',
-      fhdSrcUrl: 'site-url/gallery/image/?path=gallery/image.jpg&timestamp=5000&size=fhd&version=2',
+        'site-url/gallery/image/image.jpg?path=gallery&timestamp=5000&size=thumb&version=2',
+      fhdSrcUrl: 'site-url/gallery/image/image.jpg?path=gallery&timestamp=5000&size=fhd&version=2',
     };
 
     beforeEach(() => {
@@ -209,9 +209,9 @@ describe('GalleryImage', () => {
       const expectedMetadata2 = {
         ...expectedMetadata,
         thumbSrcUrl:
-          'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=thumb&version=2',
+          'site-url/gallery/image/image.jpg?path=gallery&timestamp=7000&size=thumb&version=2',
         fhdSrcUrl:
-          'site-url/gallery/image/?path=gallery/image.jpg&timestamp=7000&size=fhd&version=2',
+          'site-url/gallery/image/image.jpg?path=gallery&timestamp=7000&size=fhd&version=2',
       };
 
       mockStorage.contentFileExists.mockReturnValue(true);
