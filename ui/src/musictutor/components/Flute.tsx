@@ -7,7 +7,7 @@ export const Flute = () => (
       xmlns='http://www.w3.org/2000/svg'
       stroke='#000000'
       fill='#f9f9f9'
-      strokeWidth={0.2}
+      strokeWidth={0.25}
       strokeLinecap='round'
       strokeLinejoin='round'
       paintOrder='stroke markers fill'
