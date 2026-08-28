@@ -1,13 +1,13 @@
 .Root {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 10px;
 }
 
 .Fingering {
   display: flex;
   flex-direction: row;
-  column-gap: 50px;
-  justify-content: space-evenly;
+  column-gap: 20px;
+  justify-content: center;
   align-items: center;
 }

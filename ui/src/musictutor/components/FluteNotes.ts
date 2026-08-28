@@ -40,6 +40,9 @@ export const FLUTE_NOTES_ABC = [
   'c',
 ];
 
+export const FLUTE_NOTES_ABC_SHARP_ONLY = FLUTE_NOTES_ABC.filter((note) => !note.startsWith('_'));
+export const FLUTE_NOTES_ABC_FLAT_ONLY = FLUTE_NOTES_ABC.filter((note) => !note.startsWith('^'));
+
 export const FLUTE_NOTE_FINGERING: FluteNoteFingering = {
   C: ['L1-B', 'L2-C', 'L3-A', 'L4-G', 'R2-F', 'R3-E', 'R4-D', 'R5-LowC', 'R5-LowC#'],
   '^C': ['L1-B', 'L2-C', 'L3-A', 'L4-G', 'R2-F', 'R3-E', 'R4-D', 'R5-LowC#'],
