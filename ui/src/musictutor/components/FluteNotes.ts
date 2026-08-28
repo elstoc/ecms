@@ -15,11 +15,11 @@ export type FluteKey =
   | 'DTrill'
   | 'D#Trill';
 
-export type FluteNoteFingering = {
+export type FluteFingering = {
   [abcNote: string]: FluteKey[];
 };
 
-export const FLUTE_NOTE_FINGERING_MAIN: FluteNoteFingering = {
+export const FLUTE_FINGERING_MAIN: FluteFingering = {
   C: ['L1-B', 'L2-C', 'L3-A', 'L4-G', 'R2-F', 'R3-E', 'R4-D', 'R5-LowC', 'R5-LowC#'],
   '^C': ['L1-B', 'L2-C', 'L3-A', 'L4-G', 'R2-F', 'R3-E', 'R4-D', 'R5-LowC#'],
   _D: ['L1-B', 'L2-C', 'L3-A', 'L4-G', 'R2-F', 'R3-E', 'R4-D', 'R5-LowC#'],
@@ -45,20 +45,20 @@ export const FLUTE_NOTE_FINGERING_MAIN: FluteNoteFingering = {
   _e: ['L1-B', 'L3-A', 'L4-G', 'R2-F', 'R3-E', 'R4-D', 'R5-D#'],
 };
 
-export const FLUTE_NOTE_FINGERING: FluteNoteFingering = {
-  ...FLUTE_NOTE_FINGERING_MAIN,
-  e: FLUTE_NOTE_FINGERING_MAIN['E'],
-  f: FLUTE_NOTE_FINGERING_MAIN['F'],
-  '^f': FLUTE_NOTE_FINGERING_MAIN['^F'],
-  _g: FLUTE_NOTE_FINGERING_MAIN['_G'],
-  g: FLUTE_NOTE_FINGERING_MAIN['G'],
-  '^g': FLUTE_NOTE_FINGERING_MAIN['^G'],
-  _a: FLUTE_NOTE_FINGERING_MAIN['_A'],
-  a: FLUTE_NOTE_FINGERING_MAIN['A'],
-  '^a': FLUTE_NOTE_FINGERING_MAIN['^A'],
-  _b: FLUTE_NOTE_FINGERING_MAIN['_B'],
-  b: FLUTE_NOTE_FINGERING_MAIN['B'],
-  "c'": FLUTE_NOTE_FINGERING_MAIN['c'],
+export const FLUTE_FINGERING: FluteFingering = {
+  ...FLUTE_FINGERING_MAIN,
+  e: FLUTE_FINGERING_MAIN['E'],
+  f: FLUTE_FINGERING_MAIN['F'],
+  '^f': FLUTE_FINGERING_MAIN['^F'],
+  _g: FLUTE_FINGERING_MAIN['_G'],
+  g: FLUTE_FINGERING_MAIN['G'],
+  '^g': FLUTE_FINGERING_MAIN['^G'],
+  _a: FLUTE_FINGERING_MAIN['_A'],
+  a: FLUTE_FINGERING_MAIN['A'],
+  '^a': FLUTE_FINGERING_MAIN['^A'],
+  _b: FLUTE_FINGERING_MAIN['_B'],
+  b: FLUTE_FINGERING_MAIN['B'],
+  "c'": FLUTE_FINGERING_MAIN['c'],
 };
 
 export const FLUTE_NOTES_ABC = [
