@@ -1,0 +1,12 @@
+.Root {
+  width: 100%;
+  max-width: 500px;
+
+  svg {
+    fill: white;
+
+    .Pressed {
+      fill: black;
+    }
+  }
+}
