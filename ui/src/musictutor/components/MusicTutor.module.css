@@ -1,7 +1,4 @@
 .Root {
-  display: flex;
-  flex-direction: row;
-  column-gap: 100px;
-  justify-content: space-evenly;
-  align-items: center;
+  background-color: canvas;
+  height: 100%;
 }

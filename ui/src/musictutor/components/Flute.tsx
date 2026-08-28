@@ -54,7 +54,7 @@ export const Flute = ({ keysPressed }: FluteProps) => {
           d='m 26.278788,5.1443186 c 0,4.4999988 0,4.4999988 0,4.4999988 v 0 0'
           strokeWidth={0.1}
         />
-        <circle className={pressedStyle('R2-F#')} id='R2-F#' cx='30.640154' cy='7.3943181' r='2' />
+        <circle className={pressedStyle('R2-F')} id='R2-F' cx='30.640154' cy='7.3943181' r='2' />
         <circle className={pressedStyle('R3-E')} id='R3-E' cx='36.797161' cy='7.3943181' r='2' />
         <circle className={pressedStyle('R4-D')} id='R4-D' cx='42.95417' cy='7.3943181' r='2' />
         <ellipse
