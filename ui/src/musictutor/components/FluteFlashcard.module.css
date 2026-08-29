@@ -5,11 +5,19 @@
   width: 100%;
 }
 
-.Fingering {
+.NoteAndFingering {
   height: 200px;
   display: flex;
   flex-direction: row;
   column-gap: 20px;
   justify-content: center;
   align-items: center;
+}
+
+.Fingering {
+  width: 400px;
+}
+
+.Hidden {
+  visibility: hidden;
 }
