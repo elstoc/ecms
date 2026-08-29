@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { useState } from 'react';
 
 import { Button } from '@/shared/components/button';
+import { getRandomArrayElementFn } from '@/utils/getRandomArrayElementFn';
 
 import { Flute } from './Flute';
 import { FLUTE_FINGERING, FLUTE_NOTES_ABC_SHARP_ONLY } from './FluteNotes';
@@ -9,8 +10,7 @@ import { NoteRender } from './NoteRender';
 
 import * as styles from './FluteFlashcard.module.css';
 
-const getNote = () =>
-  FLUTE_NOTES_ABC_SHARP_ONLY[Math.floor(Math.random() * FLUTE_NOTES_ABC_SHARP_ONLY.length)];
+const getNote = getRandomArrayElementFn(FLUTE_NOTES_ABC_SHARP_ONLY, 10, 5);
 
 export const FluteFlashcard = () => {
   const initialNote = getNote();
