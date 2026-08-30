@@ -28,6 +28,8 @@ export const FluteFlashcard = () => {
       setProps({ note: newNote, hideFingering: true });
       synth.triggerAttackRelease(pitch, '8n');
     } else {
+      const pitch = getPitch(props.note);
+      synth.triggerAttackRelease(pitch, '8n');
       setProps((prevProps) => ({ note: prevProps.note, hideFingering: false }));
     }
   };

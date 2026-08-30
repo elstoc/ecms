@@ -59,6 +59,9 @@ export const FLUTE_FINGERING: FluteFingering = {
   _b: FLUTE_FINGERING_MAIN['_B'],
   b: FLUTE_FINGERING_MAIN['B'],
   "c'": FLUTE_FINGERING_MAIN['c'],
+  "^c'": FLUTE_FINGERING_MAIN['^c'],
+  "_d'": FLUTE_FINGERING_MAIN['^c'],
+  "d'": ['L1-B', 'L3-A', 'L4-G', 'R5-D#'],
 };
 
 export const FLUTE_NOTES_ABC = [
@@ -97,6 +100,9 @@ export const FLUTE_NOTES_ABC = [
   '_b',
   'b',
   "c'",
+  "^c'",
+  "_d'",
+  "d'",
 ];
 
 export const FLUTE_NOTES_ABC_SHARP_ONLY = FLUTE_NOTES_ABC.filter((note) => !note.startsWith('_'));
