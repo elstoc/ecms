@@ -10,7 +10,7 @@ import { PianoKeys } from './PianoKeys';
 import * as styles from './MusicTutor.module.css';
 
 export const MusicTutor = () => {
-  const [mode, setMode] = useState('fluteFingering');
+  const [mode, setMode] = useState('fluteFlashcard');
 
   const items = [
     { value: 'fluteFingering', label: 'Flute Fingering' },
