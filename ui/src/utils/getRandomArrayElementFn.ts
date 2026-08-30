@@ -1,22 +1,11 @@
-export const getRandomArrayElementFn = <T>(
-  array: T[],
-  memoryLength: number,
-  trys: number,
-): (() => T) => {
+export const getRandomArrayElementFn = <T>(array: T[], memoryLength: number): (() => T) => {
   let recentElements: T[] = [];
 
   return () => {
-    let count = 0;
-
-    while (true) {
-      const tryValue = array[Math.floor(Math.random() * array.length)];
-
-      if (!recentElements.includes(tryValue) || count === trys) {
-        recentElements = [tryValue, ...recentElements.slice(0, memoryLength - 1)];
-        return tryValue;
-      }
-
-      count++;
-    }
+    console.log(recentElements);
+    const filteredArray = array.filter((el) => !recentElements.includes(el));
+    const returnValue = filteredArray[Math.floor(Math.random() * filteredArray.length)];
+    recentElements = [returnValue, ...recentElements.slice(0, memoryLength - 1)];
+    return returnValue;
   };
 };
