@@ -5,10 +5,11 @@ import * as Tone from 'tone';
 import { Button } from '@/shared/components/button';
 import { getRandomArrayElementFn } from '@/utils/getRandomArrayElementFn';
 
+import { getPitch } from '../utils/abcToPitchNotation';
+import { FLUTE_FINGERING, FLUTE_NOTES_ABC_SHARP_ONLY } from '../utils/fluteNotes';
+
+import { AbcNoteRender } from './AbcNoteRender';
 import { Flute } from './Flute';
-import { FLUTE_FINGERING, FLUTE_NOTES_ABC_SHARP_ONLY } from './FluteNotes';
-import { NoteRender } from './NoteRender';
-import { getPitch } from './abcToPitchNotation';
 
 import * as styles from './FluteFlashcard.module.css';
 
@@ -38,7 +39,7 @@ export const FluteFlashcard = () => {
     <div className={styles.Root}>
       <div className={styles.NoteAndFingering} key={props.note}>
         <div>
-          <NoteRender note={props.note} />
+          <AbcNoteRender abcNote={props.note} />
         </div>
         <div className={cn(styles.Fingering, { [styles.Hidden]: props.hideFingering })}>
           <Flute keysPressed={FLUTE_FINGERING[props.note]} />

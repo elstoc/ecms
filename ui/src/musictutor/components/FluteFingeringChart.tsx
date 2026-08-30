@@ -1,6 +1,7 @@
+import { FLUTE_FINGERING, FLUTE_NOTES_ABC_SHARP_ONLY } from '../utils/fluteNotes';
+
+import { AbcNoteRender } from './AbcNoteRender';
 import { Flute } from './Flute';
-import { FLUTE_FINGERING, FLUTE_NOTES_ABC_SHARP_ONLY } from './FluteNotes';
-import { NoteRender } from './NoteRender';
 
 import * as styles from './FluteFingeringChart.module.css';
 
@@ -9,7 +10,7 @@ export const FluteFingeringChart = () => {
     <div className={styles.Root}>
       {FLUTE_NOTES_ABC_SHARP_ONLY.map((note) => (
         <div className={styles.Fingering} key={note}>
-          <NoteRender note={note} />
+          <AbcNoteRender abcNote={note} />
           <Flute keysPressed={FLUTE_FINGERING[note]} />
         </div>
       ))}

@@ -1,4 +1,4 @@
-import { FluteKey } from './FluteNotes';
+import { FluteKey } from '../utils/fluteNotes';
 
 import * as styles from './Flute.module.css';
 

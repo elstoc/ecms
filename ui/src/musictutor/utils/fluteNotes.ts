@@ -15,7 +15,7 @@ export type FluteKey =
   | 'DTrill'
   | 'D#Trill';
 
-export type FluteFingering = {
+type FluteFingering = {
   [abcNote: string]: FluteKey[];
 };
 

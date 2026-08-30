@@ -1,11 +1,11 @@
 import abcjs from 'abcjs';
 import { useEffect, useRef } from 'react';
 
-type StaffRenderProps = {
+type AbcStaffRenderProps = {
   tune: string;
 };
 
-export const StaffRender = ({ tune }: StaffRenderProps) => {
+export const AbcStaffRender = ({ tune }: AbcStaffRenderProps) => {
   const staffRef = useRef(null);
 
   useEffect(() => {
