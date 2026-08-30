@@ -13,41 +13,48 @@ import { Flute } from './Flute';
 
 import * as styles from './FluteFlashcard.module.css';
 
-const getNote = getRandomArrayElementFn(FLUTE_NOTES_ABC_SHARP_ONLY, 10, 5);
+const getNote = getRandomArrayElementFn(FLUTE_NOTES_ABC_SHARP_ONLY, 10);
 const synth = new Tone.Synth().toDestination();
 
-export const FluteFlashcard = () => {
-  const initialNote = getNote();
+type State = { note: string; hideFingering: boolean };
 
-  const [props, setProps] = useState({ note: initialNote, hideFingering: true });
+export const FluteFlashcard = () => {
+  const [state, setState] = useState<State | undefined>();
 
   const handleButtonClick = () => {
-    if (!props.hideFingering) {
+    if (!state?.hideFingering) {
       const newNote = getNote();
       const pitch = getPitch(newNote);
 
-      setProps({ note: newNote, hideFingering: true });
+      setState({ note: newNote, hideFingering: true });
       synth.triggerAttackRelease(pitch, '8n');
     } else {
-      const pitch = getPitch(props.note);
+      const pitch = getPitch(state.note);
       synth.triggerAttackRelease(pitch, '8n');
-      setProps((prevProps) => ({ note: prevProps.note, hideFingering: false }));
+      setState((prevProps) => ({ note: prevProps?.note ?? 'c', hideFingering: false }));
     }
   };
 
+  let buttonText = 'START';
+  if (state) {
+    buttonText = state.hideFingering ? 'Reveal Fingering' : 'New Note';
+  }
+
   return (
     <div className={styles.Root}>
-      <div className={styles.NoteAndFingering} key={props.note}>
-        <div>
-          <AbcNoteRender abcNote={props.note} />
-        </div>
-        <div className={cn(styles.Fingering, { [styles.Hidden]: props.hideFingering })}>
-          <Flute keysPressed={FLUTE_FINGERING[props.note]} />
-        </div>
+      <div className={styles.NoteAndFingering} key={state?.note ?? ''}>
+        {state && (
+          <>
+            <div>
+              <AbcNoteRender abcNote={state.note} />
+            </div>
+            <div className={cn(styles.Fingering, { [styles.Hidden]: state.hideFingering })}>
+              <Flute keysPressed={FLUTE_FINGERING[state.note]} />
+            </div>
+          </>
+        )}
       </div>
-      <Button onClick={handleButtonClick}>
-        {props.hideFingering ? 'Reveal Fingering' : 'New Note'}
-      </Button>
+      <Button onClick={handleButtonClick}>{buttonText}</Button>
     </div>
   );
 };
