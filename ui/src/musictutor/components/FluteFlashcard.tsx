@@ -6,14 +6,14 @@ import { Button } from '@/shared/components/button';
 import { getRandomArrayElementFn } from '@/utils/getRandomArrayElementFn';
 
 import { getPitch } from '../utils/abcToPitchNotation';
-import { FLUTE_FINGERING, FLUTE_NOTES_ABC_SHARP_ONLY } from '../utils/fluteNotes';
+import { FLUTE_FINGERING, FLUTE_NOTES_ABC } from '../utils/fluteNotes';
 
 import { AbcNoteRender } from './AbcNoteRender';
 import { Flute } from './Flute';
 
 import * as styles from './FluteFlashcard.module.css';
 
-const getNote = getRandomArrayElementFn(FLUTE_NOTES_ABC_SHARP_ONLY, 10);
+const getNote = getRandomArrayElementFn(FLUTE_NOTES_ABC, 10);
 const synth = new Tone.Synth().toDestination();
 
 type State = { note: string; hideFingering: boolean };
