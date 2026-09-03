@@ -42,6 +42,7 @@ export const FluteFlashcard = () => {
 
   return (
     <div className={styles.Root}>
+      <Button onClick={handleButtonClick}>{buttonText}</Button>
       <div className={styles.NoteAndFingering} key={state?.note ?? ''}>
         {state && (
           <>
@@ -54,7 +55,6 @@ export const FluteFlashcard = () => {
           </>
         )}
       </div>
-      <Button onClick={handleButtonClick}>{buttonText}</Button>
     </div>
   );
 };
